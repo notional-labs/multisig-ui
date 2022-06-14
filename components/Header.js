@@ -2,36 +2,38 @@ import FlexRow from "./flex_box/FlexRow"
 import SelectChain from "./input/SelectChain"
 import Image from "next/image"
 import { ChainContext } from "./Context"
+import Account from "./layout/Account"
 import { useContext } from "react"
+import { Input } from "antd"
+import SearchBar from "./input/SearchBar"
+import '../styles/Header.module.css'
 
 const logo = (
     <FlexRow
         components={[
             (<Image
                 src='/images/logo.png'
-                width={'50px'}
+                width={'60px'}
                 height={'50px'}
-            />), (
+            />),
+            (
                 <text
                     style={{
                         fontSize: '2rem',
-                        marginLeft: '10px'
+                        margin: 'auto 10px auto'
                     }}
                 >
-                        MULTISIG
+                    MULTISIG
                 </text>
             )
         ]}
         justifyContent={'space-between'}
-        style={{
-            
-        }}
     />
 )
 
 const Header = () => {
 
-    const {chain} = useContext(ChainContext)
+    const { chain } = useContext(ChainContext)
 
     return (
         <div
@@ -41,15 +43,25 @@ const Header = () => {
                 color: '#ffffff',
                 padding: '1em 5em',
                 position: 'fixed',
-                height: '85px',
+                height: '90px',
                 width: '100%',
                 marginBottom: '80px'
             }}
         >
             <FlexRow
                 components={[
-                    logo, 
-                    <SelectChain/>
+                    logo,
+                    <FlexRow
+                        components={[
+                            <SearchBar />,
+                            <SelectChain />,
+                        ]}
+                        justifyContent={'space-between'}
+                    />,
+                    <Account
+                        chainId={chain.chain_id}
+                        chainName={chain.name}
+                    />
                 ]}
                 justifyContent={'space-between'}
             />

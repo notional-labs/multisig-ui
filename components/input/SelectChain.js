@@ -98,6 +98,7 @@ const SelectChain = ({ }) => {
             style={{
                 position: 'relative',
                 color: '#000000',
+                margin: 'auto 0'
             }}
         >
             <Button
