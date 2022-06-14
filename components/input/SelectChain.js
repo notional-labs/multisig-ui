@@ -1,5 +1,5 @@
 import { chainData } from "../../data/chainData"
-import Button from "./button"
+import Button from "./Button"
 import FlexRow from "../flex_box/FlexRow"
 import { Image } from "antd"
 import { ChainContext } from "../Context"
