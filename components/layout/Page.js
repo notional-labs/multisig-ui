@@ -1,7 +1,7 @@
 import Header from "../Header"
 
 const Page = (props) => {
-
+ 
     return (
         <div
             className="page-container"
