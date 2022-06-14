@@ -44,7 +44,7 @@ const Profile = ({ account, chainName, setAccount }) => {
                         copyable={account[0].address}
                         style={{
                             marginBottom: 0,
-                            color: 'white'
+                            color: 'white',
                         }}
                     >
                         {addressShortener( account[0].address)}

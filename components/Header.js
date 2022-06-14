@@ -32,7 +32,6 @@ const logo = (
 )
 
 const Header = () => {
-
     const { chain } = useContext(ChainContext)
 
     return (

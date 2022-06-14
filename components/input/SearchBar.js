@@ -35,7 +35,8 @@ const SearchBar = ({ }) => {
                 />
             ]}
             style={{
-                padding: '.25em 10px .25em 0'
+                // padding: '.25em 10px .25em 0'
+                marginRight: '20px'
             }}
         />
     )

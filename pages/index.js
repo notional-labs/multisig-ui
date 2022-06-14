@@ -15,7 +15,9 @@ export default function Home() {
             height: '100vh'
           }}
         >
-          <Container />
+          <Container 
+            type='dashboard'
+          />
         </div>
       </Page>
     </ChainProvider>

@@ -7,7 +7,7 @@ const routers = [
         name: 'All Multisigs'
     },
     {
-        path: '/multisig',
+        path: '/multisig/create',
         name: 'Create multisig'
     },
     {

@@ -47,6 +47,7 @@ const SelectChain = ({ }) => {
 
     const handleSelect = (index) => {
         wrapper(index)
+        localStorage.setItem('current', index)
         setShowDropDown(false)
     }
 
@@ -98,7 +99,8 @@ const SelectChain = ({ }) => {
             style={{
                 position: 'relative',
                 color: '#000000',
-                margin: 'auto 0'
+                margin: 'auto 0',
+                height: '100%'
             }}
         >
             <Button
@@ -109,7 +111,8 @@ const SelectChain = ({ }) => {
                     borderRadius: showDropDown ? '10px 10px 0 0' : '10px',
                     backgroundColor: '#FFFFFF',
                     padding: '1em',
-                    width: '200px'
+                    width: '200px',
+                    height: '100%'
                 }}
             />
             {

@@ -1,3 +1,5 @@
+import { StargateClient } from "@cosmjs/stargate";
+
 export const getKeplrAccount = async (chainId) => {
     if (!window.getOfflineSigner || !window.keplr) {
         alert("Keplr Wallet not detected, please install extension");
@@ -16,3 +18,14 @@ export const getKeplrAccount = async (chainId) => {
         };
     }
 }
+
+export const getPubkey = async (rpc, address) => {
+    const client = await StargateClient.connect(rpc);
+    const accountOnChain = await client.getAccount(address);
+    if (!accountOnChain || !accountOnChain.pubkey) {
+        throw new Error(
+            "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+        );
+    }
+    return accountOnChain.pubkey.value;
+};

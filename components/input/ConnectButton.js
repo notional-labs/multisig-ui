@@ -1,27 +1,35 @@
 import Button from "./Button"
 import { getKeplrAccount } from "../../libs/keplrClient"
 
-const ConnectButton = ({chainId, setAccount}) => {
+const ConnectButton = ({ chainId, setAccount }) => {
 
     const connect = async () => {
-        const {accounts} = await getKeplrAccount(chainId)
+        const { accounts } = await getKeplrAccount(chainId)
         localStorage.setItem('account', JSON.stringify(accounts))
         setAccount(JSON.stringify(accounts))
     }
 
     return (
-        <Button
-            clickFunction={connect}
-            text={'Connect'}
+        <div
             style={{
-                border: 'solid 2px white',
-                backgroundColor: '#808080',
-                color: 'white',
-                borderRadius: '10px',
-                fontSize: '1.5rem',
-                padding: '0 2em 0 2em'
+                position: 'relative',
+                color: '#000000',
+                height: '100%'
             }}
-        />
+        >
+            <Button
+                clickFunction={connect}
+                text={'Connect'}
+                style={{
+                    border: 'solid 2px white',
+                    backgroundColor: '#808080',
+                    color: 'white',
+                    borderRadius: '10px',
+                    fontSize: '1.5rem',
+                    padding: '.42em 1em'
+                }}
+            />
+        </div>
     )
 }
 
