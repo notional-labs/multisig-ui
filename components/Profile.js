@@ -41,13 +41,13 @@ const Profile = ({ account, chainName, setAccount }) => {
                         {chainName.toUpperCase()}
                     </text>,
                     <Paragraph
-                        copyable={account[0].address}
+                        copyable={{ text: account[0].address }}
                         style={{
                             marginBottom: 0,
                             color: 'white',
                         }}
                     >
-                        {addressShortener( account[0].address)}
+                        {addressShortener(account[0].address)}
                     </Paragraph>
                 ]}
                 direction={'column'}
