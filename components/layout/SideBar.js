@@ -43,7 +43,7 @@ const SideBar = ({ }) => {
                             style={{
                                 borderRadius: '10px',
                                 backgroundColor: '#ffffff',
-                                color: '#000000',
+                                color: router.pathname === route.path ? '#000000' : '#ffffff',
                                 fontSize: '1.5rem',
                                 boxShadow: '0 0 20 2 rgba(0, 0, 0, 0.25)',
                                 border: 0,
