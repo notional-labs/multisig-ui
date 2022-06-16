@@ -6,6 +6,8 @@ import { getPubkey } from "../../libs/keplrClient"
 import { ChainContext } from "../Context"
 import FlexRow from "../flex_box/FlexRow"
 import { InputNumber } from "antd"
+import { openLoadingNotification, openNotification } from "../ulti/Notification"
+import { createMultisigFromPubkeys } from "../../libs/multisig"
 
 const emptyKeyInput = () => {
     return {
@@ -21,7 +23,7 @@ const style = {
         padding: '.5em 1em',
         fontSize: '1.5rem',
         margin: '0 30px',
-    }, 
+    },
     button: {
         backgroundColor: 'black',
         color: 'white',
@@ -38,7 +40,6 @@ const MultisigCreate = ({ }) => {
         emptyKeyInput(), emptyKeyInput()
     ])
     const [threshold, setThreshold] = useState(2)
-    const [loading, setLoading] = useState(false)
 
     const handleKeyGroupChange = (e, index) => {
         let newPubkeys = [...pubkeys]
@@ -79,7 +80,25 @@ const MultisigCreate = ({ }) => {
     }
 
     const handleCreate = async () => {
-
+        const compressedPubkeys = pubkeys.map(
+            (item) => item.pubkey
+        );
+        let multisigAddress;
+        try {
+            openLoadingNotification('open', 'Creating multisig')
+            multisigAddress = await createMultisigFromPubkeys(
+                compressedPubkeys,
+                parseInt(threshold, 10),
+                chain.prefix
+            );
+            console.log(multisigAddress)
+            openLoadingNotification('close')
+            openNotification('success', 'Create successfully')
+        }
+        catch (e) {
+            openLoadingNotification('close')
+            openNotification('error', e.message)
+        }
     }
 
     return (

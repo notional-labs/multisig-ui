@@ -1,0 +1,69 @@
+type Multisig {
+  pubkeyJSON: String!
+  address: String!
+}
+
+type Transaction {
+  signatures: [Signature] @relation
+  dataJSON: String
+  txHash: String
+  createBy: String!
+  status: String!
+  createdOn: String
+}
+
+type MultisigByAddress {
+  createFrom: String!
+  address: String!
+}
+
+type Signature {
+  transaction: Transaction! @relation
+  bodyBytes: String!
+  signature: String!
+  address: String!
+}
+
+# input Signatures {
+#   bodyBytes: String!
+#   signature: String!
+#   address: String!
+# }
+
+input CreateMultisigInput {
+  pubkeyJSON: String!
+  address: String!
+}
+
+# input CreateTransactionInput {
+#   signatures: [Signatures!] 
+#   dataJSON: String
+#   txHash: String
+#   createBy: String!
+#   status: TransactionStatus! = PENDING
+#   createdOn: DateTime 
+# }
+
+# input CreateMultisigByAddress {
+#   createFrom: String!
+#   address: String!
+# }
+
+type Query {
+  getMultisig(address: String!): Multisig
+  getTxByMultisig(createBy: String!): Transaction
+  getAllMultisigByAddress(address: String!): MultisigByAddress
+}
+
+# type Mutation {
+#   createMultisig(input: CreateMultisigInput!): Multisig @resolver(name: "create_multisig")
+#   # creatTransaction(input: CreateTransactionInput!): Transaction
+#   # createMultisigByAddress(input: CreateMultisigByAddress!): MultisigByAddress
+# }
+
+enum TransactionStatus {
+  PENDING
+  FINISHED
+}
+
+
