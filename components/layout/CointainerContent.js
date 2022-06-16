@@ -11,7 +11,10 @@ const ContainerContent = ({}) => {
                 minHeight: '70vh',
                 width: '100%',
                 marginLeft: '350px',
-                borderRadius: '10px'
+                borderRadius: '0 10px 10px 10px',
+                position: 'relative',
+                zIndex: 2,
+                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
             }}
         >
             {
