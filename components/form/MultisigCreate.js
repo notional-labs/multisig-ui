@@ -8,6 +8,7 @@ import FlexRow from "../flex_box/FlexRow"
 import { InputNumber } from "antd"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import { createMultisigFromPubkeys } from "../../libs/multisig"
+import { useRouter } from 'next/router'
 
 const emptyKeyInput = () => {
     return {
@@ -40,6 +41,7 @@ const MultisigCreate = ({ }) => {
         emptyKeyInput(), emptyKeyInput()
     ])
     const [threshold, setThreshold] = useState(2)
+    const router = useRouter()
 
     const handleKeyGroupChange = (e, index) => {
         let newPubkeys = [...pubkeys]
@@ -83,15 +85,19 @@ const MultisigCreate = ({ }) => {
         const compressedPubkeys = pubkeys.map(
             (item) => item.pubkey
         );
+        const components = pubkeys.map(
+            (item) => item.address
+        )
         let multisigAddress;
         try {
             openLoadingNotification('open', 'Creating multisig')
             multisigAddress = await createMultisigFromPubkeys(
                 compressedPubkeys,
                 parseInt(threshold, 10),
-                chain.prefix
+                chain.prefix,
+                components
             );
-            console.log(multisigAddress)
+            router.push(`/multisig/${multisigAddress}`);
             openLoadingNotification('close')
             openNotification('success', 'Create successfully')
         }

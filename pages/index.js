@@ -12,7 +12,7 @@ export default function Home() {
             backgroundImage: `url(/images/background.png)`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            height: '100vh'
+            minHeight: '100vh'
           }}
         >
           <Container 

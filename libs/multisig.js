@@ -1,6 +1,7 @@
 import { createMultisigThresholdPubkey, pubkeyToAddress, } from "@cosmjs/amino";
+import axios from "axios";
 
-export const createMultisigFromPubkeys = async (compressedPubkeys, threshold, prefix) => {
+export const createMultisigFromPubkeys = async (compressedPubkeys, threshold, prefix, components) => {
     try {
         let pubkeys = compressedPubkeys.map((compressedPubkey) => {
             return {
@@ -14,10 +15,20 @@ export const createMultisigFromPubkeys = async (compressedPubkeys, threshold, pr
         const multisig = {
             address: multisigAddress,
             pubkeyJSON: JSON.stringify(multisigPubkey),
+            components: components
         };
         const res = await axios.post("/api/multisig", multisig);
         return res.data.address;
-    } catch (error) {
-        throw error;
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const getMultisigFromAddress = async (address) => {
+    try {
+        const res = await axios.post(`/api/multisig/${address}`, { address })
+        return res.data
+    } catch (e) {
+        throw e
     }
 }

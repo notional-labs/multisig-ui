@@ -35,17 +35,8 @@ const SideBar = ({ }) => {
                     return (
                         <div
                             style={{
-<<<<<<< HEAD
-                                borderRadius: '10px',
-                                backgroundColor: '#ffffff',
-                                color: router.pathname === route.path ? '#000000' : '#ffffff',
-                                fontSize: '1.5rem',
-                                boxShadow: '0 0 20 2 rgba(0, 0, 0, 0.25)',
-                                border: 0,
-=======
                                 width: checkPath(route.path) ? '100%' : '80%',
                                 backgroundColor: checkPath(route.path) ? '#ffffff' : '#000000',
->>>>>>> 07e5f84812231919ab77ae642d5bb6fee565699c
                                 marginBottom: '1rem',
                                 borderRadius: checkPath(route.path) ? '10px 0 0 10px' : '10px',
                                 boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',

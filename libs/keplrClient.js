@@ -29,3 +29,10 @@ export const getPubkey = async (rpc, address) => {
     }
     return accountOnChain.pubkey.value;
 };
+
+export const getBalance = async (rpc, address, denom) => {
+    console.log(address, denom)
+    const client = await StargateClient.connect(rpc);
+    const balance = await client.getBalance(address, denom);
+    return balance;
+}
