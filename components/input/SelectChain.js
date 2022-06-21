@@ -5,7 +5,7 @@ import { Image } from "antd"
 import { ChainContext } from "../Context"
 import { useContext, useState } from "react"
 
-const SelectChain = ({ }) => {
+const SelectChain = ({ enableSelectChain }) => {
     const [showDropDown, setShowDropDown] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
 
@@ -114,6 +114,7 @@ const SelectChain = ({ }) => {
                     width: '200px',
                     height: '100%'
                 }}
+                disable={!enableSelectChain}
             />
             {
                 showDropDown && (

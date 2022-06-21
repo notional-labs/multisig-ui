@@ -7,6 +7,7 @@ import { Typography } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ChainContext } from "../Context"
+import { prefixToId } from "../../data/chainData"
 
 const { Paragraph } = Typography;
 
@@ -42,7 +43,7 @@ const MultisigView = () => {
     const [multisig, setMultisg] = useState(null)
     const [holding, setHolding] = useState(0)
     const [loading, setLoading] = useState(false)
-    const { chain } = useContext(ChainContext)
+    const { chain, wrapper } = useContext(ChainContext)
     const router = useRouter()
     const { multisigID } = router.query
 
@@ -52,6 +53,9 @@ const MultisigView = () => {
             if (!multisigID) return
             try {
                 const res = await getMultisigFromAddress(multisigID)
+                const id = prefixToId[`${res.prefix}`]
+                wrapper(id)
+                localStorage.setItem('current', id)
                 const balance = await getBalance(chain.rpc, multisigID, chain.denom)
                 setHolding(parseInt(balance.amount) / 1000000)
                 setMultisg(res)

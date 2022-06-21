@@ -1,6 +1,8 @@
 type Multisig {
   pubkeyJSON: String!
   address: String!
+  prefix: String!
+  createdOn: Time
 }
 
 type Transaction {
@@ -9,7 +11,7 @@ type Transaction {
   txHash: String
   createBy: String!
   status: String!
-  createdOn: String
+  createdOn: Time
 }
 
 type MultisigByAddress {
@@ -30,18 +32,10 @@ type Signature {
 #   address: String!
 # }
 
-<<<<<<< HEAD
 input CreateMultisigInput {
   pubkeyJSON: String!
   address: String!
 }
-=======
-# input CreateMultisigInput {
-#   pubkeyJSON: String!
-#   address: String!
-#   components: [String!]
-# }
->>>>>>> 05df630bac5059d61e3a046b5c80d2432ffbb098
 
 # input CreateTransactionInput {
 #   signatures: [Signatures!] 
@@ -60,19 +54,13 @@ input CreateMultisigInput {
 type Query {
   getMultisig(address: String!): Multisig
   getTxByMultisig(createBy: String!): Transaction
-  getAllMultisigByAddress(address: String!): MultisigByAddress
+  getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
 }
 
 # type Mutation {
-<<<<<<< HEAD
 #   createMultisig(input: CreateMultisigInput!): Multisig @resolver(name: "create_multisig")
 #   # creatTransaction(input: CreateTransactionInput!): Transaction
 #   # createMultisigByAddress(input: CreateMultisigByAddress!): MultisigByAddress
-=======
-#   createMultisig(input: CreateMultisigInput!): Multisig
-#   creatTransaction(input: CreateTransactionInput!): Transaction
-#   createMultisigByAddress(input: CreateMultisigByAddress!): MultisigByAddress
->>>>>>> 05df630bac5059d61e3a046b5c80d2432ffbb098
 # }
 
 enum TransactionStatus {

@@ -50,13 +50,12 @@ const Header = ({ enableSelectChain }) => {
                 components={[
                     logo,
                     <FlexRow
-                        components={
-                            enableSelectChain ? [
-                                <SearchBar />,
-                                <SelectChain />,
-                            ] : [
-                                <SearchBar />
-                            ]}
+                        components={[
+                            <SearchBar />,
+                            <SelectChain
+                                enableSelectChain={enableSelectChain}
+                            />,
+                        ]}
                         justifyContent={'space-between'}
                     />,
                     <Account

@@ -17,8 +17,10 @@ export const createMultisig = async (multisig) => {
             ) {
                 address
             }`
-            multisigByAddressMutation = multisigByAddressMutation + mutation + '\n'
+        multisigByAddressMutation = multisigByAddressMutation + mutation + '\n'
     })
+
+    const date = new Date()
 
     const res = await graphqlReq({
         method: "POST",
@@ -26,8 +28,10 @@ export const createMultisig = async (multisig) => {
             query: `
             mutation {
               createMultisig(data: {
-                address: "${multisig.address}"
-                pubkeyJSON: ${JSON.stringify(multisig.pubkeyJSON)}
+                address: "${multisig.address}",
+                pubkeyJSON: ${JSON.stringify(multisig.pubkeyJSON)},
+                prefix: "${multisig.prefix}"
+                createdOn: "${date.toISOString()}"
               }) {
                 _id
                 address
@@ -51,8 +55,30 @@ export const getMultisigByAddress = async (address) => {
                 getMultisig(address: "${address.address}") {
                   address
                   pubkeyJSON
+                  prefix
+                  createdOn
                 }
               }
+          `
+        },
+    })
+    return res
+}
+
+export const getMultisigOfAddress = async (address) => {
+    const res = await graphqlReq({
+        method: "POST",
+        data: {
+            query: `
+            query{
+                getAllMultisigByAddress(
+                    createFrom: "${address.address}"
+                ) {
+                    data {
+                      address
+                    }
+                }
+            }
           `
         },
     })

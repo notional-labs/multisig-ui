@@ -30,3 +30,9 @@ export const chainData = [
         logo: 'https://s3-alpha-sig.figma.com/img/8255/f5f2/f13556922bfdb07bca2cbf6d15af114b?Expires=1655683200&Signature=aR4h2d2MiKXzKBXBbvKQMJyttRC8OuYN1Oo2iW4MH4MINO58Pzk1H7q38RuX2MowhL976IxF10idGLm69o39m0CRtWDtTzxNyOdfg6Dm59NXxoJlDrAL4WZGk1kd12v7H4K~vgUhAWyDJ8mxnP1vq27euD9FaudyLMLFqmqYiSL2MRrB~BYc6BBhPA3jGfNsbCyzdTFaiGjFXxKMtrtg57~4t-Vs3jdKZ~P-zJ68ATQbY~8RDc8BLYvkuzp9YD0-0e2YewfPYZpNlI7kPNJ41vjCPo8nofIe7uvsLgNdQE7GS966LwIyDCbD3TAyc8HWEaN8qM3rSBvqAuLOmxK5qQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
     },
 ]
+
+export const prefixToId = {
+    "osmo": 0,
+    "juno": 1,
+    "cosmos": 2
+}

@@ -10,7 +10,7 @@ const ContainerContent = ({}) => {
                 backgroundColor: '#ffffff',
                 minHeight: '70vh',
                 width: '100%',
-                marginLeft: '350px',
+                marginLeft: '300px',
                 borderRadius: '0 10px 10px 10px',
                 position: 'relative',
                 zIndex: 2,
