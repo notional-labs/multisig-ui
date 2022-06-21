@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Button = ({ style, type = 'function', text, clickFunction, className, url, index }) => {
+const Button = ({ style, type = 'function', text, clickFunction, className, url, index, disable }) => {
     return type === 'function' ? (
         <button
             key={index}
@@ -9,6 +9,7 @@ const Button = ({ style, type = 'function', text, clickFunction, className, url,
                 cursor: 'pointer'
             }}
             onClick={clickFunction}
+            disabled={disable}
         >
             {text}
         </button>

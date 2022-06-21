@@ -31,7 +31,7 @@ const logo = (
     />
 )
 
-const Header = () => {
+const Header = ({ enableSelectChain }) => {
     const { chain } = useContext(ChainContext)
 
     return (
@@ -44,7 +44,6 @@ const Header = () => {
                 position: 'fixed',
                 height: '90px',
                 width: '100%',
-                marginBottom: '80px'
             }}
         >
             <FlexRow
@@ -53,7 +52,9 @@ const Header = () => {
                     <FlexRow
                         components={[
                             <SearchBar />,
-                            <SelectChain />,
+                            <SelectChain
+                                enableSelectChain={enableSelectChain}
+                            />,
                         ]}
                         justifyContent={'space-between'}
                     />,

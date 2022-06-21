@@ -10,10 +10,6 @@ const routers = [
         path: '/multisig/create',
         name: 'Create multisig'
     },
-    {
-        path: '/transaction',
-        name: 'All Transations'
-    },
 ]
 
 const SideBar = ({ }) => {

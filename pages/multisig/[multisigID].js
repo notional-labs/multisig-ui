@@ -2,12 +2,14 @@ import "antd/dist/antd.css";
 import Page from '../../components/layout/Page';
 import { ChainProvider } from "../../components/Context";
 import Container from "../../components/layout/Container";
-import MultisigCreate from "../../components/form/MultisigCreate";
+import MultisigView from "../../components/data_view/MultisigView";
 
 export default () => {
     return (
         <ChainProvider>
-            <Page>
+            <Page
+                enableSelectChain={false}
+            >
                 <div
                     style={{
                         backgroundImage: `url(/images/background.png)`,
@@ -18,7 +20,7 @@ export default () => {
                 >
                     <Container
                         component={
-                            <MultisigCreate />
+                            <MultisigView />
                         }
                     />
                 </div>

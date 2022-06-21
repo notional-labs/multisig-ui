@@ -1,6 +1,8 @@
 type Multisig {
   pubkeyJSON: String!
   address: String!
+  prefix: String!
+  createdOn: Time
 }
 
 type Transaction {
@@ -9,7 +11,7 @@ type Transaction {
   txHash: String
   createBy: String!
   status: String!
-  createdOn: String
+  createdOn: Time
 }
 
 type MultisigByAddress {
@@ -53,7 +55,7 @@ type Signature {
 type Query {
   getMultisig(address: String!): Multisig
   getTxByMultisig(createBy: String!): Transaction
-  getAllMultisigByAddress(address: String!): MultisigByAddress
+  getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
 }
 
 # type Mutation {

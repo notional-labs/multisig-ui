@@ -1,14 +1,16 @@
 import Header from "../Header"
 
-const Page = (props) => {
+const Page = ({enableSelectChain = true, children}) => {
 
     return (
         <div
             className="page-container"
         >
-            <Header/>
+            <Header
+                enableSelectChain={enableSelectChain}
+            />
             {
-                props.children
+                children
             }
         </div>
     )
