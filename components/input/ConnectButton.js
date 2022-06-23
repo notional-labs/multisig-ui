@@ -1,12 +1,17 @@
 import Button from "./Button"
 import { getKeplrAccount } from "../../libs/keplrClient"
+import { useRouter } from "next/router"
 
 const ConnectButton = ({ chainId, setAccount }) => {
+    const router = useRouter()
 
     const connect = async () => {
         const { accounts } = await getKeplrAccount(chainId)
         localStorage.setItem('account', JSON.stringify(accounts))
         setAccount(JSON.stringify(accounts))
+        if (router.pathname === '/') {
+            router.reload()
+        }
     }
 
     return (

@@ -1,6 +1,6 @@
 import FlexRow from "../flex_box/FlexRow"
 
-const Input = ({ label, onChange, name, value, placeholder, onBlur, error }) => {
+const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error, style }) => {
     return (
         <div>
             <FlexRow
@@ -14,7 +14,7 @@ const Input = ({ label, onChange, name, value, placeholder, onBlur, error }) => 
                     </h4>,
                     <input
                         onChange={onChange}
-                        type="text"
+                        type= {type || "text"}
                         name={name || "text-input"}
                         value={value}
                         placeholder={placeholder || ""}
@@ -38,6 +38,9 @@ const Input = ({ label, onChange, name, value, placeholder, onBlur, error }) => 
                     </text>
                 ]}
                 direction='column'
+                style={{
+                    ...style
+                }}
             />
         </div>
     )

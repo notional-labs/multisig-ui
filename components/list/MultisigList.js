@@ -22,7 +22,7 @@ const MultisigList = ({ }) => {
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
         })()
-    }, [params])
+    }, [params,])
 
     return (
         <div

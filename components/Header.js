@@ -7,15 +7,23 @@ import { useContext } from "react"
 import { Input } from "antd"
 import SearchBar from "./input/SearchBar"
 import '../styles/Header.module.css'
+import Link from "next/link"
 
 const logo = (
     <FlexRow
         components={[
-            (<Image
-                src='/images/logo.png'
-                width={'60px'}
-                height={'50px'}
-            />),
+            (<Link
+                href={'/'}
+                style={{
+                    cursor: 'pointer'
+                }}
+            >
+                <Image
+                    src='/images/logo.png'
+                    width={'60px'}
+                    height={'50px'}
+                />
+            </Link>),
             (
                 <text
                     style={{

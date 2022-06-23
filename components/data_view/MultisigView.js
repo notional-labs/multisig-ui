@@ -149,13 +149,13 @@ const MultisigView = () => {
                         'New transaction',
                         'Once a transaction is created, it can be signed by the multisig members, and then broadcast',
                         'Create Transaction',
-                        '/transaction/create'
+                        `/multisig/${multisigID}/transaction/create`
                     ),
                     getRowCard(
                         'Import transaction',
                         'Import an already generated transaction',
                         'Import Transaction',
-                        '/transaction/import'
+                        `/multisig/${multisigID}/transaction/import`
                     ),
                 ]}
                 justifyContent={'space-between'}

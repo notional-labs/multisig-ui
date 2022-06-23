@@ -1,13 +1,15 @@
 import { chainData } from "../../data/chainData"
 import Button from "./Button"
 import FlexRow from "../flex_box/FlexRow"
-import { Image } from "antd"
+import { Image, Modal } from "antd"
 import { ChainContext } from "../Context"
 import { useContext, useState } from "react"
+import { useRouter } from "next/router"
 
 const SelectChain = ({ enableSelectChain }) => {
     const [showDropDown, setShowDropDown] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
+    const router = useRouter()
 
     const buttonText = (
         <FlexRow
@@ -49,6 +51,9 @@ const SelectChain = ({ enableSelectChain }) => {
         wrapper(index)
         localStorage.setItem('current', index)
         setShowDropDown(false)
+        if (router.pathname === '/') {
+            router.reload()
+        }
     }
 
     const getGridButton = (chain, index) => {
@@ -94,6 +99,10 @@ const SelectChain = ({ enableSelectChain }) => {
         setShowDropDown(!showDropDown)
     }
 
+    const handleClose = () => {
+        setShowDropDown(false)
+    }
+
     return (
         <div
             style={{
@@ -108,7 +117,7 @@ const SelectChain = ({ enableSelectChain }) => {
                 clickFunction={handleShow}
                 style={{
                     border: 0,
-                    borderRadius: showDropDown ? '10px 10px 0 0' : '10px',
+                    borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
                     padding: '1em',
                     width: '200px',
@@ -116,16 +125,17 @@ const SelectChain = ({ enableSelectChain }) => {
                 }}
                 disable={!enableSelectChain}
             />
-            {
-                showDropDown && (
+            <Modal
+                    visible={showDropDown}
+                    footer={null}
+                    closable={false}
+                    onCancel={handleClose}
+                >
                     <div
                         style={{
                             backgroundColor: '#ffffff',
-                            position: 'absolute',
-                            width: '200%',
-                            borderRadius: showDropDown ? '10px 0 10px 10px' : '10px',
-                            left: '-100%',
-                            padding: '1em',
+                            borderRadius: '10px',
+                            padding: '.05em',
                         }}
                     >
                         <text
@@ -153,8 +163,7 @@ const SelectChain = ({ enableSelectChain }) => {
                             }
                         </div>
                     </div>
-                )
-            }
+                </Modal>
         </div>
     )
 }

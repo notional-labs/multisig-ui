@@ -84,3 +84,26 @@ export const getMultisigOfAddress = async (address) => {
     })
     return res
 }
+
+export const createTransaction = async (transaction) => {
+    const date = new Date()
+
+    const res = await graphqlReq({
+        method: "POST",
+        data: {
+            query: `
+            mutation {
+              createTransaction(data: {
+                createBy: "${transaction.createBy}",
+                dataJSON: ${JSON.stringify(transaction.dataJSON)},
+                status: "PENDING"
+                createdOn: "${date.toISOString()}"
+              }) {
+                _id
+              }
+            }
+          `,
+        },
+    })
+    return res
+}

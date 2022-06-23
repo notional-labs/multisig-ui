@@ -1,4 +1,5 @@
 import { StargateClient } from "@cosmjs/stargate";
+import { getMultisigFromAddress } from "./multisig";
 
 export const getKeplrAccount = async (chainId) => {
     if (!window.getOfflineSigner || !window.keplr) {
@@ -35,4 +36,31 @@ export const getBalance = async (rpc, address, denom) => {
     const client = await StargateClient.connect(rpc);
     const balance = await client.getBalance(address, denom);
     return balance;
+}
+
+export const getAccount = async (rpc, address) => {
+    const client = await StargateClient.connect(rpc);
+    try {
+        let account = await client.getAccount(address);
+
+        if (!account || !account.pubkey) {
+            const res = await getMultisigFromAddress(address);
+
+            if (!res) {
+                throw new Error(
+                    "Multisig has no pubkey on node, and was not created using this tool."
+                );
+            }
+            const pubkey = JSON.parse(res.pubkeyJSON);
+
+            if (!account) {
+                account = {};
+            }
+            account.pubkey = pubkey;
+        }
+        return account;
+    }
+    catch (e) {
+        throw new Error(e.message)
+    }
 }

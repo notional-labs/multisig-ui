@@ -7,6 +7,14 @@ const Account = ({ chainId, chainName }) => {
     const [account, setAccount] = useState('')
 
     useEffect(() => {
+        window.addEventListener("keplr_keystorechange", async () => {
+            const keplrAccount = await getAccount(chainId)
+            localStorage.setItem('account', JSON.stringify(keplrAccount))
+            setAccount(JSON.stringify(keplrAccount))
+        })
+    }, []);
+
+    useEffect(() => {
         (async () => {
             const currentAccount = localStorage.getItem('account')
             if (currentAccount && currentAccount !== '') {
@@ -20,7 +28,7 @@ const Account = ({ chainId, chainName }) => {
     useEffect(() => {
         (async () => {
             const currentAccount = localStorage.getItem('account')
-            if (currentAccount === '' || !currentAccount ) return
+            if (currentAccount === '' || !currentAccount) return
             const keplrAccount = await getAccount(chainId)
             localStorage.setItem('account', JSON.stringify(keplrAccount))
             setAccount(JSON.stringify(keplrAccount))

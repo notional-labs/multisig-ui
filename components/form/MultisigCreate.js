@@ -31,7 +31,8 @@ const style = {
         padding: '1em',
         width: '100%',
         borderRadius: '10px',
-        marginTop: '20px'
+        marginTop: '20px',
+        border: 0
     }
 }
 
