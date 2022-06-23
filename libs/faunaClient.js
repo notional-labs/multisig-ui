@@ -107,3 +107,29 @@ export const createTransaction = async (transaction) => {
     })
     return res
 }
+
+export const getTransaction = async (id) => {
+    const res = await graphqlReq({
+        method: "POST",
+        data: {
+            query: `
+                query {
+                    findTransactionByID(id: "${id}") {
+                    _id
+                    createBy
+                    txHash
+                    signatures {
+                        data {
+                        address
+                        signature
+                        bodyBytes
+                        }
+                    }
+                    dataJSON
+                    }
+                }
+          `,
+        },
+    })
+    return res
+}

@@ -1,9 +1,20 @@
 import { coins, coin } from "@cosmjs/amino";
+import axios from 'axios'
 
 const getFee = (gas, amount, denom) => {
     return {
         amount: coins(amount, denom),
         gas: gas.toString(),
+    }
+}
+
+export const getTransactionById = async (id) => {
+    try {
+        const res = await axios.get(`/api/transaction/${id}`)
+        return res.data
+    }
+    catch (e) {
+        throw e;
     }
 }
 

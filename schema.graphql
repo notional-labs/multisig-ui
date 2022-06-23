@@ -54,7 +54,7 @@ type Signature {
 
 type Query {
   getMultisig(address: String!): Multisig
-  getTxByMultisig(createBy: String!): Transaction
+  getTxByMultisig(createBy: String!): [Transaction]
   getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
 }
 
