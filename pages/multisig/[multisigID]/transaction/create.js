@@ -19,8 +19,9 @@ export default () => {
                     }}
                 >
                     <Container
+                        option={1}
                         component={
-                            <TransactionCreate/>
+                            <TransactionCreate />
                         }
                     />
                 </div>

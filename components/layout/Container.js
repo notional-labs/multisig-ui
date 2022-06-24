@@ -2,26 +2,36 @@ import SideBar from "./SideBar"
 import FlexRow from "../flex_box/FlexRow"
 import ContainerContent from "./CointainerContent"
 
-const Container = ({ type, component }) => {
+const Container = ({ type, component, option = 0 }) => {
     return (
         <div
             style={{
                 paddingTop: '15em',
-                paddingLeft: '25em',
-                paddingRight: '25em'
+                paddingLeft: '30em',
+                paddingRight: '30em'
             }}
         >
             {
                 type === 'dashboard' ? (
                     <FlexRow
                         components={[
-                            <SideBar />,
+                            <SideBar
+                                option={option}
+                            />,
                             <ContainerContent />
                         ]}
                         justifyContent={'start'}
                     />
                 ) : (
-                    component
+                    <FlexRow
+                        components={[
+                            <SideBar
+                                option={option}
+                            />,
+                            component
+                        ]}
+                        justifyContent={'start'}
+                    />
                 )
             }
         </div>

@@ -111,12 +111,13 @@ const MultisigCreate = ({ }) => {
     return (
         <div
             style={{
-                width: '60%',
-                margin: 'auto',
+                marginLeft: '300px',
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em',
-                borderRadius: '30px'
+                padding: '2em 3em',
+                borderRadius: '30px',
+                position: 'relative',
+                zIndex: 1
             }}
         >
             <h1

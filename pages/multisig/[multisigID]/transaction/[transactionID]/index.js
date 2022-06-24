@@ -19,8 +19,9 @@ export default () => {
                     }}
                 >
                     <Container
+                        option={2}
                         component={
-                            <TransactionView/>
+                            <TransactionView />
                         }
                     />
                 </div>

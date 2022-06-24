@@ -4,8 +4,6 @@ import { useRouter } from "next/router"
 import { ChainContext } from "../Context"
 import { openNotification } from "../ulti/Notification"
 import SendMsgForm from "./transaction/SendMsg"
-import { SettingFilled } from "@ant-design/icons"
-import Button from "../input/Button"
 import { Select } from "antd"
 
 const { Option } = Select
@@ -59,13 +57,14 @@ const TransactionCreate = ({ }) => {
     return (
         <div
             style={{
-                width: '60%',
-                margin: 'auto',
+                marginLeft: '300px',
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em',
+                padding: '2em 3em',
                 borderRadius: '30px',
                 position: 'relative',
+                zIndex: 1,
+                width: '100%'
             }}
         >
             <h1

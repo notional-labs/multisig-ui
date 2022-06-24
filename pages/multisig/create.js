@@ -17,6 +17,7 @@ export default () => {
                     }}
                 >
                     <Container
+                        option={0}
                         component={
                             <MultisigCreate />
                         }
