@@ -13,7 +13,7 @@ const ContainerContent = ({}) => {
                 marginLeft: '300px',
                 borderRadius: '30px',
                 position: 'relative',
-                zIndex: 2,
+                zIndex: 1,
                 boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
             }}
         >

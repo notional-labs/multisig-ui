@@ -11,31 +11,18 @@ const style = {
     },
     button: {
         borderRadius: '50%',
-        padding: 5,
         border: 0,
         backgroundColor: 'transparent'
     },
     quickButton: {
         border: 'none',
-        color: '#ffffff',
+        color: '#000000',
         backgroundColor: 'transparent'
     }
 }
 
 const ButtonList = ({ total, wrapSetParams, currentPage }) => {
     const [buttons, setButtons] = useState([])
-
-    const handleOver = (e, i) => {
-        if (currentPage != i + 1) {
-            e.target.style.backgroundColor = 'rgb(0, 0, 0, 0.25)'
-        }
-    }
-
-    const handleLeave = (e, i) => {
-        if (currentPage != i + 1) {
-            e.target.style.backgroundColor = 'transparent'
-        }
-    }
 
     const handleCLick = (index) => {
         wrapSetParams(index)
@@ -80,7 +67,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
             <div>
                 <button
                     disabled={checkDisable('double-left')}
-                    style={{ ...style.quickButton, color: currentPage === 1 ? 'rgb(255, 255, 255, 0.5)' : '#ffffff' }}
+                    style={{ ...style.quickButton, color: currentPage === 1 ? 'rgb(0, 0, 0, 0.5)' : '#000000' }}
                     onClick={() => handleCLick(1)}>
                     <DoubleLeftOutlined />
                 </button>
@@ -88,7 +75,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
             <div>
                 <button
                     disabled={checkDisable('left')}
-                    style={{ ...style.quickButton, color: currentPage === 1 ? 'rgb(255, 255, 255, 0.5)' : '#ffffff' }}
+                    style={{ ...style.quickButton, color: currentPage === 1 ? 'rgb(0, 0, 0, 0.5)' : '#000000' }}
                     onClick={() => handleCLick(currentPage - 1)}>
                     <LeftOutlined />
                 </button>
@@ -100,7 +87,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
 
 
                             style={{
-                                color: currentPage === index + 1 ? '#EEC13F' : '#ffffff',
+                                color: currentPage === index + 1 ? '#000000' : 'rgb(0, 0, 0, 0.5)',
                                 width: '50%',
                                 borderRadius: '50%',
                                 margin: '0.3em'
@@ -113,7 +100,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
 
 
                                 style={{
-                                    color: currentPage === index + 1 ? '#EEC13F' : '#ffffff',
+                                    color: currentPage === index + 1 ? '#000000' : 'rgb(0, 0, 0, 0.5)',
                                     width: '50%',
                                     borderRadius: '50%',
                                     margin: '0.3em'
@@ -126,7 +113,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
 
 
                             style={{
-                                color: currentPage === index + 1 ? '#EEC13F' : '#ffffff',
+                                color: currentPage === index + 1 ? '#000000' : 'rgb(0, 0, 0, 0.5)',
                                 width: '50%',
                                 borderRadius: '50%',
                                 margin: '0.3em'
@@ -138,7 +125,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
 
 
                             style={{
-                                color: currentPage === index + 1 ? '#EEC13F' : '#ffffff',
+                                color: currentPage === index + 1 ? '#000000' : 'rgb(0, 0, 0, 0.5)',
                                 width: '50%',
                                 borderRadius: '50%',
                                 margin: '0.3em'
@@ -150,7 +137,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
 
 
                             style={{
-                                color: currentPage === index + 1 ? '#EEC13F' : '#ffffff',
+                                color: currentPage === index + 1 ? '#000000' : 'rgb(0, 0, 0, 0.5)',
                                 width: '50%',
                                 borderRadius: '50%',
                                 margin: '0.3em'
@@ -161,7 +148,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
             <div>
                 <button
                     disabled={checkDisable('right')}
-                    style={{ ...style.quickButton, color: currentPage == total ? 'rgb(255, 255, 255, 0.5)' : '#ffffff' }}
+                    style={{ ...style.quickButton, color: currentPage == total ? 'rgb(0, 0, 0, 0.5)' : '#000000' }}
                     onClick={() => handleCLick(currentPage + 1)}>
                     <RightOutlined />
                 </button>
@@ -169,7 +156,7 @@ const ButtonList = ({ total, wrapSetParams, currentPage }) => {
             <div>
                 <button
                     disabled={checkDisable('double-right')}
-                    style={{ ...style.quickButton, color: currentPage == total ? 'rgb(255, 255, 255, 0.5)' : '#ffffff' }}
+                    style={{ ...style.quickButton, color: currentPage == total ? 'rgb(0, 0, 0, 0.5)' : '#000000' }}
                     onClick={() => handleCLick(parseInt(total))}>
                     <DoubleRightOutlined />
                 </button>

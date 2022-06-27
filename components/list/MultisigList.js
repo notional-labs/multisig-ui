@@ -2,9 +2,12 @@ import { useState, useEffect, useContext, useMemo } from "react"
 import { getAllMultisigOfAddress } from "../../libs/multisig"
 import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"
+import { getKey } from "../../libs/keplrClient"
+import ButtonList from "../input/ButtonList"
 
 const MultisigList = ({ }) => {
     const [multisigs, setMultisigs] = useState([])
+    const [viewMultsigi, setViewMultisig] = useState([])
     const [params, setParams] = useState({
         page: 1,
         limit: 5,
@@ -13,21 +16,46 @@ const MultisigList = ({ }) => {
     const [sortState, setSortState] = useState({
         createAt: '',
     })
+    const { chain } = useContext(ChainContext)
+
+    useEffect(() => {
+        window.addEventListener("keplr_keystorechange", async () => {
+            const account = await getKey(chain.chain_id)
+            const address = account.bech32Address
+            if (!address && address === '') return
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+        })
+    }, []);
 
     useEffect(() => {
         (async () => {
-            const storeAccount = localStorage.getItem('account')
-            const address = storeAccount ? JSON.parse(storeAccount)[0].address : ''
+            const account = await getKey(chain.chain_id)
+            const address = account.bech32Address
             if (address === '') return
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
+            setParams({ ...params, total: res.length })
         })()
-    }, [params,])
+    }, [chain])
+
+    useEffect(() => {
+        const pagingList = multisigs.slice(params.page - 1, params.page - 1 + params.limit)
+        setViewMultisig([...pagingList])
+    }, [params, multisigs])
+
+    const wrapSetParams = (index) => {
+        setParams({ ...params, page: index })
+    }
 
     return (
         <div
             style={{
-                padding: '1em 3em'
+                padding: '1em 2em',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                height: '100%'
             }}
         >
             <table
@@ -74,7 +102,7 @@ const MultisigList = ({ }) => {
                 </thead>
                 <tbody>
                     {
-                        multisigs.map((multisig, index) => {
+                        viewMultsigi.map((multisig, index) => {
                             return (
                                 <MultisigRowView
                                     address={multisig.address}
@@ -85,6 +113,11 @@ const MultisigList = ({ }) => {
                     }
                 </tbody>
             </table>
+            <ButtonList
+                currentPage={params.page}
+                total={Math.ceil(params.total/params.limit)}
+                wrapSetParams={wrapSetParams}
+            />
         </div>
     )
 }

@@ -1,3 +1,5 @@
+import { pubkeyToAddress } from "@cosmjs/amino"
+
 export const checkAddress = (addr, prefix) => {
     let prefixLength = prefix.length
     if (addr.slice(0, prefixLength) !== prefix) {
@@ -16,4 +18,21 @@ export const isValidAddress = (addr, prefix) => {
     catch {
         return false
     }
+}
+
+export const multisigHasAddr = (components, addr, prefix) => {
+    console.log(components)
+    const componentAddresses = components.map(component => {
+        const address = component && pubkeyToAddress(
+            component, prefix)
+        return address
+    })
+
+    const prevAddrMatch = componentAddresses.findIndex(
+        (address) => address === addr
+    );
+
+    if (prevAddrMatch > -1) return true
+
+    return false
 }

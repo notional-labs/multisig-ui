@@ -60,8 +60,6 @@ const SideBar = ({option}) => {
         return router.pathname === path
     }
 
-    console.log(router.pathname === '/')
-
     return (
         <div
             style={{

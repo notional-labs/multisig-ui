@@ -6,9 +6,9 @@ const Container = ({ type, component, option = 0 }) => {
     return (
         <div
             style={{
-                paddingTop: '15em',
-                paddingLeft: '30em',
-                paddingRight: '30em'
+                paddingTop: '13em',
+                paddingLeft: '22em',
+                paddingRight: '38em'
             }}
         >
             {

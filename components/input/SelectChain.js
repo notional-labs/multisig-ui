@@ -51,9 +51,6 @@ const SelectChain = ({ enableSelectChain }) => {
         wrapper(index)
         localStorage.setItem('current', index)
         setShowDropDown(false)
-        if (router.pathname === '/') {
-            router.reload()
-        }
     }
 
     const getGridButton = (chain, index) => {

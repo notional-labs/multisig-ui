@@ -1,31 +1,31 @@
 import axios from "axios";
 
 const graphqlReq = axios.create({
-    baseURL: "https://graphql.fauna.com/graphql",
-    headers: {
-        Authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
-    },
+  baseURL: "https://graphql.fauna.com/graphql",
+  headers: {
+    Authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
+  },
 });
 
 export const createMultisig = async (multisig) => {
-    let multisigByAddressMutation = ''
+  let multisigByAddressMutation = ''
 
-    multisig.components.map((address, index) => {
-        const mutation =
-            `alias${index}: createMultisigByAddress(
+  multisig.components.map((address, index) => {
+    const mutation =
+      `alias${index}: createMultisigByAddress(
                 data: { address: "${multisig.address}", createFrom: "${address}" }
             ) {
                 address
             }`
-        multisigByAddressMutation = multisigByAddressMutation + mutation + '\n'
-    })
+    multisigByAddressMutation = multisigByAddressMutation + mutation + '\n'
+  })
 
-    const date = new Date()
+  const date = new Date()
 
-    const res = await graphqlReq({
-        method: "POST",
-        data: {
-            query: `
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
             mutation {
               createMultisig(data: {
                 address: "${multisig.address}",
@@ -40,17 +40,17 @@ export const createMultisig = async (multisig) => {
               ${multisigByAddressMutation}
             }
           `,
-        },
-    });
+    },
+  });
 
-    return res
+  return res
 }
 
 export const getMultisigByAddress = async (address) => {
-    const res = await graphqlReq({
-        method: "POST",
-        data: {
-            query: `
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
             query {
                 getMultisig(address: "${address.address}") {
                   address
@@ -60,16 +60,16 @@ export const getMultisigByAddress = async (address) => {
                 }
               }
           `
-        },
-    })
-    return res
+    },
+  })
+  return res
 }
 
 export const getMultisigOfAddress = async (address) => {
-    const res = await graphqlReq({
-        method: "POST",
-        data: {
-            query: `
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
             query{
                 getAllMultisigByAddress(
                     createFrom: "${address.address}"
@@ -80,18 +80,18 @@ export const getMultisigOfAddress = async (address) => {
                 }
             }
           `
-        },
-    })
-    return res
+    },
+  })
+  return res
 }
 
 export const createTransaction = async (transaction) => {
-    const date = new Date()
+  const date = new Date()
 
-    const res = await graphqlReq({
-        method: "POST",
-        data: {
-            query: `
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
             mutation {
               createTransaction(data: {
                 createBy: "${transaction.createBy}",
@@ -103,16 +103,16 @@ export const createTransaction = async (transaction) => {
               }
             }
           `,
-        },
-    })
-    return res
+    },
+  })
+  return res
 }
 
 export const getTransaction = async (id) => {
-    const res = await graphqlReq({
-        method: "POST",
-        data: {
-            query: `
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
                 query {
                     findTransactionByID(id: "${id}") {
                     _id
@@ -129,7 +129,54 @@ export const getTransaction = async (id) => {
                     }
                 }
           `,
-        },
-    })
-    return res
+    },
+  })
+  return res
+}
+
+export const createSignature = async (signature, transactionId) => {
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          createSignature(data: {
+            transaction: {connect: ${transactionId}}, 
+            bodyBytes: "${signature.bodyBytes}",
+            signature: "${signature.signature}",
+            address: "${signature.address}" 
+          }) {
+            _id
+            address
+            signature
+            address
+          }
+        }
+      `,
+    },
+  });
+};
+
+export const updateTransaction = async (txHash, transactionID) => {
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          updateTransaction(id: ${transactionID}, data: {txHash: "${txHash}"}) {
+            _id
+            dataJSON
+            txHash
+            signatures {
+              data {
+                address
+                signature
+                bodyBytes
+              }
+            }
+          }
+        }
+      `,
+    },
+  });
 }

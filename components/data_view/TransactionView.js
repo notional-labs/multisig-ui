@@ -2,21 +2,25 @@ import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { getTransactionById } from "../../libs/transaction";
 import { getMultisigFromAddress } from "../../libs/multisig";
-import { openNotification } from "../ulti/Notification";
+import { openNotification, openLoadingNotification } from "../ulti/Notification";
 import TransactionInfo from "./TransactionInfo";
 import ThresholdInfo from "./ThresholdInfo";
 import JSONView from "./JSONView";
 import { Spin } from "antd";
 import { ChainContext } from "../Context";
 import { prefixToId } from "../../data/chainData";
+import TransationSign from "../form/TransactionSign";
+import Button from "../input/Button";
+import { decode } from "uint8-to-base64";
+import { StargateClient, makeMultisignedTx } from "@cosmjs/stargate";
+import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
 
 const TransactionView = ({ }) => {
     const [currentSignatures, setCurrentSignatures] = useState([]);
-    const [broadcastError, setBroadcastError] = useState('');
-    const [isBroadcasting, setIsBroadcasting] = useState(false);
     const [transactionHash, setTransactionHash] = useState('');
     const [txInfo, setTxInfo] = useState(null)
     const [multisig, setMultisig] = useState(null)
+
     const addSignature = (signature) => {
         setCurrentSignatures((currentSignatures) => [
             ...currentSignatures,
@@ -52,13 +56,47 @@ const TransactionView = ({ }) => {
                 const id = prefixToId[`${multisig.prefix}`]
                 wrapper(id)
                 localStorage.setItem('current', id)
-                multisig.pubkeyJSON && setMultisig(JSON.parse(multisig.pubkeyJSON))
+                multisig && setMultisig(multisig)
             }
             catch (e) {
                 openNotification('error', 'fail to retrieve multisig from database ' + e.message)
             }
         })()
     }, [multisigID])
+
+    const broadcastTx = async () => {
+        openLoadingNotification('open', 'Broadcasting transaction')
+        try {
+            const signatures = new Map();
+            currentSignatures.forEach((signature) => {
+                signatures.set(signature.address, decode(signature.signature));
+            });
+
+            const bodyBytes = decode(currentSignatures[0].bodyBytes);
+            const pubkey = JSON.parse(multisig.pubkeyJSON)
+            const signedTx = makeMultisignedTx(
+                pubkey,
+                txInfo.sequence,
+                txInfo.fee,
+                bodyBytes,
+                signatures
+            );
+            const broadcaster = await StargateClient.connect(chain.rpc);
+            const result = await broadcaster.broadcastTx(
+                Uint8Array.from(TxRaw.encode(signedTx).finish())
+            );
+            console.log(result);
+            const res = await axios.post(`/api/transaction/${transactionID}/update`, {
+                txHash: result.transactionHash,
+            });
+            setTransactionHash(result.transactionHash);
+            openLoadingNotification('close')
+            openNotification('sucess', 'Broadcast successfully')
+        } catch (e) {
+            openLoadingNotification('close')
+            openNotification('error', e.message)
+        }
+    }
 
     return (
         <div
@@ -121,9 +159,9 @@ const TransactionView = ({ }) => {
             }
             {
                 multisig && txInfo && !transactionHash ? (
-                    <ThresholdInfo 
+                    <ThresholdInfo
                         signatures={currentSignatures}
-                        threshold={multisig.value.threshold}
+                        threshold={JSON.parse(multisig.pubkeyJSON).value.threshold}
                     />
                 ) : (
                     <div
@@ -138,6 +176,37 @@ const TransactionView = ({ }) => {
                     >
                         <Spin size="large" />
                     </div>
+                )
+            }
+            {
+                multisig && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold) && (
+                    <Button
+                        text={'Broadcast transaction'}
+                        style={{
+                            backgroundColor: 'black',
+                            color: 'white',
+                            padding: '1em',
+                            width: '100%',
+                            borderRadius: '10px',
+                            marginTop: '20px',
+                            border: 0
+                        }}
+                        clickFunction={async () => {
+                            await broadcastTx()
+                        }}
+                    />
+                )
+            }
+            {
+                !transactionHash && txInfo && multisig && (
+                    <TransationSign
+                        tx={txInfo}
+                        transactionID={transactionID}
+                        currentSignatures={currentSignatures}
+                        addSignature={addSignature}
+                        chainId={chain.chain_id}
+                        multisig={multisig}
+                    />
                 )
             }
         </div>

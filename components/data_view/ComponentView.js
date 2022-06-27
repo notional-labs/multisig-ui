@@ -6,7 +6,6 @@ const ComponentView = ({ pubkey, index, prefix }) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
-        console.log(pubkey, prefix)
         const addr = pubkey && pubkeyToAddress(
             {
                 type: "tendermint/PubKeySecp256k1",

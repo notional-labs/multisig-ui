@@ -42,6 +42,8 @@ const logo = (
 const Header = ({ enableSelectChain }) => {
     const { chain } = useContext(ChainContext)
 
+    console.log(chain)
+
     return (
         <div
             className="header"

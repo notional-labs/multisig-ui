@@ -9,9 +9,6 @@ const ConnectButton = ({ chainId, setAccount }) => {
         const { accounts } = await getKeplrAccount(chainId)
         localStorage.setItem('account', JSON.stringify(accounts))
         setAccount(JSON.stringify(accounts))
-        if (router.pathname === '/') {
-            router.reload()
-        }
     }
 
     return (

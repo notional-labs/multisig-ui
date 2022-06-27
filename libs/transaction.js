@@ -60,3 +60,4 @@ export const createDelegateMsg = (delegator_address, validator_address, amount, 
         memo: memo,
     };
 }
+
