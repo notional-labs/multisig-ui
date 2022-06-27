@@ -41,6 +41,7 @@ const TransactionCreate = ({ }) => {
             if (multisigID) {
                 try {
                     const account = await getAccount(chain.rpc, multisigID)
+                    console.log(account)
                     setAccount(account)
                 }
                 catch (e) {

@@ -7,8 +7,9 @@ import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
 import { CheckOutlined } from '@ant-design/icons'
+import { getAccount } from "../../libs/keplrClient";
 
-const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, chainId, multisig }) => {
+const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, chainId, multisig, multisigID, rpc }) => {
     const [hasSigned, setHasSigned] = useState(false)
     const [account, setAccount] = useState(null)
     const [accountError, setAccountError] = useState('')
@@ -69,10 +70,11 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
             const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chainId
             );
+            const signAccount = await getAccount(rpc, multisigID)
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: tx.accountNumber,
-                sequence: tx.sequence,
+                accountNumber: signAccount.accountNumber,
+                sequence: signAccount.sequence,
                 chainId: chainId,
             };
 

@@ -42,27 +42,26 @@ const style = {
 const MultisigView = () => {
     const [multisig, setMultisg] = useState(null)
     const [holding, setHolding] = useState(0)
-    const [loading, setLoading] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
+    const [multisigError, setMultisgError] = useState('')
     const router = useRouter()
     const { multisigID } = router.query
 
     useEffect(() => {
         (async () => {
-            setLoading(true)
             if (!multisigID) return
             try {
+                setMultisgError('')
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
                 wrapper(id)
                 localStorage.setItem('current', id)
                 const balance = await getBalance(chain.rpc, multisigID, chain.denom)
+                if(parseInt(balance.amount) === 0) setMultisgError('*This account holdings is empty, make sure to refill it !')
                 setHolding(parseInt(balance.amount) / 1000000)
                 setMultisg(res)
-                setLoading(false)
             }
             catch (e) {
-                setLoading(false)
                 openNotification('error', e.message)
             }
         })()
@@ -138,12 +137,28 @@ const MultisigView = () => {
                 Holdings
             </h3>
             <div
-                style={style.textField}
+                style={{
+                    ...style.textField,
+                    marginBottom: '10px'
+                }}
             >
                 <text>
                     {`${holding} ${chain.denom.slice(1).toUpperCase()}`}
                 </text>
             </div>
+            {
+                multisigError !== '' && (
+                    <text
+                        style={{
+                            color: '#5e5e5e',
+                            fontSize: '.75rem',
+                            fontStyle: 'italic'
+                        }}
+                    >
+                        {multisigError}
+                    </text>
+                )
+            }
             <FlexRow
                 components={[
                     getRowCard(
@@ -161,7 +176,7 @@ const MultisigView = () => {
                 ]}
                 justifyContent={'space-between'}
                 style={{
-                    marginTop: '20px'
+                    marginTop: '40px'
                 }}
             />
         </div>

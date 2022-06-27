@@ -61,7 +61,7 @@ const JSONView = ({ tx }) => {
                 padding: '2em',
                 marginTop: '30px',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
             }}
         >   
                 <FlexRow

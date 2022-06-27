@@ -8,7 +8,7 @@ const Container = ({ type, component, option = 0 }) => {
             style={{
                 paddingTop: '13em',
                 paddingLeft: '22em',
-                paddingRight: '38em'
+                paddingRight: '30em'
             }}
         >
             {

@@ -26,16 +26,20 @@ const style = {
     }
 }
 
-const TransactionInfo = ({ tx, denom }) => {
+const TransactionInfo = ({ tx }) => {
     return (
-        <div>
+        <div
+            style={{
+                width: '100%'
+            }}
+        >
             <div
                 style={style.flexRow}
             >
                 <label
                     style={style.label}
                 >
-                    Msg type:
+                    Msg:
                 </label>
                 <div
                     style={style.value}
@@ -84,7 +88,7 @@ const TransactionInfo = ({ tx, denom }) => {
                 <div
                     style={style.value}
                 >
-                    {tx.fee.gas} UOSMO
+                    {tx.fee.gas} {tx.msgs[0].value.amount[0].denom.toUpperCase()}
                 </div>
             </div>
             <div

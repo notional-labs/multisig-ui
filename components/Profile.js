@@ -84,7 +84,7 @@ const Profile = ({ account, chainName, setAccount }) => {
         )
     }, [account])
 
-    return (
+    return account && account.length > 0 && (
        profileBox
     )
 }

@@ -13,9 +13,6 @@ const MultisigList = ({ }) => {
         limit: 5,
         total: 0,
     })
-    const [sortState, setSortState] = useState({
-        createAt: '',
-    })
     const { chain } = useContext(ChainContext)
 
     useEffect(() => {
@@ -31,8 +28,8 @@ const MultisigList = ({ }) => {
     useEffect(() => {
         (async () => {
             const account = await getKey(chain.chain_id)
-            const address = account.bech32Address
-            if (address === '') return
+            const address = account && account.bech32Address || ''
+            if (!address && address === '') return
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
             setParams({ ...params, total: res.length })

@@ -163,7 +163,7 @@ export const updateTransaction = async (txHash, transactionID) => {
     data: {
       query: `
         mutation {
-          updateTransaction(id: ${transactionID}, data: {txHash: "${txHash}"}) {
+          updateTransaction(id: ${transactionID}, data: {txHash: "${txHash}", status: "FINISHED"}) {
             _id
             dataJSON
             txHash
@@ -179,4 +179,25 @@ export const updateTransaction = async (txHash, transactionID) => {
       `,
     },
   });
+}
+
+export const getTransactionsOfMultisig = async (multisig) => {
+  const res = await graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        query {
+          getTxByMultisig(createBy: "${multisig}"){
+            data{
+              _id
+              createdOn
+              dataJSON
+              status
+            }
+          }
+        }
+      `,
+    },
+  })
+  return res
 }

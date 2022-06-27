@@ -14,6 +14,8 @@ import Button from "../input/Button";
 import { decode } from "uint8-to-base64";
 import { StargateClient, makeMultisignedTx } from "@cosmjs/stargate";
 import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
+import { getAccount } from "../../libs/keplrClient";
+import axios from "axios";
 
 const TransactionView = ({ }) => {
     const [currentSignatures, setCurrentSignatures] = useState([]);
@@ -74,9 +76,10 @@ const TransactionView = ({ }) => {
 
             const bodyBytes = decode(currentSignatures[0].bodyBytes);
             const pubkey = JSON.parse(multisig.pubkeyJSON)
+            const account = await getAccount(chain.rpc, multisigID)
             const signedTx = makeMultisignedTx(
                 pubkey,
-                txInfo.sequence,
+                account.sequence,
                 txInfo.fee,
                 bodyBytes,
                 signatures
@@ -158,7 +161,9 @@ const TransactionView = ({ }) => {
                 )
             }
             {
-                multisig && txInfo && !transactionHash ? (
+                transactionHash ? (
+                    <div></div>
+                ) : multisig && txInfo ? (
                     <ThresholdInfo
                         signatures={currentSignatures}
                         threshold={JSON.parse(multisig.pubkeyJSON).value.threshold}
@@ -179,7 +184,7 @@ const TransactionView = ({ }) => {
                 )
             }
             {
-                multisig && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold) && (
+                !transactionHash && multisig && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold) && (
                     <Button
                         text={'Broadcast transaction'}
                         style={{
@@ -205,7 +210,9 @@ const TransactionView = ({ }) => {
                         currentSignatures={currentSignatures}
                         addSignature={addSignature}
                         chainId={chain.chain_id}
+                        rpc={chain.rpc}
                         multisig={multisig}
+                        multisigID={multisigID}
                     />
                 )
             }
