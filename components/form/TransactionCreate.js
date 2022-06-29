@@ -1,19 +1,16 @@
-import { useEffect, useContext, useState } from "react"
-import { getAccount } from "../../libs/keplrClient"
+import { useContext, useState } from "react"
 import { useRouter } from "next/router"
 import { ChainContext } from "../Context"
-import { openNotification } from "../ulti/Notification"
 import SendMsgForm from "./transaction/SendMsg"
-import { Select } from "antd"
-
-const { Option } = Select
+import DelegateMsgForm from "./transaction/DelegateMsg"
+import UndelegateMsg from "./transaction/UndelegateMsg"
+import WithdrawMsg from "./transaction/WithdrawMsg"
 
 const TransactionCreate = ({ }) => {
     const [txType, setTxType] = useState(0)
     const router = useRouter()
     const { multisigID } = router.query
     const { chain } = useContext(ChainContext)
-    const [account, setAccount] = useState(null)
 
     const txTypes = [
         {
@@ -23,33 +20,37 @@ const TransactionCreate = ({ }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
-                    account={account}
                 />
             )
         }, {
             type: 'msgDelegate',
             component: (
-                <div>
-
-                </div>
+                <DelegateMsgForm
+                    chain={chain}
+                    router={router}
+                    address={multisigID}
+                />
+            )
+        }, {
+            type: 'msgUndelegate',
+            component: (
+                <UndelegateMsg
+                    chain={chain}
+                    router={router}
+                    address={multisigID}
+                />
+            )
+        }, {
+            type: 'msgWithdraw',
+            component: (
+                <WithdrawMsg
+                    chain={chain}
+                    router={router}
+                    address={multisigID}
+                />
             )
         }
     ]
-
-    useEffect(() => {
-        (async () => {
-            if (multisigID) {
-                try {
-                    const account = await getAccount(chain.rpc, multisigID)
-                    console.log(account)
-                    setAccount(account)
-                }
-                catch (e) {
-                    openNotification('error', e.message)
-                }
-            }
-        })()
-    }, [multisigID])
 
     const getForm = () => {
         return txTypes[txType].component
@@ -79,21 +80,22 @@ const TransactionCreate = ({ }) => {
             <h3>
                 Message Type
             </h3>
-            <Select
+            <select
                 defaultValue={0}
                 placeholder={'Select message type'}
-                onChange={(value) => {
-                    setTxType(value)
+                onChange={(e) => {
+                    setTxType(e.target.value)
                 }}
                 style={{
-                    marginBottom: '20px',
+                    marginBottom: '10px',
                     width: '100%',
-                    backgroundColor: '#D9D9D9'
+                    borderRadius: '10px',
+                    padding: '1em'
                 }}
             >
                 {txTypes.map((type, index) => {
                     return (
-                        <Option
+                        <option
                             key={index}
                             value={index}
                             style={{
@@ -101,10 +103,10 @@ const TransactionCreate = ({ }) => {
                             }}
                         >
                             {type.type}
-                        </Option>
+                        </option>
                     )
                 })}
-            </Select>
+            </select>
             {
                 getForm()
             }

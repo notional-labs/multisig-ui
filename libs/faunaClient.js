@@ -157,13 +157,18 @@ export const createSignature = async (signature, transactionId) => {
   });
 };
 
-export const updateTransaction = async (txHash, transactionID) => {
+export const updateTransaction = async (txHash, transactionID, multisigID) => {
   return graphqlReq({
     method: "POST",
     data: {
       query: `
         mutation {
-          updateTransaction(id: ${transactionID}, data: {txHash: "${txHash}", status: "FINISHED"}) {
+          updateTransaction(id: ${transactionID}, 
+            data: {
+              txHash: "${txHash}",
+              status: "FINISHED",
+              createBy: "${multisigID}"
+            }) {
             _id
             dataJSON
             txHash

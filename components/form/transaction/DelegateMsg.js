@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import Button from '../../input/Button';
-import Input from '../../input/Input'
-import { isValidAddress } from '../../../libs/checkTool';
-import axios from 'axios'
-import { openLoadingNotification, openNotification } from '../../ulti/Notification';
-import { createSendMsg } from '../../../libs/transaction';
-import ShareForm from './ShareForm';
+import { useEffect, useState } from "react"
+import { getValidators } from "../../../libs/validators"
+import Input from "../../input/Input"
+import ShareForm from "./ShareForm"
+import { createDelegateMsg } from "../../../libs/transaction"
+import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import axios from "axios"
 
 const style = {
     input: {
@@ -14,7 +13,8 @@ const style = {
     }
 }
 
-const SendMsgForm = ({ address, chain, router }) => {
+const DelegateMsg = ({ chain, router, address }) => {
+    const [validators, setValidators] = useState([])
     const [txBody, setTxBody] = useState({
         toAddress: '',
         amount: 0,
@@ -22,7 +22,6 @@ const SendMsgForm = ({ address, chain, router }) => {
         fee: 0,
         memo: '',
     })
-    const [addrError, setAddrError] = useState('')
 
     const invalidForm = () => {
         for (let key in txBody) {
@@ -33,16 +32,28 @@ const SendMsgForm = ({ address, chain, router }) => {
     }
 
     const disabled = () => {
-        if (invalidForm() || addrError !== '') {
+        if (invalidForm()) {
             return true
         }
         return false
     }
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await getValidators(chain.rpc)
+                res.validators && setValidators([...res.validators])
+            }
+            catch (e) {
+                openNotification('error', e.message)
+            }
+        })()
+    }, [chain])
+
     const handleCreate = async () => {
         openLoadingNotification('open', 'Creating transaction')
         try {
-            const tx = createSendMsg(
+            const tx = createDelegateMsg(
                 address,
                 txBody.toAddress,
                 txBody.amount * 1000000,
@@ -72,7 +83,7 @@ const SendMsgForm = ({ address, chain, router }) => {
     }
 
     const handleKeyGroupChange = (e) => {
-        if(e.target.name === 'amount' || e.target.name === 'fee' || e.target.name === 'gas' ) {
+        if (e.target.name === 'amount' || e.target.name === 'fee' || e.target.name === 'gas') {
             setTxBody({
                 ...txBody,
                 [e.target.name]: parseFloat(e.target.value)
@@ -86,29 +97,48 @@ const SendMsgForm = ({ address, chain, router }) => {
         }
     }
 
-    const handleKeyBlur = (e) => {
-        if (e.target.name === 'toAddress' && !isValidAddress(e.target.value, chain.prefix)) {
-            setAddrError('Invalid Address')
-        }
-        else {
-            setAddrError('')
-        }
+    const handleSelect = (e) => {
+        setTxBody({
+            ...txBody,
+            toAddress: e.target.value
+        })
     }
 
     return (
         <div>
-            <Input
-                onChange={(e) => {
-                    handleKeyGroupChange(e);
-                }}
-                value={txBody.toAddress}
-                label="Send To"
-                name="toAddress"
-                placeholder="Address here"
-                error={addrError}
-                onBlur={handleKeyBlur}
+            <div
                 style={style.input}
-            />
+            >
+                <h4
+                    style={{
+                        marginBottom: 0
+                    }}
+                >
+                    Validator
+                </h4>
+                <select
+                    onChange={handleSelect}
+                    style={{
+                        width: '100%',
+                        padding: '1em',
+                        borderRadius: '10px',
+                    }}
+                >
+                    {
+                        validators.length > 0 && validators.map((validator, index) => {
+                            return (
+                                <option
+                                    value={validator.operatorAddress}
+                                    key={index}
+                                >
+                                    {validator.description.moniker}
+                                </option>
+                            )
+                        })
+                    }
+                </select>
+
+            </div>
             <Input
                 onChange={(e) => {
                     handleKeyGroupChange(e);
@@ -134,4 +164,4 @@ const SendMsgForm = ({ address, chain, router }) => {
     )
 }
 
-export default SendMsgForm
+export default DelegateMsg

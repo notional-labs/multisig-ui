@@ -21,7 +21,6 @@ export const isValidAddress = (addr, prefix) => {
 }
 
 export const multisigHasAddr = (components, addr, prefix) => {
-    console.log(components)
     const componentAddresses = components.map(component => {
         const address = component && pubkeyToAddress(
             component, prefix)

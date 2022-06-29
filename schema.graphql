@@ -26,43 +26,11 @@ type Signature {
   address: String!
 }
 
-# input Signatures {
-#   bodyBytes: String!
-#   signature: String!
-#   address: String!
-# }
-
-# input CreateMultisigInput {
-#   pubkeyJSON: String!
-#   address: String!
-#   components: [String!]
-# }
-
-# input CreateTransactionInput {
-#   signatures: [Signatures!] 
-#   dataJSON: String
-#   txHash: String
-#   createBy: String!
-#   status: TransactionStatus! = PENDING
-#   createdOn: DateTime 
-# }
-
-# input CreateMultisigByAddress {
-#   createFrom: String!
-#   address: String!
-# }
-
 type Query {
   getMultisig(address: String!): Multisig
   getTxByMultisig(createBy: String!): [Transaction]
   getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
 }
-
-# type Mutation {
-#   createMultisig(input: CreateMultisigInput!): Multisig @resolver(name: "create_multisig")
-#   # creatTransaction(input: CreateTransactionInput!): Transaction
-#   # createMultisigByAddress(input: CreateMultisigByAddress!): MultisigByAddress
-# }
 
 enum TransactionStatus {
   PENDING

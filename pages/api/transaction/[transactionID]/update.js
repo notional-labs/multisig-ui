@@ -5,9 +5,9 @@ export default async function handler(req, res) {
         case "POST":
             try {
                 const {transactionID} = req.query;
-                const { txHash } = req.body;
-                const saveRes = await updateTransaction(txHash, transactionID);
-                console.log(saveRes)
+                const { txHash, multisigID } = req.body;
+                const saveRes = await updateTransaction(txHash, transactionID, multisigID);
+                console.log(saveRes.data)
                 res.status(200).send(saveRes.data.data.findTransactionByID);
             } catch (err) {
                 console.log(err.message)

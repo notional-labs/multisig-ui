@@ -89,8 +89,9 @@ const TransactionView = ({ }) => {
                 Uint8Array.from(TxRaw.encode(signedTx).finish())
             );
             console.log(result);
-            const res = await axios.post(`/api/transaction/${transactionID}/update`, {
+           await axios.post(`/api/transaction/${transactionID}/update`, {
                 txHash: result.transactionHash,
+                multisigID: multisigID
             });
             setTransactionHash(result.transactionHash);
             openLoadingNotification('close')

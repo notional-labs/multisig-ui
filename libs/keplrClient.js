@@ -43,7 +43,6 @@ export const getPubkey = async (rpc, address) => {
 };
 
 export const getBalance = async (rpc, address, denom) => {
-    console.log(address, denom)
     const client = await StargateClient.connect(rpc);
     const balance = await client.getBalance(address, denom);
     return balance;
@@ -54,10 +53,23 @@ export const getAccount = async (rpc, address) => {
     try {
         let account = await client.getAccount(address);
 
-        if (!account || !account.pubkey) {
+        if (!account) {
             throw new Error(
                 "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
             );
+        }
+        else if (!account.pubkey) {
+            const res = await getMultisigFromAddress(address)
+            console.log(res)
+
+            if (!res) {
+                throw new Error(
+                    "Multisig has no pubkey on node, and was not created using this tool."
+                );
+            }
+            const pubkey = JSON.parse(res.pubkeyJSON);
+
+            account.pubkey = pubkey;
         }
         return account;
     }

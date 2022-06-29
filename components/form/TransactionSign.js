@@ -71,6 +71,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                 chainId
             );
             const signAccount = await getAccount(rpc, multisigID)
+            console.log(setAccount)
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
                 accountNumber: signAccount.accountNumber,
@@ -101,7 +102,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                     signature: bases64EncodedSignature,
                     address: account.bech32Address,
                 };
-                const res = await axios.post(
+                await axios.post(
                     `/api/transaction/${transactionID}/signature`,
                     signature
                 );

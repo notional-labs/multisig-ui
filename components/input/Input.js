@@ -1,6 +1,6 @@
 import FlexRow from "../flex_box/FlexRow"
 
-const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error, style }) => {
+const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error, style, disabled = false }) => {
     return (
         <div>
             <FlexRow
@@ -27,6 +27,7 @@ const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error,
                             backgroundColor: '#D9D9D9',
                             padding: '1em'
                         }}
+                        disabled={disabled}
                     />,
                     <text
                         style={{

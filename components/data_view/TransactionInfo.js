@@ -27,6 +27,7 @@ const style = {
 }
 
 const TransactionInfo = ({ tx }) => {
+    console.log(tx)
     return (
         <div
             style={{
@@ -47,36 +48,75 @@ const TransactionInfo = ({ tx }) => {
                     {tx.msgs[0].typeUrl}
                 </div>
             </div>
-            <div
-                style={style.flexRow}
-            >
-                <label
-                    style={style.label}
-                >
-                    Amount:
-                </label>
-                <div
-                    style={style.value}
-                >
-                    {(tx.msgs[0].value.amount[0].amount / 1000000).toFixed(3)} {tx.msgs[0].value.amount[0].denom.toUpperCase()}
-                </div>
-            </div>
+            {
+                tx.msgs[0].typeUrl === '/cosmos.staking.v1beta1.MsgDelegate' ? (
+                    <div
+                        style={style.flexRow}
+                    >
+                        <label
+                            style={style.label}
+                        >
+                            Amount:
+                        </label>
+                        <div
+                            style={style.value}
+                        >
+                            {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `} 
+                            {tx.msgs[0].value.amount.denom.split('u')[1].toUpperCase().toUpperCase()}
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        style={style.flexRow}
+                    >
+                        <label
+                            style={style.label}
+                        >
+                            Amount:
+                        </label>
+                        <div
+                            style={style.value}
+                        >
+                            {`${(tx.msgs[0].value.amount[0].amount / 1000000).toFixed(3)} `} 
+                            {tx.msgs[0].value.amount[0].denom.split('u')[1].toUpperCase()}
+                        </div>
+                    </div>
+                )
+            }
+            {
+                tx.msgs[0].typeUrl === '/cosmos.staking.v1beta1.MsgDelegate' ? (
+                    <div
+                        style={style.flexRow}
+                    >
+                        <label
+                            style={style.label}
+                        >
+                            To:
+                        </label>
+                        <div
+                            style={style.value}
+                        >
+                            {tx.msgs[0].value.validatorAddress}
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        style={style.flexRow}
+                    >
+                        <label
+                            style={style.label}
+                        >
+                            To:
+                        </label>
+                        <div
+                            style={style.value}
+                        >
+                            {tx.msgs[0].value.toAddress}
+                        </div>
+                    </div>
 
-            <div
-                style={style.flexRow}
-            >
-                <label
-                    style={style.label}
-                >
-                    To:
-                </label>
-                <div
-                    style={style.value}
-                >
-                    {tx.msgs[0].value.toAddress}
-                </div>
-            </div>
-
+                )
+            }
             <div
                 style={style.flexRow}
             >
@@ -88,7 +128,7 @@ const TransactionInfo = ({ tx }) => {
                 <div
                     style={style.value}
                 >
-                    {tx.fee.gas} {tx.msgs[0].value.amount[0].denom.toUpperCase()}
+                    {tx.fee.gas}
                 </div>
             </div>
             <div
