@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { getDelegations, getRewards, } from "../../../libs/validators"
-import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
+import { getRewards } from "../../../libs/validators"
 import { createWithdrawRewardsMsg } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import axios from "axios"
@@ -17,7 +16,6 @@ const style = {
 const WithdrawMsg = ({ chain, router, address }) => {
     const [rewards, setRewards] = useState([])
     const [txBody, setTxBody] = useState({
-        validator: '',
         gas: 20000,
         fee: 0,
         memo: '',
@@ -40,9 +38,8 @@ const WithdrawMsg = ({ chain, router, address }) => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await getRewards(chain.rpc, address)
-                console.log(res)
-                
+                const res = await getRewards(chain.api, address)
+                setRewards([...res.rewards])
             }
             catch (e) {
                 openNotification('error', e.message)
@@ -53,9 +50,10 @@ const WithdrawMsg = ({ chain, router, address }) => {
     const handleCreate = async () => {
         openLoadingNotification('open', 'Creating transaction')
         try {
+            const validator_addresses = rewards.map(reward => reward.validator_address)
             const tx = createWithdrawRewardsMsg(
                 address,
-                txBody.validator,
+                validator_addresses,
                 txBody.gas,
                 chain.denom,
                 txBody.memo,
@@ -110,27 +108,79 @@ const WithdrawMsg = ({ chain, router, address }) => {
                 </h4>
                 {
                     rewards.length > 0 ? (
-                        <select
-                            onChange={handleSelect}
+                        <div
                             style={{
                                 width: '100%',
                                 padding: '1em',
                                 borderRadius: '10px',
+                                maxHeight: '100px',
+                                overflow: 'auto',
+                                border: 'solid 1px black'
                             }}
                         >
-                            {
-                                rewards.map((delegation, index) => {
-                                    return (
-                                        <option
-                                            value={delegation.delegation.validatorAddress}
-                                            key={index}
+                            <table
+                                style={{
+                                    width: '100%',
+                                    borderSpacing: '0 1em',
+                                }}
+                            >
+                                <thead
+                                    style={{
+                                        borderBottom: 'solid 1.25px black',
+                                        fontSize: '1rem'
+                                    }}
+                                >
+                                    <tr>
+                                        <th
+                                            style={{
+                                                width: '60%',
+                                                padding: '.5em',
+                                                textAlign: 'left'
+                                            }}
                                         >
-                                            {delegation.delegation.validatorAddress}
-                                        </option>
-                                    )
-                                })
-                            }
-                        </select>) : (
+                                            Validator Address
+                                        </th>
+                                        <th
+                                            style={{
+                                                width: '40%',
+                                                padding: '.5em',
+                                                textAlign: 'left'
+                                            }}
+                                        >
+                                            Reward
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        rewards.map((reward, index) => {
+                                            return (
+                                                <tr
+                                                    key={index}
+                                                >
+                                                    <td
+                                                        style={{
+                                                            width: '60%',
+                                                            paddingTop: '1em'
+                                                        }}
+                                                    >
+                                                        {reward.validator_address}
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            width: '40%',
+                                                            paddingTop: '1em'
+                                                        }}
+                                                    >
+                                                        {(parseFloat(reward.reward[0].amount) / 1000000).toFixed(2)} {reward.reward[0].denom.split('u')[1].toUpperCase()}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>) : (
                         <div
                             style={{
                                 width: '100%',

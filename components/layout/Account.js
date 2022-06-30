@@ -7,7 +7,7 @@ const Account = ({ chainId, chainName }) => {
     const [account, setAccount] = useState('')
 
     useEffect(() => {
-        window.addEventListener("keplr_keystorechange", async () => {
+        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
             const keplrAccount = await getAccount(chainId)
             localStorage.setItem('account', JSON.stringify(keplrAccount))
             setAccount(JSON.stringify(keplrAccount))

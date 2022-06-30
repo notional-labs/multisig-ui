@@ -45,8 +45,15 @@ const UndelegateMsg = ({ chain, router, address }) => {
         (async () => {
             try {
                 const res = await getDelegations(chain.rpc, address)
-                const res3 = await getRewards(chain.rpc, address)
-                console.log(res3)
+                const delegation = res.delegationResponses
+                    && res.delegationResponses.length > 0
+                    && res.delegationResponses[0]
+                console.log(delegation)
+                setMaxAmount(parseInt(delegation.balance.amount) / 1000000)
+                delegation && setTxBody({
+                    ...txBody,
+                    validator: delegation.delegation.validatorAddress
+                })
                 setdelegations([...res.delegationResponses])
             }
             catch (e) {
@@ -113,16 +120,13 @@ const UndelegateMsg = ({ chain, router, address }) => {
     }
 
     const handleSelect = (e) => {
+        console.log(e.target.value)
         setTxBody({
             ...txBody,
             validator: e.target.value
         })
-        getMaxAmount(e.target.value)
-    }
-
-    const getMaxAmount = (validatorAddr) => {
-        const filter = delegations.filter(del => del.delegation.validatorAddress === validatorAddr)
-        const delegation = filter.length > 0 && filter[0]
+        const filter = delegations.filter(del => del.delegation.validatorAddress === e.target.value)
+        const delegation = filter[0]
         setMaxAmount(parseInt(delegation.balance.amount) / 1000000)
     }
 
@@ -181,7 +185,7 @@ const UndelegateMsg = ({ chain, router, address }) => {
                     marginBottom: 0
                 }}
             >
-               {`Delegation amount (${chain.denom.split('u')[1].toUpperCase()})`}
+                {`Delegation amount (${chain.denom.split('u')[1].toUpperCase()})`}
             </h4>
             <div
                 style={{

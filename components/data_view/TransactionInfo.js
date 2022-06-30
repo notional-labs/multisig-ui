@@ -62,10 +62,10 @@ const TransactionInfo = ({ tx }) => {
                             style={style.value}
                         >
                             {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `} 
-                            {tx.msgs[0].value.amount.denom.split('u')[1].toUpperCase().toUpperCase()}
+                            {tx.msgs[0].value.amount.denom.split('u')[1].toUpperCase()}
                         </div>
                     </div>
-                ) : (
+                ) : tx.msgs[0].typeUrl === 'MsgWithdrawDelegatorReward' && (
                     <div
                         style={style.flexRow}
                     >

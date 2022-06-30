@@ -15,7 +15,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
     const [accountError, setAccountError] = useState('')
 
     useEffect(() => {
-        window.addEventListener("keplr_keystorechange", async () => {
+        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
             const account = await getKey(chainId)
             const hasSigned = currentSignatures.some(
                 (sig) => sig.address === account.bech32Address

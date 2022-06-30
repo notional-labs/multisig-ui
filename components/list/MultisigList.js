@@ -16,7 +16,7 @@ const MultisigList = ({ }) => {
     const { chain } = useContext(ChainContext)
 
     useEffect(() => {
-        window.addEventListener("keplr_keystorechange", async () => {
+        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
             const account = await getKey(chain.chain_id)
             const address = account.bech32Address
             if (!address && address === '') return

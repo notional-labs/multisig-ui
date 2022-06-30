@@ -1,6 +1,7 @@
 import { setupStakingExtension, setupDistributionExtension, } from "@cosmjs/stargate/build/queries"
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { QueryClient } from "@cosmjs/stargate/build/queries";
+import axios from "axios";
 
 export const getValidators = async (rpc) => {
     try {
@@ -44,14 +45,11 @@ export const getDelegation = async (rpc, delegator, validator) => {
     }
 }
 
-export const getRewards = async (rpc, address) => {
+export const getRewards = async (api, address) => {
     try {
-        const tendermint = await Tendermint34Client.connect("https://rpc.cosmos.network/")
-        const baseQuery = new QueryClient(tendermint)
-        const extension = setupDistributionExtension(baseQuery)
-        const res = await extension.distribution.delegationTotalRewards("cosmos105rfyahwj8wu2hwz84l7tlpz2ujxul335fdyct")
-        console.log(res)
-        return res
+        const res = await axios.get(`${api}/cosmos/distribution/v1beta1/delegators/${address}/rewards`)
+        console.log(res.data)
+        return res.data
     }
     catch (e) {
         throw e
