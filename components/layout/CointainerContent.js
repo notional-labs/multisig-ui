@@ -9,12 +9,11 @@ const ContainerContent = ({}) => {
             style={{
                 backgroundColor: '#ffffff',
                 minHeight: '70vh',
-                width: '100%',
-                marginLeft: '300px',
                 borderRadius: '30px',
                 position: 'relative',
                 zIndex: 1,
                 boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                margin: '7em 30em'
             }}
         >
             {

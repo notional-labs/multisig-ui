@@ -1,14 +1,15 @@
 import Button from "./Button"
-import { getKeplrAccount } from "../../libs/keplrClient"
+import { getKeplrAccount, getKey } from "../../libs/keplrClient"
 import { useRouter } from "next/router"
 
 const ConnectButton = ({ chainId, setAccount }) => {
     const router = useRouter()
 
     const connect = async () => {
-        const { accounts } = await getKeplrAccount(chainId)
-        localStorage.setItem('account', JSON.stringify(accounts))
-        setAccount(JSON.stringify(accounts))
+        const account = await getKey(chainId)
+        localStorage.setItem('account', JSON.stringify(account))
+        window.dispatchEvent( new Event('storage') )
+        setAccount(JSON.stringify(account))
     }
 
     return (

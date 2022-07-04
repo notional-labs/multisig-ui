@@ -13,6 +13,7 @@ const Profile = ({ account, chainName, setAccount }) => {
     const disconnect = () => {
         setAccount('')
         localStorage.removeItem('account')
+        window.dispatchEvent(new Event('storage'))
     }
 
     const disconnectButton = (
@@ -41,19 +42,19 @@ const Profile = ({ account, chainName, setAccount }) => {
                         {chainName.toUpperCase()}
                     </text>,
                     <Paragraph
-                        copyable={{ text: account[0].address }}
+                        copyable={{ text: account.bech32Address }}
                         style={{
                             marginBottom: 0,
                             color: 'white',
                         }}
                     >
-                        {addressShortener(account[0].address)}
+                        {addressShortener(account.bech32Address)}
                     </Paragraph>
                 ]}
                 direction={'column'}
             />
         )
-    }    
+    }
 
     const profileBox = useMemo(() => {
         return (
@@ -84,8 +85,8 @@ const Profile = ({ account, chainName, setAccount }) => {
         )
     }, [account])
 
-    return account && account.length > 0 && (
-       profileBox
+    return account && (
+        profileBox
     )
 }
 

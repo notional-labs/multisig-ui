@@ -1,16 +1,14 @@
-import { useContext, useState } from "react"
-import { useRouter } from "next/router"
-import { ChainContext } from "../Context"
+import { useState } from "react"
 import SendMsgForm from "./transaction/SendMsg"
 import DelegateMsgForm from "./transaction/DelegateMsg"
 import UndelegateMsg from "./transaction/UndelegateMsg"
 import WithdrawMsg from "./transaction/WithdrawMsg"
+import RedelegateMsg from "./transaction/RedelegateMsg"
+import Button from "../input/Button"
+import { CloseOutlined } from '@ant-design/icons'
 
-const TransactionCreate = ({ }) => {
+const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
     const [txType, setTxType] = useState(0)
-    const router = useRouter()
-    const { multisigID } = router.query
-    const { chain } = useContext(ChainContext)
 
     const txTypes = [
         {
@@ -49,6 +47,15 @@ const TransactionCreate = ({ }) => {
                     address={multisigID}
                 />
             )
+        }, {
+            type: 'msgRedelegate',
+            component: (
+                <RedelegateMsg
+                    chain={chain}
+                    router={router}
+                    address={multisigID}
+                />
+            )
         }
     ]
 
@@ -59,24 +66,39 @@ const TransactionCreate = ({ }) => {
     return (
         <div
             style={{
-                marginLeft: '300px',
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
                 padding: '2em 3em',
-                borderRadius: '30px',
+                borderRadius: '10px',
                 position: 'relative',
                 zIndex: 1,
-                width: '100%'
+                width: '100%',
+                marginTop: '50px'
             }}
         >
             <h1
                 style={{
                     marginBottom: 0,
-                    textAlign: 'center'
+                    textAlign: 'left'
                 }}
             >
                 Create Transaction
             </h1>
+            <Button
+                text={(
+                    <CloseOutlined />
+                )}
+                style={{
+                    position: 'absolute',
+                    left: '90%',
+                    top: '2em',
+                    border: 0,
+                    backgroundColor: 'transparent',
+                    fontWeight: 'bold',
+                    fontSize: '1.25rem'
+                }}
+                clickFunction={wrapSetClose}
+            />
             <h3>
                 Message Type
             </h3>

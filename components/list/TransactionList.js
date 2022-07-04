@@ -74,7 +74,7 @@ const TransactionList = ({ }) => {
                 backgroundColor: '#ffffff',
                 minHeight: '70vh',
                 width: '100%',
-                marginLeft: '300px',
+                
                 borderRadius: '30px',
                 position: 'relative',
                 zIndex: 1,

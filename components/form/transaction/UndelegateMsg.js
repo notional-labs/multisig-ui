@@ -45,11 +45,11 @@ const UndelegateMsg = ({ chain, router, address }) => {
         (async () => {
             try {
                 const res = await getDelegations(chain.rpc, address)
-                const delegation = res.delegationResponses
-                    && res.delegationResponses.length > 0
-                    && res.delegationResponses[0]
-                console.log(delegation)
-                setMaxAmount(parseInt(delegation.balance.amount) / 1000000)
+                let delegation
+                if(res.delegationResponses && res.delegationResponses.length > 0){
+                    delegation = res.delegationResponses[0] 
+                }
+                delegation && setMaxAmount(parseInt(delegation.balance.amount) / 1000000)
                 delegation && setTxBody({
                     ...txBody,
                     validator: delegation.delegation.validatorAddress

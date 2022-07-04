@@ -25,6 +25,7 @@ const WithdrawMsg = ({ chain, router, address }) => {
         for (let key in txBody) {
             if (key !== 'memo' && txBody[key] === '') return true
         }
+        if (rewards.length === 0) return true
         return false
     }
 
@@ -134,7 +135,7 @@ const WithdrawMsg = ({ chain, router, address }) => {
                                         <th
                                             style={{
                                                 width: '60%',
-                                                padding: '.5em',
+                                                padding: '.5em 0',
                                                 textAlign: 'left'
                                             }}
                                         >

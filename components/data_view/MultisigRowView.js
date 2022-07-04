@@ -76,7 +76,8 @@ const MultisigRowView = ({ address, index }) => {
                                 padding: '.5em',
                                 overflow: 'auto',
                                 maxHeight: '100px',
-                                display: 'inline-block'
+                                display: 'inline-block',
+                                textAlign: 'center'
                             }}
                         >
                             {<ComponentRow

@@ -1,3 +1,8 @@
+import TransferMsg from "./transaction/TransferMsg"
+import DelegateMsg from "./transaction/DelegateMsg"
+import RedelegateMsg from "./transaction/RedelegateMsg"
+import UndelegateMsg from "./transaction/UndelegateMsg"
+
 const style = {
     label: {
         backgroundColor: '#000000',
@@ -27,7 +32,37 @@ const style = {
 }
 
 const TransactionInfo = ({ tx }) => {
-    console.log(tx)
+
+    const msgInfo = {
+        "/cosmos.bank.v1beta1.MsgSend": (
+            <TransferMsg
+                tx={tx}
+                style={style}
+            />
+        ),
+        "/cosmos.staking.v1beta1.MsgDelegate": (
+            <DelegateMsg
+                tx={tx}
+                style={style}
+            />
+        ),
+        "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward": (
+            <div></div>
+        ),
+        "/cosmos.staking.v1beta1.MsgBeginRedelegate": (
+            <RedelegateMsg
+                tx={tx}
+                style={style}
+            />
+        ),
+        "/cosmos.staking.v1beta1.MsgUndelegate": (
+            <UndelegateMsg
+                tx={tx}
+                style={style}
+            />
+        )
+    }
+
     return (
         <div
             style={{
@@ -49,73 +84,7 @@ const TransactionInfo = ({ tx }) => {
                 </div>
             </div>
             {
-                tx.msgs[0].typeUrl === '/cosmos.staking.v1beta1.MsgDelegate' ? (
-                    <div
-                        style={style.flexRow}
-                    >
-                        <label
-                            style={style.label}
-                        >
-                            Amount:
-                        </label>
-                        <div
-                            style={style.value}
-                        >
-                            {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `} 
-                            {tx.msgs[0].value.amount.denom.split('u')[1].toUpperCase()}
-                        </div>
-                    </div>
-                ) : tx.msgs[0].typeUrl === 'MsgWithdrawDelegatorReward' && (
-                    <div
-                        style={style.flexRow}
-                    >
-                        <label
-                            style={style.label}
-                        >
-                            Amount:
-                        </label>
-                        <div
-                            style={style.value}
-                        >
-                            {`${(tx.msgs[0].value.amount[0].amount / 1000000).toFixed(3)} `} 
-                            {tx.msgs[0].value.amount[0].denom.split('u')[1].toUpperCase()}
-                        </div>
-                    </div>
-                )
-            }
-            {
-                tx.msgs[0].typeUrl === '/cosmos.staking.v1beta1.MsgDelegate' ? (
-                    <div
-                        style={style.flexRow}
-                    >
-                        <label
-                            style={style.label}
-                        >
-                            To:
-                        </label>
-                        <div
-                            style={style.value}
-                        >
-                            {tx.msgs[0].value.validatorAddress}
-                        </div>
-                    </div>
-                ) : (
-                    <div
-                        style={style.flexRow}
-                    >
-                        <label
-                            style={style.label}
-                        >
-                            To:
-                        </label>
-                        <div
-                            style={style.value}
-                        >
-                            {tx.msgs[0].value.toAddress}
-                        </div>
-                    </div>
-
-                )
+                msgInfo[`${tx.msgs[0].typeUrl}`]
             }
             <div
                 style={style.flexRow}

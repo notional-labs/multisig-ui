@@ -23,12 +23,29 @@ const MultisigList = ({ }) => {
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
         })
+
+        window.addEventListener('storage', async () => {
+            const account = localStorage.getItem('account')
+            console.log(account)
+            const address = account && JSON.parse(account).bech32Address || ''
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+            setParams({ ...params, total: res.length })
+        })
+
+        window.removeEventListener("keplr_keystorechange", () => {
+            console.log('close event listener')
+        })
+
+        window.removeEventListener("storage", () => {
+            console.log('close event listener')
+        })
     }, []);
 
     useEffect(() => {
         (async () => {
-            const account = await getKey(chain.chain_id)
-            const address = account && account.bech32Address || ''
+            const account = localStorage.getItem('account')
+            const address = account && JSON.parse(account).bech32Address || ''
             if (!address && address === '') return
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
@@ -52,7 +69,9 @@ const MultisigList = ({ }) => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 flexDirection: 'column',
-                height: '100%'
+                position: 'absolute',
+                height: '100%',
+                width: '100%'
             }}
         >
             <table
@@ -112,7 +131,7 @@ const MultisigList = ({ }) => {
             </table>
             <ButtonList
                 currentPage={params.page}
-                total={Math.ceil(params.total/params.limit)}
+                total={Math.ceil(params.total / params.limit)}
                 wrapSetParams={wrapSetParams}
             />
         </div>

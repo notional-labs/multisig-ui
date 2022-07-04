@@ -1,14 +1,34 @@
 import { useRouter } from 'next/router'
+import FlexRow from '../flex_box/FlexRow'
 import Button from '../input/Button'
+import { ArrowLeftOutlined, UserOutlined, TeamOutlined, BlockOutlined, UserAddOutlined } from '@ant-design/icons'
 
 const routers = [
     {
         path: '/',
-        name: 'All Multisigs'
+        pathname: `/`,
+        name: (isColor) => (
+            <div>
+                <TeamOutlined
+                    style={{
+                        color: isColor && '#189A01'
+                    }}
+                /> Multisigs
+            </div>
+        )
     },
     {
         path: '/multisig/create',
-        name: 'Create multisig'
+        pathname: `/multisig/create`,
+        name: (isColor) => (
+            <div>
+                <UserAddOutlined
+                    style={{
+                        color: isColor && '#189A01'
+                    }}
+                /> Create Multisig
+            </div>
+        )
     },
 ]
 
@@ -17,22 +37,28 @@ const multisigRouters = (multisigID) => {
         {
             path: `/multisig/${multisigID}`,
             pathname: `/multisig/[multisigID]`,
-            name: 'Multisig'
+            name: (isColor) => (
+                <div>
+                    <UserOutlined
+                        style={{
+                            color: isColor && '#189A01'
+                        }}
+                    /> Multisig
+                </div>
+            )
         },
         {
             path: `/multisig/${multisigID}/all-transactions`,
             pathname: `/multisig/[multisigID]/all-transactions`,
-            name: 'All Transactions'
-        },
-        {
-            path: `/multisig/${multisigID}/transaction/create`,
-            pathname: `/multisig/[multisigID]/transaction/create`,
-            name: 'Create Transaction'
-        },
-        {
-            path: `/`,
-            pathname: `/`,
-            name: 'Back'
+            name: (isColor) => (
+                <div>
+                    <BlockOutlined
+                        style={{
+                            color: isColor && '#189A01'
+                        }}
+                    /> Transactions
+                </div>
+            )
         },
     ]
 }
@@ -44,17 +70,25 @@ const transactionRouters = (multisigID, transactionID) => {
             pathname: `/multisig/[multisigID]/transaction/[transactionID]`,
             name: 'Transaction'
         },
-        {
-            path: `/multisig/${multisigID}`,
-            pathname: `/multisig/[multisigID]`,
-            name: 'Back'
-        },
     ]
 }
 
-const SideBar = ({option}) => {
+const style = {
+    button: {
+        borderRadius: '10px',
+        backgroundColor: '#ffffff',
+        fontSize: '1.25rem',
+        border: 0,
+        paddingTop: '.75em',
+        paddingBottom: '.75em',
+        width: '100%',
+        textAlign: 'right',
+    }
+}
+
+const SideBar = ({ option }) => {
     const router = useRouter()
-    const {multisigID, transactionID} = router.query
+    const { multisigID, transactionID } = router.query
 
     const checkPath = (path) => {
         return router.pathname === path
@@ -64,100 +98,128 @@ const SideBar = ({option}) => {
         <div
             style={{
                 position: 'fixed',
-                width: '350px'
+                width: '100%',
+                zIndex: 2,
+                backgroundColor: '#ffffff',
+                padding: '0 30em',
+                boxShadow: '0 4px 2px -2px rgba(0, 0, 0, 0.25)'
             }}
         >
             {
-                option === 0 ? routers.map((route, index) => {
-                    return (
-                        <div
+                option === 0 ? (
+                    <FlexRow
+                        components={[
+                            <FlexRow
+                                components={[
+                                    routers.map((route, index) => {
+                                        return (
+                                            <Button
+                                                type={'link'}
+                                                text={route.name(checkPath(route.pathname))}
+                                                index={index}
+                                                url={route.path}
+                                                style={{
+                                                    ...style.button,
+                                                    color: checkPath(route.pathname) ? '#000000' : '#4b525d',
+                                                    fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                }}
+                                                className={'hover-nav-button'}
+                                            />
+                                        )
+                                    })
+                                ]}
+                                justifyContent={'space-between'}
+                                style={{
+                                    width: '40%'
+                                }}
+                            />
+                        ]}
+                        justifyContent={'end'}
+                    />
+                ) : option === 1 ? (<FlexRow
+                    components={[
+                        <Button
+                            type={'link'}
+                            text={
+                                <div>
+                                    <ArrowLeftOutlined /> Back
+                                </div>
+                            }
+                            url={'/'}
                             style={{
-                                width: checkPath(route.path) ? '100%' : '80%',
+                                borderRadius: '10px',
                                 backgroundColor: '#ffffff',
-                                marginBottom: '1rem',
-                                color: 'black',
-                                borderRadius: checkPath(route.path) ? '10px 0 0 10px' : '10px',
-                                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                                fontSize: '1.25rem',
+                                border: 0,
+                                paddingTop: '.5em',
+                                paddingBottom: '.5em',
+                                color: '#4b525d',
+                                fontWeight: 400
                             }}
-                        >
+                            className={'hover-nav-button'}
+                        />,
+                        <FlexRow
+                            components={
+                                multisigRouters(multisigID).map((route, index) => {
+                                    return (
+                                        <Button
+                                            type={'link'}
+                                            text={route.name(checkPath(route.pathname))}
+                                            index={index}
+                                            url={route.path}
+                                            style={{
+                                                ...style.button,
+                                                color: checkPath(route.pathname) ? '#000000' : '#4b525d',
+                                                fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                            }}
+                                            className={'hover-nav-button'}
+                                        />
+                                    )
+                                })
+
+                            }
+                            justifyContent={'space-between'}
+                            style={{
+                                width: '40%'
+                            }}
+                        />
+                    ]
+                    }
+                    justifyContent={'space-between'}
+                />) : (
+                    <FlexRow
+                        components={[
                             <Button
                                 type={'link'}
-                                text={route.name}
-                                index={index}
-                                url={route.path}
+                                text={
+                                    <div>
+                                        <ArrowLeftOutlined /> Back
+                                    </div>
+                                }
+                                url={`/multisig/${multisigID}`}
                                 style={{
-                                    color: '#000000',
+                                    color: '#4b525d',
                                     borderRadius: '10px',
                                     backgroundColor: '#ffffff',
-                                    fontSize: '1.5rem',
+                                    fontSize: '1.25rem',
                                     border: 0,
                                     paddingTop: '.5em',
                                     paddingBottom: '.5em',
-                                    width: checkPath(route.path) ? '80%' : '100%'
+                                    fontWeight: 400
                                 }}
+                                className={'hover-nav-button'}
                             />
-                        </div>
-                    )
-                }) : option === 1 ? multisigRouters(multisigID).map((route, index) => {
-                    return (
-                        <div
-                            style={{
-                                width: checkPath(route.pathname) ? '100%' : '80%',
-                                backgroundColor: route.pathname === '/' ? '#000000' : '#ffffff',
-                                marginBottom: '1rem',
-                                borderRadius: checkPath(route.pathname) ? '10px 0 0 10px' : '10px',
-                                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                            }}
-                        >
-                            <Button
-                                type={'link'}
-                                text={route.name}
-                                index={index}
-                                url={route.path}
-                                style={{
-                                    color: route.pathname === '/' ? '#ffffff' : '#000000',
-                                    borderRadius: '10px',
-                                    backgroundColor: route.pathname === '/' ? '#000000' : '#ffffff',
-                                    fontSize: '1.5rem',
-                                    border: 0,
-                                    paddingTop: '.5em',
-                                    paddingBottom: '.5em',
-                                    width: checkPath(route.pathname) ? '80%' : '100%'
-                                }}
-                            />
-                        </div>
-                    )
-                }) : transactionRouters(multisigID, transactionID).map((route, index) => {
-                    return (
-                        <div
-                            style={{
-                                width: checkPath(route.pathname) ? '100%' : '80%',
-                                backgroundColor: route.pathname === '/multisig/[multisigID]' ? '#000000' : '#ffffff',
-                                marginBottom: '1rem',
-                                borderRadius: checkPath(route.path) ? '10px 0 0 10px' : '10px',
-                                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                            }}
-                        >
-                            <Button
-                                type={'link'}
-                                text={route.name}
-                                index={index}
-                                url={route.path}
-                                style={{
-                                    color: route.pathname === '/multisig/[multisigID]' ? '#ffffff' : '#000000',
-                                    borderRadius: '10px',
-                                    backgroundColor: route.pathname === '/multisig/[multisigID]' ? '#000000' : '#ffffff',
-                                    fontSize: '1.5rem',
-                                    border: 0,
-                                    paddingTop: '.5em',
-                                    paddingBottom: '.5em',
-                                    width: checkPath(route.pathname) ? '80%' : '100%'
-                                }}
-                            />
-                        </div>
-                    )
-                }) 
+                        ]}
+                        justifyContent={'space-between'}
+                    />
+                )
             }
+            <style jsx>{`
+                .hover-nav-button:hover {
+                    color: black;
+                    font-weight: bold;
+                }
+            `}</style>
         </div>
     )
 }

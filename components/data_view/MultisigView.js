@@ -8,6 +8,7 @@ import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ChainContext } from "../Context"
 import { prefixToId } from "../../data/chainData"
+import TransactionCreate from "../form/TransactionCreate"
 
 const { Paragraph } = Typography;
 
@@ -40,12 +41,13 @@ const style = {
 }
 
 const MultisigView = () => {
-    const [multisig, setMultisg] = useState(null)
     const [holding, setHolding] = useState(0)
     const { chain, wrapper } = useContext(ChainContext)
     const [multisigError, setMultisgError] = useState('')
     const router = useRouter()
     const { multisigID } = router.query
+    const [showCreate, setShowCreate] = useState(false)
+    const [showImport, setShowImport] = useState(false)
 
     useEffect(() => {
         (async () => {
@@ -57,9 +59,8 @@ const MultisigView = () => {
                 wrapper(id)
                 localStorage.setItem('current', id)
                 const balance = await getBalance(chain.rpc, multisigID, chain.denom)
-                if(parseInt(balance.amount) === 0) setMultisgError('*This account holdings is empty, make sure to refill it !')
+                if (parseInt(balance.amount) === 0) setMultisgError('*This account holdings is empty, make sure to refill it !')
                 setHolding(parseInt(balance.amount) / 1000000)
-                setMultisg(res)
             }
             catch (e) {
                 openNotification('error', e.message)
@@ -67,11 +68,16 @@ const MultisigView = () => {
         })()
     }, [multisigID])
 
-    const handleCLick = (route) => {
-        router.push(route)
+    const handleCLick = (buttonType, setVal = true) => {
+        if (buttonType === 'create') {
+            setShowCreate(setVal)
+        }
+        else {
+            setShowImport(setVal)
+        }
     }
 
-    const getRowCard = (title, paragrah, buttonText, route) => {
+    const getRowCard = (title, paragrah, buttonText, buttonType) => {
         return (
             <div
                 style={style.rowCard}
@@ -91,7 +97,7 @@ const MultisigView = () => {
                 <Button
                     text={buttonText}
                     style={style.button}
-                    clickFunction={() => handleCLick(route)}
+                    clickFunction={() => handleCLick(buttonType)}
                 />
             </div>
         )
@@ -100,7 +106,7 @@ const MultisigView = () => {
     return (
         <div
             style={{
-                marginLeft: '300px',
+
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
                 padding: '2em 3em',
@@ -159,26 +165,40 @@ const MultisigView = () => {
                     </text>
                 )
             }
-            <FlexRow
-                components={[
-                    getRowCard(
-                        'New transaction',
-                        'Once a transaction is created, it can be signed by the multisig members, and then broadcast',
-                        'Create Transaction',
-                        `/multisig/${multisigID}/transaction/create`
-                    ),
-                    getRowCard(
-                        'Import transaction',
-                        'Import an already generated transaction',
-                        'Import Transaction',
-                        `/multisig/${multisigID}/transaction/import`
-                    ),
-                ]}
-                justifyContent={'space-between'}
-                style={{
-                    marginTop: '40px'
-                }}
-            />
+            {
+                !showCreate && !showImport && (
+                    <FlexRow
+                        components={[
+                            getRowCard(
+                                'New transaction',
+                                'Once a transaction is created, it can be signed by the multisig members, and then broadcast',
+                                'Create Transaction',
+                                'create'
+                            ),
+                            getRowCard(
+                                'Import transaction',
+                                'Import an already generated transaction',
+                                'Import Transaction',
+                                'import'
+                            ),
+                        ]}
+                        justifyContent={'space-between'}
+                        style={{
+                            marginTop: '40px'
+                        }}
+                    />
+                )
+            }
+            {
+                showCreate && (
+                    <TransactionCreate
+                        multisigID={multisigID}
+                        router={router}
+                        chain={chain}
+                        wrapSetClose={() => handleCLick('create', false)}
+                    />
+                )
+            }
         </div>
     )
 }

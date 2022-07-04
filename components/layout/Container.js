@@ -6,32 +6,31 @@ const Container = ({ type, component, option = 0 }) => {
     return (
         <div
             style={{
-                paddingTop: '13em',
-                paddingLeft: '22em',
-                paddingRight: '30em'
+                paddingTop: '90px'
             }}
         >
             {
                 type === 'dashboard' ? (
-                    <FlexRow
-                        components={[
-                            <SideBar
-                                option={option}
-                            />,
-                            <ContainerContent />
-                        ]}
-                        justifyContent={'start'}
-                    />
+                    <>
+                        <SideBar
+                            option={option}
+                        />,
+                        <ContainerContent />
+                    </>
                 ) : (
-                    <FlexRow
-                        components={[
-                            <SideBar
-                                option={option}
-                            />,
-                            component
-                        ]}
-                        justifyContent={'start'}
-                    />
+                    <>
+                        <SideBar
+                            option={option}
+                        />,
+                        <div
+                            style={{
+                                marginTop: '7em',
+                                padding: '0 30em'
+                            }}
+                        >
+                            {component}
+                        </div>
+                    </>
                 )
             }
         </div>

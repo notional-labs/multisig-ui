@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getKeplrAccount } from "../../libs/keplrClient"
+import { getKeplrAccount, getKey } from "../../libs/keplrClient"
 import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
 
@@ -11,6 +11,10 @@ const Account = ({ chainId, chainName }) => {
             const keplrAccount = await getAccount(chainId)
             localStorage.setItem('account', JSON.stringify(keplrAccount))
             setAccount(JSON.stringify(keplrAccount))
+        })
+
+        window.removeEventListener("keplr_keystorechange", () => {
+            console.log('close event listener')
         })
     }, []);
 
@@ -40,8 +44,8 @@ const Account = ({ chainId, chainName }) => {
     }
 
     const getAccount = async () => {
-        const { accounts } = await getKeplrAccount(chainId)
-        return accounts
+        const account = await getKey(chainId)
+        return account
     }
 
     return account && account !== '' ? (

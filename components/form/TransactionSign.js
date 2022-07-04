@@ -23,6 +23,10 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
             setHasSigned(hasSigned)
             setAccount(account)
         })
+
+        window.removeEventListener("keplr_keystorechange", () => {
+            console.log('close event listener')
+        })
     }, []);
 
     useEffect(() => {

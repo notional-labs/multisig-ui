@@ -57,8 +57,11 @@ const TransactionView = ({ }) => {
                 if (!multisigID) return
                 const multisig = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${multisig.prefix}`]
-                wrapper(id)
-                localStorage.setItem('current', id)
+                const current = localStorage.getItem('current')
+                if (!current || current !== id) {
+                    wrapper(id)
+                    localStorage.setItem('current', id)
+                }
                 multisig && setMultisig(multisig)
             }
             catch (e) {
@@ -106,7 +109,7 @@ const TransactionView = ({ }) => {
     return (
         <div
             style={{
-                marginLeft: '300px',
+
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
                 padding: '2em 3em',
