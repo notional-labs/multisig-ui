@@ -4,6 +4,8 @@ import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"
 import { getKey } from "../../libs/keplrClient"
 import ButtonList from "../input/ButtonList"
+import { chainIdToId } from "../../data/chainData"
+import { motion } from "framer-motion"
 
 const MultisigList = ({ }) => {
     const [multisigs, setMultisigs] = useState([])
@@ -13,24 +15,40 @@ const MultisigList = ({ }) => {
         limit: 5,
         total: 0,
     })
+    const [loading, setLoading] = useState(false)
     const { chain } = useContext(ChainContext)
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", async () => {
+            setLoading(true)
             const account = await getKey(chain.chain_id)
             const address = account.bech32Address
-            if (!address && address === '') return
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
+            setLoading(false)
         })
 
         window.addEventListener('storage', async () => {
+            setLoading(true)
             const account = localStorage.getItem('account')
             console.log(account)
             const address = account && JSON.parse(account).bech32Address || ''
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
             setParams({ ...params, total: res.length })
+            setLoading(false)
+        })
+
+        window.addEventListener('chain_changed', async () => {
+            setLoading(true)
+            const currentId = localStorage.getItem('current')
+            const chainId = chainIdToId[currentId]
+            const account = await getKey(chainId)
+            const address = account.bech32Address
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+            setParams({ ...params, total: res.length })
+            setLoading(false)
         })
 
         window.removeEventListener("keplr_keystorechange", () => {
@@ -40,18 +58,24 @@ const MultisigList = ({ }) => {
         window.removeEventListener("storage", () => {
             console.log('close event listener')
         })
+
+        window.removeEventListener("chain_changed", () => {
+            console.log('close event listener')
+        })
     }, []);
 
     useEffect(() => {
         (async () => {
+            setLoading(true)
             const account = localStorage.getItem('account')
             const address = account && JSON.parse(account).bech32Address || ''
             if (!address && address === '') return
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
             setParams({ ...params, total: res.length })
+            setLoading(false)
         })()
-    }, [chain])
+    }, [])
 
     useEffect(() => {
         const pagingList = multisigs.slice(params.page - 1, params.page - 1 + params.limit)
@@ -116,18 +140,26 @@ const MultisigList = ({ }) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <motion.tbody
+                    animate={{
+                        transition: {
+                            staggerChildren: 0.1
+                        }
+                    }}
+                >
                     {
-                        viewMultsigi.map((multisig, index) => {
-                            return (
-                                <MultisigRowView
-                                    address={multisig.address}
-                                    index={index}
-                                />
-                            )
-                        })
+                        !loading && (
+                            viewMultsigi.map((multisig, index) => {
+                                return (
+                                    <MultisigRowView
+                                        address={multisig.address}
+                                        index={index}
+                                    />
+                                )
+                            })
+                        )
                     }
-                </tbody>
+                </motion.tbody >
             </table>
             <ButtonList
                 currentPage={params.page}

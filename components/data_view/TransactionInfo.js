@@ -2,6 +2,7 @@ import TransferMsg from "./transaction/TransferMsg"
 import DelegateMsg from "./transaction/DelegateMsg"
 import RedelegateMsg from "./transaction/RedelegateMsg"
 import UndelegateMsg from "./transaction/UndelegateMsg"
+import { Tooltip } from "antd"
 
 const style = {
     label: {
@@ -31,7 +32,7 @@ const style = {
     }
 }
 
-const TransactionInfo = ({ tx }) => {
+const TransactionInfo = ({ tx, txHash, chain }) => {
 
     const msgInfo = {
         "/cosmos.bank.v1beta1.MsgSend": (
@@ -69,6 +70,31 @@ const TransactionInfo = ({ tx }) => {
                 width: '100%'
             }}
         >
+            {
+                txHash && (
+                    <div
+                        style={style.flexRow}
+                    >
+                        <label
+                            style={style.label}
+                        >
+                            Tx hash:
+                        </label>
+                        <Tooltip placement="bottom" title="Check transaction in block explorer">
+                            <div
+                                style={style.value}
+                            >
+                                <a
+                                    href={`${chain.explorer}txs/${txHash}`}
+                                    target="_blank"
+                                >
+                                    {txHash}
+                                </a>
+                            </div>
+                        </Tooltip>
+                    </div>
+                )
+            }
             <div
                 style={style.flexRow}
             >

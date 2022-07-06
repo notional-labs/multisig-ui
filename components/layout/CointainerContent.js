@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import MultisigList from "../list/MultisigList"
 
-const ContainerContent = ({}) => {
+const ContainerContent = ({ }) => {
     const router = useRouter()
 
     return (
@@ -16,11 +16,7 @@ const ContainerContent = ({}) => {
                 margin: '7em 30em'
             }}
         >
-            {
-                router.pathname === '/' && (
-                    <MultisigList/>
-                )
-            }
+            <MultisigList />
         </div>
     )
 }

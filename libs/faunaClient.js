@@ -198,6 +198,7 @@ export const getTransactionsOfMultisig = async (multisig) => {
               createdOn
               dataJSON
               status
+              txHash
             }
           }
         }

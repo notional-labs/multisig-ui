@@ -5,6 +5,8 @@ import { CopyOutlined } from '@ant-design/icons'
 import FlexRow from "../flex_box/FlexRow";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { openNotification } from "../ulti/Notification";
+import JSONInput from 'react-json-editor-ajrm';
+import locale from 'react-json-editor-ajrm/locale/en';
 
 const convertKelprTransaction = (transaction) => {
     let cosmos_tx = {};
@@ -46,8 +48,7 @@ const convertKelprTransaction = (transaction) => {
 }
 
 const JSONView = ({ tx }) => {
-    const [showJSON, setShowJSON] = useState(true)
-    const [copy, setCopy] = useState(false)
+    const [showJSON, setShowJSON] = useState(false)
 
     const handleShowJSON = () => {
         setShowJSON(!showJSON)
@@ -63,28 +64,27 @@ const JSONView = ({ tx }) => {
                 position: 'relative',
                 zIndex: 1,
             }}
-        >   
-                <FlexRow
-                    components={[
-                        <h2>
-                            Transaction JSON
-                        </h2>,
-                        <CopyToClipboard 
-                            text={JSON.stringify(convertKelprTransaction(tx), null, 1)}
-                            onCopy={() => {
-                                setCopy(true)
-                                openNotification('success', 'Copy to clipboard !')
-                            }}
-                            style={{
-                                marginTop: '10px',
-                                marginLeft: '10px'
-                            }}
-                        >
-                            <CopyOutlined/>
-                        </CopyToClipboard>
-                    ]}
-                    justifyContent={'start'}
-                />
+        >
+            <FlexRow
+                components={[
+                    <h2>
+                        Transaction JSON
+                    </h2>,
+                    <CopyToClipboard
+                        text={JSON.stringify(convertKelprTransaction(tx), null, 1)}
+                        onCopy={() => {
+                            openNotification('success', 'Copy to clipboard !')
+                        }}
+                        style={{
+                            marginTop: '10px',
+                            marginLeft: '10px'
+                        }}
+                    >
+                        <CopyOutlined />
+                    </CopyToClipboard>
+                ]}
+                justifyContent={'start'}
+            />
             <Button
                 clickFunction={handleShowJSON}
                 text={'Show'}
@@ -99,19 +99,22 @@ const JSONView = ({ tx }) => {
                 }}
             />
             {
-                showJSON && (
-                    <div
+                showJSON && tx && (
+                    <JSONInput
+                        id='json_view'
+                        placeholder={(convertKelprTransaction(tx))}
+                        locale={locale}
+                        height='500px'
+                        width={'100%'}
+                        viewOnly={true}
                         style={{
-                            marginTop: '20px',
-                            padding: '.5em 1em',
-                            borderRadius: '10px',
-                            backgroundColor: '#D9D9D9'
+                            body: {
+                                fontSize: '1rem',
+                                borderRadius: '10px',
+                                padding: '.5em'
+                            },
                         }}
-                    >
-                        <pre>
-                            {JSON.stringify(convertKelprTransaction(tx), null, 1)}
-                        </pre>
-                    </div>
+                    />
                 )
             }
         </div>

@@ -4,6 +4,7 @@ import ComponentRow from "./ComponentRow"
 import { Skeleton } from "antd"
 import Link from 'next/link'
 import { addressShortener, timeStampHandler } from "../../libs/stringConvert"
+import { motion } from "framer-motion"
 
 const MultisigRowView = ({ address, index }) => {
     const [multisig, setMultisg] = useState(null)
@@ -19,12 +20,24 @@ const MultisigRowView = ({ address, index }) => {
     }, [address])
 
     return (
-        <tr
+        <motion.tr
+            initial={{
+                y: 60,
+                opacity: 0,
+                transition: { duration: .6, ease:  [0.6, -0.05, 0.01, 0.99] }
+            }}
+            animate={{
+                y: 0,
+                opacity: 1,
+                transition: {
+                    duration: .6,
+                    ease: [0.6, -0.05, 0.01, 0.99]
+                }
+            }}
             key={index}
             style={{
                 width: '100%',
-                borderBottom: 'solid .5px #b5b5b5',
-                marginBottom: '5px'
+                borderBottom: 'solid .25px #d6d6d6',
             }}
         >
             {
@@ -98,7 +111,7 @@ const MultisigRowView = ({ address, index }) => {
                     </>
                 )
             }
-        </tr>
+        </motion.tr>
     )
 }
 

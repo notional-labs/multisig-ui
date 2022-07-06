@@ -21,7 +21,7 @@ const logo = (
                 <Image
                     src='/images/logo.png'
                     width={'60px'}
-                    height={'50px'}
+                    height={'20px'}
                 />
             </Link>),
             (

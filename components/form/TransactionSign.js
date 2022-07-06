@@ -16,9 +16,9 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            const account = await getKey(chainId)
+            const currentAccount = await getKey(chainId)
             const hasSigned = currentSignatures.some(
-                (sig) => sig.address === account.bech32Address
+                (sig) => sig.address === currentAccount.bech32Address
             );
             setHasSigned(hasSigned)
             setAccount(account)
@@ -50,7 +50,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
             setAccountError('')
         }
         else {
-            setAccountError('Your wallet account might be different from one that create the multisig! Make sure to switch to appropriate account.')
+            setAccountError('Your wallet account might be different from one that create the multisig! Make sure to switch to an appropriate account.')
         }
     }, [account])
 

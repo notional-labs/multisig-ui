@@ -9,6 +9,9 @@ const Button = ({
     url, 
     index, 
     disable, 
+    handleMouseEnter,
+    handleMouseLeave,
+    hoverText
 }) => {
     return type === 'function' ? (
         <button
@@ -20,10 +23,12 @@ const Button = ({
             onClick={clickFunction}
             disabled={disable}
             className={className}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
             {text}
         </button>
-    ) : type === 'link' && (
+    ) : type === 'link' ? (
         <Link
             href={url}
         >
@@ -38,6 +43,23 @@ const Button = ({
                 {text}
             </button>
         </Link>
+    ) : (
+        <a
+            href={url}
+            target={'_blank'}
+            dataToggle={hoverText}
+        >
+            <button
+                key={index}
+                style={{
+                    ...style,
+                    cursor: 'pointer'
+                }}
+                className={className}
+            >
+                {text}
+            </button>
+        </a>
     )
 }
 

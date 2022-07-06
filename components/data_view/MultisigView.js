@@ -56,14 +56,14 @@ const MultisigView = () => {
                 setMultisgError('')
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
-                wrapper(id)
-                localStorage.setItem('current', id)
+                id && wrapper(id)
+                id && localStorage.setItem('current', id)
                 const balance = await getBalance(chain.rpc, multisigID, chain.denom)
                 if (parseInt(balance.amount) === 0) setMultisgError('*This account holdings is empty, make sure to refill it !')
                 setHolding(parseInt(balance.amount) / 1000000)
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification('error', 'Failed to fetch multisig info or balance ' + e.message)
             }
         })()
     }, [multisigID])

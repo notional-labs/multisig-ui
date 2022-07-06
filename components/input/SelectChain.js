@@ -35,7 +35,7 @@ const SelectChain = ({ enableSelectChain }) => {
                             )
                         ]}
                     />
-                ), (
+                ), enableSelectChain && (
                     <Image
                         src={'/images/selectButton.png'}
                         width={'20px'}
@@ -51,6 +51,7 @@ const SelectChain = ({ enableSelectChain }) => {
         wrapper(index)
         localStorage.setItem('current', index)
         setShowDropDown(false)
+        window.dispatchEvent(new Event('chain_changed'))
     }
 
     const getGridButton = (chain, index) => {
@@ -117,7 +118,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
                     padding: '1em',
-                    width: '200px',
+                    width: enableSelectChain && '200px',
                     height: '100%'
                 }}
                 disable={!enableSelectChain}

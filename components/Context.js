@@ -1,5 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { chainData } from '../data/chainData';
+import { getKey } from '../libs/keplrClient';
+import { AnimatePresence } from "framer-motion";
 
 export const ChainContext = createContext();
 
@@ -21,15 +23,19 @@ export const ChainProvider = (props) => {
     const wrapper = (index) => {
         setChain(chainData[index])
     }
-    
+
     return chain && (
-        <ChainContext.Provider
-            value={{
-                chain,
-                wrapper,
-            }}
+        <AnimatePresence
+            exitBeforeEnter={true}
         >
-            {props.children}
-        </ChainContext.Provider>
+            <ChainContext.Provider
+                value={{
+                    chain,
+                    wrapper,
+                }}
+            >
+                {props.children}
+            </ChainContext.Provider>
+        </AnimatePresence>
     );
 };

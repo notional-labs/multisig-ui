@@ -10,13 +10,13 @@ import { Spin } from "antd";
 import { ChainContext } from "../Context";
 import { prefixToId } from "../../data/chainData";
 import TransationSign from "../form/TransactionSign";
-import Button from "../input/Button";
 import { decode } from "uint8-to-base64";
 import { StargateClient, makeMultisignedTx } from "@cosmjs/stargate";
-import { TxRaw } from "@cosmjs/stargate/build/codec/cosmos/tx/v1beta1/tx";
-import { getAccount, getKey } from "../../libs/keplrClient";
+import { getAccount } from "../../libs/keplrClient";
 import axios from "axios";
 import BroadcastButton from "../input/BroadcastButton";
+import HashView from "./HashView";
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx"
 
 const TransactionView = ({ }) => {
     const [currentSignatures, setCurrentSignatures] = useState([]);
@@ -132,6 +132,8 @@ const TransactionView = ({ }) => {
                 txInfo ? (
                     <TransactionInfo
                         tx={txInfo}
+                        chain={chain}
+                        txHash={transactionHash}
                     />
                 ) : (
                     <div
@@ -146,7 +148,12 @@ const TransactionView = ({ }) => {
                 )
             }
             {
-                txInfo ? (
+                transactionHash ? (
+                    <HashView
+                        chain={chain}
+                        txHash={transactionHash}
+                    />
+                ) : txInfo ? (
                     <JSONView
                         tx={txInfo}
                     />

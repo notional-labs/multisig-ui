@@ -189,25 +189,31 @@ const SideBar = ({ option }) => {
                 />) : (
                     <FlexRow
                         components={[
-                            <Button
-                                type={'link'}
-                                text={
-                                    <div>
-                                        <ArrowLeftOutlined /> Back
-                                    </div>
+                            <FlexRow
+                                components={
+                                    multisigRouters(multisigID).map((route, index) => {
+                                        return (
+                                            <Button
+                                                type={'link'}
+                                                text={route.name(checkPath(route.pathname))}
+                                                index={index}
+                                                url={route.path}
+                                                style={{
+                                                    ...style.button,
+                                                    textAlign: 'left',
+                                                    color: checkPath(route.pathname) ? '#000000' : '#4b525d',
+                                                    fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                }}
+                                                className={'hover-nav-button'}
+                                            />
+                                        )
+                                    })
+
                                 }
-                                url={`/multisig/${multisigID}`}
+                                justifyContent={'space-between'}
                                 style={{
-                                    color: '#4b525d',
-                                    borderRadius: '10px',
-                                    backgroundColor: '#ffffff',
-                                    fontSize: '1.25rem',
-                                    border: 0,
-                                    paddingTop: '.5em',
-                                    paddingBottom: '.5em',
-                                    fontWeight: 400
+                                    width: '40%'
                                 }}
-                                className={'hover-nav-button'}
                             />
                         ]}
                         justifyContent={'space-between'}
