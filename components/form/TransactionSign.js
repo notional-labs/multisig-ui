@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
 import { SigningStargateClient, } from "@cosmjs/stargate";
@@ -14,19 +14,21 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
     const [account, setAccount] = useState(null)
     const [accountError, setAccountError] = useState('')
 
-    useEffect(() => {
-        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            const currentAccount = await getKey(chainId)
-            const hasSigned = currentSignatures.some(
-                (sig) => sig.address === currentAccount.bech32Address
-            );
-            setHasSigned(hasSigned)
-            setAccount(account)
-        })
+    const keplrKeystorechangeHandler = useCallback(async (event) => {
+        const currentAccount = await getKey(chainId)
+        const hasSigned = currentSignatures.some(
+            (sig) => sig.address === currentAccount.bech32Address
+        );
+        setHasSigned(hasSigned)
+        setAccount(account)
+    }, []);
 
-        window.removeEventListener("keplr_keystorechange", () => {
-            console.log('close event listener')
-        })
+    useEffect(() => {
+        window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
+
+        return () => {
+            window.removeEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
+        }
     }, []);
 
     useEffect(() => {

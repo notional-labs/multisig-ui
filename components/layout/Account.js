@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { getKeplrAccount, getKey } from "../../libs/keplrClient"
 import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
@@ -6,16 +6,18 @@ import Profile from "../Profile"
 const Account = ({ chainId, chainName }) => {
     const [account, setAccount] = useState('')
 
-    useEffect(() => {
-        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            const keplrAccount = await getAccount(chainId)
-            localStorage.setItem('account', JSON.stringify(keplrAccount))
-            setAccount(JSON.stringify(keplrAccount))
-        })
+    const keplrKeystorechangeHandler = useCallback(async (event) => {
+        const keplrAccount = await getAccount(chainId)
+        localStorage.setItem('account', JSON.stringify(keplrAccount))
+        setAccount(JSON.stringify(keplrAccount))
+    }, []);
 
-        window.removeEventListener("keplr_keystorechange", () => {
-            console.log('close event listener')
-        })
+    useEffect(() => {
+        window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
+
+        return () => {
+            window.removeEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
+        }
     }, []);
 
     useEffect(() => {

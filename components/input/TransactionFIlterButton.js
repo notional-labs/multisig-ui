@@ -33,7 +33,7 @@ const getButtonList = (currentFilter, setFilter) => {
                     fontSize: '1.25rem',
                     width: '15%',
                     left: index !== 0 && `-${leftMover}px`,
-                    boxShadow: '0px -8px 15px -3px rgba(0, 0, 0, 0.25)',
+                    boxShadow: '0px -10px 15px -3px rgba(0, 0, 0, 0.25)',
                 }}
                 clickFunction={() => setFilter(button.value)}
             />

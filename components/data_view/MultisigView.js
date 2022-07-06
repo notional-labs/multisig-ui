@@ -9,6 +9,7 @@ import Button from "../input/Button"
 import { ChainContext } from "../Context"
 import { prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
+import TransactionImport from "../form/TransactionImport"
 
 const { Paragraph } = Typography;
 
@@ -196,6 +197,16 @@ const MultisigView = () => {
                         router={router}
                         chain={chain}
                         wrapSetClose={() => handleCLick('create', false)}
+                    />
+                )
+            }
+            {
+                showImport && (
+                    <TransactionImport
+                        multisigID={multisigID}
+                        router={router}
+                        chain={chain}
+                        wrapSetClose={() => handleCLick('import', false)}
                     />
                 )
             }

@@ -91,7 +91,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 style={{
                     position: 'absolute',
                     left: '90%',
-                    top: '2em',
+                    top: '35px',
                     border: 0,
                     backgroundColor: 'transparent',
                     fontWeight: 'bold',

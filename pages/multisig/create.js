@@ -8,21 +8,12 @@ export default () => {
     return (
         <ChainProvider>
             <Page>
-                <div
-                    style={{
-                        backgroundImage: `url(/images/background.png)`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        minHeight: '100vh'
-                    }}
-                >
-                    <Container
-                        option={0}
-                        component={
-                            <MultisigCreate />
-                        }
-                    />
-                </div>
+                <Container
+                    option={0}
+                    component={
+                        <MultisigCreate />
+                    }
+                />
             </Page>
         </ChainProvider>
     )

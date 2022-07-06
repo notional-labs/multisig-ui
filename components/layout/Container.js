@@ -12,7 +12,7 @@ const Container = ({ type, component, option = 0 }) => {
             transition={{ duration: .6 }}
             className="page-container"
             style={{
-                paddingTop: '90px'
+                paddingTop: '90px',
             }}
         >
             {
@@ -31,7 +31,10 @@ const Container = ({ type, component, option = 0 }) => {
                         <div
                             style={{
                                 marginTop: '6em',
-                                padding: '0 30em'
+                                padding: '0 30em',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
                             }}
                         >
                             {component}

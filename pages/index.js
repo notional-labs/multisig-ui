@@ -7,18 +7,9 @@ export default function Home() {
   return (
     <ChainProvider>
       <Page>
-        <div
-          style={{
-            backgroundImage: `url(/images/background.png)`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            minHeight: '100vh'
-          }}
-        >
-          <Container 
-            type='dashboard'
-          />
-        </div>
+        <Container
+          type='dashboard'
+        />
       </Page>
     </ChainProvider>
   )

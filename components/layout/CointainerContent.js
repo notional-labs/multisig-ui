@@ -8,7 +8,7 @@ const ContainerContent = ({ }) => {
         <div
             style={{
                 backgroundColor: '#ffffff',
-                minHeight: '70vh',
+                minHeight: '60vh',
                 borderRadius: '30px',
                 position: 'relative',
                 zIndex: 1,
@@ -16,7 +16,9 @@ const ContainerContent = ({ }) => {
                 margin: '7em 30em'
             }}
         >
-            <MultisigList />
+            <MultisigList 
+                router={router}
+            />
         </div>
     )
 }

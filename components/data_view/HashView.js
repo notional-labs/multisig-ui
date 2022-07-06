@@ -14,8 +14,13 @@ const HashView = ({ chain, txHash }) => {
 
     useEffect(() => {
         (async () => {
-            const res = await getTx(chain.rpc, txHash)
-            res && setTx(res.tx)
+            try {
+                const res = await getTx(chain.rpc, txHash)
+                res && setTx(res.tx)
+            }
+            catch (e) {
+                openNotification('error', e.message)
+            }
         })()
     }, [])
 

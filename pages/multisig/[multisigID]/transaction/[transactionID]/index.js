@@ -10,21 +10,12 @@ export default () => {
             <Page
                 enableSelectChain={false}
             >
-                <div
-                    style={{
-                        backgroundImage: `url(/images/background.png)`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                        minHeight: '100vh'
-                    }}
-                >
-                    <Container
-                        option={2}
-                        component={
-                            <TransactionView />
-                        }
-                    />
-                </div>
+                <Container
+                    option={2}
+                    component={
+                        <TransactionView />
+                    }
+                />
             </Page>
         </ChainProvider>
     )

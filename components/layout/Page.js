@@ -1,5 +1,7 @@
 import Header from "../Header"
 import NextNProgress from "nextjs-progressbar";
+import Footer from "../Footer";
+import TopUpButton from "../input/TopUpButton";
 
 const Page = ({ enableSelectChain = true, children }) => {
 
@@ -7,18 +9,26 @@ const Page = ({ enableSelectChain = true, children }) => {
         <div
             className="page-container"
         >
-            <NextNProgress
-                color="#29D"
-                startPosition={0.3}
-                height={4}
-                showOnShallow={true}
-            />
             <Header
                 enableSelectChain={enableSelectChain}
             />
-            {
-                children
-            }
+            <div
+                style={{
+                    backgroundImage: `url(/images/background.png)`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    minHeight: '100vh',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column'
+                }}
+            >
+                {
+                    children
+                }
+                <Footer />
+            </div>
+            <TopUpButton/>
         </div>
     )
 }

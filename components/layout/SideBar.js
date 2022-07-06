@@ -99,7 +99,7 @@ const SideBar = ({ option }) => {
             style={{
                 position: 'fixed',
                 width: '100%',
-                zIndex: 2,
+                zIndex: 5,
                 backgroundColor: '#ffffff',
                 padding: '0 30em',
                 boxShadow: '0 4px 2px -2px rgba(0, 0, 0, 0.25)'

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo } from "react"
+import { useState, useEffect, useContext, useRef, useCallback } from "react"
 import { getAllMultisigOfAddress } from "../../libs/multisig"
 import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"
@@ -18,29 +18,26 @@ const MultisigList = ({ }) => {
     const [loading, setLoading] = useState(false)
     const { chain } = useContext(ChainContext)
 
-    useEffect(() => {
-        window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            setLoading(true)
-            const account = await getKey(chain.chain_id)
-            const address = account.bech32Address
-            const res = await getAllMultisigOfAddress(address)
-            setMultisigs([...res])
-            setLoading(false)
-        })
+    const keplrKeystorechangeListener = useCallback(async(event) => {
+        setLoading(true)
+        const account = await getKey(chain.chain_id)
+        const address = account.bech32Address
+        const res = await getAllMultisigOfAddress(address)
+        setMultisigs([...res])
+        setLoading(false)
+    }, []);
 
-        window.addEventListener('storage', async () => {
-            setLoading(true)
-            const account = localStorage.getItem('account')
-            console.log(account)
-            const address = account && JSON.parse(account).bech32Address || ''
-            const res = await getAllMultisigOfAddress(address)
-            setMultisigs([...res])
-            setParams({ ...params, total: res.length })
-            setLoading(false)
-        })
+    const storageListener = useCallback(async (event) => {
+        setLoading(true)
+        const account = await getKey(chain.chain_id)
+        const address = account.bech32Address
+        const res = await getAllMultisigOfAddress(address)
+        setMultisigs([...res])
+        setLoading(false)
+    }, []);
 
-        window.addEventListener('chain_changed', async () => {
-            setLoading(true)
+    const chainChangedListener = useCallback(async (event) => {
+        setLoading(true)
             const currentId = localStorage.getItem('current')
             const chainId = chainIdToId[currentId]
             const account = await getKey(chainId)
@@ -49,19 +46,22 @@ const MultisigList = ({ }) => {
             setMultisigs([...res])
             setParams({ ...params, total: res.length })
             setLoading(false)
-        })
+    }, []);
 
-        window.removeEventListener("keplr_keystorechange", () => {
-            console.log('close event listener')
-        })
+    useEffect(() => {
+        window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeListener)
 
-        window.removeEventListener("storage", () => {
-            console.log('close event listener')
-        })
+        window.addEventListener('storage', storageListener)
 
-        window.removeEventListener("chain_changed", () => {
-            console.log('close event listener')
-        })
+        window.addEventListener('chain_changed', chainChangedListener)
+
+        return () => {
+            window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
+
+            window.removeEventListener('storage', storageListener)
+
+            window.removeEventListener('chain_changed', chainChangedListener)
+        }
     }, []);
 
     useEffect(() => {
@@ -95,7 +95,7 @@ const MultisigList = ({ }) => {
                 flexDirection: 'column',
                 position: 'absolute',
                 height: '100%',
-                width: '100%'
+                width: '100%',
             }}
         >
             <table

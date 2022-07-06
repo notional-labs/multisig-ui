@@ -18,11 +18,18 @@ const logo = (
                     cursor: 'pointer'
                 }}
             >
-                <Image
-                    src='/images/logo.png'
-                    width={'60px'}
-                    height={'20px'}
-                />
+                <div
+                    style={{
+                        position: 'relative',
+                        top: '6px'
+                    }}
+                >
+                    <Image
+                        src='/images/logo.png'
+                        width={'50px'}
+                        height={'50px'}
+                    />
+                </div>
             </Link>),
             (
                 <text

@@ -88,7 +88,7 @@ const MultisigRowView = ({ address, index }) => {
                                 width: '100%',
                                 padding: '.5em',
                                 overflow: 'auto',
-                                maxHeight: '100px',
+                                maxHeight: '70px',
                                 display: 'inline-block',
                                 textAlign: 'center'
                             }}
