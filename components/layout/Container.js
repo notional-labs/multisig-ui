@@ -3,7 +3,7 @@ import FlexRow from "../flex_box/FlexRow"
 import ContainerContent from "./CointainerContent"
 import { motion } from "framer-motion"
 
-const Container = ({ type, component, option = 0 }) => {
+const Container = ({ component, option = 0 }) => {
     return (
         <motion.div
             initial={{ opacity: 0, x: 60 }}
@@ -16,31 +16,22 @@ const Container = ({ type, component, option = 0 }) => {
             }}
         >
             {
-                type === 'dashboard' ? (
-                    <>
-                        <SideBar
-                            option={option}
-                        />,
-                        <ContainerContent />
-                    </>
-                ) : (
-                    <>
-                        <SideBar
-                            option={option}
-                        />,
-                        <div
-                            style={{
-                                marginTop: '6em',
-                                padding: '0 30em',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            {component}
-                        </div>
-                    </>
-                )
+                <>
+                    <SideBar
+                        option={option}
+                    />,
+                    <div
+                        style={{
+                            marginTop: '6em',
+                            padding: '0 30em',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {component}
+                    </div>
+                </>
             }
         </motion.div>
     )

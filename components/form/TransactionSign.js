@@ -16,12 +16,11 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         const currentAccount = await getKey(chainId)
-        console.log(currentAccount.bech32Address)
         const hasSigned = currentSignatures.some(
             (sig) => sig.address === currentAccount.bech32Address
         );
         setHasSigned(hasSigned)
-        setAccount(account)
+        setAccount(currentAccount)
     }, []);
 
     useEffect(() => {
@@ -49,7 +48,6 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
     }, [])
 
     useEffect(() => {
-        console.log('hello')
         if (checkAddrInMultisig()) {
             setAccountError('')
         }
@@ -58,11 +56,8 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
         }
     }, [account])
 
-    console.log(account)
-
     const checkAddrInMultisig = () => {
         if (!account) return false
-        console.log('heeee')
         const pubkeys = JSON.parse(multisig.pubkeyJSON).value.pubkeys
         const check = multisigHasAddr(pubkeys, account.bech32Address, multisig.prefix)
         return check

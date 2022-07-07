@@ -116,6 +116,13 @@ const MultisigView = () => {
                 zIndex: 1
             }}
         >
+            <h1
+                style={{
+                    textAlign: 'center'
+                }}
+            >
+                Multisig Manager
+            </h1>
             <h3
                 style={{
                     marginBottom: 0

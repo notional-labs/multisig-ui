@@ -65,7 +65,7 @@ export const getAccount = async (rpc, address) => {
 
             if (!res) {
                 throw new Error(
-                    "Multisig has no pubkey on node, and was not created using this tool."
+                    "Multisig was not created using this tool."
                 );
             }
             const pubkey = JSON.parse(res.pubkeyJSON);

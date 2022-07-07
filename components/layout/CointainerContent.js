@@ -8,12 +8,12 @@ const ContainerContent = ({ }) => {
         <div
             style={{
                 backgroundColor: '#ffffff',
-                minHeight: '60vh',
+                minHeight: '65vh',
                 borderRadius: '30px',
                 position: 'relative',
                 zIndex: 1,
                 boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                margin: '7em 30em'
+                margin: '7em 30em 0 30em'
             }}
         >
             <MultisigList 

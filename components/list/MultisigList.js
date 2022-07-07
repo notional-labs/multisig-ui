@@ -6,6 +6,10 @@ import { getKey } from "../../libs/keplrClient"
 import ButtonList from "../input/ButtonList"
 import { chainIdToId } from "../../data/chainData"
 import { motion } from "framer-motion"
+import FlexRow from "../flex_box/FlexRow"
+import Button from "../input/Button"
+import { ReloadOutlined } from "@ant-design/icons";
+import { openNotification } from "../ulti/Notification"
 
 const MultisigList = ({ }) => {
     const [multisigs, setMultisigs] = useState([])
@@ -16,36 +20,42 @@ const MultisigList = ({ }) => {
         total: 0,
     })
     const [loading, setLoading] = useState(false)
+    const [toggleReload, setToggleReload] = useState(false)
     const { chain } = useContext(ChainContext)
 
-    const keplrKeystorechangeListener = useCallback(async(event) => {
+    const keplrKeystorechangeListener = useCallback(async (event) => {
         setLoading(true)
         const account = await getKey(chain.chain_id)
         const address = account.bech32Address
         const res = await getAllMultisigOfAddress(address)
         setMultisigs([...res])
-        setLoading(false)
+        setLoading(false)  
     }, []);
 
     const storageListener = useCallback(async (event) => {
-        setLoading(true)
-        const account = await getKey(chain.chain_id)
-        const address = account.bech32Address
+        const account = localStorage.getItem('account')
+        const address = account && JSON.parse(account).bech32Address || ''
+        if (address === '') {
+            setLoading(false)
+            setMultisigs([])
+            return
+        }
         const res = await getAllMultisigOfAddress(address)
         setMultisigs([...res])
+        setParams({ ...params, total: res.length })
         setLoading(false)
     }, []);
 
     const chainChangedListener = useCallback(async (event) => {
         setLoading(true)
-            const currentId = localStorage.getItem('current')
-            const chainId = chainIdToId[currentId]
-            const account = await getKey(chainId)
-            const address = account.bech32Address
-            const res = await getAllMultisigOfAddress(address)
-            setMultisigs([...res])
-            setParams({ ...params, total: res.length })
-            setLoading(false)
+        const currentId = localStorage.getItem('current')
+        const chainId = chainIdToId[currentId]
+        const account = await getKey(chainId)
+        const address = account.bech32Address
+        const res = await getAllMultisigOfAddress(address)
+        setMultisigs([...res])
+        setParams({ ...params, total: res.length })
+        setLoading(false)
     }, []);
 
     useEffect(() => {
@@ -56,7 +66,7 @@ const MultisigList = ({ }) => {
         window.addEventListener('chain_changed', chainChangedListener)
 
         return () => {
-            window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
+            window.keplr &&  window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
 
             window.removeEventListener('storage', storageListener)
 
@@ -66,16 +76,25 @@ const MultisigList = ({ }) => {
 
     useEffect(() => {
         (async () => {
-            setLoading(true)
-            const account = localStorage.getItem('account')
-            const address = account && JSON.parse(account).bech32Address || ''
-            if (!address && address === '') return
-            const res = await getAllMultisigOfAddress(address)
-            setMultisigs([...res])
-            setParams({ ...params, total: res.length })
-            setLoading(false)
+            try {
+                setLoading(true)
+                const account = localStorage.getItem('account')
+                const address = account && JSON.parse(account).bech32Address || ''
+                if (address === '') {
+                    setLoading(false)
+                    return
+                }
+                const res = await getAllMultisigOfAddress(address)
+                setMultisigs([...res])
+                setParams({ ...params, total: res.length })
+                setLoading(false)
+            }
+            catch (e) {
+                setLoading(false)
+                openNotification('error', 'Cant fetch multisigs list ' + e.message)
+            }
         })()
-    }, [])
+    }, [toggleReload])
 
     useEffect(() => {
         const pagingList = multisigs.slice(params.page - 1, params.page - 1 + params.limit)
@@ -93,74 +112,114 @@ const MultisigList = ({ }) => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 flexDirection: 'column',
-                position: 'absolute',
-                height: '100%',
+                backgroundColor: '#ffffff',
                 width: '100%',
+                borderRadius: '30px',
+                position: 'relative',
+                zIndex: 3,
+                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                minHeight: '65vh'
             }}
         >
-            <table
-                style={{
-                    width: '100%',
-                    borderSpacing: '0 1em',
-                }}
-            >
-                <thead
+            <div>
+                <FlexRow
+                    components={[
+                        <h1
+                            style={{
+                                textAlign: 'left',
+                            }}
+                        >
+                            Multisigs
+                        </h1>,
+                        <Button
+                            text={(
+                                <div>
+                                    <ReloadOutlined
+                                        spin={loading}
+                                    /> Update
+                                </div>
+                            )}
+                            style={{
+                                position: 'relative',
+                                top: '5px',
+                                color: 'white',
+                                backgroundColor: 'rgb(0, 0, 0, 0.5)',
+                                borderRadius: '10px',
+                                border: 0,
+                                height: '40px',
+                                padding: '0 2em',
+                            }}
+                            clickFunction={() => {
+                                setToggleReload(!toggleReload)
+                            }}
+                        />
+                    ]}
+                    justifyContent={'space-between'}
+                />
+                <table
                     style={{
-                        borderBottom: 'solid 1.25px black',
-                        fontSize: '1.25rem'
+                        width: '100%',
+                        borderSpacing: '0 1em',
                     }}
                 >
-                    <tr>
-                        <th
-                            style={{
-                                width: '40%',
-                                padding: '.5em',
-                                textAlign: 'left'
-                            }}
-                        >
-                            Address
-                        </th>
-                        <th
-                            style={{
-                                width: '20%',
-                                padding: '.5em',
-                                textAlign: 'left'
-                            }}
-                        >
-                            Components
-                        </th>
-                        <th
-                            style={{
-                                width: '20%',
-                                padding: '.5em',
-                                textAlign: 'right'
-                            }}
-                        >
-                            Created At
-                        </th>
-                    </tr>
-                </thead>
-                <motion.tbody
-                    animate={{
-                        transition: {
-                            staggerChildren: 0.1
+                    <thead
+                        style={{
+                            borderBottom: 'solid 1.25px black',
+                            fontSize: '1.25rem'
+                        }}
+                    >
+                        <tr>
+                            <th
+                                style={{
+                                    width: '40%',
+                                    padding: '.5em',
+                                    textAlign: 'left'
+                                }}
+                            >
+                                Address
+                            </th>
+                            <th
+                                style={{
+                                    width: '20%',
+                                    padding: '.5em',
+                                    textAlign: 'left'
+                                }}
+                            >
+                                Components
+                            </th>
+                            <th
+                                style={{
+                                    width: '20%',
+                                    padding: '.5em',
+                                    textAlign: 'right'
+                                }}
+                            >
+                                Created At
+                            </th>
+                        </tr>
+                    </thead>
+                    <motion.tbody
+                        animate={{
+                            transition: {
+                                staggerChildren: 0.1
+                            }
+                        }}
+                    >
+                        {
+                            !loading && (
+                                viewMultsigi.map((multisig, index) => {
+                                    return (
+                                        <MultisigRowView
+                                            address={multisig.address}
+                                            index={index}
+                                        />
+                                    )
+                                })
+                            )
                         }
-                    }}
-                >
-                    {
-                        !loading && (
-                            viewMultsigi.map((multisig, index) => {
-                                return (
-                                    <MultisigRowView
-                                        address={multisig.address}
-                                        index={index}
-                                    />
-                                )
-                            })
-                        )
-                    }
-                </motion.tbody >
-            </table>
+                    </motion.tbody >
+                </table>
+            </div>
             <ButtonList
                 currentPage={params.page}
                 total={Math.ceil(params.total / params.limit)}

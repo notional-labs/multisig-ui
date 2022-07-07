@@ -2,6 +2,7 @@ import TransferMsg from "./transaction/TransferMsg"
 import DelegateMsg from "./transaction/DelegateMsg"
 import RedelegateMsg from "./transaction/RedelegateMsg"
 import UndelegateMsg from "./transaction/UndelegateMsg"
+import VoteMsg from "./transaction/VoteMsg"
 import { Tooltip } from "antd"
 
 const style = {
@@ -61,6 +62,13 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 tx={tx}
                 style={style}
             />
+        ),
+        "/cosmos.gov.v1beta1.MsgVote": (
+            <VoteMsg
+                tx={tx}
+                style={style}
+                chain={chain}
+            />
         )
     }
 
@@ -80,7 +88,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                         >
                             Tx hash:
                         </label>
-                        <Tooltip placement="bottom" title="Check transaction in block explorer">
+                        <Tooltip placement="bottom" title="Check proposal in block explorer">
                             <div
                                 style={style.value}
                             >

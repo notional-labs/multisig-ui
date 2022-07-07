@@ -110,7 +110,11 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 }}
                 clickFunction={wrapSetClose}
             />
-            <h3>
+            <h3
+                style={{
+                    marginBottom: 0
+                }}
+            >
                 Message Type
             </h3>
             <select

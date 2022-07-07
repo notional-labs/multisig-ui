@@ -16,7 +16,7 @@ const style = {
 const VoteMsg = ({ chain, router, address }) => {
     const [proposals, setProposals] = useState([])
     const [txBody, setTxBody] = useState({
-        option: 0,
+        option: 1,
         proposalId: '',
         gas: 20000,
         fee: 0,
@@ -39,6 +39,10 @@ const VoteMsg = ({ chain, router, address }) => {
             try {
                 const res = await getProposals(chain.api, address)
                 res.proposals && setProposals([...res.proposals])
+                res.proposals && res.proposals.length > 0 && setTxBody({
+                    ...txBody,
+                    proposalId: res.proposals[0].proposal_id
+                })
             }
             catch (e) {
                 openNotification('error', e.message)

@@ -15,6 +15,8 @@ import TransactionFilterButton from "../input/TransactionFIlterButton";
 import { ShareAltOutlined, LinkOutlined } from "@ant-design/icons";
 import Button from "../input/Button";
 import CopyToClipboard from "react-copy-to-clipboard";
+import FlexRow from "../flex_box/FlexRow";
+import { ReloadOutlined } from "@ant-design/icons";
 
 const style = {
     actionButton: {
@@ -27,6 +29,7 @@ const style = {
 
 const TransactionList = ({ }) => {
     const [transactions, setTransactions] = useState([])
+    const [filterTransactions, setFilterTransactions] = useState([])
     const [viewTransactions, setViewTransactions] = useState([])
     const [loading, setLoading] = useState(false)
     const [params, setParams] = useState({
@@ -34,7 +37,9 @@ const TransactionList = ({ }) => {
         limit: 10,
         total: 0,
     })
-    const [filter, setFilter] = useState('all')
+    const [filter, setFilter] = useState('')
+    const [spin, setSpin] = useState(false)
+    const [toggleReload, setToggleReload] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
     const router = useRouter()
     const { multisigID } = router.query
@@ -53,11 +58,31 @@ const TransactionList = ({ }) => {
                 wrapper(id)
                 localStorage.setItem('current', id)
                 const res = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
-                const filterTxs = filter === 'all' ? [...res.data] : res.data.filter(tx => tx.status === filter.toUpperCase())
-                setTransactions([...filterTxs])
+                setTransactions([...res.data])
+                setFilter('all')
+                setLoading(false)
+                setSpin(false)
+            }
+            catch (e) {
+                setSpin(false)
+                openNotification('error', e.message)
+            }
+        })()
+    }, [multisigID, toggleReload])
+
+    useEffect(() => {
+        setSpin(true)
+    }, [toggleReload])
+
+    useEffect(() => {
+        (async () => {
+            setLoading(true)
+            try {
+                const filterTxs = filter === 'all' ? filter !== '' && [...transactions] : transactions.filter(tx => tx.status === filter.toUpperCase())
+                setFilterTransactions([...filterTxs])
                 setParams({
                     ...params,
-                    total: res.data.length
+                    total: filterTxs.length
                 })
                 setLoading(false)
             }
@@ -65,20 +90,18 @@ const TransactionList = ({ }) => {
                 openNotification('error', e.message)
             }
         })()
-    }, [multisigID, filter])
+    }, [filter])
 
     useEffect(() => {
-        const pagingList = transactions.slice(params.page - 1, params.page - 1 + params.limit)
+        const pagingList = filterTransactions.slice(params.page - 1, params.page - 1 + params.limit)
         setViewTransactions([...pagingList])
-    }, [params, transactions])
+    }, [params, filterTransactions])
 
     const getType = (tx) => {
         const txInfo = JSON.parse(tx.dataJSON)
         const type = txInfo.msgs[0].typeUrl
         return type.split('Msg')[1]
     }
-
-    console.log(transactions)
 
     return (
         <>
@@ -98,236 +121,272 @@ const TransactionList = ({ }) => {
                     position: 'relative',
                     zIndex: 3,
                     boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                    minHeight: '65vh'
+                    minHeight: '70vh'
                 }}
             >
-                <table
-                    style={{
-                        width: '100%',
-                        borderSpacing: '0 1em',
-                    }}
-                >
-                    <thead
-                        style={{
-                            borderBottom: 'solid 1.5px black',
-                            fontSize: '1.25rem',
-                        }}
-                    >
-                        <tr>
-                            <th
+                <div>
+                    <FlexRow
+                        components={[
+                            <h1
                                 style={{
-                                    width: '20%',
-                                    padding: '.5em',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                ID
-                            </th>
-                            <th
-                                style={{
-                                    width: '20%',
-                                    padding: '.5em',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                Type
-                            </th>
-                            <th
-                                style={{
-                                    width: '20%',
-                                    padding: '.5em',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                Status
-                            </th>
-                            <th
-                                style={{
-                                    width: '20%',
-                                    padding: '.5em',
                                     textAlign: 'left',
                                 }}
                             >
-                                Created At
-                            </th>
-                            <th
+                                Transactions
+                            </h1>,
+                            <Button
+                                text={(
+                                    <div>
+                                        <ReloadOutlined 
+                                            spin={spin}
+                                        /> Update
+                                    </div>
+                                )}
                                 style={{
-                                    width: '20%',
-                                    padding: '.5em',
-                                    textAlign: 'right',
+                                    position: 'relative',
+                                    top: '5px',
+                                    color: 'white',
+                                    backgroundColor: 'rgb(0, 0, 0, 0.5)',
+                                    borderRadius: '10px',
+                                    border: 0,
+                                    height: '40px',
+                                    padding: '0 2em',
                                 }}
-                            >
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <motion.tbody
-                        animate={{
-                            transition: {
-                                staggerChildren: 0.1
-                            }
+                                clickFunction={() => {
+                                    setToggleReload(!toggleReload)
+                                }}
+                            />
+                        ]}
+                        justifyContent={'space-between'}
+                    />
+                    <table
+                        style={{
+                            width: '100%',
+                            borderSpacing: '0 1em',
                         }}
                     >
-                        {
-                            viewTransactions.map((transaction, index) => {
-                                return (
-                                    <motion.tr
-                                        initial={{
-                                            y: 60,
-                                            opacity: 0,
-                                            transition: { duration: .6, ease: [0.6, -0.05, 0.01, 0.99] }
-                                        }}
-                                        animate={{
-                                            y: 0,
-                                            opacity: 1,
-                                            transition: {
-                                                duration: .6,
-                                                ease: [0.6, -0.05, 0.01, 0.99]
-                                            }
-                                        }}
-                                        key={index}
-                                        style={{
-                                            width: '100%',
-                                            borderBottom: 'solid .25px #d6d6d6',
-                                            marginBottom: '5px'
-                                        }}
-                                    >
-                                        {
-                                            loading ? (
-                                                <>
-                                                    <td
-                                                        style={{
-                                                            width: '30%',
-                                                            paddingTop: '1em'
-                                                        }}
-                                                    >
-                                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '30%',
-                                                            paddingTop: '1em'
-                                                        }}
-                                                    >
-                                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '20%',
-                                                            paddingTop: '1em'
-                                                        }}
-                                                    >
-                                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '20%',
-                                                            paddingTop: '1em'
-                                                        }}
-                                                    >
-                                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                    </td>
-                                                </>
-                                            ) : transaction !== null && (
-                                                <>
-                                                    <td
-                                                        style={{
-                                                            width: '30%',
-                                                            fontSize: '1rem',
-                                                            padding: '1em 0.5em'
-                                                        }}
-                                                    >
-                                                        <Link
-                                                            href={`/multisig/${multisigID}/transaction/${transaction._id}`}
-                                                        >
-                                                            {transaction._id}
-                                                        </Link>
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '30%',
-                                                            fontSize: '1rem',
-                                                            padding: '1em 0.5em',
-                                                        }}
-                                                    >
-                                                        {getType(transaction)}
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '20%',
-                                                            padding: '1em 0.5em',
-                                                            fontSize: '1rem',
-                                                            textAlign: 'left'
-                                                        }}
-                                                    >
-                                                        <span
+                        <thead
+                            style={{
+                                borderBottom: 'solid 1.5px black',
+                                fontSize: '1.25rem',
+                            }}
+                        >
+                            <tr>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        padding: '.5em',
+                                        textAlign: 'left'
+                                    }}
+                                >
+                                    ID
+                                </th>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        padding: '.5em',
+                                        textAlign: 'left'
+                                    }}
+                                >
+                                    Type
+                                </th>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        padding: '.5em',
+                                        textAlign: 'left'
+                                    }}
+                                >
+                                    Status
+                                </th>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        padding: '.5em',
+                                        textAlign: 'left',
+                                    }}
+                                >
+                                    Created At
+                                </th>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        padding: '.5em',
+                                        textAlign: 'right',
+                                    }}
+                                >
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <motion.tbody
+                            animate={{
+                                transition: {
+                                    staggerChildren: 0.1
+                                }
+                            }}
+                        >
+                            {
+                                viewTransactions.map((transaction, index) => {
+                                    return (
+                                        <motion.tr
+                                            initial={{
+                                                y: 60,
+                                                opacity: 0,
+                                                transition: { duration: .6, ease: [0.6, -0.05, 0.01, 0.99] }
+                                            }}
+                                            animate={{
+                                                y: 0,
+                                                opacity: 1,
+                                                transition: {
+                                                    duration: .6,
+                                                    ease: [0.6, -0.05, 0.01, 0.99]
+                                                }
+                                            }}
+                                            key={index}
+                                            style={{
+                                                width: '100%',
+                                                borderBottom: 'solid .25px #d6d6d6',
+                                                marginBottom: '5px'
+                                            }}
+                                        >
+                                            {
+                                                loading ? (
+                                                    <>
+                                                        <td
                                                             style={{
-                                                                width: '10%',
-                                                                aspectRatio: '1/1',
-                                                                backgroundColor: transaction.status === 'PENDING' ? '#D82D2C' : '#189A01',
-                                                                borderRadius: '50%',
-                                                                display: 'inline-block',
-                                                                marginRight: '10px',
-                                                                position: 'relative',
-                                                                top: '3px'
+                                                                width: '30%',
+                                                                paddingTop: '1em'
                                                             }}
-                                                        />
-                                                        {transaction.status}
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '20%',
-                                                            textAlign: 'left',
-                                                            fontSize: '1rem',
-                                                            padding: '1em 0.5em'
-                                                        }}
-                                                    >
-                                                        {timeStampHandler(new Date(transaction.createdOn))}
-                                                    </td>
-                                                    <td
-                                                        style={{
-                                                            width: '20%',
-                                                            textAlign: 'center',
-                                                            fontSize: '1rem',
-                                                            padding: '1em 0.5em'
-                                                        }}
-                                                    >
-                                                        <Tooltip placement="top" title='Share transaction'>
-                                                            <CopyToClipboard
-                                                                text={`${process.env.HOST}${multisigID}/transaction/${transaction._id}`}
-                                                                onCopy={() => {
-                                                                    openNotification('success', 'Copy to clipboard !')
-                                                                }}
-                                                                style={style.actionButton}
+                                                        >
+                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '30%',
+                                                                paddingTop: '1em'
+                                                            }}
+                                                        >
+                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '20%',
+                                                                paddingTop: '1em'
+                                                            }}
+                                                        >
+                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '20%',
+                                                                paddingTop: '1em'
+                                                            }}
+                                                        >
+                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                                        </td>
+                                                    </>
+                                                ) : transaction !== null && (
+                                                    <>
+                                                        <td
+                                                            style={{
+                                                                width: '30%',
+                                                                fontSize: '1rem',
+                                                                padding: '1em 0.5em'
+                                                            }}
+                                                        >
+                                                            <Link
+                                                                href={`/multisig/${multisigID}/transaction/${transaction._id}`}
                                                             >
-                                                                <ShareAltOutlined/>
-                                                            </CopyToClipboard>
-                                                        </Tooltip>
-                                                        {
-                                                            transaction.txHash && (
-                                                                <Tooltip placement="top" title='View in block explorer'>
-                                                                    <Button
-                                                                        text={(
-                                                                            <LinkOutlined/>
-                                                                        )}
-                                                                        style={style.actionButton}
-                                                                        type={'a'}
-                                                                        url={`${chain.explorer}txs/${transaction.txHash}`}
-                                                                        hoverText={'View in block explorer'}
-                                                                    />
-                                                                </Tooltip>
-                                                            )
-                                                        }
-                                                    </td>
-                                                </>
-                                            )
-                                        }
-                                    </motion.tr>
-                                )
-                            })
-                        }
-                    </motion.tbody>
-                </table>
+                                                                {transaction._id}
+                                                            </Link>
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '30%',
+                                                                fontSize: '1rem',
+                                                                padding: '1em 0.5em',
+                                                            }}
+                                                        >
+                                                            {getType(transaction)}
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '20%',
+                                                                padding: '1em 0.5em',
+                                                                fontSize: '1rem',
+                                                                textAlign: 'left'
+                                                            }}
+                                                        >
+                                                            <span
+                                                                style={{
+                                                                    width: '10%',
+                                                                    aspectRatio: '1/1',
+                                                                    backgroundColor: transaction.status === 'PENDING' ? '#D82D2C' : '#189A01',
+                                                                    borderRadius: '50%',
+                                                                    display: 'inline-block',
+                                                                    marginRight: '10px',
+                                                                    position: 'relative',
+                                                                    top: '3px'
+                                                                }}
+                                                            />
+                                                            {transaction.status}
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '20%',
+                                                                textAlign: 'left',
+                                                                fontSize: '1rem',
+                                                                padding: '1em 0.5em'
+                                                            }}
+                                                        >
+                                                            {timeStampHandler(new Date(transaction.createdOn))}
+                                                        </td>
+                                                        <td
+                                                            style={{
+                                                                width: '20%',
+                                                                textAlign: 'center',
+                                                                fontSize: '1rem',
+                                                                padding: '1em 0.5em'
+                                                            }}
+                                                        >
+                                                            <Tooltip placement="top" title='Share transaction'>
+                                                                <CopyToClipboard
+                                                                    text={`${process.env.HOST}${multisigID}/transaction/${transaction._id}`}
+                                                                    onCopy={() => {
+                                                                        openNotification('success', 'Copy to clipboard !')
+                                                                    }}
+                                                                    style={style.actionButton}
+                                                                >
+                                                                    <ShareAltOutlined />
+                                                                </CopyToClipboard>
+                                                            </Tooltip>
+                                                            {
+                                                                transaction.txHash && (
+                                                                    <Tooltip placement="top" title='View in block explorer'>
+                                                                        <Button
+                                                                            text={(
+                                                                                <LinkOutlined />
+                                                                            )}
+                                                                            style={style.actionButton}
+                                                                            type={'a'}
+                                                                            url={`${chain.explorer}txs/${transaction.txHash}`}
+                                                                            hoverText={'View in block explorer'}
+                                                                        />
+                                                                    </Tooltip>
+                                                                )
+                                                            }
+                                                        </td>
+                                                    </>
+                                                )
+                                            }
+                                        </motion.tr>
+                                    )
+                                })
+                            }
+                        </motion.tbody>
+                    </table>
+                </div>
                 <ButtonList
                     currentPage={params.page}
                     total={Math.ceil(params.total / params.limit)}

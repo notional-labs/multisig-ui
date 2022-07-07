@@ -65,39 +65,45 @@ const JSONView = ({ tx }) => {
                 zIndex: 1,
             }}
         >
-            <FlexRow
-                components={[
-                    <h2>
-                        Transaction JSON
-                    </h2>,
-                    <CopyToClipboard
-                        text={JSON.stringify(convertKelprTransaction(tx), null, 1)}
-                        onCopy={() => {
-                            openNotification('success', 'Copy to clipboard !')
-                        }}
-                        style={{
-                            marginTop: '10px',
-                            marginLeft: '10px'
-                        }}
-                    >
-                        <CopyOutlined />
-                    </CopyToClipboard>
-                ]}
-                justifyContent={'start'}
-            />
-            <Button
-                clickFunction={handleShowJSON}
-                text={'Show'}
+            <div
                 style={{
-                    border: 0,
-                    fontStyle: 'italic',
-                    textDecoration: 'underline',
-                    position: 'absolute',
-                    backgroundColor: 'transparent',
-                    left: '85%',
-                    top: '2.4em'
+                    display: 'flex',
+                    justifyContent: 'space-between'
                 }}
-            />
+            >
+                <FlexRow
+                    components={[
+                        <h2>
+                            Transaction JSON
+                        </h2>,
+                        <CopyToClipboard
+                            text={JSON.stringify(convertKelprTransaction(tx), null, 1)}
+                            onCopy={() => {
+                                openNotification('success', 'Copy to clipboard !')
+                            }}
+                            style={{
+                                marginTop: '10px',
+                                marginLeft: '10px'
+                            }}
+                        >
+                            <CopyOutlined />
+                        </CopyToClipboard>
+                    ]}
+                    justifyContent={'start'}
+                />
+                <Button
+                    clickFunction={handleShowJSON}
+                    text={'Show'}
+                    style={{
+                        border: 0,
+                        fontStyle: 'italic',
+                        textDecoration: 'underline',
+                        position: 'relative',
+                        backgroundColor: 'transparent',
+                        top: '-5px'
+                    }}
+                />
+            </div>
             {
                 showJSON && tx && (
                     <JSONInput

@@ -39,8 +39,10 @@ const TopUpButton = ({ }) => {
                 position: 'fixed',
                 zIndex: 2,
                 left: '95%',
-                top: '95%',
-                display: showTopBtn ? 'block' : 'none'
+                top: '91%',
+                display: showTopBtn ? 'block' : 'none',
+                border: 0,
+                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)'
             }}
             clickFunction={scrollUp}
         />

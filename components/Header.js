@@ -59,7 +59,7 @@ const Header = ({ enableSelectChain }) => {
                 position: 'fixed',
                 height: '90px',
                 width: '100%',
-                zIndex: 2
+                zIndex: 5
             }}
         >
             <FlexRow
