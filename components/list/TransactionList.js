@@ -98,7 +98,7 @@ const TransactionList = ({ }) => {
                     position: 'relative',
                     zIndex: 3,
                     boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                    minHeight: '70vh'
+                    minHeight: '65vh'
                 }}
             >
                 <table

@@ -11,11 +11,12 @@ import { getAccount } from "../../libs/keplrClient";
 
 const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, chainId, multisig, multisigID, rpc }) => {
     const [hasSigned, setHasSigned] = useState(false)
-    const [account, setAccount] = useState(null)
+    const [account, setAccount] = useState()
     const [accountError, setAccountError] = useState('')
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         const currentAccount = await getKey(chainId)
+        console.log(currentAccount.bech32Address)
         const hasSigned = currentSignatures.some(
             (sig) => sig.address === currentAccount.bech32Address
         );
@@ -48,6 +49,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
     }, [])
 
     useEffect(() => {
+        console.log('hello')
         if (checkAddrInMultisig()) {
             setAccountError('')
         }
@@ -56,8 +58,11 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
         }
     }, [account])
 
+    console.log(account)
+
     const checkAddrInMultisig = () => {
         if (!account) return false
+        console.log('heeee')
         const pubkeys = JSON.parse(multisig.pubkeyJSON).value.pubkeys
         const check = multisigHasAddr(pubkeys, account.bech32Address, multisig.prefix)
         return check
@@ -77,7 +82,6 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                 chainId
             );
             const signAccount = await getAccount(rpc, multisigID)
-            console.log(setAccount)
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
                 accountNumber: signAccount.accountNumber,

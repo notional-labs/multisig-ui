@@ -4,6 +4,7 @@ import DelegateMsgForm from "./transaction/DelegateMsg"
 import UndelegateMsg from "./transaction/UndelegateMsg"
 import WithdrawMsg from "./transaction/WithdrawMsg"
 import RedelegateMsg from "./transaction/RedelegateMsg"
+import VoteMsg from "./transaction/VoteMsg"
 import Button from "../input/Button"
 import { CloseOutlined } from '@ant-design/icons'
 
@@ -51,6 +52,16 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             type: 'msgRedelegate',
             component: (
                 <RedelegateMsg
+                    chain={chain}
+                    router={router}
+                    address={multisigID}
+                />
+            )
+        },
+        {
+            type: 'msgVoteProposal',
+            component: (
+                <VoteMsg
                     chain={chain}
                     router={router}
                     address={multisigID}

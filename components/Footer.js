@@ -15,9 +15,9 @@ const Footer = () => {
     return (
         <div
             style={{
-                backgroundColor: '#707070',
+                backgroundColor: '#2b2b2b',
                 padding: '2em 30em',
-                marginTop: '50px',
+                marginTop: '70px',
                 color: 'white',
             }}
         >
@@ -64,7 +64,7 @@ const Footer = () => {
                             top: '5px'
                         }}
                     >
-                        Powered By Notional
+                        © Powered By Notional
                     </text>
                 ]}
                 justifyContent={'space-between'}

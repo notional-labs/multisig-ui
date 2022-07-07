@@ -1,4 +1,4 @@
-import { setupStakingExtension, setupTxExtension, QueryClient } from "@cosmjs/stargate";
+import { setupStakingExtension, setupTxExtension, QueryClient, setupGovExtension } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import axios from "axios";
 
@@ -63,6 +63,16 @@ export const getTx = async (rpc, txHash) => {
         const res = await extension.tx.getTx(txHash)
         console.log(res)
         return res
+    }
+    catch (e) {
+        throw e
+    }
+}
+
+export const getProposals = async (api) => {
+    try {
+        const res = await axios.get(`${api}/cosmos/gov/v1beta1/proposals?proposal_status=2`)
+        return res.data
     }
     catch (e) {
         throw e
