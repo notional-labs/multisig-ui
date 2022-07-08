@@ -16,7 +16,7 @@ const style = {
 const WithdrawMsg = ({ chain, router, address }) => {
     const [rewards, setRewards] = useState([])
     const [txBody, setTxBody] = useState({
-        gas: 20000,
+        gas: 200000,
         fee: 0,
         memo: '',
     })

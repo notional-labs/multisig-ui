@@ -1,5 +1,12 @@
 import { Tooltip } from "antd"
 
+const options = {
+    1: 'yes',
+    2: 'no',
+    3: 'no with veto',
+    4: 'abstain'
+}
+
 const VoteMsg = ({ tx, style, chain }) => {
     return (
         <>
@@ -11,7 +18,7 @@ const VoteMsg = ({ tx, style, chain }) => {
                 >
                     Proposal Id:
                 </label>
-                <Tooltip placement="bottom" title="Check transaction in block explorer">
+                <Tooltip placement="bottom" title="Check proposal in block explorer">
                     <div
                         style={style.value}
                     >
@@ -35,7 +42,7 @@ const VoteMsg = ({ tx, style, chain }) => {
                 <div
                     style={style.value}
                 >
-                    {tx.msgs[0].value.option}
+                    {options[`${tx.msgs[0].value.option}`]}
                 </div>
             </div>
         </>

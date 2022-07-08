@@ -19,7 +19,7 @@ const UndelegateMsg = ({ chain, router, address }) => {
     const [txBody, setTxBody] = useState({
         validator: '',
         amount: 0,
-        gas: 20000,
+        gas: 200000,
         fee: 0,
         memo: '',
     })

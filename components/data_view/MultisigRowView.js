@@ -24,7 +24,7 @@ const MultisigRowView = ({ address, index }) => {
             initial={{
                 y: 60,
                 opacity: 0,
-                transition: { duration: .6, ease:  [0.6, -0.05, 0.01, 0.99] }
+                transition: { duration: .6, ease: [0.6, -0.05, 0.01, 0.99] }
             }}
             animate={{
                 y: 0,
@@ -34,6 +34,8 @@ const MultisigRowView = ({ address, index }) => {
                     ease: [0.6, -0.05, 0.01, 0.99]
                 }
             }}
+            whileHover={{ scale: 1.009 }}
+            whileTap={{ scale: 0.95 }}
             key={index}
             style={{
                 width: '100%',

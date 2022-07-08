@@ -18,7 +18,7 @@ const SendMsgForm = ({ address, chain, router }) => {
     const [txBody, setTxBody] = useState({
         toAddress: '',
         amount: 0,
-        gas: 20000,
+        gas: 200000,
         fee: 0,
         memo: '',
     })

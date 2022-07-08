@@ -88,7 +88,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                         >
                             Tx hash:
                         </label>
-                        <Tooltip placement="bottom" title="Check proposal in block explorer">
+                        <Tooltip placement="bottom" title="Check transaction in block explorer">
                             <div
                                 style={style.value}
                             >

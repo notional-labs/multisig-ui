@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import FlexRow from '../flex_box/FlexRow'
 import Button from '../input/Button'
+import { motion } from "framer-motion"
 import { ArrowLeftOutlined, UserOutlined, TeamOutlined, BlockOutlined, UserAddOutlined } from '@ant-design/icons'
 
 const routers = [
@@ -63,32 +64,32 @@ const multisigRouters = (multisigID) => {
     ]
 }
 
-const transactionRouters = (multisigID, transactionID) => {
-    return [
-        {
-            path: `/multisig/${multisigID}/transaction/${transactionID}`,
-            pathname: `/multisig/[multisigID]/transaction/[transactionID]`,
-            name: 'Transaction'
-        },
-    ]
-}
+// const transactionRouters = (multisigID, transactionID) => {
+//     return [
+//         {
+//             path: `/multisig/${multisigID}/transaction/${transactionID}`,
+//             pathname: `/multisig/[multisigID]/transaction/[transactionID]`,
+//             name: 'Transaction'
+//         },
+//     ]
+// }
 
 const style = {
     button: {
         borderRadius: '10px',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
         fontSize: '1.25rem',
         border: 0,
         paddingTop: '.75em',
         paddingBottom: '.75em',
-        width: '100%',
+        width: '250px',
         textAlign: 'right',
     }
 }
 
 const SideBar = ({ option }) => {
     const router = useRouter()
-    const { multisigID, transactionID } = router.query
+    const { multisigID } = router.query
 
     const checkPath = (path) => {
         return router.pathname === path
@@ -113,6 +114,66 @@ const SideBar = ({ option }) => {
                                 components={[
                                     routers.map((route, index) => {
                                         return (
+                                            <motion.div
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Button
+                                                    type={'link'}
+                                                    text={route.name(checkPath(route.pathname))}
+                                                    index={index}
+                                                    url={route.path}
+                                                    style={{
+                                                        ...style.button,
+                                                        color: checkPath(route.pathname) ? '#000000' : '#4b525d',
+                                                        fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                    }}
+                                                    className={'hover-nav-button'}
+                                                />
+                                            </motion.div>
+                                        )
+                                    })
+                                ]}
+                                justifyContent={'space-between'}
+                            />
+                        ]}
+                        justifyContent={'end'}
+                    />
+                ) : option === 1 ? (<FlexRow
+                    components={[
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Button
+                                type={'link'}
+                                text={
+                                    <div>
+                                        <ArrowLeftOutlined /> Back
+                                    </div>
+                                }
+                                url={'/'}
+                                style={{
+                                    borderRadius: '10px',
+                                    backgroundColor: 'transparent',
+                                    fontSize: '1.25rem',
+                                    border: 0,
+                                    paddingTop: '.5em',
+                                    paddingBottom: '.5em',
+                                    color: '#4b525d',
+                                    fontWeight: 400
+                                }}
+                                className={'hover-nav-button'}
+                            />
+                        </motion.div>,
+                        <FlexRow
+                            components={
+                                multisigRouters(multisigID).map((route, index) => {
+                                    return (
+                                        <motion.div
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
                                             <Button
                                                 type={'link'}
                                                 text={route.name(checkPath(route.pathname))}
@@ -125,63 +186,12 @@ const SideBar = ({ option }) => {
                                                 }}
                                                 className={'hover-nav-button'}
                                             />
-                                        )
-                                    })
-                                ]}
-                                justifyContent={'space-between'}
-                                style={{
-                                    width: '40%'
-                                }}
-                            />
-                        ]}
-                        justifyContent={'end'}
-                    />
-                ) : option === 1 ? (<FlexRow
-                    components={[
-                        <Button
-                            type={'link'}
-                            text={
-                                <div>
-                                    <ArrowLeftOutlined /> Back
-                                </div>
-                            }
-                            url={'/'}
-                            style={{
-                                borderRadius: '10px',
-                                backgroundColor: '#ffffff',
-                                fontSize: '1.25rem',
-                                border: 0,
-                                paddingTop: '.5em',
-                                paddingBottom: '.5em',
-                                color: '#4b525d',
-                                fontWeight: 400
-                            }}
-                            className={'hover-nav-button'}
-                        />,
-                        <FlexRow
-                            components={
-                                multisigRouters(multisigID).map((route, index) => {
-                                    return (
-                                        <Button
-                                            type={'link'}
-                                            text={route.name(checkPath(route.pathname))}
-                                            index={index}
-                                            url={route.path}
-                                            style={{
-                                                ...style.button,
-                                                color: checkPath(route.pathname) ? '#000000' : '#4b525d',
-                                                fontWeight: checkPath(route.pathname) ? 'bold' : 400
-                                            }}
-                                            className={'hover-nav-button'}
-                                        />
+                                        </motion.div>
                                     )
                                 })
 
                             }
                             justifyContent={'space-between'}
-                            style={{
-                                width: '40%'
-                            }}
                         />
                     ]
                     }
@@ -193,27 +203,29 @@ const SideBar = ({ option }) => {
                                 components={
                                     multisigRouters(multisigID).map((route, index) => {
                                         return (
-                                            <Button
-                                                type={'link'}
-                                                text={route.name(checkPath(route.pathname))}
-                                                index={index}
-                                                url={route.path}
-                                                style={{
-                                                    ...style.button,
-                                                    textAlign: 'left',
-                                                    color: checkPath(route.pathname) ? '#000000' : '#4b525d',
-                                                    fontWeight: checkPath(route.pathname) ? 'bold' : 400
-                                                }}
-                                                className={'hover-nav-button'}
-                                            />
+                                            <motion.div
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                            >
+                                                <Button
+                                                    type={'link'}
+                                                    text={route.name(checkPath(route.pathname))}
+                                                    index={index}
+                                                    url={route.path}
+                                                    style={{
+                                                        ...style.button,
+                                                        textAlign: 'left',
+                                                        color: checkPath(route.pathname) ? '#000000' : '#4b525d',
+                                                        fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                    }}
+                                                    className={'hover-nav-button'}
+                                                />
+                                            </motion.div>
                                         )
                                     })
 
                                 }
                                 justifyContent={'space-between'}
-                                style={{
-                                    width: '40%'
-                                }}
                             />
                         ]}
                         justifyContent={'space-between'}

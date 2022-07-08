@@ -18,7 +18,7 @@ const VoteMsg = ({ chain, router, address }) => {
     const [txBody, setTxBody] = useState({
         option: 1,
         proposalId: '',
-        gas: 20000,
+        gas: 200000,
         fee: 0,
         memo: '',
     })

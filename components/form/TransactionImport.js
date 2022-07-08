@@ -1,9 +1,19 @@
 import Button from "../input/Button"
 import { CloseOutlined } from '@ant-design/icons'
+import { motion } from "framer-motion"
 
 const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
     return (
-        <div
+        <motion.div
+            initial={{
+                y: -60,
+                opacity: 0,
+
+            }}
+            animate={{
+                y: 0,
+                opacity: 1
+            }}
             style={{
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
@@ -15,31 +25,38 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                 marginTop: '50px'
             }}
         >
-            <h1
+            <div
                 style={{
-                    marginBottom: 0,
-                    textAlign: 'left'
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: '10px'
                 }}
             >
-                Import Transaction
-            </h1>
-            <Button
-                text={(
-                    <CloseOutlined />
-                )}
-                style={{
-                    position: 'absolute',
-                    left: '90%',
-                    top: '35px',
-                    border: 0,
-                    backgroundColor: 'transparent',
-                    fontWeight: 'bold',
-                    fontSize: '1.25rem'
-                }}
-                clickFunction={wrapSetClose}
-            />
+                <h2
+                    style={{
+                        marginBottom: 0,
+                        textAlign: 'left'
+                    }}
+                >
+                    Import Transaction
+                </h2>
+                <Button
+                    text={(
+                        <CloseOutlined />
+                    )}
+                    style={{
+                        position: 'relative',
+                        top: '0px',
+                        border: 0,
+                        backgroundColor: 'transparent',
+                        fontWeight: 'bold',
+                        fontSize: '1.25rem'
+                    }}
+                    clickFunction={wrapSetClose}
+                />
+            </div>
 
-        </div>
+        </motion.div>
     )
 }
 

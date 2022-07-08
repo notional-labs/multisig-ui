@@ -21,7 +21,7 @@ const RedelegateMsg = ({ chain, router, address }) => {
         validatorSrc: '',
         validatorDest: '',
         amount: 0,
-        gas: 20000,
+        gas: 200000,
         fee: 0,
         memo: '',
     })

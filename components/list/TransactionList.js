@@ -137,7 +137,7 @@ const TransactionList = ({ }) => {
                             <Button
                                 text={(
                                     <div>
-                                        <ReloadOutlined 
+                                        <ReloadOutlined
                                             spin={spin}
                                         /> Update
                                     </div>
@@ -243,6 +243,7 @@ const TransactionList = ({ }) => {
                                                     ease: [0.6, -0.05, 0.01, 0.99]
                                                 }
                                             }}
+                                            whileHover={{ scale: 1.02 }}
                                             key={index}
                                             style={{
                                                 width: '100%',
@@ -288,7 +289,8 @@ const TransactionList = ({ }) => {
                                                     </>
                                                 ) : transaction !== null && (
                                                     <>
-                                                        <td
+                                                        <motion.td
+                                                            whileTap={{ scale: 0.9 }}
                                                             style={{
                                                                 width: '30%',
                                                                 fontSize: '1rem',
@@ -300,8 +302,9 @@ const TransactionList = ({ }) => {
                                                             >
                                                                 {transaction._id}
                                                             </Link>
-                                                        </td>
-                                                        <td
+                                                        </motion.td>
+                                                        <motion.td
+                                                            whileTap={{ scale: 0.9 }}
                                                             style={{
                                                                 width: '30%',
                                                                 fontSize: '1rem',
@@ -309,8 +312,9 @@ const TransactionList = ({ }) => {
                                                             }}
                                                         >
                                                             {getType(transaction)}
-                                                        </td>
-                                                        <td
+                                                        </motion.td>
+                                                        <motion.td
+                                                            whileTap={{ scale: 0.9 }}
                                                             style={{
                                                                 width: '20%',
                                                                 padding: '1em 0.5em',
@@ -331,8 +335,9 @@ const TransactionList = ({ }) => {
                                                                 }}
                                                             />
                                                             {transaction.status}
-                                                        </td>
-                                                        <td
+                                                        </motion.td>
+                                                        <motion.td
+                                                            whileTap={{ scale: 0.9 }}
                                                             style={{
                                                                 width: '20%',
                                                                 textAlign: 'left',
@@ -341,7 +346,7 @@ const TransactionList = ({ }) => {
                                                             }}
                                                         >
                                                             {timeStampHandler(new Date(transaction.createdOn))}
-                                                        </td>
+                                                        </motion.td>
                                                         <td
                                                             style={{
                                                                 width: '20%',
