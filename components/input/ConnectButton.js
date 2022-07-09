@@ -16,7 +16,6 @@ const ConnectButton = ({ chainId, setAccount }) => {
         <div
             style={{
                 position: 'relative',
-                color: '#000000',
                 height: '100%'
             }}
         >
@@ -25,8 +24,8 @@ const ConnectButton = ({ chainId, setAccount }) => {
                 text={'Connect'}
                 style={{
                     border: 'solid 2px white',
-                    backgroundColor: '#808080',
-                    color: 'white',
+                    backgroundImage: 'linear-gradient(93.58deg, #D9D9D9 0%, #808080 100%)',
+                    color: 'black',
                     borderRadius: '10px',
                     fontSize: '1.5rem',
                     padding: '.42em 1em'
