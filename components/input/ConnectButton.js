@@ -16,7 +16,7 @@ const ConnectButton = ({ chainId, setAccount }) => {
         <div
             style={{
                 position: 'relative',
-                height: '100%'
+                margin: 'auto 0'
             }}
         >
             <Button
@@ -27,8 +27,8 @@ const ConnectButton = ({ chainId, setAccount }) => {
                     backgroundImage: 'linear-gradient(93.58deg, #D9D9D9 0%, #808080 100%)',
                     color: 'black',
                     borderRadius: '10px',
-                    fontSize: '1.5rem',
-                    padding: '.42em 1em'
+                    fontSize: '1.25rem',
+                    padding: '.25em 1em'
                 }}
             />
         </div>

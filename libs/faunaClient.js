@@ -1,4 +1,11 @@
 import axios from "axios";
+const faunadb = require('faunadb')
+
+const client = new faunadb.Client({
+  secret: 'fnAEpSQb4LACVM3J42gdN_LN0_CG5XZ8ppzLi-ZK',
+})
+
+const q = faunadb.query
 
 const graphqlReq = axios.create({
   baseURL: "https://graphql.fauna.com/graphql",
@@ -6,6 +13,24 @@ const graphqlReq = axios.create({
     Authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
   },
 });
+
+export const deletePreviousSig = async (address) => {
+  // delete all previous signature when new tx is broadcast
+  const helper = await client.paginate(
+    q.Match(
+      q.Index('getSignaturesFromAddress'),
+      address
+    ),
+  ).each(function (signatures) {
+    signatures.map(async (signature) => {
+      await client.query(
+        q.Delete(
+          q.Ref(signature)
+        )
+      )
+    }) 
+  })
+}
 
 export const createMultisig = async (multisig) => {
   let multisigByAddressMutation = ''

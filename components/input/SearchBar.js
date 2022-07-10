@@ -1,7 +1,7 @@
 import { Input } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "./Button"
-import {SearchOutlined} from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 
 const SearchBar = ({ }) => {
     return (
@@ -9,34 +9,32 @@ const SearchBar = ({ }) => {
             components={[
                 <Input
                     style={{
-                        borderRadius: '10px 0 0 10px',
+                        borderRadius: '10px',
                         backgroundColor: 'transparent',
-                        border: 'solid 2px white',
-                        borderRight: 0,
-                        color: 'white',
-                        height: '100%',
-                        margin: 'auto 0',
-                        width: '500px',
-                        fontSize: '1.25rem'
+                        color: 'black',
+                        width: '400px',
+                        fontSize: '1rem',
                     }}
                     placeholder={'Search multisig'}
+                    allowClear={true}
+                    suffix={(
+                        <Button
+                            text={
+                                <SearchOutlined />
+                            }
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: 0,
+                            }}
+                        />
+                    )}
                 />,
-                <Button 
-                    text={
-                        <SearchOutlined />
-                    }
-                    style={{
-                        backgroundColor: 'transparent',
-                        border: 'solid 2px white',
-                        borderLeft: 0,
-                        borderRadius: '0 10px 10px 0',
-                        fontSize: '1.5rem',
-                    }}
-                />
             ]}
             style={{
-                // padding: '.25em 10px .25em 0'
-                marginRight: '20px'
+                marginRight: '20px',
+                backgroundColor: 'white',
+                borderRadius: '10px',
+                height: '48px',
             }}
         />
     )

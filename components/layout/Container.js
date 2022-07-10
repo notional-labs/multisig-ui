@@ -12,7 +12,7 @@ const Container = ({ component, option = 0 }) => {
             transition={{ duration: .6 }}
             className="page-container"
             style={{
-                paddingTop: '90px',
+                paddingTop: '80px',
             }}
         >
             {

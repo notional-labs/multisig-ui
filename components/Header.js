@@ -1,49 +1,33 @@
 import FlexRow from "./flex_box/FlexRow"
 import SelectChain from "./input/SelectChain"
-import Image from "next/image"
+import { Image } from "antd"
 import { ChainContext } from "./Context"
 import Account from "./layout/Account"
 import { useContext } from "react"
-import { Input } from "antd"
 import SearchBar from "./input/SearchBar"
 import '../styles/Header.module.css'
 import Link from "next/link"
 
 const logo = (
-    <FlexRow
-        components={[
-            (<Link
-                href={'/'}
-                style={{
-                    cursor: 'pointer'
-                }}
-            >
-                <div
-                    style={{
-                        position: 'relative',
-                        top: '6px'
-                    }}
-                >
-                    <Image
-                        src='/images/logo.png'
-                        width={'50px'}
-                        height={'50px'}
-                    />
-                </div>
-            </Link>),
-            (
-                <text
-                    style={{
-                        fontSize: '2rem',
-                        margin: 'auto 10px auto'
-                    }}
-                >
-                    MULTISIG
-                </text>
-            )
-        ]}
-        justifyContent={'space-between'}
-    />
+    <Link
+        href={'/multisigs'}
+        style={{
+            cursor: 'pointer'
+        }}
+    >
+        <div
+            style={{
+                position: 'relative',
+                margin: 'auto 0'
+            }}
+        >
+            <Image
+                src='/images/logo.png'
+                height={'50px'}
+                preview={false}
+            />
+        </div>
+    </Link>
 )
 
 const Header = ({ enableSelectChain }) => {
@@ -57,7 +41,7 @@ const Header = ({ enableSelectChain }) => {
                 color: '#ffffff',
                 padding: '1em 5em',
                 position: 'fixed',
-                height: '90px',
+                height: '80px',
                 width: '100%',
                 zIndex: 5
             }}

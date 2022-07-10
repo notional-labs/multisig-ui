@@ -24,7 +24,7 @@ const VoteMsg = ({ chain, router, address }) => {
     })
 
     const invalidForm = () => {
-        return txBody.option === 0 || txBody.proposalId === '' 
+        return txBody.option === 0 || txBody.proposalId === ''
     }
 
     const disabled = () => {
@@ -119,29 +119,48 @@ const VoteMsg = ({ chain, router, address }) => {
                 >
                     Proposal
                 </h4>
-                <select
-                    onChange={handleSelect}
-                    style={{
-                        width: '100%',
-                        padding: '1em',
-                        borderRadius: '10px',
-                    }}
-                    name={'proposalId'}
-                >
-                    {
-                        proposals.length > 0 && proposals.map((proposal, index) => {
-                            return (
-                                <option
-                                    value={proposal.proposal_id}
-                                    key={index}
-                                >
-                                    # {proposal.proposal_id} {proposal.content.title}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
+                {
+                    proposals.length > 0 ? (
+                        <select
+                            onChange={handleSelect}
+                            style={{
+                                width: '100%',
+                                padding: '1em',
+                                borderRadius: '10px',
+                            }}
+                            name={'proposalId'}
+                        >
+                            {
+                                proposals.map((proposal, index) => {
+                                    return (
+                                        <option
+                                            value={proposal.proposal_id}
+                                            key={index}
+                                        >
+                                            # {proposal.proposal_id} {proposal.content.title}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
 
+                    ) : (
+                        <div
+                            style={{
+                                width: '100%',
+                                borderRadius: '10px',
+                                height: '50px',
+                                border: 0,
+                                backgroundColor: 'transparent',
+                                padding: '1em',
+                                border: 'solid 1px black',
+                                color: 'red'
+                            }}
+                        >
+                            No proposals in voting period yet!
+                        </div>
+                    )
+                }
             </div>
             <div
                 style={style.input}

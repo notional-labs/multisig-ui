@@ -38,7 +38,8 @@ const Profile = ({ account, chainName, setAccount }) => {
         return (
             <FlexRow
                 components={[
-                    <text>
+                    <text
+                    >
                         {chainName.toUpperCase()}
                     </text>,
                     <Paragraph
@@ -46,6 +47,7 @@ const Profile = ({ account, chainName, setAccount }) => {
                         style={{
                             marginBottom: 0,
                             color: 'white',
+                            fontSize: '.75rem'
                         }}
                     >
                         {addressShortener(account.bech32Address)}
@@ -60,22 +62,29 @@ const Profile = ({ account, chainName, setAccount }) => {
         return (
             <div
                 style={{
-                    border: 'solid 2px white',
+                    border: 'solid 1px white',
                     backgroundColor: 'transparent',
                     color: 'white',
                     borderRadius: '10px',
-                    padding: '.5em 1em',
-                    width: '300px',
+                    padding: '.25em 1em',
+                    width: '280px',
                     margin: 'auto 0'
                 }}
             >
                 <FlexRow
                     components={[
-                        <Image
-                            src={'/images/avatar.png'}
-                            width='40px'
-                            height='40px'
-                        />,
+                        <div
+                            style={{
+                                position: 'relative',
+                                top: '3px'
+                            }}
+                        >
+                            <Image
+                                src={'/images/avatar.png'}
+                                width='35px'
+                                height='35px'
+                            />
+                        </div>,
                         addressCol(),
                         disconnectButton
                     ]}

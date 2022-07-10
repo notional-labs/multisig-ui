@@ -6,8 +6,8 @@ import { ArrowLeftOutlined, UserOutlined, TeamOutlined, BlockOutlined, UserAddOu
 
 const routers = [
     {
-        path: '/',
-        pathname: `/`,
+        path: '/multisigs',
+        pathname: `/multisigs`,
         name: (isColor) => (
             <div>
                 <TeamOutlined
@@ -152,15 +152,15 @@ const SideBar = ({ option }) => {
                                         <ArrowLeftOutlined /> Back
                                     </div>
                                 }
-                                url={'/'}
+                                url={'/multisigs'}
                                 style={{
                                     borderRadius: '10px',
                                     backgroundColor: 'transparent',
                                     fontSize: '1.25rem',
                                     border: 0,
-                                    paddingTop: '.5em',
-                                    paddingBottom: '.5em',
+                                    padding: '.5em 0',
                                     color: '#4b525d',
+                                    height: '100%',
                                     fontWeight: 400
                                 }}
                                 className={'hover-nav-button'}

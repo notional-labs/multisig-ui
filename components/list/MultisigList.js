@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef, useCallback } from "react"
+import { useState, useEffect, useContext, useCallback } from "react"
 import { getAllMultisigOfAddress } from "../../libs/multisig"
 import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"

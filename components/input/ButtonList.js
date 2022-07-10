@@ -7,7 +7,8 @@ const style = {
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: '20px'
     },
     button: {
         borderRadius: '50%',

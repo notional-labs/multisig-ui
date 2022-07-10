@@ -20,7 +20,7 @@ const SelectChain = ({ enableSelectChain }) => {
                             (
                                 <Image
                                     src={chain.logo}
-                                    width={'20px'}
+                                    width={'25px'}
                                     preview={false}
                                 />
                             ), (
@@ -28,6 +28,8 @@ const SelectChain = ({ enableSelectChain }) => {
                                     style={{
                                         marginLeft: '10px',
                                         fontSize: '1rem',
+                                        position: 'relative',
+                                        top: '2px'
                                     }}
                                 >
                                     {chain.name.toUpperCase()}
@@ -38,8 +40,12 @@ const SelectChain = ({ enableSelectChain }) => {
                 ), enableSelectChain && (
                     <Image
                         src={'/images/selectButton.png'}
-                        width={'20px'}
+                        width={'15px'}
                         preview={false}
+                        style={{
+                            position: 'relative',
+                            top: '1px'
+                        }}
                     />
                 )
             ]}
@@ -64,7 +70,7 @@ const SelectChain = ({ enableSelectChain }) => {
                             (
                                 <Image
                                     src={chain.logo}
-                                    width={'20px'}
+                                    width={'30px'}
                                     preview={false}
                                 />
                             ), (
@@ -73,7 +79,9 @@ const SelectChain = ({ enableSelectChain }) => {
                                         margin: '0 0 0 .25em',
                                         position: 'relative',
                                         fontSize: '1rem',
-                                        color: '#000000'
+                                        color: '#000000',
+                                        position: 'relative',
+                                        top: '3px'
                                     }}
                                 >
                                     {chain.name.toUpperCase()}
@@ -107,7 +115,6 @@ const SelectChain = ({ enableSelectChain }) => {
                 position: 'relative',
                 color: '#000000',
                 margin: 'auto 0',
-                height: '100%'
             }}
         >
             <Button
@@ -117,51 +124,50 @@ const SelectChain = ({ enableSelectChain }) => {
                     border: 0,
                     borderRadius: '10px',
                     backgroundColor: '#FFFFFF',
-                    padding: '1em',
-                    width: enableSelectChain && '200px',
-                    height: '100%'
+                    padding: '.75em 1em',
+                    width: enableSelectChain && '170px',
                 }}
                 disable={!enableSelectChain}
             />
             <Modal
-                    visible={showDropDown}
-                    footer={null}
-                    closable={false}
-                    onCancel={handleClose}
+                visible={showDropDown}
+                footer={null}
+                closable={false}
+                onCancel={handleClose}
+            >
+                <div
+                    style={{
+                        backgroundColor: '#ffffff',
+                        borderRadius: '10px',
+                        padding: '.05em',
+                    }}
                 >
-                    <div
+                    <text
                         style={{
-                            backgroundColor: '#ffffff',
-                            borderRadius: '10px',
-                            padding: '.05em',
+                            fontWeight: 'bold',
                         }}
                     >
-                        <text
-                            style={{
-                                fontWeight: 'bold',
-                            }}
-                        >
-                            Select a chain
-                        </text>
-                        <div
-                            style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(3, 1fr)',
-                                gridRowGap: '10px',
-                                gridColumnGap: '10px',
-                                marginTop: '10px'
-                            }}
-                        >
-                            {
-                                chainData.map((chain, index) => {
-                                    return (
-                                        getGridButton(chain, index)
-                                    )
-                                })
-                            }
-                        </div>
+                        Select a chain
+                    </text>
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gridRowGap: '10px',
+                            gridColumnGap: '10px',
+                            marginTop: '10px'
+                        }}
+                    >
+                        {
+                            chainData.map((chain, index) => {
+                                return (
+                                    getGridButton(chain, index)
+                                )
+                            })
+                        }
                     </div>
-                </Modal>
+                </div>
+            </Modal>
         </div>
     )
 }
