@@ -227,7 +227,7 @@ const TransactionList = ({ }) => {
                             }}
                         >
                             {
-                                viewTransactions.map((transaction, index) => {
+                                !loading ? viewTransactions.map((transaction, index) => {
                                     return (
                                         <motion.tr
                                             initial={{
@@ -252,42 +252,7 @@ const TransactionList = ({ }) => {
                                             }}
                                         >
                                             {
-                                                loading ? (
-                                                    <>
-                                                        <td
-                                                            style={{
-                                                                width: '30%',
-                                                                paddingTop: '1em'
-                                                            }}
-                                                        >
-                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                        </td>
-                                                        <td
-                                                            style={{
-                                                                width: '30%',
-                                                                paddingTop: '1em'
-                                                            }}
-                                                        >
-                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                        </td>
-                                                        <td
-                                                            style={{
-                                                                width: '20%',
-                                                                paddingTop: '1em'
-                                                            }}
-                                                        >
-                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                        </td>
-                                                        <td
-                                                            style={{
-                                                                width: '20%',
-                                                                paddingTop: '1em'
-                                                            }}
-                                                        >
-                                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                                        </td>
-                                                    </>
-                                                ) : transaction !== null && (
+                                                transaction !== null && (
                                                     <>
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
@@ -331,7 +296,7 @@ const TransactionList = ({ }) => {
                                                                     display: 'inline-block',
                                                                     marginRight: '10px',
                                                                     position: 'relative',
-                                                                    top: '3px'
+                                                                    top: '2px'
                                                                 }}
                                                             />
                                                             {transaction.status}
@@ -357,7 +322,7 @@ const TransactionList = ({ }) => {
                                                         >
                                                             <Tooltip placement="top" title='Share transaction'>
                                                                 <CopyToClipboard
-                                                                    text={`${process.env.HOST}${multisigID}/transaction/${transaction._id}`}
+                                                                    text={`${process.env.NEXT_PUBLIC_HOST}${multisigID}/transaction/${transaction._id}`}
                                                                     onCopy={() => {
                                                                         openNotification('success', 'Copy to clipboard !')
                                                                     }}
@@ -387,7 +352,42 @@ const TransactionList = ({ }) => {
                                             }
                                         </motion.tr>
                                     )
-                                })
+                                }) : (
+                                    <>
+                                        <td
+                                            style={{
+                                                width: '30%',
+                                                paddingTop: '1em'
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                        </td>
+                                        <td
+                                            style={{
+                                                width: '30%',
+                                                paddingTop: '1em'
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                        </td>
+                                        <td
+                                            style={{
+                                                width: '20%',
+                                                paddingTop: '1em'
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                        </td>
+                                        <td
+                                            style={{
+                                                width: '20%',
+                                                paddingTop: '1em'
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                        </td>
+                                    </>
+                                )
                             }
                         </motion.tbody>
                     </table>

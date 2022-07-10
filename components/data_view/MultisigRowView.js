@@ -6,12 +6,13 @@ import Link from 'next/link'
 import { addressShortener, timeStampHandler } from "../../libs/stringConvert"
 import { motion } from "framer-motion"
 
-const MultisigRowView = ({ address, index }) => {
+const MultisigRowView = ({ address, index, loadingRow = false }) => {
     const [multisig, setMultisg] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
+            if(loadingRow) return
             setLoading(true)
             const res = await getMultisigFromAddress(address)
             setMultisg(res)
@@ -43,7 +44,7 @@ const MultisigRowView = ({ address, index }) => {
             }}
         >
             {
-                loading ? (
+                loading || loadingRow ? (
                     <>
                         <td
                             style={{

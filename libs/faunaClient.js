@@ -2,7 +2,7 @@ import axios from "axios";
 const faunadb = require('faunadb')
 
 const client = new faunadb.Client({
-  secret: 'fnAEpSQb4LACVM3J42gdN_LN0_CG5XZ8ppzLi-ZK',
+  secret: process.env.NEXT_PUBLIC_FAUNADB_SECRET,
 })
 
 const q = faunadb.query
@@ -10,7 +10,7 @@ const q = faunadb.query
 const graphqlReq = axios.create({
   baseURL: "https://graphql.fauna.com/graphql",
   headers: {
-    Authorization: `Bearer ${process.env.FAUNADB_SECRET}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
   },
 });
 

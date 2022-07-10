@@ -29,6 +29,35 @@ const Page = ({ enableSelectChain = true, children }) => {
                 <Footer />
             </div>
             <TopUpButton/>
+            
+            {/* global css */}
+            <style jsx global>{`
+                ::-webkit-scrollbar {
+                    width: 10px;
+                    height: 5px;
+                }
+                
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    display: none;
+                    background: transparent
+                }
+                
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: #8f8f8f; 
+                    border-radius: 10px;
+                }
+                
+                .hover-nav-button:hover {
+                    font-size: 1.5em;
+                }
+
+                .ant-modal-content {
+                    border-radius: 20px;
+                    /* background: red; */
+                  }
+            `}</style>
         </div>
     )
 }

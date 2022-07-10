@@ -23,7 +23,7 @@ const SelectChain = ({ enableSelectChain }) => {
                                     width={'25px'}
                                     preview={false}
                                 />
-                            ), (
+                            ), enableSelectChain && (
                                 <span
                                     style={{
                                         marginLeft: '10px',
@@ -114,17 +114,17 @@ const SelectChain = ({ enableSelectChain }) => {
             style={{
                 position: 'relative',
                 color: '#000000',
-                margin: 'auto 0',
+                margin: 'auto 15px',
             }}
         >
             <Button
                 text={buttonText}
                 clickFunction={handleShow}
                 style={{
-                    border: 0,
-                    borderRadius: '10px',
+                    border: 'solid 1px white',
+                    borderRadius: enableSelectChain ? '10px' : '50%',
                     backgroundColor: '#FFFFFF',
-                    padding: '.75em 1em',
+                    padding:  enableSelectChain ? '.75em 1em' : '.75em',
                     width: enableSelectChain && '170px',
                 }}
                 disable={!enableSelectChain}

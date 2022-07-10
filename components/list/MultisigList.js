@@ -29,7 +29,7 @@ const MultisigList = ({ }) => {
         const address = account.bech32Address
         const res = await getAllMultisigOfAddress(address)
         setMultisigs([...res])
-        setLoading(false)  
+        setLoading(false)
     }, []);
 
     const storageListener = useCallback(async (event) => {
@@ -66,7 +66,7 @@ const MultisigList = ({ }) => {
         window.addEventListener('chain_changed', chainChangedListener)
 
         return () => {
-            window.keplr &&  window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
+            window.keplr && window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
 
             window.removeEventListener('storage', storageListener)
 
@@ -206,15 +206,17 @@ const MultisigList = ({ }) => {
                         }}
                     >
                         {
-                            !loading && (
-                                viewMultsigi.map((multisig, index) => {
-                                    return (
-                                        <MultisigRowView
-                                            address={multisig.address}
-                                            index={index}
-                                        />
-                                    )
-                                })
+                            !loading ? viewMultsigi.map((multisig, index) => {
+                                return (
+                                    <MultisigRowView
+                                        address={multisig.address}
+                                        index={index}
+                                    />
+                                )
+                            }) : (
+                                <MultisigRowView
+                                    loadingRow={true}
+                                />
                             )
                         }
                     </motion.tbody >

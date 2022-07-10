@@ -39,7 +39,7 @@ const Header = ({ enableSelectChain }) => {
             style={{
                 backgroundImage: `${chain.color}`,
                 color: '#ffffff',
-                padding: '1em 5em',
+                padding: '1em 30em',
                 position: 'fixed',
                 height: '80px',
                 width: '100%',
@@ -51,17 +51,16 @@ const Header = ({ enableSelectChain }) => {
                     logo,
                     <FlexRow
                         components={[
-                            <SearchBar />,
                             <SelectChain
                                 enableSelectChain={enableSelectChain}
                             />,
+                            <Account
+                                chainId={chain.chain_id}
+                                chainName={chain.name}
+                            />
                         ]}
                         justifyContent={'space-between'}
                     />,
-                    <Account
-                        chainId={chain.chain_id}
-                        chainName={chain.name}
-                    />
                 ]}
                 justifyContent={'space-between'}
             />

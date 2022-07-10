@@ -24,7 +24,8 @@ const style = {
         color: '#000000',
         fontSize: '1rem',
         width: '80%',
-        textAlign: 'left'
+        textAlign: 'left',
+        overflowX: 'hidden'
     },
     flexRow: {
         display: 'flex',
