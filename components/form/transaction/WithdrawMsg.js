@@ -3,6 +3,7 @@ import ShareForm from "./ShareForm"
 import { getRewards } from "../../../libs/validators"
 import { createWithdrawRewardsMsg } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import ValidatorRow from "../../data_view/ValidatorRow"
 import axios from "axios"
 
 const style = {
@@ -139,7 +140,7 @@ const WithdrawMsg = ({ chain, router, address }) => {
                                                 textAlign: 'left'
                                             }}
                                         >
-                                            Validator Address
+                                            Validator
                                         </th>
                                         <th
                                             style={{
@@ -165,7 +166,16 @@ const WithdrawMsg = ({ chain, router, address }) => {
                                                             paddingTop: '1em'
                                                         }}
                                                     >
-                                                        {reward.validator_address}
+                                                        <a
+                                                            href={`${chain.explorer}validators/${reward.validator_address}`}
+                                                            target={'_blank'}
+                                                            rel="noreferrer"
+                                                        >
+                                                            <ValidatorRow
+                                                                address={reward.validator_address}
+                                                                chain={chain}
+                                                            />
+                                                        </a>
                                                     </td>
                                                     <td
                                                         style={{

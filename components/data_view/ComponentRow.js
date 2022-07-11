@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import ComponentView from "./ComponentView"
-import { addressShortener } from "../../libs/stringConvert"
 
 const ComponentRow = ({ pubkeys, prefix }) => {
     const [pubkeyList, setPubkeyList] = useState([])

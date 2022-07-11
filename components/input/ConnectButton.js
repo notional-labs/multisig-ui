@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { getKeplrAccount, getKey } from "../../libs/keplrClient"
+import { getKey } from "../../libs/keplrClient"
 import { useRouter } from "next/router"
 
 const ConnectButton = ({ chainId, setAccount }) => {
@@ -16,7 +16,8 @@ const ConnectButton = ({ chainId, setAccount }) => {
         <div
             style={{
                 position: 'relative',
-                margin: 'auto 0'
+                margin: 'auto 0',
+                height: '100%'
             }}
         >
             <Button
@@ -28,7 +29,8 @@ const ConnectButton = ({ chainId, setAccount }) => {
                     color: 'black',
                     borderRadius: '10px',
                     fontSize: '1.25rem',
-                    padding: '.25em 1em'
+                    padding: '.25em 1em',
+                    height: '100%'
                 }}
             />
         </div>

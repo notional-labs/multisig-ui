@@ -1,5 +1,4 @@
 import Header from "../Header"
-import NextNProgress from "nextjs-progressbar";
 import Footer from "../Footer";
 import TopUpButton from "../input/TopUpButton";
 
