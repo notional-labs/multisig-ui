@@ -8,7 +8,6 @@ export const getValidators = async (rpc) => {
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
         const res = await extension.staking.validators('BOND_STATUS_BONDED')
-        console.log(res)
         return res
     }
     catch (e) {
@@ -16,6 +15,19 @@ export const getValidators = async (rpc) => {
     }
 }
 
+export const getValidator = async (rpc, address) => {
+    try{
+        const tendermint = await Tendermint34Client.connect(rpc)
+        const baseQuery = new QueryClient(tendermint)
+        const extension = setupStakingExtension(baseQuery)
+        const res = await extension.staking.validator(address)
+        return res
+    }
+    catch (e) {
+        throw e
+    }
+}
+  
 export const getDelegations = async (rpc, delegator) => {
     try {
         const tendermint = await Tendermint34Client.connect(rpc)

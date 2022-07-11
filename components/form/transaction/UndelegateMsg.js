@@ -4,6 +4,7 @@ import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
 import { createUndelegateMsg } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import ValidatorRow from "../../data_view/ValidatorRow"
 import axios from "axios"
 
 const style = {
@@ -159,7 +160,10 @@ const UndelegateMsg = ({ chain, router, address }) => {
                                             value={delegation.delegation.validatorAddress}
                                             key={index}
                                         >
-                                            {delegation.delegation.validatorAddress}
+                                            <ValidatorRow
+                                                address={delegation.delegation.validatorAddress}
+                                                chain={chain}
+                                            />
                                         </option>
                                     )
                                 })

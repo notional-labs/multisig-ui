@@ -4,12 +4,10 @@ import FlexRow from "../flex_box/FlexRow"
 import { Image, Modal } from "antd"
 import { ChainContext } from "../Context"
 import { useContext, useState } from "react"
-import { useRouter } from "next/router"
 
 const SelectChain = ({ enableSelectChain }) => {
     const [showDropDown, setShowDropDown] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
-    const router = useRouter()
 
     const buttonText = (
         <FlexRow
@@ -29,13 +27,15 @@ const SelectChain = ({ enableSelectChain }) => {
                                         marginLeft: '10px',
                                         fontSize: '1rem',
                                         position: 'relative',
-                                        top: '2px'
                                     }}
                                 >
                                     {chain.name.toUpperCase()}
                                 </span>
                             )
                         ]}
+                        style={{
+                            margin: 'auto 0'
+                        }}
                     />
                 ), enableSelectChain && (
                     <Image
@@ -44,7 +44,7 @@ const SelectChain = ({ enableSelectChain }) => {
                         preview={false}
                         style={{
                             position: 'relative',
-                            top: '1px'
+                            top: '1px',
                         }}
                     />
                 )
