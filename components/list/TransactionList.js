@@ -322,7 +322,7 @@ const TransactionList = ({ }) => {
                                                         >
                                                             <Tooltip placement="top" title='Share transaction'>
                                                                 <CopyToClipboard
-                                                                    text={`${process.env.NEXT_PUBLIC_HOST}${multisigID}/transaction/${transaction._id}`}
+                                                                    text={`${process.env.NEXT_PUBLIC_HOST}/multisig/${multisigID}/transaction/${transaction._id}`}
                                                                     onCopy={() => {
                                                                         openNotification('success', 'Copy to clipboard !')
                                                                     }}
