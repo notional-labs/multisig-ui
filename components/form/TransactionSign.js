@@ -141,7 +141,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                     marginBottom: '20px'
                 }}
             >
-                By signing this transaction, you'll agree to unsigned all previous pending transaction to avoid mismatch sequence.
+                By signing this transaction, you`ll agree to unsigned all previous pending transaction to avoid mismatch sequence.
             </div>
             {
                 hasSigned ? (

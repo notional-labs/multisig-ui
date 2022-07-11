@@ -4,7 +4,7 @@ import { ChainProvider } from "../components/Context";
 import Container from "../components/layout/Container";
 import MultisigList from "../components/list/MultisigList";
 
-export default function Home() {
+export default function Multisigs() {
   return (
     <ChainProvider>
       <Page>

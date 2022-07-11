@@ -174,7 +174,7 @@ const UndelegateMsg = ({ chain, router, address }) => {
                                 color: 'white'
                             }}
                         >
-                            This address hasn't delegate to any validators yet!
+                            This address hasn`t delegate to any validators yet!
                         </div>
                     )
                 }

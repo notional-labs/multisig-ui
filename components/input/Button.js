@@ -48,6 +48,7 @@ const Button = ({
             href={url}
             target={'_blank'}
             dataToggle={hoverText}
+            rel="noreferrer"
         >
             <button
                 key={index}

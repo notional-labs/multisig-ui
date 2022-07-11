@@ -4,7 +4,7 @@ import { ChainProvider } from "../../../components/Context";
 import Container from "../../../components/layout/Container";
 import TransactionList from "../../../components/list/TransactionList";
 
-export default () => {
+export default function Transactions() {
     return (
         <ChainProvider>
             <Page

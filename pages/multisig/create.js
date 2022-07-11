@@ -4,7 +4,7 @@ import { ChainProvider } from "../../components/Context";
 import Container from "../../components/layout/Container";
 import MultisigCreate from "../../components/form/MultisigCreate";
 
-export default () => {
+export default function MultisigCreatePage() {
     return (
         <ChainProvider>
             <Page>

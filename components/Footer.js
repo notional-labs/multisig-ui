@@ -32,6 +32,7 @@ const Footer = () => {
                                 )}
                                 type={'a'}
                                 url={'https://github.com/notional-labs/'}
+                                index={0}
                             />,
                             <Button
                                 style={style.button}
@@ -40,6 +41,7 @@ const Footer = () => {
                                 )}
                                 type={'a'}
                                 url={'https://twitter.com/notionaldao'}
+                                index={1}
                             />,
                             <Button
                                 style={style.button}
@@ -48,12 +50,14 @@ const Footer = () => {
                                 )}
                                 type={'a'}
                                 url={'https://notional.ventures/'}
+                                index={2}
                             />
                         ]}
                         style={{
                             width: '150px'
                         }}
                         justifyContent={'space-between'}
+                        index={0}
                     />,
                     <text
                         style={{
@@ -63,6 +67,7 @@ const Footer = () => {
                             color: '#dedede',
                             top: '5px'
                         }}
+                        key={1}
                     >
                         © Powered By Notional
                     </text>

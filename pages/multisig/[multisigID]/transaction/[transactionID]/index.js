@@ -4,7 +4,7 @@ import Container from "../../../../../components/layout/Container";
 import { ChainProvider } from "../../../../../components/Context";
 import TransactionView from "../../../../../components/data_view/TransactionView";
 
-export default () => {
+export default function Transaction() {
     return (
         <ChainProvider>
             <Page
