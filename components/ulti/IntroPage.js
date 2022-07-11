@@ -1,47 +1,6 @@
 import { motion } from "framer-motion"
 import Button from "../input/Button"
-import FlexRow from "../flex_box/FlexRow"
 import { Image } from "antd"
-
-const variant = {
-    button: {
-        yoyo: Infinity,
-        scale: 1.2,
-        repeatDelay: 1
-    }
-}
-
-const logo = (
-    <FlexRow
-        components={[
-            (
-                <div
-                    style={{
-                        position: 'relative',
-                        top: '5px'
-                    }}
-                >
-                    <Image
-                        src='/images/invert-logo.png'
-                        width={'40px'}
-                        height={'40px'}
-                    />
-                </div>
-            ),
-            (
-                <text
-                    style={{
-                        fontSize: '1.5rem',
-                        margin: 'auto 10px auto'
-                    }}
-                >
-                    MULTISIG
-                </text>
-            )
-        ]}
-        justifyContent={'space-between'}
-    />
-)
 
 const IntroPage = ({ }) => {
     return (
@@ -55,87 +14,96 @@ const IntroPage = ({ }) => {
                 padding: '1em 30em',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                overflowX: 'hidden',
+                overflowY: 'hidden'
             }}
         >
-            <motion.div
-                initial={{
-                    y: -60,
-                    opacity: 0
-                }}
-                animate={{
-                    y: 0,
-                    opacity: 1
-                }}
-                exit={{ opacity: 0, y: -60 }}
-                transition={{ duration: .6 }}
-            >
-                <Image
-                    src={'/images/pink-logo.png'}
-                    height={'150px'}
-                    preview={false}
-                    style={{
-
-                    }}
-                />
-            </motion.div>
-            <motion.div
-                initial={{
-                    x: -60,
-                    opacity: 0
-                }}
-                animate={{
-                    x: 0,
-                    opacity: 1
-                }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: .6 }}
+            <div
                 style={{
-                    color: '#F195C6',
-                    fontSize: '24px',
-                    margin: '20px 0'
+                    position: 'relative',
+                    zIndex: 1
                 }}
             >
-                <text
+                <motion.div
+                    initial={{
+                        y: -60,
+                        opacity: 0
+                    }}
+                    animate={{
+                        y: 0,
+                        opacity: 1
+                    }}
+                    exit={{ opacity: 0, y: -60 }}
+                    transition={{ duration: .6 }}
+                >
+                    <Image
+                        src={'/images/pink-logo.png'}
+                        height={'150px'}
+                        preview={false}
+                        style={{
+
+                        }}
+                    />
+                </motion.div>
+                <motion.div
+                    initial={{
+                        x: -60,
+                        opacity: 0
+                    }}
+                    animate={{
+                        x: 0,
+                        opacity: 1
+                    }}
+                    exit={{ opacity: 0, x: -60 }}
+                    transition={{ duration: .6 }}
                     style={{
                         color: '#F195C6',
+                        fontSize: '24px',
+                        margin: '20px 0'
                     }}
                 >
-                    Create multisig, sign and broadcast transaction together!
-                </text>
-            </motion.div>
-            <motion.div
-                initial={{
-                    scale: .95,
-                }}
-                animate={{
-                    scale: 1
-                }}
-                transition={{
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 2
-                }}
-                whileHover={{
-                    color: 'black'
-                }}
-            >
-                <Button
-                    text={'Enter The Tool'}
-                    style={{
-                        fontSize: '1.5rem',
-                        padding: '.25em 2em',
-                        borderRadius: '10px',
-                        backgroundImage: 'linear-gradient(92.29deg, #CCD1FF 0%, #EF96C5 100%)',
-                        fontWeight: 'bold',
-                        color: 'white',
-                        border: 0,
+                    <text
+                        style={{
+                            color: '#F195C6',
+                        }}
+                    >
+                        Create multisig, sign and broadcast transaction together!
+                    </text>
+                </motion.div>
+                <motion.div
+                    initial={{
+                        scale: .95,
                     }}
-                    type={'link'}
-                    url={'/multisigs'}
-                    className={'gradient-button'}
-                />
-            </motion.div>
+                    animate={{
+                        scale: 1
+                    }}
+                    transition={{
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        duration: 2
+                    }}
+                    whileHover={{
+                        color: 'black'
+                    }}
+                >
+                    <Button
+                        text={'Enter The Tool'}
+                        style={{
+                            fontSize: '1.5rem',
+                            padding: '.25em 2em',
+                            borderRadius: '10px',
+                            backgroundImage: 'linear-gradient(92.29deg, #CCD1FF 0%, #EF96C5 100%)',
+                            fontWeight: 'bold',
+                            color: 'white',
+                            border: 0,
+                        }}
+                        type={'link'}
+                        url={'/multisigs'}
+                        className={'gradient-button'}
+                    />
+                </motion.div>
+            </div>
             <Button
                 text={'View in github'}
                 type={'a'}
@@ -163,6 +131,23 @@ const IntroPage = ({ }) => {
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
                 }
+                ::-webkit-scrollbar {
+                    width: 10px;
+                    height: 5px;
+                }
+                
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    display: none;
+                    background: transparent
+                }
+                
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: #8f8f8f; 
+                    border-radius: 10px;
+                }
+                
             `}</style>
         </div>
     )

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
 import { chainData } from '../data/chainData';
-import { getKey } from '../libs/keplrClient';
 import { AnimatePresence } from "framer-motion";
 
 export const ChainContext = createContext();

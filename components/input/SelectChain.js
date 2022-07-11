@@ -115,6 +115,7 @@ const SelectChain = ({ enableSelectChain }) => {
                 position: 'relative',
                 color: '#000000',
                 margin: 'auto 15px',
+                height: '100%'
             }}
         >
             <Button
@@ -126,6 +127,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     backgroundColor: '#FFFFFF',
                     padding:  enableSelectChain ? '.75em 1em' : '.75em',
                     width: enableSelectChain && '170px',
+                    height: '100%'
                 }}
                 disable={!enableSelectChain}
             />

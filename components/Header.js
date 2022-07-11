@@ -4,7 +4,6 @@ import { Image } from "antd"
 import { ChainContext } from "./Context"
 import Account from "./layout/Account"
 import { useContext } from "react"
-import SearchBar from "./input/SearchBar"
 import '../styles/Header.module.css'
 import Link from "next/link"
 

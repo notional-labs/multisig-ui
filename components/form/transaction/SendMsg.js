@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Button from '../../input/Button';
 import Input from '../../input/Input'
 import { isValidAddress } from '../../../libs/checkTool';
 import axios from 'axios'

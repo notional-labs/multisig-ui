@@ -1,6 +1,4 @@
 import SideBar from "./SideBar"
-import FlexRow from "../flex_box/FlexRow"
-import ContainerContent from "./CointainerContent"
 import { motion } from "framer-motion"
 
 const Container = ({ component, option = 0 }) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getDelegations, getRewards, } from "../../../libs/validators"
+import { getDelegations, } from "../../../libs/validators"
 import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
 import { createUndelegateMsg } from "../../../libs/transaction"
