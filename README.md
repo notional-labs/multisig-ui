@@ -1,4 +1,4 @@
-## This is a Osmosis multisig UI 
+## This is a multisig UI 
 
 # Getting Started
 
