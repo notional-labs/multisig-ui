@@ -23,6 +23,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```
 NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-4334
 NEXT_PUBLIC_HOST=http://localhost:3000/
-
 ```
 
