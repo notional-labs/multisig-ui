@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react"
 import { getProposals } from "../../../libs/validators"
 import ShareForm from "./ShareForm"
-import { createVoteMsg } from "../../../libs/transaction"
+import { createVoteMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import { Radio, Space } from 'antd';
+import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
 
 const style = {
     input: {
         marginBottom: '10px',
         color: 'black'
+    },
+    button: {
+        border: 0,
+        borderRadius: '10px',
+        width: '40%',
+        padding: '.5em 1em'
     }
 }
 
@@ -22,6 +29,7 @@ const VoteMsg = ({ chain, router, address }) => {
         fee: 0,
         memo: '',
     })
+    const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         return txBody.option === 0 || txBody.proposalId === ''
@@ -107,6 +115,25 @@ const VoteMsg = ({ chain, router, address }) => {
         })
     }
 
+    const handleClose = () => {
+        setShowWarning(false)
+    }
+
+    const handleProcced = async () => {
+        const check = await checkIfHasPendingTx(address)
+        if (check) {
+            setShowWarning(true)
+        }
+        else {
+            await handleCreate()
+        }
+    }
+
+    const handleCancel = () => {
+        setShowWarning(false)
+        openNotification('error', 'Cancel create transaction')
+    }
+
     return (
         <div>
             <div
@@ -190,10 +217,17 @@ const VoteMsg = ({ chain, router, address }) => {
                 handleKeyGroupChange={(e) => {
                     handleKeyGroupChange(e);
                 }}
-                handleCreate={handleCreate}
+                handleCreate={handleProcced}
                 chain={chain}
                 style={style}
                 disabled={disabled()}
+            />
+            <WarningModal
+                style={style}
+                handleClose={handleClose}
+                handleCreate={handleCreate}
+                showWarning={showWarning}
+                handleCancel={handleCancel}
             />
         </div>
     )

@@ -1,4 +1,5 @@
 import { StargateClient } from "@cosmjs/stargate";
+import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 
 export const getKeplrAccount = async (chainId) => {
@@ -54,6 +55,8 @@ export const getAccount = async (rpc, address) => {
     try {
         let account = await client.getAccount(address);
 
+        console.log(account)
+
         if (!account) {
             throw new Error(
                 "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
@@ -73,6 +76,26 @@ export const getAccount = async (rpc, address) => {
             account.pubkey = pubkey;
         }
         return account;
+    }
+    catch (e) {
+        throw new Error(e.message)
+    }
+}
+
+export const getSequence = async (api, address) => {
+    try {
+        let { data } = await axios.get(`${api}cosmos/auth/v1beta1/accounts/${address}`, {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          })
+
+        if (!data.account) {
+            throw new Error(
+                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+            );
+        }
+        return data.account;
     }
     catch (e) {
         throw new Error(e.message)

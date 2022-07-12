@@ -28,7 +28,7 @@ export const deletePreviousSig = async (address) => {
           q.Ref(signature)
         )
       )
-    }) 
+    })
   })
 }
 
@@ -144,14 +144,17 @@ export const getTransaction = async (id) => {
                     createBy
                     txHash
                     signatures {
-                        data {
+                      data {
+                        _id
                         address
                         signature
                         bodyBytes
-                        }
+                        accountNumber
+                        sequence
+                      }
                     }
                     dataJSON
-                    }
+                  }
                 }
           `,
     },
@@ -159,7 +162,7 @@ export const getTransaction = async (id) => {
   return res
 }
 
-export const createSignature = async (signature, transactionId) => {
+export const getTransactionByStatus = async (address) => {
   return graphqlReq({
     method: "POST",
     data: {
@@ -180,7 +183,78 @@ export const createSignature = async (signature, transactionId) => {
       `,
     },
   });
+}
+
+export const createSignature = async (signature, transactionId) => {
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          createSignature(data: {
+            transaction: {connect: ${transactionId}}, 
+            bodyBytes: "${signature.bodyBytes}",
+            signature: "${signature.signature}",
+            address: "${signature.address}",
+            accountNumber: ${signature.accountNumber},
+            sequence: ${signature.sequence}
+          }) {
+            _id
+            address
+            signature
+            address
+            accountNumber
+            sequence
+          }
+        }
+      `,
+    },
+  });
 };
+
+export const updateSignature = async (signature, transactionId) => {
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          updateSignature(id: "${signature.id}",
+             data: { 
+              transaction: {connect: ${transactionId}}, 
+              bodyBytes: "${signature.bodyBytes}",
+              signature: "${signature.signature}",
+              address: "${signature.address}",
+              accountNumber: ${signature.accountNumber},
+              sequence: ${signature.sequence}
+            }) {
+              _id
+              address
+              signature
+              address
+              accountNumber
+              sequence
+            }
+        }
+      `,
+    },
+  });
+};
+
+export const deleteSignature = async (id) => {
+  console.log(id)
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          deleteSignature(id: "${id}") {
+              _id
+            }
+        }
+      `,
+    },
+  });
+}
 
 export const updateTransaction = async (txHash, transactionID, multisigID) => {
   return graphqlReq({
@@ -199,9 +273,12 @@ export const updateTransaction = async (txHash, transactionID, multisigID) => {
             txHash
             signatures {
               data {
+                _id
                 address
                 signature
                 bodyBytes
+                accountNumber
+                sequence
               }
             }
           }

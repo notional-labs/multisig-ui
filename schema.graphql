@@ -24,6 +24,8 @@ type Signature {
   bodyBytes: String!
   signature: String!
   address: String!
+  accountNumber: Int
+  sequence: Int
 }
 
 type Query {
@@ -31,6 +33,7 @@ type Query {
   getTxByMultisig(createBy: String!): [Transaction]
   getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
   getSignaturesFromAddress(address: String!): [Signature]
+  getTransactionByStatus(status: String!): [Transaction]
 }
 
 type mutation {

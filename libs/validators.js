@@ -58,7 +58,7 @@ export const getDelegation = async (rpc, delegator, validator) => {
 
 export const getRewards = async (api, address) => {
     try {
-        const res = await axios.get(`${api}/cosmos/distribution/v1beta1/delegators/${address}/rewards`)
+        const res = await axios.get(`${api}cosmos/distribution/v1beta1/delegators/${address}/rewards`)
         console.log(res.data)
         return res.data
     }
@@ -83,7 +83,7 @@ export const getTx = async (rpc, txHash) => {
 
 export const getProposals = async (api) => {
     try {
-        const res = await axios.get(`${api}/cosmos/gov/v1beta1/proposals?proposal_status=2`)
+        const res = await axios.get(`${api}cosmos/gov/v1beta1/proposals?proposal_status=2`)
         return res.data
     }
     catch (e) {

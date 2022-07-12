@@ -81,6 +81,7 @@ const TransactionView = ({ }) => {
             const bodyBytes = decode(currentSignatures[0].bodyBytes);
             const pubkey = JSON.parse(multisig.pubkeyJSON)
             const account = await getAccount(chain.rpc, multisigID)
+            console.log(account)
             const signedTx = makeMultisignedTx(
                 pubkey,
                 account.sequence,
@@ -211,8 +212,7 @@ const TransactionView = ({ }) => {
                         transactionID={transactionID}
                         currentSignatures={currentSignatures}
                         addSignature={addSignature}
-                        chainId={chain.chain_id}
-                        rpc={chain.rpc}
+                        chain={chain}
                         multisig={multisig}
                         multisigID={multisigID}
                     />

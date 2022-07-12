@@ -2,14 +2,21 @@ import { useEffect, useState } from "react"
 import { getValidators } from "../../../libs/validators"
 import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
-import { createDelegateMsg } from "../../../libs/transaction"
+import { checkIfHasPendingTx, createDelegateMsg } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import axios from "axios"
+import WarningModal from "../../ulti/WarningModal"
 
 const style = {
     input: {
         marginBottom: '10px',
         color: 'black'
+    },
+    button: {
+        border: 0,
+        borderRadius: '10px',
+        width: '40%',
+        padding: '.5em 1em'
     }
 }
 
@@ -22,6 +29,7 @@ const DelegateMsg = ({ chain, router, address }) => {
         fee: 0,
         memo: '',
     })
+    const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
@@ -103,7 +111,25 @@ const DelegateMsg = ({ chain, router, address }) => {
             toAddress: e.target.value
         })
     }
+    const handleClose = () => {
+        setShowWarning(false)
+    }
 
+    const handleProcced = async () => {
+        const check = await checkIfHasPendingTx(address)
+        if (check) {
+            setShowWarning(true)
+        }
+        else {
+            await handleCreate()
+        }
+    }
+
+    const handleCancel = () => {
+        setShowWarning(false)
+        openNotification('error', 'Cancel create transaction')
+    }
+ 
     return (
         <div>
             <div
@@ -155,10 +181,17 @@ const DelegateMsg = ({ chain, router, address }) => {
                 handleKeyGroupChange={(e) => {
                     handleKeyGroupChange(e);
                 }}
-                handleCreate={handleCreate}
+                handleCreate={handleProcced}
                 chain={chain}
                 style={style}
                 disabled={disabled()}
+            />
+            <WarningModal
+                style={style}
+                handleClose={handleClose}
+                handleCreate={handleCreate}
+                showWarning={showWarning}
+                handleCancel={handleCancel}
             />
         </div>
     )

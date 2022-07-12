@@ -6,7 +6,7 @@ export const chainData = [
         prefix: 'osmo',
         color: 'linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)',
         rpc: 'https://rpc.osmosis.zone/',
-        api: 'https://lcd.osmosis.zone',
+        api: 'https://osmosis-api.polkachu.com/',
         explorer: 'https://www.mintscan.io/osmosis/',
         logo: '/images/logo/osmosis.png'
     },
@@ -28,7 +28,7 @@ export const chainData = [
         prefix: 'cosmos',
         color: 'linear-gradient(270.1deg, #000000 0%, #414141 74%)',
         rpc: 'https://rpc.cosmos.network/',
-        api: 'https://api.cosmos.network',
+        api: 'https://api.cosmos.network/',
         explorer: 'https://www.mintscan.io/cosmos/',
         logo: '/images/logo/atom.png'
     },
