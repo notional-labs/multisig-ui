@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { pubkeyToAddress } from "@cosmjs/amino"
 import { addressShortener } from "../../libs/stringConvert"
 
-const ComponentView = ({ pubkey, index, prefix }) => {
+const ComponentView = ({ pubkey, index, prefix, chain }) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
@@ -24,7 +24,15 @@ const ComponentView = ({ pubkey, index, prefix }) => {
                 marginBottom: '5px'
             }}
         >
-            {addressShortener(address)}
+            <a
+                href={`${chain.explorer}account/${address}`}
+                target={'_blank'}
+                style={{
+                    color: 'black'
+                }}
+            >
+                {addressShortener(address)}
+            </a>
         </div>
     )
 }

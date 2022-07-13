@@ -7,7 +7,8 @@ import Tooltip from "antd/lib/tooltip"
 import { RetweetOutlined, DeleteOutlined } from "@ant-design/icons"
 import { SigningStargateClient } from "@cosmjs/stargate/build/signingstargateclient"
 import { encode } from "uint8-to-base64"
-import { getSequence } from "../../libs/keplrClient"
+import { getAccount, getSequence } from "../../libs/keplrClient"
+import { useState } from "react"
 
 const SignerList = ({
     currentSignatures,
@@ -50,11 +51,11 @@ const SignerList = ({
             const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chain.chain_id
             );
-            const signAccount = await getSequence(chain.api, address)
+            const signAccount = await getAccount(chain.rpc, address)
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.account_number),
+                accountNumber: parseInt(signAccount.accountNumber),
                 sequence: parseInt(signAccount.sequence),
                 chainId: chain.chain_id,
             };
@@ -74,14 +75,14 @@ const SignerList = ({
                 id: id,
                 bodyBytes: bases64EncodedBodyBytes,
                 signature: bases64EncodedSignature,
-                accountNumber: signAccount.account_number,
+                accountNumber: signAccount.accountNumber,
                 sequence: signAccount.sequence,
                 address: walletAccount.bech32Address,
             };
 
-            editSignature(signature);
+            const res = await updateSignature(signature, transactionID)
+            res.data.data && res.data.data.updateSignature ? editSignature(res.data.data.updateSignature) : editSignature(signature)
             setHasSigned(true)
-            await updateSignature(signature, transactionID)
             openLoadingNotification('close')
             openNotification('success', 'Successfully update signature')
         }

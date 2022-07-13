@@ -63,9 +63,9 @@ const TransactionView = ({ }) => {
     }, [multisigID])
 
     const addSignature = (signature) => {
-        setCurrentSignatures((currentSignatures) => [
+        setCurrentSignatures([
             ...currentSignatures,
-            signature,
+            signature
         ])
     }
 

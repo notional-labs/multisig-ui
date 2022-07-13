@@ -45,9 +45,8 @@ export const getPubkey = async (rpc, address) => {
 
 export const getBalance = async (rpc, address, denom) => {
     const client = await StargateClient.connect(rpc);
-    const balance = await client.getBalance(address, denom);
-    console.log(balance)
-    return balance;
+    const res = await client.getAllBalances(address)
+    return res;
 }
 
 export const getAccount = async (rpc, address) => {

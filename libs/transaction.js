@@ -12,7 +12,6 @@ const getFee = (gas, amount, denom) => {
 export const getTransactionById = async (id) => {
     try {
         const res = await axios.get(`/api/transaction/${id}`)
-        console.log(res.data)
         if (!res.data || res.data === null) {
             throw new Error('This transaction might not be created using this tool!')
         }

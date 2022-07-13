@@ -314,12 +314,16 @@ const TransactionList = ({ }) => {
                                                                     backgroundColor: transaction.status === 'PENDING' ? '#D82D2C' : '#189A01',
                                                                     borderRadius: '50%',
                                                                     display: 'inline-block',
-                                                                    marginRight: '10px',
-                                                                    position: 'relative',
-                                                                    top: '2px'
+                                                                    margin: 'auto 10px'
                                                                 }}
                                                             />
-                                                            {transaction.status}
+                                                            <span
+                                                                style={{
+                                                                    margin: 'auto 0'
+                                                                }}
+                                                            >
+                                                                {transaction.status}
+                                                            </span>
                                                         </motion.td>
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
@@ -353,8 +357,8 @@ const TransactionList = ({ }) => {
                                                             </Tooltip>
                                                             {
                                                                 transaction.txHash && (
-                                                                    <Tooltip 
-                                                                        placement="top" 
+                                                                    <Tooltip
+                                                                        placement="top"
                                                                         title='View in block explorer'
                                                                     >
                                                                         <a
@@ -369,8 +373,8 @@ const TransactionList = ({ }) => {
                                                             }
                                                             {
                                                                 !transaction.txHash && (
-                                                                    <Tooltip 
-                                                                        placement="top" 
+                                                                    <Tooltip
+                                                                        placement="top"
                                                                         title='Delete'
                                                                     >
                                                                         <button

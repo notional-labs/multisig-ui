@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
 import { SigningStargateClient, } from "@cosmjs/stargate";
-import { getKey, getSequence } from "../../libs/keplrClient"
+import { getAccount, getKey, getSequence } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
@@ -57,7 +57,7 @@ const TransationSign = ({
                 openNotification('error', 'Failed to get account key')
             }
         })()
-    }, [])
+    }, [currentSignatures])
 
     useEffect(() => {
         if (checkAddrInMultisig()) {
@@ -88,11 +88,11 @@ const TransationSign = ({
             const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chain.chain_id
             );
-            const signAccount = await getSequence(chain.api, multisigID)
+            const signAccount = await getAccount(chain.rpc, multisigID)
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.account_number),
+                accountNumber: parseInt(signAccount.accountNumber),
                 sequence: parseInt(signAccount.sequence),
                 chainId: chain.chain_id,
             };
@@ -119,14 +119,15 @@ const TransationSign = ({
                     bodyBytes: bases64EncodedBodyBytes,
                     signature: bases64EncodedSignature,
                     address: account.bech32Address,
-                    accountNumber: signAccount.account_number,
+                    accountNumber: signAccount.accountNumber,
                     sequence: signAccount.sequence
                 };
-                await axios.post(
+                const res = await axios.post(
                     `/api/transaction/${transactionID}/signature`,
                     signature
                 );
-                addSignature(signature);
+                console.log(res.data)
+                addSignature(res.data);
                 setHasSigned(true)
             }
             openLoadingNotification('close')

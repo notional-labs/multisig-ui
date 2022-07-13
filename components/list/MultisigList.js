@@ -86,7 +86,7 @@ const MultisigList = ({ }) => {
                 }
                 const res = await getAllMultisigOfAddress(address)
                 setMultisigs([...res])
-                setParams({ ...params, total: res.length })
+                setParams({ ...params, total: res.length, page: 1 })
                 setLoading(false)
             }
             catch (e) {
@@ -171,7 +171,7 @@ const MultisigList = ({ }) => {
                         <tr>
                             <th
                                 style={{
-                                    width: '40%',
+                                    width: '50%',
                                     padding: '.5em',
                                     textAlign: 'left'
                                 }}
@@ -180,7 +180,7 @@ const MultisigList = ({ }) => {
                             </th>
                             <th
                                 style={{
-                                    width: '20%',
+                                    width: '30%',
                                     padding: '.5em',
                                     textAlign: 'left'
                                 }}
@@ -191,10 +191,10 @@ const MultisigList = ({ }) => {
                                 style={{
                                     width: '20%',
                                     padding: '.5em',
-                                    textAlign: 'right'
+                                    textAlign: 'center'
                                 }}
                             >
-                                Created At
+                                Threshold
                             </th>
                         </tr>
                     </thead>
@@ -211,6 +211,7 @@ const MultisigList = ({ }) => {
                                     <MultisigRowView
                                         address={multisig.address}
                                         index={index}
+                                        chain={chain}
                                     />
                                 )
                             }) : (

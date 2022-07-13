@@ -56,6 +56,10 @@ const Page = ({ enableSelectChain = true, children }) => {
                     border-radius: 20px;
                     /* background: red; */
                   }
+
+                .anticon-copy {
+                    color: white;
+                }
             `}</style>
         </div>
     )
