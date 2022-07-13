@@ -51,7 +51,7 @@ jobs:
       uses: garygrossgarten/github-action-scp@release
       with:
         local: .
-        remote: /root/notional.ventures
+        remote: /root/multisig.notional.ventures
         host: ${{ secrets.WEB_SERVER }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.PRIV_KEY }}
