@@ -50,17 +50,32 @@ const TransactionList = ({ }) => {
         setParams({ ...params, page: index })
     }
 
+    const compare = (a, b) => {
+        if (a.createdOn > b.createdOn) {
+            return -1;
+        }
+        if (a.createdOn < b.createdOn) {
+            return 1;
+        }
+        // a must be equal to b
+        return 0;
+    }
+
     useEffect(() => {
         (async () => {
             if (!multisigID) return
             setLoading(true)
             try {
+                const current = localStorage.getItem('current')
                 const multisigAccount = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${multisigAccount.prefix}`]
-                wrapper(id)
-                localStorage.setItem('current', id)
-                const res = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
-                setTransactions([...res.data])
+                if (parseInt(current) !== id) {
+                    wrapper(id)
+                    localStorage.setItem('current', id)
+                }
+                const { data } = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
+                data = data.sort(compare)
+                setTransactions([...data])
                 setFilter('all')
                 setLoading(false)
                 setSpin(false)
