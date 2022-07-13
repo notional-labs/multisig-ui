@@ -97,7 +97,7 @@ const MultisigList = ({ }) => {
     }, [toggleReload])
 
     useEffect(() => {
-        const pagingList = multisigs.slice(params.page - 1, params.page - 1 + params.limit)
+        const pagingList = multisigs.slice((params.page - 1) * params.limit, params.page * params.limit)
         setViewMultisig([...pagingList])
     }, [params, multisigs])
 

@@ -93,7 +93,8 @@ const TransactionList = ({ }) => {
     }, [filter])
 
     useEffect(() => {
-        const pagingList = filterTransactions.slice(params.page - 1, params.page - 1 + params.limit)
+        const pagingList = filterTransactions.slice((params.page - 1) * params.limit, params.page * params.limit)
+        console.log(pagingList)
         setViewTransactions([...pagingList])
     }, [params, filterTransactions])
 
@@ -102,6 +103,8 @@ const TransactionList = ({ }) => {
         const type = txInfo.msgs[0].typeUrl
         return type.split('Msg')[1]
     }
+
+    console.log(params)
 
     return (
         <>

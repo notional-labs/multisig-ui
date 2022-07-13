@@ -23,15 +23,7 @@ const TransactionView = ({ }) => {
     const [transactionHash, setTransactionHash] = useState('');
     const [txInfo, setTxInfo] = useState(null)
     const [multisig, setMultisig] = useState(null)
-
-    const addSignature = (signature) => {
-        setCurrentSignatures((currentSignatures) => [
-            ...currentSignatures,
-            signature,
-        ]);
-    };
     const { chain, wrapper } = useContext(ChainContext)
-
     const router = useRouter()
     const { transactionID, multisigID } = router.query
 
@@ -70,6 +62,28 @@ const TransactionView = ({ }) => {
         })()
     }, [multisigID])
 
+    const addSignature = (signature) => {
+        setCurrentSignatures((currentSignatures) => [
+            ...currentSignatures,
+            signature,
+        ])
+    }
+
+    const removeSignature = (id) => {
+        const filterSignatures = currentSignatures.filter(sig => sig._id !== id)
+        setCurrentSignatures([...filterSignatures])
+    }
+
+    const editSignature = (signature) => {
+        const editSignatures = currentSignatures.map((sig) => {
+            if (sig._id === signature._id) {
+                return signature
+            }
+            return sig
+        })
+        setCurrentSignatures([...editSignatures])
+    }
+
     const broadcastTx = async () => {
         openLoadingNotification('open', 'Broadcasting transaction')
         try {
@@ -81,7 +95,6 @@ const TransactionView = ({ }) => {
             const bodyBytes = decode(currentSignatures[0].bodyBytes);
             const pubkey = JSON.parse(multisig.pubkeyJSON)
             const account = await getAccount(chain.rpc, multisigID)
-            console.log(account)
             const signedTx = makeMultisignedTx(
                 pubkey,
                 account.sequence,
@@ -215,6 +228,8 @@ const TransactionView = ({ }) => {
                         chain={chain}
                         multisig={multisig}
                         multisigID={multisigID}
+                        removeSignature={removeSignature}
+                        editSignature={editSignature}
                     />
                 )
             }

@@ -18,7 +18,9 @@ const TransationSign = ({
     addSignature,
     chain,
     multisig,
-    multisigID
+    multisigID,
+    removeSignature,
+    editSignature
 }) => {
     const [hasSigned, setHasSigned] = useState(false)
     const [account, setAccount] = useState()
@@ -148,16 +150,6 @@ const TransationSign = ({
             <h2>
                 Sign Transaction
             </h2>
-            <AccountInfo
-                chain={chain}
-                address={multisigID}
-                currentSignatures={currentSignatures}
-                tx={tx}
-                transactionID={transactionID}
-                addSignature={addSignature}
-                walletAccount={account}
-                setHasSigned={setHasSigned}
-            />
             {
                 hasSigned ? (
                     <div
@@ -193,6 +185,17 @@ const TransationSign = ({
                     />
                 )
             }
+            <AccountInfo
+                chain={chain}
+                address={multisigID}
+                currentSignatures={currentSignatures}
+                tx={tx}
+                transactionID={transactionID}
+                walletAccount={account}
+                setHasSigned={setHasSigned}
+                removeSignature={removeSignature}
+                editSignature={editSignature}
+            />
         </div>
     )
 }

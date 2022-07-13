@@ -28,11 +28,12 @@ const circle = (
     />
 )
 
-const AccountInfo = ({ 
-    address, 
-    chain, 
+const AccountInfo = ({
+    address,
+    chain,
     currentSignatures,
-    addSignature,
+    removeSignature,
+    editSignature,
     transactionID,
     walletAccount,
     setHasSigned,
@@ -70,9 +71,41 @@ const AccountInfo = ({
 
     return (
         <>
-            <text>
-                Current account sequence
-            </text>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'start',
+                    marginBottom: '5px'
+                }}
+            >
+                <h3
+                    style={{ marginBottom: 0, marginTop: '10px' }}
+                >
+                    Current sequence and account number
+                </h3>
+                <Tooltip title='Update'>
+                    <Button
+                        text={(
+                            <div>
+                                <ReloadOutlined
+                                    spin={loading}
+                                />
+                            </div>
+                        )}
+                        style={{
+                            position: 'relative',
+                            top: '6px',
+                            color: 'black',
+                            backgroundColor: 'transparent',
+                            borderRadius: '10px',
+                            border: 0,
+                        }}
+                        clickFunction={() => {
+                            setToggleUpdate(!toggleUpdate)
+                        }}
+                    />
+                </Tooltip>
+            </div>
             <div
                 style={{
                     backgroundColor: '#D9D9D9',
@@ -125,57 +158,37 @@ const AccountInfo = ({
                                 ]}
                                 justifyContent={'start'}
                             />
-                            <Tooltip title='Update'>
-                                <Button
-                                    text={(
-                                        <div>
-                                            <ReloadOutlined
-                                                spin={loading}
-                                            />
-                                        </div>
-                                    )}
-                                    style={{
-                                        position: 'absolute',
-                                        top: '0px',
-                                        left: '96%',
-                                        color: 'black',
-                                        backgroundColor: 'transparent',
-                                        borderRadius: '10px',
-                                        border: 0,
-                                        height: '40px',
-                                    }}
-                                    clickFunction={() => {
-                                        setToggleUpdate(!toggleUpdate)
-                                    }}
-                                />
-                            </Tooltip>
                         </>
                     )
                 }
             </div>
-            <h3>
+            <h3
+                style={{ marginBottom: 0 }}
+            >
                 Current Signers
             </h3>
-            {
-                currentSignatures.length > 0 ? (
-                    <SignerList
-                        currentSignatures={currentSignatures}
-                        account={account}
-                        style={style}
-                        chain={chain}
-                        address={address}
-                        walletAccount={walletAccount}
-                        tx={tx} 
-                        addSignature={addSignature}
-                        setHasSigned={setHasSigned}
-                        transactionID={transactionID}
-                    />
-                ) : (
-                    <text>
-                        No signatures yet
-                    </text>
-                )
-            }
+            <text
+                style={{
+                    fontSize: '12px',
+                    fontStyle: 'italic',
+                    margin: 0,
+                }}
+            >
+                *Make sure all signature infos are sync to prevent mismatch sequence or account number
+            </text>
+            <SignerList
+                currentSignatures={currentSignatures}
+                account={account}
+                style={style}
+                chain={chain}
+                address={address}
+                walletAccount={walletAccount}
+                tx={tx}
+                setHasSigned={setHasSigned}
+                transactionID={transactionID}
+                removeSignature={removeSignature}
+                editSignature={editSignature}
+            />
         </>
     )
 }

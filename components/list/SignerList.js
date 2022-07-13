@@ -7,6 +7,7 @@ import Tooltip from "antd/lib/tooltip"
 import { RetweetOutlined, DeleteOutlined } from "@ant-design/icons"
 import { SigningStargateClient } from "@cosmjs/stargate/build/signingstargateclient"
 import { encode } from "uint8-to-base64"
+import { getSequence } from "../../libs/keplrClient"
 
 const SignerList = ({
     currentSignatures,
@@ -16,15 +17,17 @@ const SignerList = ({
     address,
     walletAccount,
     tx,
-    addSignature,
     setHasSigned,
-    transactionID
+    transactionID,
+    removeSignature,
+    editSignature,
 }) => {
-
     const deleteSig = async (id) => {
         openLoadingNotification('open', 'Deleting Signature')
         try {
             await deleteSignature(id)
+            removeSignature(id)
+            setHasSigned(false)
             openLoadingNotification('close')
             openNotification('success', 'Successfully delete signature')
         }
@@ -71,12 +74,12 @@ const SignerList = ({
                 id: id,
                 bodyBytes: bases64EncodedBodyBytes,
                 signature: bases64EncodedSignature,
-                address: account.bech32Address,
                 accountNumber: signAccount.account_number,
-                sequence: signAccount.sequence
+                sequence: signAccount.sequence,
+                address: walletAccount.bech32Address,
             };
 
-            addSignature(signature);
+            editSignature(signature);
             setHasSigned(true)
             await updateSignature(signature, transactionID)
             openLoadingNotification('close')
@@ -103,11 +106,10 @@ const SignerList = ({
                         )}
                         clickFunction={async () => await updateSig(id)}
                         style={{
-                            border: 0,
-                            color: 'white',
-                            width: '45%',
-                            borderRadius: '10px',
-                            backgroundColor: 'black',
+                            border: 'solid .5px black',
+                            width: '50%',
+                            borderRadius: '10px 0 0 10px',
+                            backgroundColor: 'transparent',
                             height: '30px',
                             margin: 'auto 0'
                         }}
@@ -123,11 +125,10 @@ const SignerList = ({
                         )}
                         clickFunction={async () => await deleteSig(id)}
                         style={{
-                            border: 0,
-                            backgroundColor: '#ff384f',
-                            color: 'white',
-                            width: '45%',
-                            borderRadius: '10px',
+                            border: 'solid .5px black',
+                            width: '50%',
+                            borderRadius: '0 10px 10px 0',
+                            backgroundColor: 'transparent',
                             height: '30px',
                             margin: 'auto 0'
                         }}
@@ -147,17 +148,23 @@ const SignerList = ({
 
     const circle = (key, value) => {
         return (
-            <span
-                style={{
-                    width: '10px',
-                    height: '10px',
-                    backgroundColor: !checkStatus(key, value) ? '#D82D2C' : '#189A01',
-                    borderRadius: '50%',
-                    display: 'inline-block',
-                    position: 'relative',
-                    margin: 'auto 10px auto 0'
-                }}
-            />
+            <Tooltip
+                placement="left"
+                title={
+                    checkStatus(key, value) ? 'sync' : 'not sync'
+                }>
+                <span
+                    style={{
+                        width: '10px',
+                        height: '10px',
+                        backgroundColor: !checkStatus(key, value) ? '#D82D2C' : '#189A01',
+                        borderRadius: '50%',
+                        display: 'inline-block',
+                        position: 'relative',
+                        margin: 'auto 10px auto 0'
+                    }}
+                />
+            </Tooltip>
         )
     }
 
@@ -165,7 +172,7 @@ const SignerList = ({
         <div
             style={{
                 maxHeight: '200px',
-                overflow: 'hidden',
+                overflow: 'auto',
                 border: 'solid 1px black',
                 padding: '.5em 1em',
                 borderRadius: '10px',
@@ -215,7 +222,7 @@ const SignerList = ({
                 </thead>
                 <tbody>
                     {
-                        currentSignatures.map((sig, index) => {
+                        currentSignatures.length > 0 ? currentSignatures.map((sig, index) => {
                             return (
                                 <tr
                                     key={index}
@@ -275,12 +282,22 @@ const SignerList = ({
                                         }}
                                     >
                                         {
-                                            actionButtons(sig._id)
+                                            walletAccount
+                                                && walletAccount.bech32Address === sig.address
+                                                ? actionButtons(sig._id) : 'Not available'
                                         }
                                     </td>
                                 </tr>
                             )
-                        })
+                        }) : (
+                            <div
+                                style={{
+                                    padding: '1em 0'
+                                }}
+                            >
+                                No signatures yet
+                            </div>
+                        )
                     }
                 </tbody>
             </table>
