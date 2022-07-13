@@ -3,7 +3,7 @@ import { getMultisigFromAddress } from "../../libs/multisig"
 import { openNotification } from "../ulti/Notification"
 import { useRouter } from "next/router"
 import { getBalance } from "../../libs/keplrClient"
-import { Typography, Tooltip } from "antd"
+import { Typography, Tooltip, Skeleton } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ChainContext } from "../Context"
@@ -48,17 +48,20 @@ const MultisigView = () => {
     const { multisigID } = router.query
     const [showCreate, setShowCreate] = useState(false)
     const [showImport, setShowImport] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
             if (!multisigID) return
             try {
+                setLoading(true)
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
                 id && wrapper(id)
                 id && localStorage.setItem('current', id)
                 const balances = await getBalance(chain.rpc, multisigID)
                 setHolding([...balances])
+                setLoading(false)
             }
             catch (e) {
                 openNotification('error', 'Failed to fetch multisig info or balance ' + e.message)
@@ -162,10 +165,10 @@ const MultisigView = () => {
             <div
                 style={{
                     marginBottom: '10px',
-                    maxHeight: '200px',
+                    maxHeight: '300px',
                     overflow: 'auto',
                     border: 'solid 1px black',
-                    padding: '.5em 1em',
+                    padding: '.5em 2em',
                     borderRadius: '10px',
                 }}
             >
@@ -184,7 +187,7 @@ const MultisigView = () => {
                         <tr>
                             <th
                                 style={{
-                                    width: '30%',
+                                    width: '50%',
                                     textAlign: 'left'
                                 }}
                             >
@@ -192,8 +195,8 @@ const MultisigView = () => {
                             </th>
                             <th
                                 style={{
-                                    width: '40%',
-                                    textAlign: 'center'
+                                    width: '20%',
+                                    textAlign: 'left'
                                 }}
                             >
                                 Amount
@@ -202,15 +205,18 @@ const MultisigView = () => {
                     </thead>
                     <tbody>
                         {
-                            holding.map((balance, index) => {
+                            !loading ? holding.map((balance, index) => {
                                 return (
                                     <tr
                                         key={index}
+                                        style={{
+                                            borderBottom: 'solid .25px #d6d6d6',
+                                        }}
                                     >
                                         <td
                                             style={{
-                                                width: '30%',
-                                                paddingTop: '1em'
+                                                width: '50%',
+                                                padding: '1em 0'
                                             }}
                                         >
                                             {
@@ -219,9 +225,8 @@ const MultisigView = () => {
                                         </td>
                                         <td
                                             style={{
-                                                width: '40%',
-                                                paddingTop: '1em',
-                                                textAlign: 'center'
+                                                width: '20%',
+                                                padding: '1em 0',
                                             }}
                                         >
                                             {
@@ -230,7 +235,26 @@ const MultisigView = () => {
                                         </td>
                                     </tr>
                                 )
-                            })
+                            }) : (
+                                <>
+                                        <td
+                                            style={{
+                                                width: '50%',
+                                                paddingTop: '1em',
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                        </td>
+                                        <td
+                                            style={{
+                                                width: '20%',
+                                                paddingTop: '1em',
+                                            }}
+                                        >
+                                            <Skeleton active rows={1} paragraph={{ rows: 0 }}/>
+                                        </td>
+                                    </>
+                            )
                         }
                     </tbody>
                 </table>

@@ -17,7 +17,8 @@ import Button from "../input/Button";
 import CopyToClipboard from "react-copy-to-clipboard";
 import FlexRow from "../flex_box/FlexRow";
 import { ReloadOutlined, DeleteOutlined } from "@ant-design/icons";
-import { deleteTransaction } from "../../libs/faunaClient";
+import { deleteTransaction } from "../../libs/faunaClient"
+import EmptyPage from "../ulti/EmptyPage";
 
 const style = {
     actionButton: {
@@ -431,12 +432,27 @@ const TransactionList = ({ }) => {
                             }
                         </motion.tbody>
                     </table>
+                    {
+                        !loading && viewTransactions.length === 0 && (
+                            <EmptyPage
+                                description={(
+                                    <div>
+                                        No transactions found
+                                    </div>
+                                )}
+                            />
+                        )
+                    }
                 </div>
-                <ButtonList
-                    currentPage={params.page}
-                    total={Math.ceil(params.total / params.limit)}
-                    wrapSetParams={wrapSetParams}
-                />
+                {
+                    params.total > 0 && (
+                        <ButtonList
+                            currentPage={params.page}
+                            total={Math.ceil(params.total / params.limit)}
+                            wrapSetParams={wrapSetParams}
+                        />
+                    )
+                }
             </div>
         </>
     )

@@ -10,6 +10,7 @@ import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ReloadOutlined } from "@ant-design/icons";
 import { openNotification } from "../ulti/Notification"
+import EmptyPage from "../ulti/EmptyPage"
 
 const MultisigList = ({ }) => {
     const [multisigs, setMultisigs] = useState([])
@@ -222,12 +223,47 @@ const MultisigList = ({ }) => {
                         }
                     </motion.tbody >
                 </table>
+                {
+                    !loading && viewMultsigi.length === 0 && (
+                        <EmptyPage
+                            description={(
+                                <>
+                                    <div>
+                                        No multisigs found
+                                    </div>
+                                    <div>
+                                        Either connect your keplr wallet or create a new multisig
+                                    </div>
+                                </>
+                            )}
+                            addButton={true}
+                            button={(
+                                <Button
+                                    text={'Create now'}
+                                    type={'link'}
+                                    url={'/multisig/create'}
+                                    style={{
+                                        borderRadius: '10px',
+                                        border: 0,
+                                        padding: '.5em 1em',
+                                        backgroundColor: 'black',
+                                        color: 'white'
+                                    }}
+                                />
+                            )}
+                        />
+                    )
+                }
             </div>
-            <ButtonList
-                currentPage={params.page}
-                total={Math.ceil(params.total / params.limit)}
-                wrapSetParams={wrapSetParams}
-            />
+            {
+                params.total > 0 && (
+                    <ButtonList
+                        currentPage={params.page}
+                        total={Math.ceil(params.total / params.limit)}
+                        wrapSetParams={wrapSetParams}
+                    />
+                )
+            }
         </div>
     )
 }

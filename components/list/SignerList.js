@@ -227,11 +227,15 @@ const SignerList = ({
                             return (
                                 <tr
                                     key={index}
+                                    style={{
+                                        width: '100%',
+                                        borderBottom: 'solid .25px #d6d6d6',
+                                    }}
                                 >
                                     <td
                                         style={{
                                             width: '30%',
-                                            paddingTop: '1em'
+                                            padding: '1em 0'
                                         }}
                                     >
                                         <Tooltip
@@ -244,7 +248,7 @@ const SignerList = ({
                                     <td
                                         style={{
                                             width: '40%',
-                                            paddingTop: '1em'
+                                            padding: '1em 0'
                                         }}
                                     >
                                         <FlexRow
@@ -265,7 +269,7 @@ const SignerList = ({
                                     <td
                                         style={{
                                             width: '10%',
-                                            paddingTop: '1em',
+                                            padding: '1em 0',
                                         }}
                                     >
                                         {

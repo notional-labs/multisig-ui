@@ -83,28 +83,28 @@ const AccountInfo = ({
                 >
                     Current sequence and account number
                 </h3>
-                <Tooltip title='Update'>
-                    <Button
-                        text={(
+                <Button
+                    text={(
+                        <Tooltip title='Update'>
                             <div>
                                 <ReloadOutlined
                                     spin={loading}
                                 />
                             </div>
-                        )}
-                        style={{
-                            position: 'relative',
-                            top: '6px',
-                            color: 'black',
-                            backgroundColor: 'transparent',
-                            borderRadius: '10px',
-                            border: 0,
-                        }}
-                        clickFunction={() => {
-                            setToggleUpdate(!toggleUpdate)
-                        }}
-                    />
-                </Tooltip>
+                        </Tooltip>
+                    )}
+                    style={{
+                        position: 'relative',
+                        top: '6px',
+                        color: 'black',
+                        backgroundColor: 'transparent',
+                        borderRadius: '10px',
+                        border: 0,
+                    }}
+                    clickFunction={() => {
+                        setToggleUpdate(!toggleUpdate)
+                    }}
+                />
             </div>
             <div
                 style={{
