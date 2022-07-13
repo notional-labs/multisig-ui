@@ -3,7 +3,7 @@ import { ChainContext } from "../Context"
 import ButtonList from "../input/ButtonList"
 import { useRouter } from "next/router";
 import { Tooltip } from "antd";
-import { openNotification } from "../ulti/Notification"
+import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import { getMultisigFromAddress } from "../../libs/multisig"
 import { prefixToId } from "../../data/chainData"
 import { Skeleton } from "antd"
@@ -16,7 +16,8 @@ import { ShareAltOutlined, LinkOutlined } from "@ant-design/icons";
 import Button from "../input/Button";
 import CopyToClipboard from "react-copy-to-clipboard";
 import FlexRow from "../flex_box/FlexRow";
-import { ReloadOutlined } from "@ant-design/icons";
+import { ReloadOutlined, DeleteOutlined } from "@ant-design/icons";
+import { deleteTransaction } from "../../libs/faunaClient";
 
 const style = {
     actionButton: {
@@ -72,6 +73,10 @@ const TransactionList = ({ }) => {
 
     useEffect(() => {
         setSpin(true)
+        setParams({
+            ...params,
+            page: 1
+        })
     }, [toggleReload])
 
     useEffect(() => {
@@ -82,7 +87,8 @@ const TransactionList = ({ }) => {
                 setFilterTransactions([...filterTxs])
                 setParams({
                     ...params,
-                    total: filterTxs.length
+                    total: filterTxs.length,
+                    page: 1
                 })
                 setLoading(false)
             }
@@ -94,7 +100,6 @@ const TransactionList = ({ }) => {
 
     useEffect(() => {
         const pagingList = filterTransactions.slice((params.page - 1) * params.limit, params.page * params.limit)
-        console.log(pagingList)
         setViewTransactions([...pagingList])
     }, [params, filterTransactions])
 
@@ -104,7 +109,19 @@ const TransactionList = ({ }) => {
         return type.split('Msg')[1]
     }
 
-    console.log(params)
+    const removeTransaction = async (id) => {
+        try {
+            openLoadingNotification('open', 'Deleting transaction')
+            await deleteTransaction(id)
+            openLoadingNotification('close')
+            openNotification('success', 'Successfully delete transaction')
+            setToggleReload(!toggleReload)
+        }
+        catch (e) {
+            openLoadingNotification('close')
+            openNotification('error', 'Unsuccessfully delete transaction ' + e.message)
+        }
+    }
 
     return (
         <>
@@ -336,16 +353,32 @@ const TransactionList = ({ }) => {
                                                             </Tooltip>
                                                             {
                                                                 transaction.txHash && (
-                                                                    <Tooltip placement="top" title='View in block explorer'>
-                                                                        <Button
-                                                                            text={(
-                                                                                <LinkOutlined />
-                                                                            )}
+                                                                    <Tooltip 
+                                                                        placement="top" 
+                                                                        title='View in block explorer'
+                                                                    >
+                                                                        <a
+                                                                            href={`${chain.explorer}txs/${transaction.txHash}`}
+                                                                            target="_blank"
                                                                             style={style.actionButton}
-                                                                            type={'a'}
-                                                                            url={`${chain.explorer}txs/${transaction.txHash}`}
-                                                                            hoverText={'View in block explorer'}
-                                                                        />
+                                                                        >
+                                                                            <LinkOutlined />
+                                                                        </a>
+                                                                    </Tooltip>
+                                                                )
+                                                            }
+                                                            {
+                                                                !transaction.txHash && (
+                                                                    <Tooltip 
+                                                                        placement="top" 
+                                                                        title='Delete'
+                                                                    >
+                                                                        <button
+                                                                            onClick={(async () => await removeTransaction(transaction._id))}
+                                                                            style={style.actionButton}
+                                                                        >
+                                                                            <DeleteOutlined />
+                                                                        </button>
                                                                     </Tooltip>
                                                                 )
                                                             }

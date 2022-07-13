@@ -241,7 +241,6 @@ export const updateSignature = async (signature, transactionId) => {
 };
 
 export const deleteSignature = async (id) => {
-  console.log(id)
   return graphqlReq({
     method: "POST",
     data: {
@@ -287,6 +286,22 @@ export const updateTransaction = async (txHash, transactionID, multisigID) => {
     },
   });
 }
+
+export const deleteTransaction = async (id) => {
+  return graphqlReq({
+    method: "POST",
+    data: {
+      query: `
+        mutation {
+          deleteTransaction(id: "${id}") {
+              _id
+            }
+        }
+      `,
+    },
+  });
+}
+
 
 export const getTransactionsOfMultisig = async (multisig) => {
   const res = await graphqlReq({
