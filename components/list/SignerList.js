@@ -249,20 +249,6 @@ const SignerList = ({
                                     >
                                         <FlexRow
                                             components={[
-                                                circle('accountNumber', sig.accountNumber),
-                                                <text>
-                                                    Account Number:
-                                                </text>,
-                                                <text
-                                                    style={style.value}
-                                                >
-                                                    {sig.accountNumber}
-                                                </text>
-                                            ]}
-                                            justifyContent={'start'}
-                                        />
-                                        <FlexRow
-                                            components={[
                                                 circle('sequence', sig.sequence),
                                                 <text>
                                                     Sequence:

@@ -174,7 +174,7 @@ const AccountInfo = ({
                     margin: 0,
                 }}
             >
-                *Make sure all signature infos are sync to prevent mismatch sequence or account number
+                *Make sure all signature infos are sync to prevent mismatch sequence
             </text>
             <SignerList
                 currentSignatures={currentSignatures}
