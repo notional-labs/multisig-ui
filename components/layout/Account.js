@@ -9,7 +9,6 @@ const Account = ({ chainId, chainName }) => {
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         const keplrAccount = await getAccount(chainId)
         const currentAccount = localStorage.getItem('account')
-        console.log(currentAccount)
         if (currentAccount && currentAccount !== '') {
             localStorage.setItem('account', JSON.stringify(keplrAccount))
             setAccount(JSON.stringify(keplrAccount))

@@ -129,7 +129,6 @@ const UndelegateMsg = ({ chain, router, address }) => {
     }
 
     const handleSelect = (e) => {
-        console.log(e.target.value)
         setTxBody({
             ...txBody,
             validator: e.target.value

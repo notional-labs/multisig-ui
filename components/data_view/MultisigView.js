@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react"
 import { getMultisigFromAddress } from "../../libs/multisig"
 import { openNotification } from "../ulti/Notification"
 import { useRouter } from "next/router"
-import { getBalance } from "../../libs/keplrClient"
+import { getBalance, getBalances } from "../../libs/keplrClient"
 import { Typography, Tooltip, Skeleton } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
@@ -10,6 +10,7 @@ import { ChainContext } from "../Context"
 import { prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
 import TransactionImport from "../form/TransactionImport"
+import AssetRow from "./AssetRow"
 
 const { Paragraph } = Typography;
 
@@ -59,7 +60,7 @@ const MultisigView = () => {
                 const id = prefixToId[`${res.prefix}`]
                 id && wrapper(id)
                 id && localStorage.setItem('current', id)
-                const balances = await getBalance(chain.rpc, multisigID)
+                const balances = await getBalances(chain.api, multisigID)
                 setHolding([...balances])
                 setLoading(false)
             }
@@ -199,7 +200,7 @@ const MultisigView = () => {
                                     textAlign: 'left'
                                 }}
                             >
-                                Amount
+                                Available Amount
                             </th>
                         </tr>
                     </thead>
@@ -219,9 +220,10 @@ const MultisigView = () => {
                                                 padding: '1em 0'
                                             }}
                                         >
-                                            {
-                                                balance.denom.split('u')[1].toUpperCase()
-                                            }
+                                            <AssetRow
+                                                chain={chain}
+                                                ibcDenom={balance.denom}
+                                            />
                                         </td>
                                         <td
                                             style={{

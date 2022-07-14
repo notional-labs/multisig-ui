@@ -32,7 +32,6 @@ const TransactionView = ({ }) => {
             try {
                 if (!transactionID) return
                 const transaction = await getTransactionById(transactionID)
-                console.log(transaction)
                 transaction.dataJSON && setTxInfo(JSON.parse(transaction.dataJSON))
                 setTransactionHash(transaction.txHash)
                 setCurrentSignatures([...transaction.signatures.data])
@@ -106,7 +105,6 @@ const TransactionView = ({ }) => {
             const result = await broadcaster.broadcastTx(
                 Uint8Array.from(TxRaw.encode(signedTx).finish())
             );
-            console.log(result);
             await axios.post(`/api/transaction/${transactionID}/update`, {
                 txHash: result.transactionHash,
                 multisigID: multisigID

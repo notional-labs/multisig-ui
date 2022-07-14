@@ -1,4 +1,5 @@
 import { pubkeyToAddress } from "@cosmjs/amino"
+import { addressAmino, addressConversion } from "./stringConvert"
 
 export const checkAddress = (addr, prefix) => {
     let prefixLength = prefix.length
@@ -34,4 +35,40 @@ export const multisigHasAddr = (components, addr, prefix) => {
     if (prevAddrMatch > -1) return true
 
     return false
+}
+
+const checkAddressOsmoValid = (prefix, address) => {
+    let checkPrefix = prefix + 1;
+    if(address.includes(checkPrefix)){
+      return true;
+    }
+
+    return false;
+}
+
+const checkValidatorAddressOsmoValid = (prefix, address) => {
+    let checkPrefix = prefix + "valoper1";
+    if(address.includes(checkPrefix)){
+      return true;
+    }
+
+    return false;
+}
+
+export const checkMsg = (prefix, msgValue) => {
+    for (const address of addressAmino) {
+        if(!(address in msgValue)) continue;
+  
+        if(address.includes("validator"))
+          if(!checkValidatorAddressOsmoValid(prefix, msgValue[address])){
+            throw new Error("Invalid field " + address + ". Please Check Again!");
+          }else{
+            continue;
+          }
+  
+  
+        if(!checkAddressOsmoValid(prefix, msgValue[address])){
+          throw new Error("Invalid field " + address + ". Please Check Again!");
+        }
+    }
 }

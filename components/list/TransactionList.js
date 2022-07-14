@@ -112,7 +112,7 @@ const TransactionList = ({ }) => {
                 openNotification('error', e.message)
             }
         })()
-    }, [filter])
+    }, [filter, transactions])
 
     useEffect(() => {
         const pagingList = filterTransactions.slice((params.page - 1) * params.limit, params.page * params.limit)
@@ -129,9 +129,10 @@ const TransactionList = ({ }) => {
         try {
             openLoadingNotification('open', 'Deleting transaction')
             await deleteTransaction(id)
+            const filterTransactions = transactions.filter((tx) => tx._id !== id)
+            setTransactions([...filterTransactions])
             openLoadingNotification('close')
             openNotification('success', 'Successfully delete transaction')
-            setToggleReload(!toggleReload)
         }
         catch (e) {
             openLoadingNotification('close')

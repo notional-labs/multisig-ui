@@ -43,18 +43,23 @@ export const getPubkey = async (rpc, address) => {
     return accountOnChain.pubkey.value;
 };
 
-export const getBalance = async (rpc, address, denom) => {
+export const getBalance = async (rpc, address) => {
     const client = await StargateClient.connect(rpc);
     const res = await client.getAllBalances(address)
+    console.log(res)
     return res;
+}
+
+export const getBalances = async (api, address) => {
+    const { data } = await axios.get(`${api}cosmos/bank/v1beta1/balances/${address}`)
+    const balances = data.balances ? data.balances : []
+    return balances
 }
 
 export const getAccount = async (rpc, address) => {
     const client = await StargateClient.connect(rpc);
     try {
         let account = await client.getAccount(address);
-
-        console.log(account)
 
         if (!account) {
             throw new Error(
@@ -63,7 +68,6 @@ export const getAccount = async (rpc, address) => {
         }
         else if (!account.pubkey) {
             const res = await getMultisigFromAddress(address)
-            console.log(res)
 
             if (!res) {
                 throw new Error(

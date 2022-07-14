@@ -34,7 +34,6 @@ export const getDelegations = async (rpc, delegator) => {
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
         const res = await extension.staking.delegatorDelegations(delegator)
-        console.log(res)
         return res
     }
     catch (e) {
@@ -48,7 +47,6 @@ export const getDelegation = async (rpc, delegator, validator) => {
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
         const res = await extension.staking.delegation(delegator, validator)
-        console.log(res)
         return res
     }
     catch (e) {
@@ -59,7 +57,6 @@ export const getDelegation = async (rpc, delegator, validator) => {
 export const getRewards = async (api, address) => {
     try {
         const res = await axios.get(`${api}cosmos/distribution/v1beta1/delegators/${address}/rewards`)
-        console.log(res.data)
         return res.data
     }
     catch (e) {
@@ -73,7 +70,6 @@ export const getTx = async (rpc, txHash) => {
         const baseQuery = new QueryClient(tendermint)
         const extension = setupTxExtension(baseQuery)
         const res = await extension.tx.getTx(txHash)
-        console.log(res)
         return res
     }
     catch (e) {
