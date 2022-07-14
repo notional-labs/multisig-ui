@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import ComponentView from "./ComponentView"
 
-const ComponentRow = ({ pubkeys, prefix }) => {
+const ComponentRow = ({ pubkeys, prefix, chain }) => {
     const [pubkeyList, setPubkeyList] = useState([])
 
     useEffect(() => {
@@ -19,6 +19,7 @@ const ComponentRow = ({ pubkeys, prefix }) => {
                             pubkey={pubkey.value}
                             index={index}
                             prefix={prefix}
+                            chain={chain}
                         />
                     )
                 })

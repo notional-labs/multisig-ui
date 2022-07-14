@@ -2,15 +2,22 @@ import { useEffect, useState } from "react"
 import { getDelegations, getValidators, } from "../../../libs/validators"
 import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
-import { createRedelegateMsg } from "../../../libs/transaction"
+import { createRedelegateMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
+import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
 
 const style = {
     input: {
         marginBottom: '10px',
         color: 'black'
+    },
+    button: {
+        border: 0,
+        borderRadius: '10px',
+        width: '40%',
+        padding: '.5em 1em'
     }
 }
 
@@ -26,6 +33,7 @@ const RedelegateMsg = ({ chain, router, address }) => {
         fee: 0,
         memo: '',
     })
+    const [showWarning, setShowWarning] = useState(false)
     const [amountError, setAmountError] = useState('')
     const [valError, setValError] = useState('')
     const [maxAmount, setMaxAmount] = useState(0)
@@ -146,6 +154,25 @@ const RedelegateMsg = ({ chain, router, address }) => {
         })
         if (e.target.value === txBody.validatorSrc) setValError('Destination address must be different from the source address')
         else setValError('')
+    }
+
+    const handleClose = () => {
+        setShowWarning(false)
+    }
+
+    const handleProcced = async () => {
+        const check = await checkIfHasPendingTx(address)
+        if (check) {
+            setShowWarning(true)
+        }
+        else {
+            await handleCreate()
+        }
+    }
+
+    const handleCancel = () => {
+        setShowWarning(false)
+        openNotification('error', 'Cancel create transaction')
     }
 
     return (
@@ -278,10 +305,17 @@ const RedelegateMsg = ({ chain, router, address }) => {
                 handleKeyGroupChange={(e) => {
                     handleKeyGroupChange(e);
                 }}
-                handleCreate={handleCreate}
+                handleCreate={handleProcced}
                 chain={chain}
                 style={style}
                 disabled={disabled()}
+            />
+            <WarningModal
+                style={style}
+                handleClose={handleClose}
+                handleCreate={handleCreate}
+                showWarning={showWarning}
+                handleCancel={handleCancel}
             />
         </div>
     )

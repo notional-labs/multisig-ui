@@ -23,15 +23,7 @@ const TransactionView = ({ }) => {
     const [transactionHash, setTransactionHash] = useState('');
     const [txInfo, setTxInfo] = useState(null)
     const [multisig, setMultisig] = useState(null)
-
-    const addSignature = (signature) => {
-        setCurrentSignatures((currentSignatures) => [
-            ...currentSignatures,
-            signature,
-        ]);
-    };
     const { chain, wrapper } = useContext(ChainContext)
-
     const router = useRouter()
     const { transactionID, multisigID } = router.query
 
@@ -69,6 +61,28 @@ const TransactionView = ({ }) => {
             }
         })()
     }, [multisigID])
+
+    const addSignature = (signature) => {
+        setCurrentSignatures([
+            ...currentSignatures,
+            signature
+        ])
+    }
+
+    const removeSignature = (id) => {
+        const filterSignatures = currentSignatures.filter(sig => sig._id !== id)
+        setCurrentSignatures([...filterSignatures])
+    }
+
+    const editSignature = (signature) => {
+        const editSignatures = currentSignatures.map((sig) => {
+            if (sig._id === signature._id) {
+                return signature
+            }
+            return sig
+        })
+        setCurrentSignatures([...editSignatures])
+    }
 
     const broadcastTx = async () => {
         openLoadingNotification('open', 'Broadcasting transaction')
@@ -211,10 +225,11 @@ const TransactionView = ({ }) => {
                         transactionID={transactionID}
                         currentSignatures={currentSignatures}
                         addSignature={addSignature}
-                        chainId={chain.chain_id}
-                        rpc={chain.rpc}
+                        chain={chain}
                         multisig={multisig}
                         multisigID={multisigID}
+                        removeSignature={removeSignature}
+                        editSignature={editSignature}
                     />
                 )
             }

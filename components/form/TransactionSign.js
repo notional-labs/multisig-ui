@@ -2,20 +2,32 @@ import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
 import { SigningStargateClient, } from "@cosmjs/stargate";
-import { getKey } from "../../libs/keplrClient"
+import { getAccount, getKey, getSequence } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
 import { CheckOutlined } from '@ant-design/icons'
-import { getAccount } from "../../libs/keplrClient";
+import AccountInfo from "../ulti/AccountInfo";
+import FlexRow from "../flex_box/FlexRow";
+import SignerList from "../list/SignerList";
 
-const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, chainId, multisig, multisigID, rpc }) => {
+const TransationSign = ({
+    tx,
+    transactionID,
+    currentSignatures,
+    addSignature,
+    chain,
+    multisig,
+    multisigID,
+    removeSignature,
+    editSignature
+}) => {
     const [hasSigned, setHasSigned] = useState(false)
     const [account, setAccount] = useState()
     const [accountError, setAccountError] = useState('')
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
-        const currentAccount = await getKey(chainId)
+        const currentAccount = await getKey(chain.chain_id)
         const hasSigned = currentSignatures.some(
             (sig) => sig.address === currentAccount.bech32Address
         );
@@ -34,7 +46,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
     useEffect(() => {
         (async () => {
             try {
-                const account = await getKey(chainId)
+                const account = await getKey(chain.chain_id)
                 const hasSigned = currentSignatures.some(
                     (sig) => sig.address === account.bech32Address
                 );
@@ -45,7 +57,7 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                 openNotification('error', 'Failed to get account key')
             }
         })()
-    }, [])
+    }, [currentSignatures])
 
     useEffect(() => {
         if (checkAddrInMultisig()) {
@@ -74,14 +86,15 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                 },
             };
             const offlineSigner = window.getOfflineSignerOnlyAmino(
-                chainId
+                chain.chain_id
             );
-            const signAccount = await getAccount(rpc, multisigID)
+            const signAccount = await getAccount(chain.rpc, multisigID)
+
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: signAccount.accountNumber,
-                sequence: signAccount.sequence,
-                chainId: chainId,
+                accountNumber: parseInt(signAccount.accountNumber),
+                sequence: parseInt(signAccount.sequence),
+                chainId: chain.chain_id,
             };
 
             const { bodyBytes, signatures } = await signingClient.sign(
@@ -106,13 +119,15 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                     bodyBytes: bases64EncodedBodyBytes,
                     signature: bases64EncodedSignature,
                     address: account.bech32Address,
+                    accountNumber: signAccount.accountNumber,
+                    sequence: signAccount.sequence
                 };
-                await axios.post(
+                const res = await axios.post(
                     `/api/transaction/${transactionID}/signature`,
                     signature
                 );
-
-                addSignature(signature);
+                console.log(res.data)
+                addSignature(res.data);
                 setHasSigned(true)
             }
             openLoadingNotification('close')
@@ -136,13 +151,6 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
             <h2>
                 Sign Transaction
             </h2>
-            <div
-                style={{
-                    marginBottom: '20px'
-                }}
-            >
-                By signing this transaction, you`ll agree to unsigned all previous pending transaction to avoid mismatch sequence.
-            </div>
             {
                 hasSigned ? (
                     <div
@@ -178,6 +186,17 @@ const TransationSign = ({ tx, transactionID, currentSignatures, addSignature, ch
                     />
                 )
             }
+            <AccountInfo
+                chain={chain}
+                address={multisigID}
+                currentSignatures={currentSignatures}
+                tx={tx}
+                transactionID={transactionID}
+                walletAccount={account}
+                setHasSigned={setHasSigned}
+                removeSignature={removeSignature}
+                editSignature={editSignature}
+            />
         </div>
     )
 }

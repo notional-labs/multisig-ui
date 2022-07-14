@@ -3,10 +3,10 @@ import { getMultisigFromAddress } from "../../libs/multisig"
 import ComponentRow from "./ComponentRow"
 import { Skeleton } from "antd"
 import Link from 'next/link'
-import { addressShortener, timeStampHandler } from "../../libs/stringConvert"
+import { addressShortener } from "../../libs/stringConvert"
 import { motion } from "framer-motion"
 
-const MultisigRowView = ({ address, index, loadingRow = false }) => {
+const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
     const [multisig, setMultisg] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -48,7 +48,15 @@ const MultisigRowView = ({ address, index, loadingRow = false }) => {
                     <>
                         <td
                             style={{
-                                width: '40%',
+                                width: '50%',
+                                paddingTop: '1em'
+                            }}
+                        >
+                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                        </td>
+                        <td
+                            style={{
+                                width: '30%',
                                 paddingTop: '1em'
                             }}
                         >
@@ -57,15 +65,8 @@ const MultisigRowView = ({ address, index, loadingRow = false }) => {
                         <td
                             style={{
                                 width: '20%',
-                                paddingTop: '1em'
-                            }}
-                        >
-                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                        </td>
-                        <td
-                            style={{
-                                width: '20%',
-                                paddingTop: '1em'
+                                paddingTop: '1em',
+                                textAlign: 'center'
                             }}
                         >
                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
@@ -99,17 +100,20 @@ const MultisigRowView = ({ address, index, loadingRow = false }) => {
                             {<ComponentRow
                                 pubkeys={multisig.pubkeyJSON}
                                 prefix={multisig.prefix}
+                                chain={chain}
                             />}
                         </td>
                         <td
                             style={{
-                                width: '20%',
-                                textAlign: 'right',
+                                width: '40%',
                                 fontSize: '1rem',
-                                padding: '.5em'
+                                padding: '.5em',
+                                textAlign: 'center'
                             }}
                         >
-                            {timeStampHandler(new Date(multisig.createdOn))}
+                            {
+                                JSON.parse(multisig.pubkeyJSON).value.threshold
+                            }
                         </td>
                     </>
                 )

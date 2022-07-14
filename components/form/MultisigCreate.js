@@ -50,11 +50,25 @@ const MultisigCreate = ({ }) => {
         setPubkeys([...newPubkeys])
     }
 
+    const checkDuplicate = (address, index) => {
+        const check = pubkeys.some((pubkey, i) => i !== index && pubkey.address === address)
+        return check
+    }
+
+    const checkDisable = () => {
+        const check = pubkeys.some(pubkey => pubkey.error !== '')
+        console.log(check)
+        return check
+    }
+
     const handleKeyBlur = async (e, index) => {
         let address = e.target.value;
         if (address.length > 0) {
             try {
                 checkAddress(address, chain.prefix)
+                if (checkDuplicate(address, index)) {
+                    throw new Error('Duplicate address')
+                }
                 const pubkey = await getPubkey(chain.rpc, address)
                 let newPubkeys = [...pubkeys]
                 newPubkeys[index].pubkey = pubkey;
@@ -228,8 +242,12 @@ const MultisigCreate = ({ }) => {
             </p>
             <Button
                 text={'CREATE MULTISIG'}
-                style={style.button}
+                style={{
+                    ...style.button,
+                    backgroundColor: checkDisable() ? '#D9D9D9' : 'black'
+                }}
                 clickFunction={async () => await handleCreate()}
+                disable={checkDisable()}
             />
         </div>
     )

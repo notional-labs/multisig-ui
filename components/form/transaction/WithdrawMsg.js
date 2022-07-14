@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react"
 import ShareForm from "./ShareForm"
 import { getRewards } from "../../../libs/validators"
-import { createWithdrawRewardsMsg } from "../../../libs/transaction"
+import { createWithdrawRewardsMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
+import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
 
 const style = {
     input: {
         marginBottom: '10px',
         color: 'black'
+    },
+    button: {
+        border: 0,
+        borderRadius: '10px',
+        width: '40%',
+        padding: '.5em 1em'
     }
 }
 
@@ -21,6 +28,7 @@ const WithdrawMsg = ({ chain, router, address }) => {
         fee: 0,
         memo: '',
     })
+    const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
@@ -94,6 +102,25 @@ const WithdrawMsg = ({ chain, router, address }) => {
                 [e.target.name]: e.target.value
             })
         }
+    }
+
+    const handleClose = () => {
+        setShowWarning(false)
+    }
+
+    const handleProcced = async () => {
+        const check = await checkIfHasPendingTx(address)
+        if (check) {
+            setShowWarning(true)
+        }
+        else {
+            await handleCreate()
+        }
+    }
+
+    const handleCancel = () => {
+        setShowWarning(false)
+        openNotification('error', 'Cancel create transaction')
     }
 
     return (
@@ -212,10 +239,17 @@ const WithdrawMsg = ({ chain, router, address }) => {
                 handleKeyGroupChange={(e) => {
                     handleKeyGroupChange(e);
                 }}
-                handleCreate={handleCreate}
+                handleCreate={handleProcced}
                 chain={chain}
                 style={style}
                 disabled={disabled()}
+            />
+            <WarningModal
+                style={style}
+                handleClose={handleClose}
+                handleCreate={handleCreate}
+                showWarning={showWarning}
+                handleCancel={handleCancel}
             />
         </div>
     )

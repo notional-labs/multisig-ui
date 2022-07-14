@@ -12,11 +12,24 @@ const getFee = (gas, amount, denom) => {
 export const getTransactionById = async (id) => {
     try {
         const res = await axios.get(`/api/transaction/${id}`)
-        console.log(res.data)
         if (!res.data || res.data === null) {
             throw new Error('This transaction might not be created using this tool!')
         }
         return res.data
+    }
+    catch (e) {
+        throw e;
+    }
+}
+
+export const checkIfHasPendingTx = async(address) => {
+    try {
+        const res = await axios.get(`/api/multisig/${address}/all-transaction`)
+        console.log(res.data)
+        if (!res.data || res.data === null) {
+            throw new Error('Failed to check transaction!')
+        }
+        return res.data.some((tx) => tx.status === 'PENDING')
     }
     catch (e) {
         throw e;
