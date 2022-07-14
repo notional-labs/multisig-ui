@@ -4,9 +4,9 @@
 
 Firstly, go to Faunadb (https://fauna.com/) create a database and import the schema from the schema.graphql file. 
 
-Secondly, get the Secret key from faunadb. Create a .local.env file in the root directory and add the secret key.
+Secondly, get the Secret key from faunadb. Create a .env.local file in the root directory and add the secret key.
 
-Thirdly, add the host directory in the .local.env file
+Thirdly, add the host directory in the .env.local file
 
 Finally, run the development server:
 
