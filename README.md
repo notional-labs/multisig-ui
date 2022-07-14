@@ -18,7 +18,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# Example .local.env file
+# Example .env.local file
 
 ```
 NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-4334
