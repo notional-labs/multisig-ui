@@ -18,7 +18,6 @@ export const createMultisigFromPubkeys = async (compressedPubkeys, threshold, pr
             components: components,
             prefix: prefix
         };
-        console.log(multisigAddress)
         const check = await checkIfMultisigExist(multisigAddress)
         if (check) throw new Error('This multisig already exist, maybe try add more component addresses or change the current components')
         const res = await axios.post("/api/multisig", multisig);
@@ -51,6 +50,5 @@ export const getAllMultisigOfAddress = async (address) => {
 
 export const checkIfMultisigExist = async (address) => {
     const res = await axios.post(`/api/multisig/${address}`, { address })
-    console.log(!res.data)
     return (res.data)
 }

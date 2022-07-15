@@ -20,7 +20,7 @@ const style = {
     }
 }
 
-const SendMsgForm = ({ address, chain, router }) => {
+const SendMsgForm = ({ address, chain, router, checked, setChecked }) => {
     const [txBody, setTxBody] = useState({
         toAddress: '',
         amount: 0,
@@ -108,7 +108,7 @@ const SendMsgForm = ({ address, chain, router }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(address)
-        if (check) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {
@@ -162,6 +162,8 @@ const SendMsgForm = ({ address, chain, router }) => {
                 handleCreate={handleCreate}
                 showWarning={showWarning}
                 handleCancel={handleCancel}
+                checked={checked}
+                setChecked={setChecked}
             />
         </div>
     )

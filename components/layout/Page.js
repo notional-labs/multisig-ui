@@ -27,8 +27,8 @@ const Page = ({ enableSelectChain = true, children }) => {
                 }
                 <Footer />
             </div>
-            <TopUpButton/>
-            
+            <TopUpButton />
+
             {/* global css */}
             <style jsx global>{`
                 ::-webkit-scrollbar {
@@ -59,6 +59,11 @@ const Page = ({ enableSelectChain = true, children }) => {
 
                 .anticon-copy {
                     color: white;
+                }
+
+                .black-placeholder::placeholder {
+                    color: #333333;
+                    opacity: 0.5
                 }
             `}</style>
         </div>

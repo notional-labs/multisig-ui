@@ -6,7 +6,6 @@ export default async function handler(req, res) {
             try {
                 const data = req.body;
                 const saveRes = await getMultisigOfAddress(data);
-                console.log(saveRes.data)
                 res.status(200).send(saveRes.data.data.getAllMultisigByAddress.data);
             } catch (err) {
                 console.log(err.message)

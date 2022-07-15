@@ -7,7 +7,6 @@ export default async function handler(req, res) {
                 const {transactionID} = req.query;
                 const { txHash, multisigID } = req.body;
                 const saveRes = await updateTransaction(txHash, transactionID, multisigID);
-                console.log(saveRes.data)
                 res.status(200).send(saveRes.data.data.updateTransaction);
             } catch (err) {
                 console.log(err.message)

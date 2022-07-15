@@ -126,7 +126,6 @@ const TransationSign = ({
                     `/api/transaction/${transactionID}/signature`,
                     signature
                 );
-                console.log(res.data)
                 addSignature(res.data);
                 setHasSigned(true)
             }

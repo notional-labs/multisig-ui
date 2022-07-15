@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react"
 import { getMultisigFromAddress } from "../../libs/multisig"
 import { openNotification } from "../ulti/Notification"
 import { useRouter } from "next/router"
-import { getBalance } from "../../libs/keplrClient"
+import { getBalance, getBalances } from "../../libs/keplrClient"
 import { Typography, Tooltip, Skeleton } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
@@ -10,6 +10,7 @@ import { ChainContext } from "../Context"
 import { prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
 import TransactionImport from "../form/TransactionImport"
+import AssetRow from "./AssetRow"
 
 const { Paragraph } = Typography;
 
@@ -48,6 +49,7 @@ const MultisigView = () => {
     const { multisigID } = router.query
     const [showCreate, setShowCreate] = useState(false)
     const [showImport, setShowImport] = useState(false)
+    const [multisigErr, setMultisigErr] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -55,15 +57,19 @@ const MultisigView = () => {
             if (!multisigID) return
             try {
                 setLoading(true)
+                setMultisigErr('')
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
                 id && wrapper(id)
                 id && localStorage.setItem('current', id)
-                const balances = await getBalance(chain.rpc, multisigID)
+                const balances = await getBalances(chain.api, multisigID)
                 setHolding([...balances])
                 setLoading(false)
             }
             catch (e) {
+                if (e.message === 'This address might not be created using this tool !') {
+                    setMultisigErr(e.message)
+                }
                 openNotification('error', 'Failed to fetch multisig info or balance ' + e.message)
             }
         })()
@@ -107,7 +113,6 @@ const MultisigView = () => {
     return (
         <div
             style={{
-
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
                 padding: '2em 3em',
@@ -199,7 +204,7 @@ const MultisigView = () => {
                                     textAlign: 'left'
                                 }}
                             >
-                                Amount
+                                Available Amount
                             </th>
                         </tr>
                     </thead>
@@ -219,9 +224,10 @@ const MultisigView = () => {
                                                 padding: '1em 0'
                                             }}
                                         >
-                                            {
-                                                balance.denom.split('u')[1].toUpperCase()
-                                            }
+                                            <AssetRow
+                                                chain={chain}
+                                                ibcDenom={balance.denom}
+                                            />
                                         </td>
                                         <td
                                             style={{
@@ -237,30 +243,46 @@ const MultisigView = () => {
                                 )
                             }) : (
                                 <>
-                                        <td
-                                            style={{
-                                                width: '50%',
-                                                paddingTop: '1em',
-                                            }}
-                                        >
-                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                        </td>
-                                        <td
-                                            style={{
-                                                width: '20%',
-                                                paddingTop: '1em',
-                                            }}
-                                        >
-                                            <Skeleton active rows={1} paragraph={{ rows: 0 }}/>
-                                        </td>
-                                    </>
+                                    <td
+                                        style={{
+                                            width: '50%',
+                                            paddingTop: '1em',
+                                        }}
+                                    >
+                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                    </td>
+                                    <td
+                                        style={{
+                                            width: '20%',
+                                            paddingTop: '1em',
+                                        }}
+                                    >
+                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                    </td>
+                                </>
                             )
                         }
                     </tbody>
                 </table>
             </div>
             {
-                !showCreate && !showImport && (
+                multisigErr !== '' && (
+                    <div
+                        style={{
+                            backgroundColor: '#ffffff',
+                            boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                            padding: '2em 3em',
+                            borderRadius: '10px',
+                            color: 'red',
+                            marginTop: '30px'
+                        }}
+                    >
+                        {multisigErr}
+                    </div>
+                )
+            }
+            {
+                multisigErr === '' && !showCreate && !showImport && (
                     <FlexRow
                         components={[
                             getRowCard(
@@ -271,7 +293,7 @@ const MultisigView = () => {
                             ),
                             getRowCard(
                                 'Import transaction',
-                                'Import an already generated transaction',
+                                'Import an already generated transaction JSON',
                                 'Import Transaction',
                                 'import'
                             ),
@@ -284,7 +306,7 @@ const MultisigView = () => {
                 )
             }
             {
-                showCreate && (
+                multisigErr === '' && showCreate && (
                     <TransactionCreate
                         multisigID={multisigID}
                         router={router}
@@ -294,7 +316,7 @@ const MultisigView = () => {
                 )
             }
             {
-                showImport && (
+                multisigErr === '' && showImport && (
                     <TransactionImport
                         multisigID={multisigID}
                         router={router}

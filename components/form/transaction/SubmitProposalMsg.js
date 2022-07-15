@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import { getValidators } from "../../../libs/validators"
-import Input from "../../input/Input"
+import { getProposals } from "../../../libs/validators"
 import ShareForm from "./ShareForm"
-import { checkIfHasPendingTx, createDelegateMsg } from "../../../libs/transaction"
+import { createVoteMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
-import axios from "axios"
+import { Radio, Space } from 'antd';
 import WarningModal from "../../ulti/WarningModal"
+import axios from "axios"
 
 const style = {
     input: {
@@ -20,11 +20,13 @@ const style = {
     }
 }
 
-const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
-    const [validators, setValidators] = useState([])
+const SubmitProposalMsg = ({ chain, router, address, checked, setChecked }) => {
+    const [proposals, setProposals] = useState([])
     const [txBody, setTxBody] = useState({
-        toAddress: '',
-        amount: 0,
+        proposalType: '',
+        title: '',
+        description: '',
+        initialDeposit: 0,
         gas: 200000,
         fee: 0,
         memo: '',
@@ -34,7 +36,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     const invalidForm = () => {
         for (let key in txBody) {
             if (key !== 'memo' && txBody[key] === '') return true
-            else if (key === 'amount' && txBody[key] === 0) return true
+            else if (key === 'initialDeposit' && txBody[key] === 0) return true
         }
         return false
     }
@@ -49,8 +51,12 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await getValidators(chain.rpc)
-                res.validators && setValidators([...res.validators])
+                const res = await getProposals(chain.api, address)
+                res.proposals && setProposals([...res.proposals])
+                res.proposals && res.proposals.length > 0 && setTxBody({
+                    ...txBody,
+                    proposalId: res.proposals[0].proposal_id
+                })
             }
             catch (e) {
                 openNotification('error', e.message)
@@ -61,10 +67,10 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     const handleCreate = async () => {
         openLoadingNotification('open', 'Creating transaction')
         try {
-            const tx = createDelegateMsg(
+            const tx = createVoteMsg(
+                txBody.option,
+                txBody.proposalId,
                 address,
-                txBody.toAddress,
-                txBody.amount * 1000000,
                 txBody.gas,
                 chain.denom,
                 txBody.memo,
@@ -91,7 +97,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     }
 
     const handleKeyGroupChange = (e) => {
-        if (e.target.name === 'amount' || e.target.name === 'fee' || e.target.name === 'gas') {
+        if (e.target.name === 'fee' || e.target.name === 'gas') {
             setTxBody({
                 ...txBody,
                 [e.target.name]: parseFloat(e.target.value)
@@ -106,18 +112,22 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     }
 
     const handleSelect = (e) => {
+        let newTx = {
+            ...txBody
+        }
+        newTx[e.target.name] = e.target.value
         setTxBody({
-            ...txBody,
-            toAddress: e.target.value
+            ...newTx,
         })
     }
+
     const handleClose = () => {
         setShowWarning(false)
     }
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(address)
-        if ( check && !checked ) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {
@@ -129,7 +139,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
         setShowWarning(false)
         openNotification('error', 'Cancel create transaction')
     }
- 
+
     return (
         <div>
             <div
@@ -140,42 +150,74 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                         marginBottom: 0
                     }}
                 >
-                    Validator
+                    Proposal
                 </h4>
-                <select
-                    onChange={handleSelect}
+                {
+                    proposals.length > 0 ? (
+                        <select
+                            onChange={handleSelect}
+                            style={{
+                                width: '100%',
+                                padding: '1em',
+                                borderRadius: '10px',
+                            }}
+                            name={'proposalId'}
+                        >
+                            {
+                                proposals.map((proposal, index) => {
+                                    return (
+                                        <option
+                                            value={proposal.proposal_id}
+                                            key={index}
+                                        >
+                                            # {proposal.proposal_id} {proposal.content.title}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+
+                    ) : (
+                        <div
+                            style={{
+                                width: '100%',
+                                borderRadius: '10px',
+                                height: '50px',
+                                border: 0,
+                                backgroundColor: 'transparent',
+                                padding: '1em',
+                                border: 'solid 1px black',
+                                color: 'red'
+                            }}
+                        >
+                            No proposals in voting period yet!
+                        </div>
+                    )
+                }
+            </div>
+            <div
+                style={style.input}
+            >
+                <h4
                     style={{
-                        width: '100%',
-                        padding: '1em',
-                        borderRadius: '10px',
+                        marginBottom: 0
                     }}
                 >
-                    {
-                        validators.length > 0 && validators.map((validator, index) => {
-                            return (
-                                <option
-                                    value={validator.operatorAddress}
-                                    key={index}
-                                >
-                                    {validator.description.moniker}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
-
+                    Option
+                </h4>
+                <Radio.Group
+                    onChange={handleSelect}
+                    value={txBody.option}
+                    name={'option'}
+                >
+                    <Space direction="horizontal">
+                        <Radio value={1}>Yes</Radio>
+                        <Radio value={3}>No</Radio>
+                        <Radio value={4}>No With Veto</Radio>
+                        <Radio value={2}>Abstain</Radio>
+                    </Space>
+                </Radio.Group>
             </div>
-            <Input
-                onChange={(e) => {
-                    handleKeyGroupChange(e);
-                }}
-                value={txBody.amount}
-                label={`Amount (${chain.denom.split('u')[1].toUpperCase()})`}
-                name="amount"
-                type="number"
-                placeholder="Amount"
-                style={style.input}
-            />
             <ShareForm
                 txBody={txBody}
                 handleKeyGroupChange={(e) => {
@@ -199,4 +241,4 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     )
 }
 
-export default DelegateMsg
+export default SubmitProposalMsg

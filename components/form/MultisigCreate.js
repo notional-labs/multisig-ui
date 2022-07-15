@@ -57,7 +57,6 @@ const MultisigCreate = ({ }) => {
 
     const checkDisable = () => {
         const check = pubkeys.some(pubkey => pubkey.error !== '')
-        console.log(check)
         return check
     }
 
