@@ -25,7 +25,7 @@ NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-4334
 NEXT_PUBLIC_HOST=http://localhost:3000/
 ```
 
-#Supported chains:
+# Supported chains:
 
 1. Osmosis
 2. Gaia (cosmoshub)
