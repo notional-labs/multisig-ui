@@ -2,9 +2,12 @@ import Button from "../input/Button"
 import { CloseOutlined } from '@ant-design/icons'
 import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { checkMsg } from "../../libs/checkTool"
+import { mockData } from "../../data/mockData"
+import { checkIfHasPendingTx } from "../../libs/transaction"
+import WarningModal from "../ulti/WarningModal"
 import { addressAmino, addressConversion } from "../../libs/stringConvert"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 
@@ -24,8 +27,30 @@ const typeMsgConversion = [
     '/cosmos.staking.v1beta1.MsgBeginRedelegate'
 ]
 
+const style = {
+    input: {
+        marginBottom: '10px',
+        color: 'black'
+    },
+    button: {
+        border: 0,
+        borderRadius: '10px',
+        width: '40%',
+        padding: '.5em 1em'
+    }
+}
+
 const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
     const [tx, setTx] = useState('')
+    const [checked, setChecked] = useState(false)
+    const [showWarning, setShowWarning] = useState(false)
+
+    useEffect(() => {
+        const notShowWarning = localStorage.getItem('not-show-warning')
+        if (notShowWarning && notShowWarning === 'true') {
+            setChecked(notShowWarning)
+        }
+    }, [])
 
     const handleChange = (e) => {
         setTx(e.target.value)
@@ -142,6 +167,26 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return tx === ''
     }
 
+    const handleClose = () => {
+        setShowWarning(false)
+    }
+
+    const handleProcced = async () => {
+        const check = await checkIfHasPendingTx(multisigID)
+        console.log(checked)
+        if ( check && !checked ) {
+            setShowWarning(true)
+        }
+        else {
+            await handleCreate()
+        }
+    }
+
+    const handleCancel = () => {
+        setShowWarning(false)
+        openNotification('error', 'Cancel create transaction')
+    }
+
     return (
         <motion.div
             initial={{
@@ -194,11 +239,21 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     clickFunction={wrapSetClose}
                 />
             </div>
+            <div
+                style={{
+                    fontStyle: 'italic',
+                    color: '#636363',
+                    marginBottom: '20px'
+                }}
+            >
+                *Currently support Send, WithdrawDelegatorReward, Delegate, Undelegate, BeginRedelegate type message
+            </div>
             <div>
                 <TextArea
-                    placeholder="paste your transaction JSON"
+                    placeholder={mockData}
                     rows={6}
                     onChange={handleChange}
+                    className={'black-placeholder'}
                     value={tx}
                     style={{
                         backgroundColor: '#D9D9D9',
@@ -220,8 +275,17 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     marginTop: '20px',
                     border: 0
                 }}
-                clickFunction={async () => await handleCreate()}
+                clickFunction={async () => await handleProcced()}
                 disable={checDisable()}
+            />
+            <WarningModal
+                style={style}
+                handleClose={handleClose}
+                handleCreate={handleCreate}
+                showWarning={showWarning}
+                handleCancel={handleCancel}
+                checked={checked}
+                setChecked={setChecked}
             />
         </motion.div>
     )

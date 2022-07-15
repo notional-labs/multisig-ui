@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SendMsgForm from "./transaction/SendMsg"
 import DelegateMsgForm from "./transaction/DelegateMsg"
 import UndelegateMsg from "./transaction/UndelegateMsg"
@@ -11,6 +11,7 @@ import { motion } from "framer-motion"
 
 const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
     const [txType, setTxType] = useState(0)
+    const [checked, setChecked] = useState(false)
 
     const txTypes = [
         {
@@ -20,6 +21,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         }, {
@@ -29,6 +32,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         }, {
@@ -38,6 +43,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         }, {
@@ -47,6 +54,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         }, {
@@ -56,6 +65,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         },
@@ -66,10 +77,19 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                     chain={chain}
                     router={router}
                     address={multisigID}
+                    checked={checked}
+                    setChecked={setChecked}
                 />
             )
         }
     ]
+
+    useEffect(() => {
+        const notShowWarning = localStorage.getItem('not-show-warning')
+        if (notShowWarning && notShowWarning === 'true') {
+            setChecked(notShowWarning)
+        }
+    }, [])
 
     const getForm = () => {
         return txTypes[txType].component

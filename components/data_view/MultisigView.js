@@ -49,6 +49,7 @@ const MultisigView = () => {
     const { multisigID } = router.query
     const [showCreate, setShowCreate] = useState(false)
     const [showImport, setShowImport] = useState(false)
+    const [multisigErr, setMultisigErr] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -56,6 +57,7 @@ const MultisigView = () => {
             if (!multisigID) return
             try {
                 setLoading(true)
+                setMultisigErr('')
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
                 id && wrapper(id)
@@ -65,6 +67,9 @@ const MultisigView = () => {
                 setLoading(false)
             }
             catch (e) {
+                if (e.message === 'This address might not be created using this tool !') {
+                    setMultisigErr(e.message)
+                }
                 openNotification('error', 'Failed to fetch multisig info or balance ' + e.message)
             }
         })()
@@ -108,7 +113,6 @@ const MultisigView = () => {
     return (
         <div
             style={{
-
                 backgroundColor: '#ffffff',
                 boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
                 padding: '2em 3em',
@@ -239,30 +243,46 @@ const MultisigView = () => {
                                 )
                             }) : (
                                 <>
-                                        <td
-                                            style={{
-                                                width: '50%',
-                                                paddingTop: '1em',
-                                            }}
-                                        >
-                                            <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                        </td>
-                                        <td
-                                            style={{
-                                                width: '20%',
-                                                paddingTop: '1em',
-                                            }}
-                                        >
-                                            <Skeleton active rows={1} paragraph={{ rows: 0 }}/>
-                                        </td>
-                                    </>
+                                    <td
+                                        style={{
+                                            width: '50%',
+                                            paddingTop: '1em',
+                                        }}
+                                    >
+                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                    </td>
+                                    <td
+                                        style={{
+                                            width: '20%',
+                                            paddingTop: '1em',
+                                        }}
+                                    >
+                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                    </td>
+                                </>
                             )
                         }
                     </tbody>
                 </table>
             </div>
             {
-                !showCreate && !showImport && (
+                multisigErr !== '' && (
+                    <div
+                        style={{
+                            backgroundColor: '#ffffff',
+                            boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                            padding: '2em 3em',
+                            borderRadius: '10px',
+                            color: 'red',
+                            marginTop: '30px'
+                        }}
+                    >
+                        {multisigErr}
+                    </div>
+                )
+            }
+            {
+                multisigErr === '' && !showCreate && !showImport && (
                     <FlexRow
                         components={[
                             getRowCard(
@@ -273,7 +293,7 @@ const MultisigView = () => {
                             ),
                             getRowCard(
                                 'Import transaction',
-                                'Import an already generated transaction',
+                                'Import an already generated transaction JSON',
                                 'Import Transaction',
                                 'import'
                             ),
@@ -286,7 +306,7 @@ const MultisigView = () => {
                 )
             }
             {
-                showCreate && (
+                multisigErr === '' && showCreate && (
                     <TransactionCreate
                         multisigID={multisigID}
                         router={router}
@@ -296,7 +316,7 @@ const MultisigView = () => {
                 )
             }
             {
-                showImport && (
+                multisigErr === '' && showImport && (
                     <TransactionImport
                         multisigID={multisigID}
                         router={router}

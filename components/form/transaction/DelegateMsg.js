@@ -20,7 +20,7 @@ const style = {
     }
 }
 
-const DelegateMsg = ({ chain, router, address }) => {
+const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     const [validators, setValidators] = useState([])
     const [txBody, setTxBody] = useState({
         toAddress: '',
@@ -117,7 +117,7 @@ const DelegateMsg = ({ chain, router, address }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(address)
-        if (check) {
+        if ( check && !checked ) {
             setShowWarning(true)
         }
         else {
@@ -192,6 +192,8 @@ const DelegateMsg = ({ chain, router, address }) => {
                 handleCreate={handleCreate}
                 showWarning={showWarning}
                 handleCancel={handleCancel}
+                checked={checked}
+                setChecked={setChecked}
             />
         </div>
     )

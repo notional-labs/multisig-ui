@@ -22,7 +22,7 @@ const style = {
 }
 
 
-const RedelegateMsg = ({ chain, router, address }) => {
+const RedelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     const [validators, setValidators] = useState([])
     const [delegations, setdelegations] = useState([])
     const [txBody, setTxBody] = useState({
@@ -162,7 +162,7 @@ const RedelegateMsg = ({ chain, router, address }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(address)
-        if (check) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {
@@ -316,6 +316,8 @@ const RedelegateMsg = ({ chain, router, address }) => {
                 handleCreate={handleCreate}
                 showWarning={showWarning}
                 handleCancel={handleCancel}
+                checked={checked}
+                setChecked={setChecked}
             />
         </div>
     )

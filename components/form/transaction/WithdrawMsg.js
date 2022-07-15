@@ -21,7 +21,7 @@ const style = {
 }
 
 
-const WithdrawMsg = ({ chain, router, address }) => {
+const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
     const [rewards, setRewards] = useState([])
     const [txBody, setTxBody] = useState({
         gas: 200000,
@@ -110,7 +110,7 @@ const WithdrawMsg = ({ chain, router, address }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(address)
-        if (check) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {
@@ -250,6 +250,8 @@ const WithdrawMsg = ({ chain, router, address }) => {
                 handleCreate={handleCreate}
                 showWarning={showWarning}
                 handleCancel={handleCancel}
+                checked={checked}
+                setChecked={setChecked}
             />
         </div>
     )
