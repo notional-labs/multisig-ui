@@ -63,7 +63,7 @@ export const getAccount = async (rpc, address) => {
 
         if (!account) {
             throw new Error(
-                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
             );
         }
         else if (!account.pubkey) {
@@ -95,7 +95,7 @@ export const getSequence = async (api, address) => {
 
         if (!data.account) {
             throw new Error(
-                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
             );
         }
         return data.account;
