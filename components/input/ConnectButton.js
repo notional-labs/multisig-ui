@@ -1,15 +1,21 @@
 import Button from "./Button"
 import { getKey } from "../../libs/keplrClient"
 import { useRouter } from "next/router"
+import { openNotification } from "../ulti/Notification"
 
 const ConnectButton = ({ chainId, setAccount }) => {
     const router = useRouter()
 
     const connect = async () => {
-        const account = await getKey(chainId)
-        localStorage.setItem('account', JSON.stringify(account))
-        window.dispatchEvent( new Event('storage') )
-        setAccount(JSON.stringify(account))
+        try {
+            const account = await getKey(chainId)
+            localStorage.setItem('account', JSON.stringify(account))
+            window.dispatchEvent(new Event('storage'))
+            setAccount(JSON.stringify(account))
+        }
+        catch (e) {
+            openNotification('error', e.message)
+        }
     }
 
     return (

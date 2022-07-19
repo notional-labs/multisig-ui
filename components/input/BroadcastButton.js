@@ -2,8 +2,9 @@ import Button from "./Button"
 import { multisigHasAddr } from "../../libs/checkTool"
 import { useEffect, useState } from "react"
 import { getKey } from "../../libs/keplrClient"
+import { openNotification } from "../ulti/Notification"
 
-const BroadcastButton = ({ broadcastTx, chain, multisig}) => {
+const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
     const [account, setAccount] = useState()
 
     useEffect(() => {
@@ -15,9 +16,14 @@ const BroadcastButton = ({ broadcastTx, chain, multisig}) => {
 
     useEffect(() => {
         (async () => {
-            const account = await getKey(chain.chain_id)
-            if (!account) return
-            setAccount(account)
+            try {
+                const account = await getKey(chain.chain_id)
+                if (!account) return
+                setAccount(account)
+            }
+            catch (e) {
+                openNotification('error', e.message)
+            }
         })()
     }, [])
 
