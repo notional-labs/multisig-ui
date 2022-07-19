@@ -233,7 +233,7 @@ const MultisigView = () => {
                                                     fontWeight: 'bold'
                                                 }}
                                             >
-                                                OSMO
+                                                {chain.prefix.toUpperCase()}
                                             </td>
                                             <td
                                                 style={{
