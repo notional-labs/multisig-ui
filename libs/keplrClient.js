@@ -3,32 +3,40 @@ import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 
 export const getKeplrAccount = async (chainId) => {
-    if (!window.getOfflineSigner || !window.keplr) {
-        alert("Keplr Wallet not detected, please install extension");
-        return {
-            accounts: null
+    try {
+        if (!window.getOfflineSigner || !window.keplr) {
+            alert("Keplr Wallet not detected, please install extension");
+            throw new Error('Keplr not install')
+        } else {
+            // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
+            await window.keplr.enable(chainId)
+            const offlineSigner = window.keplr.getOfflineSigner(chainId);
+            const accounts = await offlineSigner.getAccounts();
+            return {
+                accounts,
+                offlineSigner,
+            };
         }
-    } else {
-        // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
-        await window.keplr.enable(chainId)
-        const offlineSigner = window.keplr.getOfflineSigner(chainId);
-        const accounts = await offlineSigner.getAccounts();
-        return {
-            accounts,
-            offlineSigner,
-        };
+    }
+    catch (e) {
+        alert(e.message)
     }
 }
 
 export const getKey = async (chainId) => {
-    if (!window.getOfflineSigner || !window.keplr) {
-        alert("Keplr Wallet not detected, please install extension");
-        return null
-    } else {
-        // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
-        await window.keplr.enable(chainId)
-        const account = await window.keplr.getKey(chainId);
-        return account
+    try {
+        if (!window.getOfflineSigner || !window.keplr) {
+            alert("Keplr Wallet not detected, please install extension");
+            throw new Error('Keplr not install')
+        } else {
+            // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
+            await window.keplr.enable(chainId)
+            const account = await window.keplr.getKey(chainId);
+            return account
+        }
+    }
+    catch (e) {
+        alert(e.message)
     }
 }
 
@@ -63,7 +71,7 @@ export const getAccount = async (rpc, address) => {
 
         if (!account) {
             throw new Error(
-                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
             );
         }
         else if (!account.pubkey) {
@@ -91,11 +99,11 @@ export const getSequence = async (api, address) => {
             'Cache-Control': 'no-cache',
             'Pragma': 'no-cache',
             'Expires': '0',
-          })
+        })
 
         if (!data.account) {
             throw new Error(
-                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
             );
         }
         return data.account;

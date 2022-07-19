@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import Head from 'next/head';
 import { chainData } from '../data/chainData';
 import { AnimatePresence } from "framer-motion";
 
@@ -27,6 +28,9 @@ export const ChainProvider = (props) => {
         <AnimatePresence
             exitBeforeEnter={true}
         >
+            <Head>
+                <link rel="shortcut icon" href="/images/favico.png" />
+            </Head>
             <ChainContext.Provider
                 value={{
                     chain,

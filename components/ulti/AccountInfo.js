@@ -63,19 +63,29 @@ const AccountInfo = ({
                     accountNumber: 'Account not yet on chain',
                     sequence: 'Account not yet on chain'
                 })
-                openNotification('error', 'Failed to fetch current account info')
+
+                //ignore no pubkey error
+                if (e.message !== 'Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )') {
+                    openNotification('error', e.message)
+                }
             }
         })()
     }, [toggleUpdate])
 
-
     return (
-        <>
+        <div
+            style={{
+                boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                padding: '2em 3em',
+                borderRadius: '10px',
+                marginTop: '30px'
+            }}
+        >
             <div
                 style={{
                     display: 'flex',
                     justifyContent: 'start',
-                    marginBottom: '5px'
+                    marginBottom: '5px',
                 }}
             >
                 <h3
@@ -189,7 +199,7 @@ const AccountInfo = ({
                 removeSignature={removeSignature}
                 editSignature={editSignature}
             />
-        </>
+        </div>
     )
 }
 

@@ -67,6 +67,7 @@ const MultisigView = () => {
                 setLoading(false)
             }
             catch (e) {
+                // display error when multisig not created by multisig-ui
                 if (e.message === 'This address might not be created using this tool !') {
                     setMultisigErr(e.message)
                 }
@@ -128,142 +129,178 @@ const MultisigView = () => {
             >
                 Multisig Manager
             </h1>
-            <h3
+            <div
                 style={{
-                    marginBottom: 0
+                    boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
+                    padding: '2em 3em',
+                    borderRadius: '10px',
+                    marginTop: '10px'
                 }}
             >
-                Address
-            </h3>
-            <div
-                style={style.textField}
-            >
-                <Paragraph
-                    copyable={{ text: multisigID }}
+                <h3
                     style={{
-                        marginBottom: 0,
-                        color: 'white'
+                        marginBottom: 0
                     }}
                 >
-                    <a
-                        href={`${chain.explorer}account/${multisigID}`}
-                        target="_blank"
+                    Address
+                </h3>
+                <div
+                    style={style.textField}
+                >
+                    <Paragraph
+                        copyable={{ text: multisigID }}
                         style={{
+                            marginBottom: 0,
                             color: 'white'
                         }}
                     >
-                        <Tooltip
-                            title="Check address on block explorer"
+                        <a
+                            href={`${chain.explorer}account/${multisigID}`}
+                            target="_blank"
+                            style={{
+                                color: 'white'
+                            }}
                         >
-                            {multisigID}
-                        </Tooltip>
-                    </a>
-                </Paragraph>
-            </div>
-            <h3
-                style={{
-                    marginBottom: 0
-                }}
-            >
-                Holdings
-            </h3>
-            <div
-                style={{
-                    marginBottom: '10px',
-                    maxHeight: '300px',
-                    overflow: 'auto',
-                    border: 'solid 1px black',
-                    padding: '.5em 2em',
-                    borderRadius: '10px',
-                }}
-            >
-                <table
+                            <Tooltip
+                                title="Check address on block explorer"
+                            >
+                                {multisigID}
+                            </Tooltip>
+                        </a>
+                    </Paragraph>
+                </div>
+                <h3
                     style={{
-                        width: '100%',
-                        borderSpacing: '0 1em',
+                        marginBottom: 0
                     }}
                 >
-                    <thead
+                    Holdings
+                </h3>
+                <div
+                    style={{
+                        marginBottom: '10px',
+                        maxHeight: '300px',
+                        overflow: 'auto',
+                        border: 'solid 1px black',
+                        padding: '.5em 2em',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <table
                         style={{
-                            borderBottom: 'solid 1.25px black',
-                            fontSize: '1rem'
+                            width: '100%',
+                            borderSpacing: '0 1em',
                         }}
                     >
-                        <tr>
-                            <th
-                                style={{
-                                    width: '50%',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                Name
-                            </th>
-                            <th
-                                style={{
-                                    width: '20%',
-                                    textAlign: 'left'
-                                }}
-                            >
-                                Available Amount
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            !loading ? holding.map((balance, index) => {
-                                return (
-                                    <tr
-                                        key={index}
-                                        style={{
-                                            borderBottom: 'solid .25px #d6d6d6',
-                                        }}
-                                    >
-                                        <td
+                        <thead
+                            style={{
+                                borderBottom: 'solid 1.25px black',
+                                fontSize: '1rem'
+                            }}
+                        >
+                            <tr>
+                                <th
+                                    style={{
+                                        width: '50%',
+                                        textAlign: 'left'
+                                    }}
+                                >
+                                    Name
+                                </th>
+                                <th
+                                    style={{
+                                        width: '20%',
+                                        textAlign: 'left'
+                                    }}
+                                >
+                                    Available Amount
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                !loading ?
+                                    holding.length === 0 ? (
+                                        <tr
                                             style={{
-                                                width: '50%',
-                                                padding: '1em 0'
+                                                borderBottom: 'solid .25px #d6d6d6',
                                             }}
                                         >
-                                            <AssetRow
-                                                chain={chain}
-                                                ibcDenom={balance.denom}
-                                            />
-                                        </td>
-                                        <td
-                                            style={{
-                                                width: '20%',
-                                                padding: '1em 0',
-                                            }}
-                                        >
-                                            {
-                                                (parseInt(balance.amount) / 1000000).toFixed(6)
-                                            }
-                                        </td>
-                                    </tr>
-                                )
-                            }) : (
-                                <>
-                                    <td
-                                        style={{
-                                            width: '50%',
-                                            paddingTop: '1em',
-                                        }}
-                                    >
-                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                    </td>
-                                    <td
-                                        style={{
-                                            width: '20%',
-                                            paddingTop: '1em',
-                                        }}
-                                    >
-                                        <Skeleton active rows={1} paragraph={{ rows: 0 }} />
-                                    </td>
-                                </>
-                            )
-                        }
-                    </tbody>
-                </table>
+                                            <td
+                                                style={{
+                                                    width: '50%',
+                                                    padding: '1em 0',
+                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                OSMO
+                                            </td>
+                                            <td
+                                                style={{
+                                                    width: '20%',
+                                                    padding: '1em 0',
+                                                }}
+                                            >
+                                                {
+                                                    0
+                                                }
+                                            </td>
+                                        </tr>
+                                    ) : holding.map((balance, index) => {
+                                        return (
+                                            <tr
+                                                key={index}
+                                                style={{
+                                                    borderBottom: 'solid .25px #d6d6d6',
+                                                }}
+                                            >
+                                                <td
+                                                    style={{
+                                                        width: '50%',
+                                                        padding: '1em 0'
+                                                    }}
+                                                >
+                                                    <AssetRow
+                                                        chain={chain}
+                                                        ibcDenom={balance.denom}
+                                                    />
+                                                </td>
+                                                <td
+                                                    style={{
+                                                        width: '20%',
+                                                        padding: '1em 0',
+                                                    }}
+                                                >
+                                                    {
+                                                        (parseInt(balance.amount) / 1000000).toFixed(6)
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : (
+                                        <>
+                                            <td
+                                                style={{
+                                                    width: '50%',
+                                                    paddingTop: '1em',
+                                                }}
+                                            >
+                                                <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                            </td>
+                                            <td
+                                                style={{
+                                                    width: '20%',
+                                                    paddingTop: '1em',
+                                                }}
+                                            >
+                                                <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                                            </td>
+                                        </>
+                                    )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {
                 multisigErr !== '' && (
