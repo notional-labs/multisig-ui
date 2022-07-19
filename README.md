@@ -1,12 +1,12 @@
-## This is a Osmosis multisig UI 
+## This is a multisig UI 
 
 # Getting Started
 
 Firstly, go to Faunadb (https://fauna.com/) create a database and import the schema from the schema.graphql file. 
 
-Secondly, get the Secret key from faunadb. Create a .local.env file in the root directory and add the secret key.
+Secondly, get the Secret key from faunadb. Create a .env.local file in the root directory and add the secret key.
 
-Thirdly, add the host directory in the .local.env file
+Thirdly, add the host directory in the .env.local file
 
 Finally, run the development server:
 
@@ -23,6 +23,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```
 NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-4334
 NEXT_PUBLIC_HOST=http://localhost:3000/
-
 ```
+
+# Supported chains:
+
+1. Osmosis
+2. Gaia (cosmoshub)
+3. Juno
+
+Will add more chains in the future
 
