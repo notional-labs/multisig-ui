@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react"
 import { getKeplrAccount, getKey } from "../../libs/keplrClient"
 import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
+import { openNotification } from "../ulti/Notification"
 
 const Account = ({ chainId, chainName }) => {
     const [account, setAccount] = useState('')
@@ -36,11 +37,16 @@ const Account = ({ chainId, chainName }) => {
 
     useEffect(() => {
         (async () => {
-            const currentAccount = localStorage.getItem('account')
-            if (currentAccount === '' || !currentAccount) return
-            const keplrAccount = await getAccount(chainId)
-            localStorage.setItem('account', JSON.stringify(keplrAccount))
-            setAccount(JSON.stringify(keplrAccount))
+            try {
+                const currentAccount = localStorage.getItem('account')
+                if (currentAccount === '' || !currentAccount) return
+                const keplrAccount = await getAccount(chainId)
+                localStorage.setItem('account', JSON.stringify(keplrAccount))
+                setAccount(JSON.stringify(keplrAccount))
+            }
+            catch (e) {
+                openNotification('error', e.message)
+            }
         })()
     }, [chainId])
 
