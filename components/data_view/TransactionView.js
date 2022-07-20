@@ -208,7 +208,10 @@ const TransactionView = () => {
                 )
             }
             {
-                !transactionHash && multisig && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold, 10) && (
+                !transactionHash 
+                && multisig 
+                && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold, 10) 
+                && (
                     <BroadcastButton
                         broadcastTx={broadcastTx}
                         multisig={multisig}
