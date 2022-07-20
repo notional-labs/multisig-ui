@@ -9,8 +9,13 @@ const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            const account = await getKey(chain.chain_id)
-            setAccount(account)
+            try {
+                const account = await getKey(chain.chain_id)
+                setAccount(account)
+            }
+            catch (e) {
+                alert(e.message)
+            }
         })
     }, []);
 
