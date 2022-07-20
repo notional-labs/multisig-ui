@@ -25,38 +25,53 @@ const MultisigList = () => {
     const { chain } = useContext(ChainContext)
 
     const keplrKeystorechangeListener = useCallback(async (event) => {
-        setLoading(true)
-        const account = await getKey(chain.chain_id)
-        const address = account.bech32Address
-        const res = await getAllMultisigOfAddress(address)
-        setMultisigs([...res])
-        setLoading(false)
+        try {
+            setLoading(true)
+            const account = await getKey(chain.chain_id)
+            const address = account.bech32Address
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+            setLoading(false)
+        }
+        catch (e) {
+            alert(e.message)
+        }
     }, []);
 
     const storageListener = useCallback(async (event) => {
-        const account = localStorage.getItem("account")
-        const address = account && JSON.parse(account).bech32Address || ""
-        if (address === "") {
+        try {
+            const account = localStorage.getItem("account")
+            const address = account && JSON.parse(account).bech32Address || ""
+            if (address === "") {
+                setLoading(false)
+                setMultisigs([])
+                return
+            }
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+            setParams({ ...params, total: res.length })
             setLoading(false)
-            setMultisigs([])
-            return
         }
-        const res = await getAllMultisigOfAddress(address)
-        setMultisigs([...res])
-        setParams({ ...params, total: res.length })
-        setLoading(false)
+        catch (e) {
+            alert(e.message)
+        }
     }, []);
 
     const chainChangedListener = useCallback(async (event) => {
-        setLoading(true)
-        const currentId = localStorage.getItem("current")
-        const chainId = chainIdToId[currentId]
-        const account = await getKey(chainId)
-        const address = account.bech32Address
-        const res = await getAllMultisigOfAddress(address)
-        setMultisigs([...res])
-        setParams({ ...params, total: res.length })
-        setLoading(false)
+        try {
+            setLoading(true)
+            const currentId = localStorage.getItem("current")
+            const chainId = chainIdToId[currentId]
+            const account = await getKey(chainId)
+            const address = account.bech32Address
+            const res = await getAllMultisigOfAddress(address)
+            setMultisigs([...res])
+            setParams({ ...params, total: res.length })
+            setLoading(false)
+        }
+        catch (e) {
+            alert(e.message)
+        }
     }, []);
 
     useEffect(() => {

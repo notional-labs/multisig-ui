@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
 import { SigningStargateClient, } from "@cosmjs/stargate";
-import { getAccount, getKey, getSequence } from "../../libs/keplrClient"
+import { getAccount, getKey } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
@@ -25,12 +25,17 @@ const TransationSign = ({
     const [accountError, setAccountError] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
-        const currentAccount = await getKey(chain.chain_id)
-        const checkHasSigned = currentSignatures.some(
-            (sig) => sig.address === currentAccount.bech32Address
-        );
-        setHasSigned(checkHasSigned)
-        setAccount(currentAccount)
+        try{
+            const currentAccount = await getKey(chain.chain_id)
+            const checkHasSigned = currentSignatures.some(
+                (sig) => sig.address === currentAccount.bech32Address
+            );
+            setHasSigned(checkHasSigned)
+            setAccount(currentAccount)
+        }
+        catch (e) {
+            alert(e.message)
+        }
     }, []);
 
     useEffect(() => {
@@ -83,7 +88,7 @@ const TransationSign = ({
                     disableBalanceCheck: true,
                 },
             };
-            const offlineSigner = window.getOfflineSignerOnlyAmino(
+            const offlineSigner = window.getOfflineSigner(
                 chain.chain_id
             );
             const signAccount = await getAccount(chain.rpc, multisigID)

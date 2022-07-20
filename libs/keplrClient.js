@@ -6,7 +6,7 @@ export const getKeplrAccount = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
             alert("Keplr Wallet not detected, please install extension");
-            throw new Error("Keplr not install")
+            throw new Error("Keplr not found")
         } else {
             // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
             await window.keplr.enable(chainId)
@@ -20,6 +20,7 @@ export const getKeplrAccount = async (chainId) => {
     }
     catch (e) {
         alert(e.message)
+        throw e
     }
 }
 
@@ -27,7 +28,7 @@ export const getKey = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
             alert("Keplr Wallet not detected, please install extension");
-            throw new Error("Keplr not install")
+            throw new Error("Keplr not found")
         } else {
             // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
             await window.keplr.enable(chainId)
@@ -37,6 +38,7 @@ export const getKey = async (chainId) => {
     }
     catch (e) {
         alert(e.message)
+        throw e
     }
 }
 

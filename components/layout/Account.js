@@ -26,11 +26,16 @@ const Account = ({ chainId, chainName }) => {
 
     useEffect(() => {
         (async () => {
-            const currentAccount = localStorage.getItem("account")
-            if (currentAccount && currentAccount !== "") {
-                const keplrAccount = await getAccount(chainId)
-                localStorage.setItem("account", JSON.stringify(keplrAccount))
-                setAccount(JSON.stringify(keplrAccount))
+            try {
+                const currentAccount = localStorage.getItem("account")
+                if (currentAccount && currentAccount !== "") {
+                    const keplrAccount = await getAccount(chainId)
+                    localStorage.setItem("account", JSON.stringify(keplrAccount))
+                    setAccount(JSON.stringify(keplrAccount))
+                }
+            }
+            catch (e) {
+                alert(e.message)
             }
         })()
     }, [])
