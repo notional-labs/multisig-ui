@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Button from "./Button"
 import { getKey } from "../../libs/keplrClient"
 import { useRouter } from "next/router"
@@ -45,12 +44,3 @@ const ConnectButton = ({ chainId, setAccount }) => {
 }
 
 export default ConnectButton
-=======
-const ConnectButton = ({}) => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
->>>>>>> main

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import SideBar from "./SideBar"
 import { motion } from "framer-motion"
 
@@ -33,13 +32,6 @@ const Container = ({ component, option = 0 }) => {
                 </>
             }
         </motion.div>
-=======
-const Container = () => {
-    return (
-        <div>
-            
-        </div>
->>>>>>> main
     )
 }
 

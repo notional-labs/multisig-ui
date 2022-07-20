@@ -2,13 +2,8 @@ import Header from "../Header"
 import Footer from "../Footer";
 import TopUpButton from "../input/TopUpButton";
 
-<<<<<<< HEAD
 const Page = ({ enableSelectChain = true, children }) => {
 
-=======
-const Page = (props) => {
- 
->>>>>>> main
     return (
         <div
             className="page-container"
