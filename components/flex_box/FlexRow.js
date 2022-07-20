@@ -1,4 +1,4 @@
-const FlexRow = ({components, style, justifyContent = 'center', direction = 'row', className}) => {
+const FlexRow = ({ components, style, justifyContent = 'center', direction = 'row', className }) => {
     return (
         <div
             className={className}
@@ -10,8 +10,10 @@ const FlexRow = ({components, style, justifyContent = 'center', direction = 'row
             }}
         >
             {
-                components !== null && components.map(component => {
-                    return component
+                components !== null && components.map((component, index) => {
+                    return (
+                       component
+                    )
                 })
             }
         </div>

@@ -1,37 +1,36 @@
 import FlexRow from "./flex_box/FlexRow"
 import SelectChain from "./input/SelectChain"
-import Image from "next/image"
+import { Image } from "antd"
 import { ChainContext } from "./Context"
+import Account from "./layout/Account"
 import { useContext } from "react"
+import '../styles/Header.module.css'
+import Link from "next/link"
 
 const logo = (
-    <FlexRow
-        components={[
-            (<Image
-                src='/images/logo.png'
-                width={'50px'}
-                height={'50px'}
-            />), (
-                <text
-                    style={{
-                        fontSize: '2rem',
-                        marginLeft: '10px'
-                    }}
-                >
-                        MULTISIG
-                </text>
-            )
-        ]}
-        justifyContent={'space-between'}
+    <Link
+        href={'/multisigs'}
         style={{
-            
+            cursor: 'pointer'
         }}
-    />
+    >
+        <div
+            style={{
+                position: 'relative',
+                margin: 'auto 0'
+            }}
+        >
+            <Image
+                src='/images/logo.png'
+                height={'50px'}
+                preview={false}
+            />
+        </div>
+    </Link>
 )
 
-const Header = () => {
-
-    const {chain} = useContext(ChainContext)
+const Header = ({ enableSelectChain }) => {
+    const { chain } = useContext(ChainContext)
 
     return (
         <div
@@ -39,17 +38,28 @@ const Header = () => {
             style={{
                 backgroundImage: `${chain.color}`,
                 color: '#ffffff',
-                padding: '1em 5em',
+                padding: '1em 30em',
                 position: 'fixed',
-                height: '85px',
+                height: '80px',
                 width: '100%',
-                marginBottom: '80px'
+                zIndex: 5
             }}
         >
             <FlexRow
                 components={[
-                    logo, 
-                    <SelectChain/>
+                    logo,
+                    <FlexRow
+                        components={[
+                            <SelectChain
+                                enableSelectChain={enableSelectChain}
+                            />,
+                            <Account
+                                chainId={chain.chain_id}
+                                chainName={chain.name}
+                            />
+                        ]}
+                        justifyContent={'space-between'}
+                    />,
                 ]}
                 justifyContent={'space-between'}
             />
