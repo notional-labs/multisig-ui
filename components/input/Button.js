@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import Link from "next/link"
 
 const Button = ({ 
     style, 
-    type = 'function', 
+    type = "function", 
     text, 
     clickFunction, 
     className, 
@@ -13,12 +13,12 @@ const Button = ({
     handleMouseLeave,
     hoverText
 }) => {
-    return type === 'function' ? (
+    return type === "function" ? (
         <button
             key={index}
             style={{
                 ...style,
-                cursor: 'pointer'
+                cursor: "pointer"
             }}
             onClick={clickFunction}
             disabled={disable}
@@ -28,7 +28,7 @@ const Button = ({
         >
             {text}
         </button>
-    ) : type === 'link' ? (
+    ) : type === "link" ? (
         <Link
             href={url}
         >
@@ -36,7 +36,7 @@ const Button = ({
                 key={index}
                 style={{
                     ...style,
-                    cursor: 'pointer'
+                    cursor: "pointer"
                 }}
                 className={className}
             >
@@ -46,7 +46,7 @@ const Button = ({
     ) : (
         <a
             href={url}
-            target={'_blank'}
+            target={"_blank"}
             dataToggle={hoverText}
             rel="noreferrer"
         >
@@ -54,7 +54,7 @@ const Button = ({
                 key={index}
                 style={{
                     ...style,
-                    cursor: 'pointer'
+                    cursor: "pointer"
                 }}
                 className={className}
             >

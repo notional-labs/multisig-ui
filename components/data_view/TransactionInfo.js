@@ -7,30 +7,30 @@ import { Tooltip } from "antd"
 
 const style = {
     label: {
-        backgroundColor: '#000000',
-        padding: '1em 1.5em',
-        borderRadius: '10px 0 0 10px',
-        display: 'block',
-        color: 'white',
-        fontSize: '1rem',
-        width: '20%',
-        textAlign: 'center'
+        backgroundColor: "#000000",
+        padding: "1em 1.5em",
+        borderRadius: "10px 0 0 10px",
+        display: "block",
+        color: "white",
+        fontSize: "1rem",
+        width: "20%",
+        textAlign: "center"
     },
     value: {
-        backgroundColor: '#D9D9D9',
-        padding: '1em 1.5em',
-        borderRadius: '0px 10px 10px 0px',
-        display: 'block',
-        color: '#000000',
-        fontSize: '1rem',
-        width: '80%',
-        textAlign: 'left',
-        overflowX: 'hidden'
+        backgroundColor: "#D9D9D9",
+        padding: "1em 1.5em",
+        borderRadius: "0px 10px 10px 0px",
+        display: "block",
+        color: "#000000",
+        fontSize: "1rem",
+        width: "80%",
+        textAlign: "left",
+        overflowX: "hidden"
     },
     flexRow: {
-        display: 'flex',
-        justifyContent: 'start',
-        marginBottom: '20px'
+        display: "flex",
+        justifyContent: "start",
+        marginBottom: "20px"
     }
 }
 
@@ -76,7 +76,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
     return (
         <div
             style={{
-                width: '100%'
+                width: "100%"
             }}
         >
             {
@@ -96,6 +96,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                                 <a
                                     href={`${chain.explorer}txs/${txHash}`}
                                     target="_blank"
+                                    rel="noreferrer"
                                 >
                                     {txHash}
                                 </a>

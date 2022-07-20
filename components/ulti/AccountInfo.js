@@ -9,21 +9,21 @@ import SignerList from "../list/SignerList"
 
 const style = {
     value: {
-        fontWeight: 'bold',
-        margin: '0 5px'
+        fontWeight: "bold",
+        margin: "0 5px"
     }
 }
 
 const circle = (
     <span
         style={{
-            width: '10px',
-            height: '10px',
-            backgroundColor: '#189A01',
-            borderRadius: '50%',
-            display: 'inline-block',
-            position: 'relative',
-            margin: 'auto 10px auto 0'
+            width: "10px",
+            height: "10px",
+            backgroundColor: "#189A01",
+            borderRadius: "50%",
+            display: "inline-block",
+            position: "relative",
+            margin: "auto 10px auto 0"
         }}
     />
 )
@@ -40,8 +40,8 @@ const AccountInfo = ({
     tx
 }) => {
     const [account, setAccount] = useState({
-        accountNumber: '',
-        sequence: ''
+        accountNumber: "",
+        sequence: ""
     })
     const [loading, setLoading] = useState(false)
     const [toggleUpdate, setToggleUpdate] = useState(false)
@@ -60,13 +60,13 @@ const AccountInfo = ({
             catch (e) {
                 setLoading(false)
                 setAccount({
-                    accountNumber: 'Account not yet on chain',
-                    sequence: 'Account not yet on chain'
+                    accountNumber: "Account not yet on chain",
+                    sequence: "Account not yet on chain"
                 })
 
-                //ignore no pubkey error
-                if (e.message !== 'Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )') {
-                    openNotification('error', e.message)
+                // ignore no pubkey error
+                if (e.message !== "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )") {
+                    openNotification("error", e.message)
                 }
             }
         })()
@@ -75,27 +75,27 @@ const AccountInfo = ({
     return (
         <div
             style={{
-                boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em 3em',
-                borderRadius: '10px',
-                marginTop: '30px'
+                boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                padding: "2em 3em",
+                borderRadius: "10px",
+                marginTop: "30px"
             }}
         >
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    marginBottom: '5px',
+                    display: "flex",
+                    justifyContent: "start",
+                    marginBottom: "5px",
                 }}
             >
                 <h3
-                    style={{ marginBottom: 0, marginTop: '10px' }}
+                    style={{ marginBottom: 0, marginTop: "10px" }}
                 >
                     Current sequence and account number
                 </h3>
                 <Button
                     text={(
-                        <Tooltip title='Update'>
+                        <Tooltip title="Update">
                             <div>
                                 <ReloadOutlined
                                     spin={loading}
@@ -104,11 +104,11 @@ const AccountInfo = ({
                         </Tooltip>
                     )}
                     style={{
-                        position: 'relative',
-                        top: '6px',
-                        color: 'black',
-                        backgroundColor: 'transparent',
-                        borderRadius: '10px',
+                        position: "relative",
+                        top: "6px",
+                        color: "black",
+                        backgroundColor: "transparent",
+                        borderRadius: "10px",
                         border: 0,
                     }}
                     clickFunction={() => {
@@ -118,22 +118,22 @@ const AccountInfo = ({
             </div>
             <div
                 style={{
-                    backgroundColor: '#D9D9D9',
-                    padding: '1em',
-                    width: '100%',
-                    borderRadius: '10px',
-                    position: 'relative',
-                    marginBottom: '10px'
+                    backgroundColor: "#D9D9D9",
+                    padding: "1em",
+                    width: "100%",
+                    borderRadius: "10px",
+                    position: "relative",
+                    marginBottom: "10px"
                 }}
             >
                 {
                     loading ? (
                         <div
                             style={{
-                                width: '100%',
-                                textAlign: 'center',
-                                marginTop: '20px',
-                                borderRadius: '10px'
+                                width: "100%",
+                                textAlign: "center",
+                                marginTop: "20px",
+                                borderRadius: "10px"
                             }}
                         >
                             <Spin size="large" />
@@ -152,7 +152,7 @@ const AccountInfo = ({
                                         {account.accountNumber}
                                     </text>
                                 ]}
-                                justifyContent={'start'}
+                                justifyContent={"start"}
                             />
                             <FlexRow
                                 components={[
@@ -166,7 +166,7 @@ const AccountInfo = ({
                                         {account.sequence}
                                     </text>
                                 ]}
-                                justifyContent={'start'}
+                                justifyContent={"start"}
                             />
                         </>
                     )
@@ -179,8 +179,8 @@ const AccountInfo = ({
             </h3>
             <text
                 style={{
-                    fontSize: '12px',
-                    fontStyle: 'italic',
+                    fontSize: "12px",
+                    fontStyle: "italic",
                     margin: 0,
                 }}
             >

@@ -13,12 +13,12 @@ const Page = ({ enableSelectChain = true, children }) => {
             <div
                 style={{
                     backgroundImage: `url(/images/background.png)`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    minHeight: '100vh',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'column'
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    minHeight: "100vh",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "column"
                 }}
             >
                 {

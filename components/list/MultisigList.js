@@ -12,7 +12,7 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { openNotification } from "../ulti/Notification"
 import EmptyPage from "../ulti/EmptyPage"
 
-const MultisigList = ({ }) => {
+const MultisigList = () => {
     const [multisigs, setMultisigs] = useState([])
     const [viewMultsigi, setViewMultisig] = useState([])
     const [params, setParams] = useState({
@@ -40,9 +40,9 @@ const MultisigList = ({ }) => {
 
     const storageListener = useCallback(async (event) => {
         try {
-            const account = localStorage.getItem('account')
-            const address = account && JSON.parse(account).bech32Address || ''
-            if (address === '') {
+            const account = localStorage.getItem("account")
+            const address = account && JSON.parse(account).bech32Address || ""
+            if (address === "") {
                 setLoading(false)
                 setMultisigs([])
                 return
@@ -60,7 +60,7 @@ const MultisigList = ({ }) => {
     const chainChangedListener = useCallback(async (event) => {
         try {
             setLoading(true)
-            const currentId = localStorage.getItem('current')
+            const currentId = localStorage.getItem("current")
             const chainId = chainIdToId[currentId]
             const account = await getKey(chainId)
             const address = account.bech32Address
@@ -77,16 +77,16 @@ const MultisigList = ({ }) => {
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeListener)
 
-        window.addEventListener('storage', storageListener)
+        window.addEventListener("storage", storageListener)
 
-        window.addEventListener('chain_changed', chainChangedListener)
+        window.addEventListener("chain_changed", chainChangedListener)
 
         return () => {
-            window.keplr && window.removeEventListener('keplr_keystorechange', keplrKeystorechangeListener)
+            window.keplr && window.removeEventListener("keplr_keystorechange", keplrKeystorechangeListener)
 
-            window.removeEventListener('storage', storageListener)
+            window.removeEventListener("storage", storageListener)
 
-            window.removeEventListener('chain_changed', chainChangedListener)
+            window.removeEventListener("chain_changed", chainChangedListener)
         }
     }, []);
 
@@ -94,9 +94,9 @@ const MultisigList = ({ }) => {
         (async () => {
             try {
                 setLoading(true)
-                const account = localStorage.getItem('account')
-                const address = account !== 'undefined' && JSON.parse(account).bech32Address || ''
-                if (address === '') {
+                const account = localStorage.getItem("account")
+                const address = account && JSON.parse(account).bech32Address || ""
+                if (address === "") {
                     setLoading(false)
                     return
                 }
@@ -107,7 +107,7 @@ const MultisigList = ({ }) => {
             }
             catch (e) {
                 setLoading(false)
-                openNotification('error', 'Cant fetch multisigs list ' + e.message)
+                openNotification("error", "Cant fetch multisigs list " + e.message)
             }
         })()
     }, [toggleReload])
@@ -124,17 +124,17 @@ const MultisigList = ({ }) => {
     return (
         <div
             style={{
-                padding: '1em 2em',
-                display: 'flex',
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-                backgroundColor: '#ffffff',
-                width: '100%',
-                borderRadius: '30px',
-                position: 'relative',
+                padding: "1em 2em",
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "column",
+                backgroundColor: "#ffffff",
+                width: "100%",
+                borderRadius: "30px",
+                position: "relative",
                 zIndex: 3,
-                boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                minHeight: '65vh'
+                boxShadow: "0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                minHeight: "65vh"
             }}
         >
             <div>
@@ -142,7 +142,7 @@ const MultisigList = ({ }) => {
                     components={[
                         <h1
                             style={{
-                                textAlign: 'left',
+                                textAlign: "left",
                             }}
                         >
                             Multisigs
@@ -156,58 +156,58 @@ const MultisigList = ({ }) => {
                                 </div>
                             )}
                             style={{
-                                position: 'relative',
-                                top: '5px',
-                                color: 'white',
-                                backgroundColor: 'rgb(0, 0, 0, 0.5)',
-                                borderRadius: '10px',
+                                position: "relative",
+                                top: "5px",
+                                color: "white",
+                                backgroundColor: "rgb(0, 0, 0, 0.5)",
+                                borderRadius: "10px",
                                 border: 0,
-                                height: '40px',
-                                padding: '0 2em',
+                                height: "40px",
+                                padding: "0 2em",
                             }}
                             clickFunction={() => {
                                 setToggleReload(!toggleReload)
                             }}
                         />
                     ]}
-                    justifyContent={'space-between'}
+                    justifyContent={"space-between"}
                 />
                 <table
                     style={{
-                        width: '100%',
-                        borderSpacing: '0 1em',
+                        width: "100%",
+                        borderSpacing: "0 1em",
                     }}
                 >
                     <thead
                         style={{
-                            borderBottom: 'solid 1.25px black',
-                            fontSize: '1.25rem'
+                            borderBottom: "solid 1.25px black",
+                            fontSize: "1.25rem"
                         }}
                     >
                         <tr>
                             <th
                                 style={{
-                                    width: '50%',
-                                    padding: '.5em',
-                                    textAlign: 'left'
+                                    width: "50%",
+                                    padding: ".5em",
+                                    textAlign: "left"
                                 }}
                             >
                                 Address
                             </th>
                             <th
                                 style={{
-                                    width: '30%',
-                                    padding: '.5em',
-                                    textAlign: 'left'
+                                    width: "30%",
+                                    padding: ".5em",
+                                    textAlign: "left"
                                 }}
                             >
                                 Components
                             </th>
                             <th
                                 style={{
-                                    width: '20%',
-                                    padding: '.5em',
-                                    textAlign: 'center'
+                                    width: "20%",
+                                    padding: ".5em",
+                                    textAlign: "center"
                                 }}
                             >
                                 Threshold
@@ -254,15 +254,15 @@ const MultisigList = ({ }) => {
                             addButton={true}
                             button={(
                                 <Button
-                                    text={'Create now'}
-                                    type={'link'}
-                                    url={'/multisig/create'}
+                                    text={"Create now"}
+                                    type={"link"}
+                                    url={"/multisig/create"}
                                     style={{
-                                        borderRadius: '10px',
+                                        borderRadius: "10px",
                                         border: 0,
-                                        padding: '.5em 1em',
-                                        backgroundColor: 'black',
-                                        color: 'white'
+                                        padding: ".5em 1em",
+                                        backgroundColor: "black",
+                                        color: "white"
                                     }}
                                 />
                             )}

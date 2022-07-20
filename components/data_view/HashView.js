@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { getTx } from "../../libs/validators"
-import { CopyOutlined } from '@ant-design/icons'
+import { getTx } from "../../libs/queryClients"
+import { CopyOutlined } from "@ant-design/icons"
 import FlexRow from "../flex_box/FlexRow";
 import Button from "../input/Button";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { openNotification } from "../ulti/Notification";
-import JSONInput from 'react-json-editor-ajrm';
-import locale from 'react-json-editor-ajrm/locale/en';
+import JSONInput from "react-json-editor-ajrm";
+import locale from "react-json-editor-ajrm/locale/en";
 
 const HashView = ({ chain, txHash }) => {
     const [tx, setTx] = useState()
@@ -19,7 +19,7 @@ const HashView = ({ chain, txHash }) => {
                 res && setTx(res.tx)
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [])
@@ -31,18 +31,18 @@ const HashView = ({ chain, txHash }) => {
     return (
         <div
             style={{
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                borderRadius: '10px',
-                padding: '2em',
-                marginTop: '30px',
-                position: 'relative',
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                borderRadius: "10px",
+                padding: "2em",
+                marginTop: "30px",
+                position: "relative",
                 zIndex: 1,
             }}
         >
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
+                    display: "flex",
+                    justifyContent: "space-between"
                 }}
             >
                 <FlexRow
@@ -53,45 +53,45 @@ const HashView = ({ chain, txHash }) => {
                         <CopyToClipboard
                             text={JSON.stringify(tx, null, 2)}
                             onCopy={() => {
-                                openNotification('success', 'Copy to clipboard !')
+                                openNotification("success", "Copy to clipboard !")
                             }}
                             style={{
-                                marginTop: '10px',
-                                marginLeft: '10px'
+                                marginTop: "10px",
+                                marginLeft: "10px"
                             }}
                         >
                             <CopyOutlined />
                         </CopyToClipboard>
                     ]}
-                    justifyContent={'start'}
+                    justifyContent={"start"}
                 />
                 <Button
                     clickFunction={handleShowJSON}
-                    text={'Show'}
+                    text={"Show"}
                     style={{
                         border: 0,
-                        fontStyle: 'italic',
-                        textDecoration: 'underline',
-                        position: 'relative',
-                        backgroundColor: 'transparent',
-                        top: '-5px'
+                        fontStyle: "italic",
+                        textDecoration: "underline",
+                        position: "relative",
+                        backgroundColor: "transparent",
+                        top: "-5px"
                     }}
                 />
             </div>
             {
                 showJSON && tx && (
                     <JSONInput
-                        id='json_view'
+                        id="json_view"
                         placeholder={tx}
                         locale={locale}
-                        height='500px'
-                        width={'100%'}
+                        height="500px"
+                        width={"100%"}
                         viewOnly={true}
                         style={{
                             body: {
-                                fontSize: '1rem',
-                                borderRadius: '10px',
-                                padding: '.5em'
+                                fontSize: "1rem",
+                                borderRadius: "10px",
+                                padding: ".5em"
                             },
                         }}
                     />

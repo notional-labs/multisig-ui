@@ -5,8 +5,8 @@ const EmptyPage = ({ description, addButton = false, button }) => {
     return (
         <div
             style={{
-                position: 'relative',
-                top: '10vh'
+                position: "relative",
+                top: "10vh"
             }}
         >
             <Empty

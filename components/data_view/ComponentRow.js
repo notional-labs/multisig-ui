@@ -6,8 +6,8 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
 
     useEffect(() => {
         const pubkeyJson = JSON.parse(pubkeys)
-        const pubkeyList = pubkeyJson.value.pubkeys
-        setPubkeyList([...pubkeyList])
+        const pubkeyListFromJSON = pubkeyJson.value.pubkeys
+        setPubkeyList([...pubkeyListFromJSON])
     }, [pubkeys])
 
     return (
@@ -15,12 +15,16 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
             {
                 pubkeyList.length > 0 && pubkeyList.map((pubkey, index) => {
                     return (
-                        <ComponentView
-                            pubkey={pubkey.value}
-                            index={index}
-                            prefix={prefix}
-                            chain={chain}
-                        />
+                        <div
+                            key={index}
+                        >
+                            <ComponentView
+                                pubkey={pubkey.value}
+                                index={index}
+                                prefix={prefix}
+                                chain={chain}
+                            />
+                        </div>
                     )
                 })
             }

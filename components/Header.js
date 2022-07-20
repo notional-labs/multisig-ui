@@ -4,25 +4,26 @@ import { Image } from "antd"
 import { ChainContext } from "./Context"
 import Account from "./layout/Account"
 import { useContext } from "react"
-import '../styles/Header.module.css'
+import "../styles/Header.module.css"
 import Link from "next/link"
 
 const logo = (
     <Link
-        href={'/multisigs'}
+        href={"/multisigs"}
         style={{
-            cursor: 'pointer'
+            cursor: "pointer"
         }}
     >
         <div
             style={{
-                position: 'relative',
-                margin: 'auto 0'
+                position: "relative",
+                margin: "auto 0"
             }}
         >
             <Image
-                src='/images/logo.png'
-                height={'50px'}
+                src="/images/logo.png"
+                alt="app_logo"
+                height={"50px"}
                 preview={false}
             />
         </div>
@@ -37,11 +38,11 @@ const Header = ({ enableSelectChain }) => {
             className="header"
             style={{
                 backgroundImage: `${chain.color}`,
-                color: '#ffffff',
-                padding: '1em 30em',
-                position: 'fixed',
-                height: '80px',
-                width: '100%',
+                color: "#ffffff",
+                padding: "1em 30em",
+                position: "fixed",
+                height: "80px",
+                width: "100%",
                 zIndex: 5
             }}
         >
@@ -58,10 +59,10 @@ const Header = ({ enableSelectChain }) => {
                                 chainName={chain.name}
                             />
                         ]}
-                        justifyContent={'space-between'}
+                        justifyContent={"space-between"}
                     />,
                 ]}
-                justifyContent={'space-between'}
+                justifyContent={"space-between"}
             />
         </div>
     )

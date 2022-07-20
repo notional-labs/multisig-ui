@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { getMultisigFromAddress } from "../../libs/multisig"
 import ComponentRow from "./ComponentRow"
 import { Skeleton } from "antd"
-import Link from 'next/link'
+import Link from "next/link"
 import { addressShortener } from "../../libs/stringConvert"
 import { motion } from "framer-motion"
 
@@ -39,8 +39,8 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
             whileTap={{ scale: 0.95 }}
             key={index}
             style={{
-                width: '100%',
-                borderBottom: 'solid .25px #d6d6d6',
+                width: "100%",
+                borderBottom: "solid .25px #d6d6d6",
             }}
         >
             {
@@ -48,25 +48,25 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
                     <>
                         <td
                             style={{
-                                width: '50%',
-                                paddingTop: '1em'
+                                width: "50%",
+                                paddingTop: "1em"
                             }}
                         >
                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
                         </td>
                         <td
                             style={{
-                                width: '30%',
-                                paddingTop: '1em'
+                                width: "30%",
+                                paddingTop: "1em"
                             }}
                         >
                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
                         </td>
                         <td
                             style={{
-                                width: '20%',
-                                paddingTop: '1em',
-                                textAlign: 'center'
+                                width: "20%",
+                                paddingTop: "1em",
+                                textAlign: "center"
                             }}
                         >
                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
@@ -76,9 +76,9 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
                     <>
                         <td
                             style={{
-                                width: '40%',
-                                fontSize: '1rem',
-                                padding: '.5em'
+                                width: "40%",
+                                fontSize: "1rem",
+                                padding: ".5em"
                             }}
                         >
                             <Link
@@ -89,12 +89,12 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
                         </td>
                         <td
                             style={{
-                                width: '100%',
-                                padding: '.5em',
-                                overflow: 'auto',
-                                maxHeight: '70px',
-                                display: 'inline-block',
-                                textAlign: 'center'
+                                width: "100%",
+                                padding: ".5em",
+                                overflow: "auto",
+                                maxHeight: "70px",
+                                display: "inline-block",
+                                textAlign: "center"
                             }}
                         >
                             {<ComponentRow
@@ -105,10 +105,10 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
                         </td>
                         <td
                             style={{
-                                width: '40%',
-                                fontSize: '1rem',
-                                padding: '.5em',
-                                textAlign: 'center'
+                                width: "40%",
+                                fontSize: "1rem",
+                                padding: ".5em",
+                                textAlign: "center"
                             }}
                         >
                             {

@@ -6,7 +6,7 @@ import WithdrawMsg from "./transaction/WithdrawMsg"
 import RedelegateMsg from "./transaction/RedelegateMsg"
 import VoteMsg from "./transaction/VoteMsg"
 import Button from "../input/Button"
-import { CloseOutlined } from '@ant-design/icons'
+import { CloseOutlined } from "@ant-design/icons"
 import { motion } from "framer-motion"
 
 const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
@@ -15,7 +15,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const txTypes = [
         {
-            type: 'msgSend',
+            type: "msgSend",
             component: (
                 <SendMsgForm
                     chain={chain}
@@ -26,7 +26,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 />
             )
         }, {
-            type: 'msgDelegate',
+            type: "msgDelegate",
             component: (
                 <DelegateMsgForm
                     chain={chain}
@@ -37,7 +37,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 />
             )
         }, {
-            type: 'msgUndelegate',
+            type: "msgUndelegate",
             component: (
                 <UndelegateMsg
                     chain={chain}
@@ -48,7 +48,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 />
             )
         }, {
-            type: 'msgWithdraw',
+            type: "msgWithdraw",
             component: (
                 <WithdrawMsg
                     chain={chain}
@@ -59,7 +59,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 />
             )
         }, {
-            type: 'msgRedelegate',
+            type: "msgRedelegate",
             component: (
                 <RedelegateMsg
                     chain={chain}
@@ -71,7 +71,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             )
         },
         {
-            type: 'msgVoteProposal',
+            type: "msgVoteProposal",
             component: (
                 <VoteMsg
                     chain={chain}
@@ -85,8 +85,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
     ]
 
     useEffect(() => {
-        const notShowWarning = localStorage.getItem('not-show-warning')
-        if (notShowWarning && notShowWarning === 'true') {
+        const notShowWarning = localStorage.getItem("not-show-warning")
+        if (notShowWarning && notShowWarning === "true") {
             setChecked(notShowWarning)
         }
     }, [])
@@ -107,27 +107,27 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 opacity: 1
             }}
             style={{
-                backgroundColor: '#ffffff',
-                boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em 3em',
-                borderRadius: '10px',
-                position: 'relative',
+                backgroundColor: "#ffffff",
+                boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                padding: "2em 3em",
+                borderRadius: "10px",
+                position: "relative",
                 zIndex: 1,
-                width: '100%',
-                marginTop: '50px'
+                width: "100%",
+                marginTop: "50px"
             }}
         >
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: '10px'
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "10px"
                 }}
             >
                 <h2
                     style={{
                         marginBottom: 0,
-                        textAlign: 'left'
+                        textAlign: "left"
                     }}
                 >
                     Create Transaction
@@ -137,12 +137,12 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                         <CloseOutlined />
                     )}
                     style={{
-                        position: 'relative',
-                        top: '0px',
+                        position: "relative",
+                        top: "0px",
                         border: 0,
-                        backgroundColor: 'transparent',
-                        fontWeight: 'bold',
-                        fontSize: '1.25rem'
+                        backgroundColor: "transparent",
+                        fontWeight: "bold",
+                        fontSize: "1.25rem"
                     }}
                     clickFunction={wrapSetClose}
                 />
@@ -156,15 +156,15 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             </h3>
             <select
                 defaultValue={0}
-                placeholder={'Select message type'}
+                placeholder={"Select message type"}
                 onChange={(e) => {
                     setTxType(e.target.value)
                 }}
                 style={{
-                    marginBottom: '10px',
-                    width: '100%',
-                    borderRadius: '10px',
-                    padding: '1em'
+                    marginBottom: "10px",
+                    width: "100%",
+                    borderRadius: "10px",
+                    padding: "1em"
                 }}
             >
                 {txTypes.map((type, index) => {
@@ -173,7 +173,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                             key={index}
                             value={index}
                             style={{
-                                padding: '1em'
+                                padding: "1em"
                             }}
                         >
                             {type.type}

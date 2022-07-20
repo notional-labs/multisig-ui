@@ -10,7 +10,7 @@ const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error,
                             marginBottom: 0
                         }}
                     >
-                        {label || ''}
+                        {label || ""}
                     </h4>,
                     <input
                         onChange={onChange}
@@ -21,24 +21,24 @@ const Input = ({ label, type, onChange, name, value, placeholder, onBlur, error,
                         autoComplete="off"
                         onBlur={onBlur}
                         style={{
-                            borderRadius: '10px',
-                            height: '50px',
+                            borderRadius: "10px",
+                            height: "50px",
                             border: 0,
-                            backgroundColor: '#D9D9D9',
-                            padding: '1em'
+                            backgroundColor: "#D9D9D9",
+                            padding: "1em"
                         }}
                         disabled={disabled}
                     />,
                     <text
                         style={{
-                            color: 'red',
-                            fontSize: '.75rem'
+                            color: "red",
+                            fontSize: ".75rem"
                         }}
                     >
                         {error}
                     </text>
                 ]}
-                direction='column'
+                direction="column"
                 style={{
                     ...style
                 }}

@@ -1,25 +1,26 @@
 import { Image } from "antd"
 
-const LoadingPage = ({}) => {
+const LoadingPage = () => {
     return (
         <div
             style={{
-                position: 'fixed',
-                height: '100%',
-                width: '100vw',
-                backgroundColor: 'white',
-                textAlign: 'center',
+                position: "fixed",
+                height: "100%",
+                width: "100vw",
+                backgroundColor: "white",
+                textAlign: "center",
                 zIndex: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
             }}
         >
             <Image
-                src={'/images/loading.gif'}
+                src={"/images/loading.gif"}
+                alt="loading"
                 style={{
-                    width: '50vw',
-                    margin: 'auto 0',
+                    width: "50vw",
+                    margin: "auto 0",
                 }}
                 preview={false}
             />

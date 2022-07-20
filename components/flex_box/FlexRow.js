@@ -10,7 +10,7 @@ const FlexRow = ({ components, style, justifyContent = 'center', direction = 'ro
             }}
         >
             {
-                components !== null && components.map((component, index) => {
+                components !== null && components.map((component) => {
                     return (
                        component
                     )

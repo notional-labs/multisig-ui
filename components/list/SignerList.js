@@ -24,22 +24,22 @@ const SignerList = ({
     editSignature,
 }) => {
     const deleteSig = async (id) => {
-        openLoadingNotification('open', 'Deleting Signature')
+        openLoadingNotification("open", "Deleting Signature")
         try {
             await deleteSignature(id)
             removeSignature(id)
             setHasSigned(false)
-            openLoadingNotification('close')
-            openNotification('success', 'Successfully delete signature')
+            openLoadingNotification("close")
+            openNotification("success", "Successfully delete signature")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', 'Unsuccessfully delete signature ' + e.message)
+            openLoadingNotification("close")
+            openNotification("error", "Unsuccessfully delete signature " + e.message)
         }
     }
 
     const updateSig = async (id) => {
-        openLoadingNotification('open', 'Resigning Signature')
+        openLoadingNotification("open", "Resigning Signature")
         try {
             window.keplr.defaultOptions = {
                 sign: {
@@ -55,8 +55,8 @@ const SignerList = ({
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.accountNumber),
-                sequence: parseInt(signAccount.sequence),
+                accountNumber: parseInt(signAccount.accountNumber, 10),
+                sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
 
@@ -83,12 +83,12 @@ const SignerList = ({
             const res = await updateSignature(signature, transactionID)
             res.data.data && res.data.data.updateSignature ? editSignature(res.data.data.updateSignature) : editSignature(signature)
             setHasSigned(true)
-            openLoadingNotification('close')
-            openNotification('success', 'Successfully update signature')
+            openLoadingNotification("close")
+            openNotification("success", "Successfully update signature")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', 'Unsuccessfully update signature ' + e.message)
+            openLoadingNotification("close")
+            openNotification("error", "Unsuccessfully update signature " + e.message)
         }
     }
 
@@ -100,51 +100,51 @@ const SignerList = ({
                         text={(
                             <Tooltip
                                 placement="top"
-                                title={'Resigning signature'}
+                                title={"Resigning signature"}
                             >
                                 <RetweetOutlined />
                             </Tooltip>
                         )}
                         clickFunction={async () => await updateSig(id)}
                         style={{
-                            border: 'solid .5px black',
-                            width: '50%',
-                            borderRadius: '10px 0 0 10px',
-                            backgroundColor: 'transparent',
-                            height: '30px',
-                            margin: 'auto 0'
+                            border: "solid .5px black",
+                            width: "50%",
+                            borderRadius: "10px 0 0 10px",
+                            backgroundColor: "transparent",
+                            height: "30px",
+                            margin: "auto 0"
                         }}
                     />,
                     <Button
                         text={(
                             <Tooltip
                                 placement="top"
-                                title={'Delete signature'}
+                                title={"Delete signature"}
                             >
                                 <DeleteOutlined />
                             </Tooltip>
                         )}
                         clickFunction={async () => await deleteSig(id)}
                         style={{
-                            border: 'solid .5px black',
-                            width: '50%',
-                            borderRadius: '0 10px 10px 0',
-                            backgroundColor: 'transparent',
-                            height: '30px',
-                            margin: 'auto 0'
+                            border: "solid .5px black",
+                            width: "50%",
+                            borderRadius: "0 10px 10px 0",
+                            backgroundColor: "transparent",
+                            height: "30px",
+                            margin: "auto 0"
                         }}
                     />
                 ]}
-                justifyContent={'space-between'}
+                justifyContent={"space-between"}
                 style={{
-                    width: '100px'
+                    width: "100px"
                 }}
             />
         )
     }
 
     const checkStatus = (key, value) => {
-        return parseInt(account[key]) === value
+        return parseInt(account[key], 10) === value
     }
 
     const circle = (key, value) => {
@@ -152,17 +152,17 @@ const SignerList = ({
             <Tooltip
                 placement="left"
                 title={
-                    checkStatus(key, value) ? 'sync' : 'not sync'
+                    checkStatus(key, value) ? "sync" : "not sync"
                 }>
                 <span
                     style={{
-                        width: '10px',
-                        height: '10px',
-                        backgroundColor: !checkStatus(key, value) ? '#D82D2C' : '#189A01',
-                        borderRadius: '50%',
-                        display: 'inline-block',
-                        position: 'relative',
-                        margin: 'auto 10px auto 0'
+                        width: "10px",
+                        height: "10px",
+                        backgroundColor: !checkStatus(key, value) ? "#D82D2C" : "#189A01",
+                        borderRadius: "50%",
+                        display: "inline-block",
+                        position: "relative",
+                        margin: "auto 10px auto 0"
                     }}
                 />
             </Tooltip>
@@ -172,49 +172,49 @@ const SignerList = ({
     return (
         <div
             style={{
-                maxHeight: '200px',
-                overflow: 'auto',
-                border: 'solid 1px black',
-                padding: '.5em 1em',
-                borderRadius: '10px',
+                maxHeight: "200px",
+                overflow: "auto",
+                border: "solid 1px black",
+                padding: ".5em 1em",
+                borderRadius: "10px",
             }}
         >
             <table
                 style={{
-                    width: '100%',
-                    borderSpacing: '0 1em',
+                    width: "100%",
+                    borderSpacing: "0 1em",
                 }}
             >
                 <thead
                     style={{
-                        borderBottom: 'solid 1.25px black',
-                        fontSize: '1rem'
+                        borderBottom: "solid 1.25px black",
+                        fontSize: "1rem"
                     }}
                 >
                     <tr>
                         <th
                             style={{
-                                width: '30%',
-                                padding: '.5em 0',
-                                textAlign: 'left'
+                                width: "30%",
+                                padding: ".5em 0",
+                                textAlign: "left"
                             }}
                         >
                             Address
                         </th>
                         <th
                             style={{
-                                width: '40%',
-                                padding: '.5em',
-                                textAlign: 'left'
+                                width: "40%",
+                                padding: ".5em",
+                                textAlign: "left"
                             }}
                         >
                             Sig Info
                         </th>
                         <th
                             style={{
-                                width: '10%',
-                                padding: '.5em',
-                                textAlign: 'center'
+                                width: "10%",
+                                padding: ".5em",
+                                textAlign: "center"
                             }}
                         >
                             Action
@@ -228,14 +228,14 @@ const SignerList = ({
                                 <tr
                                     key={index}
                                     style={{
-                                        width: '100%',
-                                        borderBottom: 'solid .25px #d6d6d6',
+                                        width: "100%",
+                                        borderBottom: "solid .25px #d6d6d6",
                                     }}
                                 >
                                     <td
                                         style={{
-                                            width: '30%',
-                                            padding: '1em 0'
+                                            width: "30%",
+                                            padding: "1em 0"
                                         }}
                                     >
                                         <Tooltip
@@ -247,13 +247,13 @@ const SignerList = ({
                                     </td>
                                     <td
                                         style={{
-                                            width: '40%',
-                                            padding: '1em 0'
+                                            width: "40%",
+                                            padding: "1em 0"
                                         }}
                                     >
                                         <FlexRow
                                             components={[
-                                                circle('sequence', sig.sequence),
+                                                circle("sequence", sig.sequence),
                                                 <text>
                                                     Sequence:
                                                 </text>,
@@ -263,19 +263,19 @@ const SignerList = ({
                                                     {sig.sequence}
                                                 </text>
                                             ]}
-                                            justifyContent={'start'}
+                                            justifyContent={"start"}
                                         />
                                     </td>
                                     <td
                                         style={{
-                                            width: '10%',
-                                            padding: '1em 0',
+                                            width: "10%",
+                                            padding: "1em 0",
                                         }}
                                     >
                                         {
                                             walletAccount
                                                 && walletAccount.bech32Address === sig.address
-                                                ? actionButtons(sig._id) : 'Not available'
+                                                ? actionButtons(sig._id) : "Not available"
                                         }
                                     </td>
                                 </tr>
@@ -283,7 +283,7 @@ const SignerList = ({
                         }) : (
                             <div
                                 style={{
-                                    padding: '1em 0'
+                                    padding: "1em 0"
                                 }}
                             >
                                 No signatures yet
