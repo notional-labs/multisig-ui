@@ -53,7 +53,7 @@ const TransactionView = () => {
                     wrapper(id)
                     localStorage.setItem("current", id)
                 }
-                multisig && setMultisig(multisigInfo)
+                multisigInfo && setMultisig(multisigInfo)
             }
             catch (e) {
                 openNotification("error", "fail to retrieve multisig from database " + e.message)
