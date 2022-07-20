@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getValidator } from "../../libs/validators"
+import { getValidator } from "../../libs/queryClients"
 import Skeleton from "antd/lib/skeleton"
 
 const ValidatorRow = ({ chain, address }) => {

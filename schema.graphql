@@ -33,11 +33,6 @@ type Query {
   getTxByMultisig(createBy: String!): [Transaction]
   getAllMultisigByAddress(createFrom: String!): [MultisigByAddress]
   getSignaturesFromAddress(address: String!): [Signature]
-  getTransactionByStatus(status: String!): [Transaction]
-}
-
-type mutation {
-  deleteSignatureOfAddress(address: String!): Signature @resolver
 }
 
 enum TransactionStatus {

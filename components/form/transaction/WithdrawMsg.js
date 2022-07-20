@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import ShareForm from "./ShareForm"
-import { getRewards } from "../../../libs/validators"
+import { getRewards } from "../../../libs/queryClients"
 import { createWithdrawRewardsMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
@@ -9,14 +9,14 @@ import axios from "axios"
 
 const style = {
     input: {
-        marginBottom: '10px',
-        color: 'black'
+        marginBottom: "10px",
+        color: "black"
     },
     button: {
         border: 0,
-        borderRadius: '10px',
-        width: '40%',
-        padding: '.5em 1em'
+        borderRadius: "10px",
+        width: "40%",
+        padding: ".5em 1em"
     }
 }
 
@@ -26,13 +26,13 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
     const [txBody, setTxBody] = useState({
         gas: 200000,
         fee: 0,
-        memo: '',
+        memo: "",
     })
     const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
-            if (key !== 'memo' && txBody[key] === '') return true
+            if (key !== "memo" && txBody[key] === "") return true
         }
         if (rewards.length === 0) return true
         return false
@@ -52,13 +52,13 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                 setRewards([...res.rewards])
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [chain])
 
     const handleCreate = async () => {
-        openLoadingNotification('open', 'Creating transaction')
+        openLoadingNotification("open", "Creating transaction")
         try {
             const validator_addresses = rewards.map(reward => reward.validator_address)
             const tx = createWithdrawRewardsMsg(
@@ -75,25 +75,25 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
             const data = {
                 dataJSON,
                 createBy: address,
-                status: 'PENDING'
+                status: "PENDING"
             }
             const res = await axios.post("/api/transaction/create", data);
             const { _id } = res.data;
             router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification('close')
-            openNotification('success', 'Created successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Created successfully")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
     const handleKeyGroupChange = (e) => {
-        if (e.target.name === 'fee' || e.target.name === 'gas') {
+        if (e.target.name === "fee" || e.target.name === "gas") {
             setTxBody({
                 ...txBody,
-                [e.target.name]: parseInt(e.target.value)
+                [e.target.name]: parseInt(e.target.value, 10)
             })
         }
         else {
@@ -120,7 +120,7 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
 
     const handleCancel = () => {
         setShowWarning(false)
-        openNotification('error', 'Cancel create transaction')
+        openNotification("error", "Cancel create transaction")
     }
 
     return (
@@ -139,41 +139,41 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                     rewards.length > 0 ? (
                         <div
                             style={{
-                                width: '100%',
-                                padding: '1em',
-                                borderRadius: '10px',
-                                maxHeight: '100px',
-                                overflow: 'auto',
-                                border: 'solid 1px black'
+                                width: "100%",
+                                padding: "1em",
+                                borderRadius: "10px",
+                                maxHeight: "100px",
+                                overflow: "auto",
+                                border: "solid 1px black"
                             }}
                         >
                             <table
                                 style={{
-                                    width: '100%',
-                                    borderSpacing: '0 1em',
+                                    width: "100%",
+                                    borderSpacing: "0 1em",
                                 }}
                             >
                                 <thead
                                     style={{
-                                        borderBottom: 'solid 1.25px black',
-                                        fontSize: '1rem'
+                                        borderBottom: "solid 1.25px black",
+                                        fontSize: "1rem"
                                     }}
                                 >
                                     <tr>
                                         <th
                                             style={{
-                                                width: '60%',
-                                                padding: '.5em 0',
-                                                textAlign: 'left'
+                                                width: "60%",
+                                                padding: ".5em 0",
+                                                textAlign: "left"
                                             }}
                                         >
                                             Validator
                                         </th>
                                         <th
                                             style={{
-                                                width: '40%',
-                                                padding: '.5em',
-                                                textAlign: 'left'
+                                                width: "40%",
+                                                padding: ".5em",
+                                                textAlign: "left"
                                             }}
                                         >
                                             Reward
@@ -189,13 +189,13 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                                                 >
                                                     <td
                                                         style={{
-                                                            width: '60%',
-                                                            paddingTop: '1em'
+                                                            width: "60%",
+                                                            paddingTop: "1em"
                                                         }}
                                                     >
                                                         <a
                                                             href={`${chain.explorer}validators/${reward.validator_address}`}
-                                                            target={'_blank'}
+                                                            target={"_blank"}
                                                             rel="noreferrer"
                                                         >
                                                             <ValidatorRow
@@ -206,11 +206,11 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                                                     </td>
                                                     <td
                                                         style={{
-                                                            width: '40%',
-                                                            paddingTop: '1em'
+                                                            width: "40%",
+                                                            paddingTop: "1em"
                                                         }}
                                                     >
-                                                        {(parseFloat(reward.reward[0].amount) / 1000000).toFixed(2)} {reward.reward[0].denom.split('u')[1].toUpperCase()}
+                                                        {(parseFloat(reward.reward[0].amount) / 1000000).toFixed(2)} {reward.reward[0].denom.split("u")[1].toUpperCase()}
                                                     </td>
                                                 </tr>
                                             )
@@ -221,11 +221,11 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                         </div>) : (
                         <div
                             style={{
-                                width: '100%',
-                                padding: '1em',
-                                borderRadius: '10px',
-                                backgroundColor: '#808080',
-                                color: 'white'
+                                width: "100%",
+                                padding: "1em",
+                                borderRadius: "10px",
+                                backgroundColor: "#808080",
+                                color: "white"
                             }}
                         >
                             This address hasn`t delegate to any validators yet!

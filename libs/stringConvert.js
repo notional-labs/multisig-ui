@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const addressShortener = (addr, start = 15, end = 4) => {
-    return addr && addr.slice(0, start) + '...' + addr.slice(addr.length - end, addr.length)
+    return addr && addr.slice(0, start) + "..." + addr.slice(addr.length - end, addr.length)
 }
 
 export const timeStampHandler = (time) => {
@@ -14,6 +14,6 @@ export const addressConversion = ["validatorAddress", "delegatorAddress", "fromA
 
 export const getDenom = async (api, ibcDenom) => {
     const { data } = await axios.get(`${api}ibc/apps/transfer/v1/denom_traces/${ibcDenom}`)
-    const denom = data.denom_trace && data.denom_trace.base_denom.substring(0,1) === 'u' ? data.denom_trace.base_denom : 'unknown'
+    const denom = data.denom_trace && data.denom_trace.base_denom.substring(0,1) === "u" ? data.denom_trace.base_denom : "unknown"
     return denom
 }

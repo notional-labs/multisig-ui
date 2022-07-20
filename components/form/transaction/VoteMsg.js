@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react"
-import { getProposals } from "../../../libs/validators"
+import { getProposals } from "../../../libs/queryClients"
 import ShareForm from "./ShareForm"
 import { createVoteMsg, checkIfHasPendingTx } from "../../../libs/transaction"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
-import { Radio, Space } from 'antd';
+import { Radio, Space } from "antd";
 import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
 
 const style = {
     input: {
-        marginBottom: '10px',
-        color: 'black'
+        marginBottom: "10px",
+        color: "black"
     },
     button: {
         border: 0,
-        borderRadius: '10px',
-        width: '40%',
-        padding: '.5em 1em'
+        borderRadius: "10px",
+        width: "40%",
+        padding: ".5em 1em"
     }
 }
 
@@ -24,15 +24,15 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
     const [proposals, setProposals] = useState([])
     const [txBody, setTxBody] = useState({
         option: 1,
-        proposalId: '',
+        proposalId: "",
         gas: 200000,
         fee: 0,
-        memo: '',
+        memo: "",
     })
     const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
-        return txBody.option === 0 || txBody.proposalId === ''
+        return txBody.option === 0 || txBody.proposalId === ""
     }
 
     const disabled = () => {
@@ -53,13 +53,13 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
                 })
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [chain])
 
     const handleCreate = async () => {
-        openLoadingNotification('open', 'Creating transaction')
+        openLoadingNotification("open", "Creating transaction")
         try {
             const tx = createVoteMsg(
                 txBody.option,
@@ -76,22 +76,22 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
             const data = {
                 dataJSON,
                 createBy: address,
-                status: 'PENDING'
+                status: "PENDING"
             }
             const res = await axios.post("/api/transaction/create", data);
             const { _id } = res.data;
             router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification('close')
-            openNotification('success', 'Created successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Created successfully")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
     const handleKeyGroupChange = (e) => {
-        if (e.target.name === 'fee' || e.target.name === 'gas') {
+        if (e.target.name === "fee" || e.target.name === "gas") {
             setTxBody({
                 ...txBody,
                 [e.target.name]: parseFloat(e.target.value)
@@ -106,7 +106,7 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
     }
 
     const handleSelect = (e) => {
-        let newTx = {
+        const newTx = {
             ...txBody
         }
         newTx[e.target.name] = e.target.value
@@ -131,7 +131,7 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
 
     const handleCancel = () => {
         setShowWarning(false)
-        openNotification('error', 'Cancel create transaction')
+        openNotification("error", "Cancel create transaction")
     }
 
     return (
@@ -151,11 +151,11 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
                         <select
                             onChange={handleSelect}
                             style={{
-                                width: '100%',
-                                padding: '1em',
-                                borderRadius: '10px',
+                                width: "100%",
+                                padding: "1em",
+                                borderRadius: "10px",
                             }}
-                            name={'proposalId'}
+                            name={"proposalId"}
                         >
                             {
                                 proposals.map((proposal, index) => {
@@ -174,14 +174,13 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
                     ) : (
                         <div
                             style={{
-                                width: '100%',
-                                borderRadius: '10px',
-                                height: '50px',
-                                border: 0,
-                                backgroundColor: 'transparent',
-                                padding: '1em',
-                                border: 'solid 1px black',
-                                color: 'red'
+                                width: "100%",
+                                borderRadius: "10px",
+                                height: "50px",
+                                backgroundColor: "transparent",
+                                padding: "1em",
+                                border: "solid 1px black",
+                                color: "red"
                             }}
                         >
                             No proposals in voting period yet!
@@ -202,7 +201,7 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
                 <Radio.Group
                     onChange={handleSelect}
                     value={txBody.option}
-                    name={'option'}
+                    name={"option"}
                 >
                     <Space direction="horizontal">
                         <Radio value={1}>Yes</Radio>

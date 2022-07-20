@@ -9,20 +9,20 @@ const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", async () => {
-            const account = await getKey(chain.chain_id)
-            setAccount(account)
+            const acc = await getKey(chain.chain_id)
+            setAccount(acc)
         })
     }, []);
 
     useEffect(() => {
         (async () => {
             try {
-                const account = await getKey(chain.chain_id)
-                if (!account) return
-                setAccount(account)
+                const acc = await getKey(chain.chain_id)
+                if (!acc) return
+                setAccount(acc)
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [])
@@ -37,14 +37,14 @@ const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
 
     return checkAddrInMultisig() && (
         <Button
-            text={'Broadcast transaction'}
+            text={"Broadcast transaction"}
             style={{
-                backgroundColor: 'black',
-                color: 'white',
-                padding: '1em',
-                width: '100%',
-                borderRadius: '10px',
-                marginTop: '20px',
+                backgroundColor: "black",
+                color: "white",
+                padding: "1em",
+                width: "100%",
+                borderRadius: "10px",
+                marginTop: "20px",
                 border: 0
             }}
             clickFunction={async () => {

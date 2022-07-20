@@ -6,7 +6,7 @@ export const getKeplrAccount = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
             alert("Keplr Wallet not detected, please install extension");
-            throw new Error('Keplr not install')
+            throw new Error("Keplr not install")
         } else {
             // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
             await window.keplr.enable(chainId)
@@ -27,7 +27,7 @@ export const getKey = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
             alert("Keplr Wallet not detected, please install extension");
-            throw new Error('Keplr not install')
+            throw new Error("Keplr not install")
         } else {
             // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
             await window.keplr.enable(chainId)
@@ -96,9 +96,9 @@ export const getAccount = async (rpc, address) => {
 export const getSequence = async (api, address) => {
     try {
         let { data } = await axios.get(`${api}cosmos/auth/v1beta1/accounts/${address}`, {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0',
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+            "Expires": "0",
         })
 
         if (!data.account) {

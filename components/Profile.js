@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import FlexRow from "./flex_box/FlexRow"
 import Button from "./input/Button"
 import { addressShortener } from "../libs/stringConvert"
-import { LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from "@ant-design/icons";
 import Image from "next/image"
 import { Typography, Tooltip } from "antd"
 
@@ -11,9 +11,9 @@ const { Paragraph } = Typography;
 const Profile = ({ account, chainName, setAccount }) => {
 
     const disconnect = () => {
-        setAccount('')
-        localStorage.removeItem('account')
-        window.dispatchEvent(new Event('storage'))
+        setAccount("")
+        localStorage.removeItem("account")
+        window.dispatchEvent(new Event("storage"))
     }
 
     const disconnectButton = (
@@ -27,9 +27,9 @@ const Profile = ({ account, chainName, setAccount }) => {
             clickFunction={disconnect}
             style={{
                 border: 0,
-                color: 'white',
-                backgroundColor: 'transparent',
-                fontSize: '1.5rem'
+                color: "white",
+                backgroundColor: "transparent",
+                fontSize: "1.5rem"
             }}
         />
     )
@@ -46,14 +46,14 @@ const Profile = ({ account, chainName, setAccount }) => {
                         copyable={{ text: account.bech32Address }}
                         style={{
                             marginBottom: 0,
-                            color: 'white',
-                            fontSize: '.75rem'
+                            color: "white",
+                            fontSize: ".75rem"
                         }}
                     >
                         {addressShortener(account.bech32Address)}
                     </Paragraph>
                 ]}
-                direction={'column'}
+                direction={"column"}
             />
         )
     }
@@ -62,33 +62,34 @@ const Profile = ({ account, chainName, setAccount }) => {
         return (
             <div
                 style={{
-                    border: 'solid 1px white',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                    borderRadius: '10px',
-                    padding: '.25em 1em',
-                    width: '280px',
-                    margin: 'auto 0'
+                    border: "solid 1px white",
+                    backgroundColor: "transparent",
+                    color: "white",
+                    borderRadius: "10px",
+                    padding: ".25em 1em",
+                    width: "280px",
+                    margin: "auto 0"
                 }}
             >
                 <FlexRow
                     components={[
                         <div
                             style={{
-                                position: 'relative',
-                                top: '3px'
+                                position: "relative",
+                                top: "3px"
                             }}
                         >
                             <Image
-                                src={'/images/avatar.png'}
-                                width='35px'
-                                height='35px'
+                                src={"/images/avatar.png"}
+                                alt="avatar"
+                                width="35px"
+                                height="35px"
                             />
                         </div>,
                         addressCol(),
                         disconnectButton
                     ]}
-                    justifyContent={'space-between'}
+                    justifyContent={"space-between"}
                 />
             </div>
         )

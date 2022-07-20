@@ -44,14 +44,14 @@ const ShareForm = ({
                 style={style.input}
             />
             <Button
-                text={'Create Transaction'}
+                text={"Create Transaction"}
                 style={{
-                    backgroundColor: disabled ? '#808080' : 'black',
-                    color: 'white',
-                    padding: '1em',
-                    width: '100%',
-                    borderRadius: '10px',
-                    marginTop: '20px',
+                    backgroundColor: disabled ? "#808080" : "black",
+                    color: "white",
+                    padding: "1em",
+                    width: "100%",
+                    borderRadius: "10px",
+                    marginTop: "20px",
                     border: 0
                 }}
                 clickFunction={async() => await handleCreate()}

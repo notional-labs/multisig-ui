@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 import { getDenom } from "../../libs/stringConvert"
 
 const AssetRow = ({ chain, ibcDenom }) => {
-    const [name, setName] = useState('')
+    const [name, setName] = useState("")
 
     useEffect(() => {
         (async () => {
-            if (ibcDenom.substring(0, 3) === 'ibc') {
+            if (ibcDenom.substring(0, 3) === "ibc") {
                 const res = await getDenom(chain.api, ibcDenom.substring(4))
                 console.log(res)
                 setName(res)
@@ -20,11 +20,11 @@ const AssetRow = ({ chain, ibcDenom }) => {
     return (
         <div
             style={{
-                fontWeight: 'bold'
+                fontWeight: "bold"
             }}
         >
             {
-                name !== 'unknown' && name !== '' ? name.substring(1).toUpperCase() : name.toUpperCase()
+                name !== "unknown" && name !== "" ? name.substring(1).toUpperCase() : name.toUpperCase()
             }
         </div>
     )

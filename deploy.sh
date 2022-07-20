@@ -2,7 +2,7 @@
 
 git stash
 git pull
-cp ../env-multisig .env.local
+cp .env.local
 npm install
 npm run build
 npm run start

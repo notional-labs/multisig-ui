@@ -5,13 +5,13 @@ import Profile from "../Profile"
 import { openNotification } from "../ulti/Notification"
 
 const Account = ({ chainId, chainName }) => {
-    const [account, setAccount] = useState('')
+    const [account, setAccount] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         const keplrAccount = await getAccount(chainId)
-        const currentAccount = localStorage.getItem('account')
-        if (currentAccount && currentAccount !== '') {
-            localStorage.setItem('account', JSON.stringify(keplrAccount))
+        const currentAccount = localStorage.getItem("account")
+        if (currentAccount && currentAccount !== "") {
+            localStorage.setItem("account", JSON.stringify(keplrAccount))
             setAccount(JSON.stringify(keplrAccount))
         }
     }, []);
@@ -26,10 +26,10 @@ const Account = ({ chainId, chainName }) => {
 
     useEffect(() => {
         (async () => {
-            const currentAccount = localStorage.getItem('account')
-            if (currentAccount && currentAccount !== '') {
+            const currentAccount = localStorage.getItem("account")
+            if (currentAccount && currentAccount !== "") {
                 const keplrAccount = await getAccount(chainId)
-                localStorage.setItem('account', JSON.stringify(keplrAccount))
+                localStorage.setItem("account", JSON.stringify(keplrAccount))
                 setAccount(JSON.stringify(keplrAccount))
             }
         })()
@@ -38,28 +38,28 @@ const Account = ({ chainId, chainName }) => {
     useEffect(() => {
         (async () => {
             try {
-                const currentAccount = localStorage.getItem('account')
-                if (currentAccount === '' || !currentAccount) return
+                const currentAccount = localStorage.getItem("account")
+                if (currentAccount === "" || !currentAccount) return
                 const keplrAccount = await getAccount(chainId)
-                localStorage.setItem('account', JSON.stringify(keplrAccount))
+                localStorage.setItem("account", JSON.stringify(keplrAccount))
                 setAccount(JSON.stringify(keplrAccount))
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [chainId])
 
-    const wrapperSetAccount = (account) => {
-        setAccount(account)
+    const wrapperSetAccount = (acc) => {
+        setAccount(acc)
     }
 
     const getAccount = async () => {
-        const account = await getKey(chainId)
-        return account
+        const acc = await getKey(chainId)
+        return acc
     }
 
-    return account && account !== '' ? (
+    return account && account !== "" ? (
         <Profile
             account={JSON.parse(account)}
             chainName={chainName}
