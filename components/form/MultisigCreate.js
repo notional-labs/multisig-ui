@@ -8,35 +8,35 @@ import FlexRow from "../flex_box/FlexRow"
 import { InputNumber } from "antd"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import { createMultisigFromPubkeys } from "../../libs/multisig"
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router"
 
 const emptyKeyInput = () => {
     return {
-        address: '',
-        pubkey: '',
-        error: ''
+        address: "",
+        pubkey: "",
+        error: ""
     }
 }
 
 const style = {
     inputNumberStyle: {
-        borderRadius: '10px',
-        padding: '.5em 1em',
-        fontSize: '1.5rem',
-        margin: '0 30px',
+        borderRadius: "10px",
+        padding: ".5em 1em",
+        fontSize: "1.5rem",
+        margin: "0 30px",
     },
     button: {
-        backgroundColor: 'black',
-        color: 'white',
-        padding: '1em',
-        width: '100%',
-        borderRadius: '10px',
-        marginTop: '20px',
+        backgroundColor: "black",
+        color: "white",
+        padding: "1em",
+        width: "100%",
+        borderRadius: "10px",
+        marginTop: "20px",
         border: 0
     }
 }
 
-const MultisigCreate = ({ }) => {
+const MultisigCreate = () => {
     const { chain } = useContext(ChainContext)
     const [pubkeys, setPubkeys] = useState([
         emptyKeyInput(), emptyKeyInput()
@@ -45,7 +45,7 @@ const MultisigCreate = ({ }) => {
     const router = useRouter()
 
     const handleKeyGroupChange = (e, index) => {
-        let newPubkeys = [...pubkeys]
+        const newPubkeys = [...pubkeys]
         newPubkeys[index].address = e.target.value
         setPubkeys([...newPubkeys])
     }
@@ -56,27 +56,28 @@ const MultisigCreate = ({ }) => {
     }
 
     const checkDisable = () => {
-        const check = pubkeys.some(pubkey => pubkey.error !== '')
+        const check = pubkeys.some(pubkey => pubkey.error !== "")
+        console.log(check)
         return check
     }
 
     const handleKeyBlur = async (e, index) => {
-        let address = e.target.value;
+        const address = e.target.value;
         if (address.length > 0) {
             try {
                 checkAddress(address, chain.prefix)
                 if (checkDuplicate(address, index)) {
-                    throw new Error('Duplicate address')
+                    throw new Error("Duplicate address")
                 }
                 const pubkey = await getPubkey(chain.rpc, address)
-                let newPubkeys = [...pubkeys]
+                const newPubkeys = [...pubkeys]
                 newPubkeys[index].pubkey = pubkey;
                 newPubkeys[index].error = "";
                 setPubkeys([...newPubkeys])
             }
-            catch (e) {
-                let newPubkeys = [...pubkeys]
-                newPubkeys[index].error = e.message;
+            catch (err) {
+                const newPubkeys = [...pubkeys]
+                newPubkeys[index].error = err.message;
                 setPubkeys([...newPubkeys])
             }
         }
@@ -87,7 +88,7 @@ const MultisigCreate = ({ }) => {
     }
 
     const handleRemove = (index) => {
-        let newPubkeys = pubkeys.filter((_, i) => i !== index)
+        const newPubkeys = pubkeys.filter((_, i) => i !== index)
         setPubkeys([...newPubkeys])
     }
 
@@ -104,7 +105,7 @@ const MultisigCreate = ({ }) => {
         )
         let multisigAddress;
         try {
-            openLoadingNotification('open', 'Creating multisig')
+            openLoadingNotification("open", "Creating multisig")
             multisigAddress = await createMultisigFromPubkeys(
                 compressedPubkeys,
                 parseInt(threshold, 10),
@@ -112,12 +113,12 @@ const MultisigCreate = ({ }) => {
                 components
             );
             router.push(`/multisig/${multisigAddress}`);
-            openLoadingNotification('close')
-            openNotification('success', 'Create successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Create successfully")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
@@ -125,23 +126,23 @@ const MultisigCreate = ({ }) => {
         <div
             style={{
                 
-                backgroundColor: '#ffffff',
-                boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em 3em',
-                borderRadius: '30px',
-                position: 'relative',
+                backgroundColor: "#ffffff",
+                boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                padding: "2em 3em",
+                borderRadius: "30px",
+                position: "relative",
                 zIndex: 1
             }}
         >
             <h1
                 style={{
-                    textAlign: 'center'
+                    textAlign: "center"
                 }}
             >
                 Create Multisig
             </h1>
             <p
-                style={{ marginBottom: '10px' }}
+                style={{ marginBottom: "10px" }}
             >
                 Add the addresses that will make up this multisig.
             </p>
@@ -150,23 +151,23 @@ const MultisigCreate = ({ }) => {
                     return (
                         <div
                             style={{
-                                marginBottom: '10px',
-                                position: 'relative'
+                                marginBottom: "10px",
+                                position: "relative"
                             }}
                         >
                             {
                                 pubkeys.length > 2 && (
                                     <Button
-                                        text={'X'}
+                                        text={"X"}
                                         clickFunction={() => handleRemove(index)}
                                         style={{
-                                            borderRadius: '50%',
+                                            borderRadius: "50%",
                                             border: 0,
-                                            aspectRatio: '1/1',
-                                            width: '30px',
-                                            position: 'absolute',
-                                            left: '97%',
-                                            top: '10%',
+                                            aspectRatio: "1/1",
+                                            width: "30px",
+                                            position: "absolute",
+                                            left: "97%",
+                                            top: "10%",
                                         }}
                                     />
                                 )
@@ -189,13 +190,13 @@ const MultisigCreate = ({ }) => {
                 })
             }
             <Button
-                text={'ADD ANOTHER ADDRESS'}
+                text={"ADD ANOTHER ADDRESS"}
                 clickFunction={handleAddAddress}
                 style={style.button}
             />
             <div
                 style={{
-                    marginTop: '30px'
+                    marginTop: "30px"
                 }}
             >
                 <FlexRow
@@ -208,14 +209,14 @@ const MultisigCreate = ({ }) => {
                             onChange={handleChangeThreshold}
                             style={{
                                 ...style.inputNumberStyle,
-                                backgroundColor: '#F5F5F5'
+                                backgroundColor: "#F5F5F5"
                             }}
                         />,
                         <text
                             style={{
-                                fontSize: '1.5rem',
-                                position: 'absolute',
-                                top: '10px'
+                                fontSize: "1.5rem",
+                                position: "absolute",
+                                top: "10px"
                             }}
                         >
                             Of
@@ -227,25 +228,26 @@ const MultisigCreate = ({ }) => {
                         />
                     ]}
                     style={{
-                        position: 'relative'
+                        position: "relative"
                     }}
                 />
             </div>
             <p
                 style={{
-                    marginTop: '20px',
-                    fontSize: '.75rem'
+                    marginTop: "20px",
+                    fontSize: ".75rem"
                 }}
             >
-                {`This means that each transaction this multisig makes will require ${threshold} of the members to sign it for it to be accepted by the validators.`}
+                {`This means that each transaction this multisig makes will require ${threshold} 
+                of the members to sign it for it to be accepted by the validators.`}
             </p>
             <Button
-                text={'CREATE MULTISIG'}
+                text={"CREATE MULTISIG"}
                 style={{
                     ...style.button,
-                    backgroundColor: checkDisable() ? '#D9D9D9' : 'black'
+                    backgroundColor: checkDisable() ? "#D9D9D9" : "black"
                 }}
-                clickFunction={async () => await handleCreate()}
+                clickFunction={async () => await handleCreate()} 
                 disable={checkDisable()}
             />
         </div>

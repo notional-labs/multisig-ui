@@ -1,31 +1,31 @@
-import { useRouter } from 'next/router'
-import FlexRow from '../flex_box/FlexRow'
-import Button from '../input/Button'
+import { useRouter } from "next/router"
+import FlexRow from "../flex_box/FlexRow"
+import Button from "../input/Button"
 import { motion } from "framer-motion"
-import { ArrowLeftOutlined, UserOutlined, TeamOutlined, BlockOutlined, UserAddOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, UserOutlined, TeamOutlined, BlockOutlined, UserAddOutlined } from "@ant-design/icons"
 
 const routers = [
     {
-        path: '/multisigs',
+        path: "/multisigs",
         pathname: `/multisigs`,
         name: (isColor) => (
             <div>
                 <TeamOutlined
                     style={{
-                        color: isColor && '#189A01'
+                        color: isColor && "#189A01"
                     }}
                 /> Multisigs
             </div>
         )
     },
     {
-        path: '/multisig/create',
+        path: "/multisig/create",
         pathname: `/multisig/create`,
         name: (isColor) => (
             <div>
                 <UserAddOutlined
                     style={{
-                        color: isColor && '#189A01'
+                        color: isColor && "#189A01"
                     }}
                 /> Create Multisig
             </div>
@@ -42,7 +42,7 @@ const multisigRouters = (multisigID) => {
                 <div>
                     <UserOutlined
                         style={{
-                            color: isColor && '#189A01'
+                            color: isColor && "#189A01"
                         }}
                     /> Multisig
                 </div>
@@ -55,7 +55,7 @@ const multisigRouters = (multisigID) => {
                 <div>
                     <BlockOutlined
                         style={{
-                            color: isColor && '#189A01'
+                            color: isColor && "#189A01"
                         }}
                     /> Transactions
                 </div>
@@ -69,21 +69,21 @@ const multisigRouters = (multisigID) => {
 //         {
 //             path: `/multisig/${multisigID}/transaction/${transactionID}`,
 //             pathname: `/multisig/[multisigID]/transaction/[transactionID]`,
-//             name: 'Transaction'
+//             name: "Transaction"
 //         },
 //     ]
 // }
 
 const style = {
     button: {
-        borderRadius: '10px',
-        backgroundColor: 'transparent',
-        fontSize: '1.25rem',
+        borderRadius: "10px",
+        backgroundColor: "transparent",
+        fontSize: "1.25rem",
         border: 0,
-        paddingTop: '.75em',
-        paddingBottom: '.75em',
-        width: '250px',
-        textAlign: 'right',
+        paddingTop: ".75em",
+        paddingBottom: ".75em",
+        width: "250px",
+        textAlign: "right",
     }
 }
 
@@ -98,12 +98,12 @@ const SideBar = ({ option }) => {
     return (
         <div
             style={{
-                position: 'fixed',
-                width: '100%',
+                position: "fixed",
+                width: "100%",
                 zIndex: 5,
-                backgroundColor: '#ffffff',
-                padding: '0 30em',
-                boxShadow: '0 4px 2px -2px rgba(0, 0, 0, 0.25)'
+                backgroundColor: "#ffffff",
+                padding: "0 30em",
+                boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.25)"
             }}
         >
             {
@@ -119,25 +119,25 @@ const SideBar = ({ option }) => {
                                                 whileTap={{ scale: 0.95 }}
                                             >
                                                 <Button
-                                                    type={'link'}
+                                                    type={"link"}
                                                     text={route.name(checkPath(route.pathname))}
                                                     index={index}
                                                     url={route.path}
                                                     style={{
                                                         ...style.button,
-                                                        color: checkPath(route.pathname) ? '#000000' : '#4b525d',
-                                                        fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                        color: checkPath(route.pathname) ? "#000000" : "#4b525d",
+                                                        fontWeight: checkPath(route.pathname) ? "bold" : 400
                                                     }}
-                                                    className={'hover-nav-button'}
+                                                    className={"hover-nav-button"}
                                                 />
                                             </motion.div>
                                         )
                                     })
                                 ]}
-                                justifyContent={'space-between'}
+                                justifyContent={"space-between"}
                             />
                         ]}
-                        justifyContent={'end'}
+                        justifyContent={"end"}
                     />
                 ) : option === 1 ? (<FlexRow
                     components={[
@@ -146,24 +146,24 @@ const SideBar = ({ option }) => {
                             whileTap={{ scale: 0.95 }}
                         >
                             <Button
-                                type={'link'}
+                                type={"link"}
                                 text={
                                     <div>
                                         <ArrowLeftOutlined /> Back
                                     </div>
                                 }
-                                url={'/multisigs'}
+                                url={"/multisigs"}
                                 style={{
-                                    borderRadius: '10px',
-                                    backgroundColor: 'transparent',
-                                    fontSize: '1.25rem',
+                                    borderRadius: "10px",
+                                    backgroundColor: "transparent",
+                                    fontSize: "1.25rem",
                                     border: 0,
-                                    padding: '.5em 0',
-                                    color: '#4b525d',
-                                    height: '100%',
+                                    padding: ".5em 0",
+                                    color: "#4b525d",
+                                    height: "100%",
                                     fontWeight: 400
                                 }}
-                                className={'hover-nav-button'}
+                                className={"hover-nav-button"}
                             />
                         </motion.div>,
                         <FlexRow
@@ -175,27 +175,27 @@ const SideBar = ({ option }) => {
                                             whileTap={{ scale: 0.95 }}
                                         >
                                             <Button
-                                                type={'link'}
+                                                type={"link"}
                                                 text={route.name(checkPath(route.pathname))}
                                                 index={index}
                                                 url={route.path}
                                                 style={{
                                                     ...style.button,
-                                                    color: checkPath(route.pathname) ? '#000000' : '#4b525d',
-                                                    fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                    color: checkPath(route.pathname) ? "#000000" : "#4b525d",
+                                                    fontWeight: checkPath(route.pathname) ? "bold" : 400
                                                 }}
-                                                className={'hover-nav-button'}
+                                                className={"hover-nav-button"}
                                             />
                                         </motion.div>
                                     )
                                 })
 
                             }
-                            justifyContent={'space-between'}
+                            justifyContent={"space-between"}
                         />
                     ]
                     }
-                    justifyContent={'space-between'}
+                    justifyContent={"space-between"}
                 />) : (
                     <FlexRow
                         components={[
@@ -208,27 +208,27 @@ const SideBar = ({ option }) => {
                                                 whileTap={{ scale: 0.95 }}
                                             >
                                                 <Button
-                                                    type={'link'}
+                                                    type={"link"}
                                                     text={route.name(checkPath(route.pathname))}
                                                     index={index}
                                                     url={route.path}
                                                     style={{
                                                         ...style.button,
-                                                        textAlign: 'left',
-                                                        color: checkPath(route.pathname) ? '#000000' : '#4b525d',
-                                                        fontWeight: checkPath(route.pathname) ? 'bold' : 400
+                                                        textAlign: "left",
+                                                        color: checkPath(route.pathname) ? "#000000" : "#4b525d",
+                                                        fontWeight: checkPath(route.pathname) ? "bold" : 400
                                                     }}
-                                                    className={'hover-nav-button'}
+                                                    className={"hover-nav-button"}
                                                 />
                                             </motion.div>
                                         )
                                     })
 
                                 }
-                                justifyContent={'space-between'}
+                                justifyContent={"space-between"}
                             />
                         ]}
-                        justifyContent={'space-between'}
+                        justifyContent={"space-between"}
                     />
                 )
             }

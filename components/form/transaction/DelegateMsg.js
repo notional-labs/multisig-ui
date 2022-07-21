@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getValidators } from "../../../libs/validators"
+import { getValidators } from "../../../libs/queryClients"
 import Input from "../../input/Input"
 import ShareForm from "./ShareForm"
 import { checkIfHasPendingTx, createDelegateMsg } from "../../../libs/transaction"
@@ -9,32 +9,32 @@ import WarningModal from "../../ulti/WarningModal"
 
 const style = {
     input: {
-        marginBottom: '10px',
-        color: 'black'
+        marginBottom: "10px",
+        color: "black"
     },
     button: {
         border: 0,
-        borderRadius: '10px',
-        width: '40%',
-        padding: '.5em 1em'
+        borderRadius: "10px",
+        width: "40%",
+        padding: ".5em 1em"
     }
 }
 
 const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
     const [validators, setValidators] = useState([])
     const [txBody, setTxBody] = useState({
-        toAddress: '',
+        toAddress: "",
         amount: 0,
         gas: 200000,
         fee: 0,
-        memo: '',
+        memo: "",
     })
     const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
-            if (key !== 'memo' && txBody[key] === '') return true
-            else if (key === 'amount' && txBody[key] === 0) return true
+            if (key !== "memo" && txBody[key] === "") return true
+            else if (key === "amount" && txBody[key] === 0) return true
         }
         return false
     }
@@ -53,13 +53,13 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                 res.validators && setValidators([...res.validators])
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [chain])
 
     const handleCreate = async () => {
-        openLoadingNotification('open', 'Creating transaction')
+        openLoadingNotification("open", "Creating transaction")
         try {
             const tx = createDelegateMsg(
                 address,
@@ -76,22 +76,22 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
             const data = {
                 dataJSON,
                 createBy: address,
-                status: 'PENDING'
+                status: "PENDING"
             }
             const res = await axios.post("/api/transaction/create", data);
             const { _id } = res.data;
             router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification('close')
-            openNotification('success', 'Created successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Created successfully")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
     const handleKeyGroupChange = (e) => {
-        if (e.target.name === 'amount' || e.target.name === 'fee' || e.target.name === 'gas') {
+        if (e.target.name === "amount" || e.target.name === "fee" || e.target.name === "gas") {
             setTxBody({
                 ...txBody,
                 [e.target.name]: parseFloat(e.target.value)
@@ -127,7 +127,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
 
     const handleCancel = () => {
         setShowWarning(false)
-        openNotification('error', 'Cancel create transaction')
+        openNotification("error", "Cancel create transaction")
     }
  
     return (
@@ -145,9 +145,9 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                 <select
                     onChange={handleSelect}
                     style={{
-                        width: '100%',
-                        padding: '1em',
-                        borderRadius: '10px',
+                        width: "100%",
+                        padding: "1em",
+                        borderRadius: "10px",
                     }}
                 >
                     {
@@ -170,7 +170,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                     handleKeyGroupChange(e);
                 }}
                 value={txBody.amount}
-                label={`Amount (${chain.denom.split('u')[1].toUpperCase()})`}
+                label={`Amount (${chain.denom.split("u")[1].toUpperCase()})`}
                 name="amount"
                 type="number"
                 placeholder="Amount"

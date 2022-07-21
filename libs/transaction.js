@@ -1,6 +1,6 @@
 import { coins, coin } from "@cosmjs/amino";
 const gov_1 = require("cosmjs-types/cosmos/gov/v1beta1/gov")
-import axios from 'axios'
+import axios from "axios"
 
 const getFee = (gas, amount, denom) => {
     return {
@@ -13,7 +13,7 @@ export const getTransactionById = async (id) => {
     try {
         const res = await axios.get(`/api/transaction/${id}`)
         if (!res.data || res.data === null) {
-            throw new Error('This transaction might not be created using this tool!')
+            throw new Error("This transaction might not be created using this tool!")
         }
         return res.data
     }
@@ -26,9 +26,9 @@ export const checkIfHasPendingTx = async(address) => {
     try {
         const res = await axios.get(`/api/multisig/${address}/all-transaction`)
         if (!res.data || res.data === null) {
-            throw new Error('Failed to check transaction!')
+            throw new Error("Failed to check transaction!")
         }
-        return res.data.some((tx) => tx.status === 'PENDING')
+        return res.data.some((tx) => tx.status === "PENDING")
     }
     catch (e) {
         throw e;
@@ -264,7 +264,7 @@ export const createDepositMsg = (
     }
 
     const msg = {
-        typeUrl: '/cosmos.gov.v1beta1.MsgDeposit',
+        typeUrl: "/cosmos.gov.v1beta1.MsgDeposit",
         value: msgDeposit
     }
 

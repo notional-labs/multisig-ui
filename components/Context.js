@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
-import Head from 'next/head';
-import { chainData } from '../data/chainData';
+import { createContext, useEffect, useState } from "react";
+import Head from "next/head";
+import { chainData } from "../data/chainData";
 import { AnimatePresence } from "framer-motion";
 
 export const ChainContext = createContext();
@@ -10,8 +10,8 @@ export const ChainProvider = (props) => {
 
     useEffect(() => {
         (async () => {
-            const index = localStorage.getItem('current')
-            if (index && index !== '') {
+            const index = localStorage.getItem("current")
+            if (index && index !== "") {
                 setChain(chainData[index])
             }
             else {

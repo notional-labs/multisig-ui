@@ -2,26 +2,26 @@ import { motion } from "framer-motion"
 import Button from "../input/Button"
 import { Image } from "antd"
 
-const IntroPage = ({ }) => {
+const IntroPage = () => {
     return (
         <div
             style={{
                 backgroundImage: `url(/images/background.png)`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                minHeight: '100vh',
-                textAlign: 'center',
-                padding: '1em 30em',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                overflowX: 'hidden',
-                overflowY: 'hidden'
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                minHeight: "100vh",
+                textAlign: "center",
+                padding: "1em 30em",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                overflowX: "hidden",
+                overflowY: "hidden"
             }}
         >
             <div
                 style={{
-                    position: 'relative',
+                    position: "relative",
                     zIndex: 1
                 }}
             >
@@ -38,8 +38,9 @@ const IntroPage = ({ }) => {
                     transition={{ duration: .6 }}
                 >
                     <Image
-                        src={'/images/pink-logo.png'}
-                        height={'150px'}
+                        src={"/images/pink-logo.png"}
+                        alt="logo"
+                        height={"150px"}
                         preview={false}
                         style={{
 
@@ -58,14 +59,14 @@ const IntroPage = ({ }) => {
                     exit={{ opacity: 0, x: -60 }}
                     transition={{ duration: .6 }}
                     style={{
-                        color: '#F195C6',
-                        fontSize: '24px',
-                        margin: '20px 0'
+                        color: "#F195C6",
+                        fontSize: "24px",
+                        margin: "20px 0"
                     }}
                 >
                     <text
                         style={{
-                            color: '#F195C6',
+                            color: "#F195C6",
                         }}
                     >
                         Create multisig, sign and broadcast transaction together!
@@ -84,43 +85,42 @@ const IntroPage = ({ }) => {
                         duration: 2
                     }}
                     whileHover={{
-                        color: 'black'
+                        color: "black"
                     }}
                 >
                     <Button
-                        text={'Enter The Tool'}
+                        text={"Enter The Tool"}
                         style={{
-                            fontSize: '1.5rem',
-                            padding: '.25em 2em',
-                            borderRadius: '10px',
-                            backgroundImage: 'linear-gradient(92.29deg, #CCD1FF 0%, #EF96C5 100%)',
-                            fontWeight: 'bold',
-                            color: 'white',
+                            fontSize: "1.5rem",
+                            padding: ".25em 2em",
+                            borderRadius: "10px",
+                            backgroundImage: "linear-gradient(92.29deg, #CCD1FF 0%, #EF96C5 100%)",
+                            fontWeight: "bold",
+                            color: "white",
                             border: 0,
                         }}
-                        type={'link'}
-                        url={'/multisigs'}
-                        className={'gradient-button'}
+                        type={"link"}
+                        url={"/multisigs"}
+                        className={"gradient-button"}
                     />
                 </motion.div>
             </div>
             <Button
-                text={'View in github'}
-                type={'a'}
-                url={'https://github.com/notional-labs/multisig-ui'}
+                text={"View in github"}
+                type={"a"}
+                url={"https://github.com/notional-labs/multisig-ui"}
                 style={{
-                    backgroundColor: 'transparent',
                     border: 0,
-                    backgroundColor: 'black',
-                    color: 'white',
-                    padding: '.5em 1em',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
-                    position: 'absolute',
-                    left: '85%',
-                    top: '90%',
-                    fontStyle: 'italic',
-                    textDecoration: 'underline'
+                    backgroundColor: "black",
+                    color: "white",
+                    padding: ".5em 1em",
+                    borderRadius: "10px",
+                    fontSize: "1rem",
+                    position: "absolute",
+                    left: "85%",
+                    top: "90%",
+                    fontStyle: "italic",
+                    textDecoration: "underline"
                 }}
             />
             <style jsx>{`

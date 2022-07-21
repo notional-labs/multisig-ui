@@ -12,7 +12,7 @@ const RedelegateMsg = ({ tx, style }) => {
                 <div
                     style={style.value}
                 >
-                    {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `} {tx.msgs[0].value.amount.denom.split('u')[1].toUpperCase()}
+                    {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `} {tx.msgs[0].value.amount.denom.split("u")[1].toUpperCase()}
                 </div>
             </div>
             <div

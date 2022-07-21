@@ -6,7 +6,7 @@ import { getAccount, getKey } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
-import { CheckOutlined } from '@ant-design/icons'
+import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
 
 const TransationSign = ({
@@ -22,15 +22,15 @@ const TransationSign = ({
 }) => {
     const [hasSigned, setHasSigned] = useState(false)
     const [account, setAccount] = useState()
-    const [accountError, setAccountError] = useState('')
+    const [accountError, setAccountError] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         try{
             const currentAccount = await getKey(chain.chain_id)
-            const hasSigned = currentSignatures.some(
+            const checkHasSigned = currentSignatures.some(
                 (sig) => sig.address === currentAccount.bech32Address
             );
-            setHasSigned(hasSigned)
+            setHasSigned(checkHasSigned)
             setAccount(currentAccount)
         }
         catch (e) {
@@ -49,25 +49,25 @@ const TransationSign = ({
     useEffect(() => {
         (async () => {
             try {
-                const account = await getKey(chain.chain_id)
-                const hasSigned = currentSignatures.some(
-                    (sig) => sig.address === account.bech32Address
+                const acc = await getKey(chain.chain_id)
+                const checkHasSigned = currentSignatures.some(
+                    (sig) => sig.address === acc.bech32Address
                 );
-                setAccount(account)
-                setHasSigned(hasSigned)
+                setAccount(acc)
+                setHasSigned(checkHasSigned)
             } catch (e) {
                 console.log("enable err: ", e);
-                openNotification('error', 'Failed to get account key')
+                openNotification("error", "Failed to get account key")
             }
         })()
     }, [currentSignatures])
 
     useEffect(() => {
         if (checkAddrInMultisig()) {
-            setAccountError('')
+            setAccountError("")
         }
         else {
-            setAccountError('Your wallet account might be different from one that create the multisig! Make sure to switch to an appropriate account.')
+            setAccountError("Your wallet account might be different from one that create the multisig! Make sure to switch to an appropriate account.")
         }
     }, [account])
 
@@ -79,7 +79,7 @@ const TransationSign = ({
     }
 
     const signTransaction = async () => {
-        openLoadingNotification('open', 'Creating signature')
+        openLoadingNotification("open", "Creating signature")
         try {
             window.keplr.defaultOptions = {
                 sign: {
@@ -95,8 +95,8 @@ const TransationSign = ({
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.accountNumber),
-                sequence: parseInt(signAccount.sequence),
+                accountNumber: parseInt(signAccount.accountNumber, 10),
+                sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
 
@@ -116,7 +116,7 @@ const TransationSign = ({
             );
 
             if (prevSigMatch > -1) {
-                throw new Error('This account has already signed')
+                throw new Error("This account has already signed")
             } else {
                 const signature = {
                     bodyBytes: bases64EncodedBodyBytes,
@@ -132,22 +132,22 @@ const TransationSign = ({
                 addSignature(res.data);
                 setHasSigned(true)
             }
-            openLoadingNotification('close')
-            openNotification('success', 'Sign successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Sign successfully")
         } catch (e) {
             console.log("Error creating signature:", e.message);
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
     return (
         <div
             style={{
-                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                borderRadius: '10px',
-                padding: '2em',
-                marginTop: '30px'
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                borderRadius: "10px",
+                padding: "2em",
+                marginTop: "30px"
             }}
         >
             <h2>
@@ -157,31 +157,31 @@ const TransationSign = ({
                 hasSigned ? (
                     <div
                         style={{
-                            fontWeight: 'bold',
-                            fontWeight: '1rem',
-                            color: '#189A01'
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                            color: "#189A01"
                         }}
                     >
                         <CheckOutlined /> You have signed this transaction !
                     </div>
-                ) : accountError !== '' ? (
+                ) : accountError !== "" ? (
                     <div
                         style={{
-                            color: 'red'
+                            color: "red"
                         }}
                     >
                         {accountError}
                     </div>
                 ) : (
                     <Button
-                        text={'Sign Transation'}
+                        text={"Sign Transation"}
                         style={{
-                            backgroundColor: 'black',
-                            color: 'white',
-                            padding: '1em',
-                            width: '100%',
-                            borderRadius: '10px',
-                            marginTop: '20px',
+                            backgroundColor: "black",
+                            color: "white",
+                            padding: "1em",
+                            width: "100%",
+                            borderRadius: "10px",
+                            marginTop: "20px",
                             border: 0
                         }}
                         clickFunction={signTransaction}

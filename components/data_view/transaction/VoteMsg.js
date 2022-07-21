@@ -1,10 +1,10 @@
 import { Tooltip } from "antd"
 
 const options = {
-    1: 'yes',
-    2: 'no',
-    3: 'no with veto',
-    4: 'abstain'
+    1: "yes",
+    2: "no",
+    3: "no with veto",
+    4: "abstain"
 }
 
 const VoteMsg = ({ tx, style, chain }) => {
@@ -25,6 +25,7 @@ const VoteMsg = ({ tx, style, chain }) => {
                         <a
                             href={`${chain.explorer}proposals/${tx.msgs[0].value.proposalId}`}
                             target="_blank"
+                            rel="noreferrer"
                         >
                             {(tx.msgs[0].value.proposalId)}
                         </a>

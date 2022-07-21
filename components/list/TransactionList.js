@@ -10,7 +10,7 @@ import { Skeleton } from "antd"
 import axios from "axios";
 import { timeStampHandler } from "../../libs/stringConvert";
 import { motion } from "framer-motion"
-import Link from 'next/link'
+import Link from "next/link"
 import TransactionFilterButton from "../input/TransactionFIlterButton";
 import { ShareAltOutlined, LinkOutlined } from "@ant-design/icons";
 import Button from "../input/Button";
@@ -23,13 +23,13 @@ import EmptyPage from "../ulti/EmptyPage";
 const style = {
     actionButton: {
         border: 0,
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
         padding: 5,
-        fontSize: '1rem',
+        fontSize: "1rem",
     },
 }
 
-const TransactionList = ({ }) => {
+const TransactionList = () => {
     const [transactions, setTransactions] = useState([])
     const [filterTransactions, setFilterTransactions] = useState([])
     const [viewTransactions, setViewTransactions] = useState([])
@@ -39,7 +39,7 @@ const TransactionList = ({ }) => {
         limit: 10,
         total: 0,
     })
-    const [filter, setFilter] = useState('')
+    const [filter, setFilter] = useState("")
     const [spin, setSpin] = useState(false)
     const [toggleReload, setToggleReload] = useState(false)
     const { chain, wrapper } = useContext(ChainContext)
@@ -66,23 +66,23 @@ const TransactionList = ({ }) => {
             if (!multisigID) return
             setLoading(true)
             try {
-                const current = localStorage.getItem('current')
+                const current = localStorage.getItem("current")
                 const multisigAccount = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${multisigAccount.prefix}`]
-                if (parseInt(current) !== id) {
+                if (parseInt(current, 10) !== id) {
                     wrapper(id)
-                    localStorage.setItem('current', id)
+                    localStorage.setItem("current", id)
                 }
-                const { data } = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
+                let { data } = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
                 data = data.sort(compare)
                 setTransactions([...data])
-                setFilter('all')
+                setFilter("all")
                 setLoading(false)
                 setSpin(false)
             }
             catch (e) {
                 setSpin(false)
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [multisigID, toggleReload])
@@ -99,7 +99,7 @@ const TransactionList = ({ }) => {
         (async () => {
             setLoading(true)
             try {
-                const filterTxs = filter === 'all' ? filter !== '' && [...transactions] : transactions.filter(tx => tx.status === filter.toUpperCase())
+                const filterTxs = filter === "all" ? filter !== "" && [...transactions] : transactions.filter(tx => tx.status === filter.toUpperCase())
                 setFilterTransactions([...filterTxs])
                 setParams({
                     ...params,
@@ -109,7 +109,7 @@ const TransactionList = ({ }) => {
                 setLoading(false)
             }
             catch (e) {
-                openNotification('error', e.message)
+                openNotification("error", e.message)
             }
         })()
     }, [filter, transactions])
@@ -122,21 +122,21 @@ const TransactionList = ({ }) => {
     const getType = (tx) => {
         const txInfo = JSON.parse(tx.dataJSON)
         const type = txInfo.msgs[0].typeUrl
-        return type.split('Msg')[1]
+        return type.split("Msg")[1]
     }
 
     const removeTransaction = async (id) => {
         try {
-            openLoadingNotification('open', 'Deleting transaction')
+            openLoadingNotification("open", "Deleting transaction")
             await deleteTransaction(id)
-            const filterTransactions = transactions.filter((tx) => tx._id !== id)
-            setTransactions([...filterTransactions])
-            openLoadingNotification('close')
-            openNotification('success', 'Successfully delete transaction')
+            const newFilterTransactions = transactions.filter((tx) => tx._id !== id)
+            setTransactions([...newFilterTransactions])
+            openLoadingNotification("close")
+            openNotification("success", "Successfully delete transaction")
         }
         catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', 'Unsuccessfully delete transaction ' + e.message)
+            openLoadingNotification("close")
+            openNotification("error", "Unsuccessfully delete transaction " + e.message)
         }
     }
 
@@ -148,17 +148,17 @@ const TransactionList = ({ }) => {
             />
             <div
                 style={{
-                    padding: '1em 2em',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'column',
-                    backgroundColor: '#ffffff',
-                    width: '100%',
-                    borderRadius: '0 30px 30px 30px',
-                    position: 'relative',
+                    padding: "1em 2em",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                    backgroundColor: "#ffffff",
+                    width: "100%",
+                    borderRadius: "0 30px 30px 30px",
+                    position: "relative",
                     zIndex: 3,
-                    boxShadow: '0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                    minHeight: '70vh'
+                    boxShadow: "0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                    minHeight: "70vh"
                 }}
             >
                 <div>
@@ -166,7 +166,7 @@ const TransactionList = ({ }) => {
                         components={[
                             <h1
                                 style={{
-                                    textAlign: 'left',
+                                    textAlign: "left",
                                 }}
                             >
                                 Transactions
@@ -180,76 +180,76 @@ const TransactionList = ({ }) => {
                                     </div>
                                 )}
                                 style={{
-                                    position: 'relative',
-                                    top: '5px',
-                                    color: 'white',
-                                    backgroundColor: 'rgb(0, 0, 0, 0.5)',
-                                    borderRadius: '10px',
+                                    position: "relative",
+                                    top: "5px",
+                                    color: "white",
+                                    backgroundColor: "rgb(0, 0, 0, 0.5)",
+                                    borderRadius: "10px",
                                     border: 0,
-                                    height: '40px',
-                                    padding: '0 2em',
+                                    height: "40px",
+                                    padding: "0 2em",
                                 }}
                                 clickFunction={() => {
                                     setToggleReload(!toggleReload)
                                 }}
                             />
                         ]}
-                        justifyContent={'space-between'}
+                        justifyContent={"space-between"}
                     />
                     <table
                         style={{
-                            width: '100%',
-                            borderSpacing: '0 1em',
+                            width: "100%",
+                            borderSpacing: "0 1em",
                         }}
                     >
                         <thead
                             style={{
-                                borderBottom: 'solid 1.5px black',
-                                fontSize: '1.25rem',
+                                borderBottom: "solid 1.5px black",
+                                fontSize: "1.25rem",
                             }}
                         >
                             <tr>
                                 <th
                                     style={{
-                                        width: '20%',
-                                        padding: '.5em',
-                                        textAlign: 'left'
+                                        width: "20%",
+                                        padding: ".5em",
+                                        textAlign: "left"
                                     }}
                                 >
                                     ID
                                 </th>
                                 <th
                                     style={{
-                                        width: '20%',
-                                        padding: '.5em',
-                                        textAlign: 'left'
+                                        width: "20%",
+                                        padding: ".5em",
+                                        textAlign: "left"
                                     }}
                                 >
                                     Type
                                 </th>
                                 <th
                                     style={{
-                                        width: '20%',
-                                        padding: '.5em',
-                                        textAlign: 'left'
+                                        width: "20%",
+                                        padding: ".5em",
+                                        textAlign: "left"
                                     }}
                                 >
                                     Status
                                 </th>
                                 <th
                                     style={{
-                                        width: '20%',
-                                        padding: '.5em',
-                                        textAlign: 'left',
+                                        width: "20%",
+                                        padding: ".5em",
+                                        textAlign: "left",
                                     }}
                                 >
                                     Created At
                                 </th>
                                 <th
                                     style={{
-                                        width: '20%',
-                                        padding: '.5em',
-                                        textAlign: 'right',
+                                        width: "20%",
+                                        padding: ".5em",
+                                        textAlign: "right",
                                     }}
                                 >
                                     Action
@@ -283,9 +283,9 @@ const TransactionList = ({ }) => {
                                             whileHover={{ scale: 1.02 }}
                                             key={index}
                                             style={{
-                                                width: '100%',
-                                                borderBottom: 'solid .25px #d6d6d6',
-                                                marginBottom: '5px'
+                                                width: "100%",
+                                                borderBottom: "solid .25px #d6d6d6",
+                                                marginBottom: "5px"
                                             }}
                                         >
                                             {
@@ -294,9 +294,9 @@ const TransactionList = ({ }) => {
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
                                                             style={{
-                                                                width: '30%',
-                                                                fontSize: '1rem',
-                                                                padding: '1em 0.5em'
+                                                                width: "30%",
+                                                                fontSize: "1rem",
+                                                                padding: "1em 0.5em"
                                                             }}
                                                         >
                                                             <Link
@@ -308,9 +308,9 @@ const TransactionList = ({ }) => {
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
                                                             style={{
-                                                                width: '30%',
-                                                                fontSize: '1rem',
-                                                                padding: '1em 0.5em',
+                                                                width: "30%",
+                                                                fontSize: "1rem",
+                                                                padding: "1em 0.5em",
                                                             }}
                                                         >
                                                             {getType(transaction)}
@@ -318,25 +318,25 @@ const TransactionList = ({ }) => {
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
                                                             style={{
-                                                                width: '20%',
-                                                                padding: '1em 0.5em',
-                                                                fontSize: '1rem',
-                                                                textAlign: 'left'
+                                                                width: "20%",
+                                                                padding: "1em 0.5em",
+                                                                fontSize: "1rem",
+                                                                textAlign: "left"
                                                             }}
                                                         >
                                                             <span
                                                                 style={{
-                                                                    width: '10%',
-                                                                    aspectRatio: '1/1',
-                                                                    backgroundColor: transaction.status === 'PENDING' ? '#D82D2C' : '#189A01',
-                                                                    borderRadius: '50%',
-                                                                    display: 'inline-block',
-                                                                    margin: 'auto 10px'
+                                                                    width: "10%",
+                                                                    aspectRatio: "1/1",
+                                                                    backgroundColor: transaction.status === "PENDING" ? "#D82D2C" : "#189A01",
+                                                                    borderRadius: "50%",
+                                                                    display: "inline-block",
+                                                                    margin: "auto 10px"
                                                                 }}
                                                             />
                                                             <span
                                                                 style={{
-                                                                    margin: 'auto 0'
+                                                                    margin: "auto 0"
                                                                 }}
                                                             >
                                                                 {transaction.status}
@@ -345,27 +345,27 @@ const TransactionList = ({ }) => {
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
                                                             style={{
-                                                                width: '20%',
-                                                                textAlign: 'left',
-                                                                fontSize: '1rem',
-                                                                padding: '1em 0.5em'
+                                                                width: "20%",
+                                                                textAlign: "left",
+                                                                fontSize: "1rem",
+                                                                padding: "1em 0.5em"
                                                             }}
                                                         >
                                                             {timeStampHandler(new Date(transaction.createdOn))}
                                                         </motion.td>
                                                         <td
                                                             style={{
-                                                                width: '20%',
-                                                                textAlign: 'center',
-                                                                fontSize: '1rem',
-                                                                padding: '1em 0.5em'
+                                                                width: "20%",
+                                                                textAlign: "center",
+                                                                fontSize: "1rem",
+                                                                padding: "1em 0.5em"
                                                             }}
                                                         >
-                                                            <Tooltip placement="top" title='Share transaction'>
+                                                            <Tooltip placement="top" title="Share transaction">
                                                                 <CopyToClipboard
                                                                     text={`${process.env.NEXT_PUBLIC_HOST}/multisig/${multisigID}/transaction/${transaction._id}`}
                                                                     onCopy={() => {
-                                                                        openNotification('success', 'Copy to clipboard !')
+                                                                        openNotification("success", "Copy to clipboard !")
                                                                     }}
                                                                     style={style.actionButton}
                                                                 >
@@ -376,11 +376,12 @@ const TransactionList = ({ }) => {
                                                                 transaction.txHash && (
                                                                     <Tooltip
                                                                         placement="top"
-                                                                        title='View in block explorer'
+                                                                        title="View in block explorer"
                                                                     >
                                                                         <a
                                                                             href={`${chain.explorer}txs/${transaction.txHash}`}
                                                                             target="_blank"
+                                                                            rel="noreferrer"
                                                                             style={style.actionButton}
                                                                         >
                                                                             <LinkOutlined />
@@ -392,7 +393,7 @@ const TransactionList = ({ }) => {
                                                                 !transaction.txHash && (
                                                                     <Tooltip
                                                                         placement="top"
-                                                                        title='Delete'
+                                                                        title="Delete"
                                                                     >
                                                                         <button
                                                                             onClick={(async () => await removeTransaction(transaction._id))}
@@ -413,32 +414,32 @@ const TransactionList = ({ }) => {
                                     <>
                                         <td
                                             style={{
-                                                width: '30%',
-                                                paddingTop: '1em'
+                                                width: "30%",
+                                                paddingTop: "1em"
                                             }}
                                         >
                                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
                                         </td>
                                         <td
                                             style={{
-                                                width: '30%',
-                                                paddingTop: '1em'
+                                                width: "30%",
+                                                paddingTop: "1em"
                                             }}
                                         >
                                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
                                         </td>
                                         <td
                                             style={{
-                                                width: '20%',
-                                                paddingTop: '1em'
+                                                width: "20%",
+                                                paddingTop: "1em"
                                             }}
                                         >
                                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />
                                         </td>
                                         <td
                                             style={{
-                                                width: '20%',
-                                                paddingTop: '1em'
+                                                width: "20%",
+                                                paddingTop: "1em"
                                             }}
                                         >
                                             <Skeleton active rows={1} paragraph={{ rows: 0 }} />

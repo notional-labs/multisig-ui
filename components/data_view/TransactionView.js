@@ -18,9 +18,9 @@ import BroadcastButton from "../input/BroadcastButton";
 import HashView from "./HashView";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx"
 
-const TransactionView = ({ }) => {
+const TransactionView = () => {
     const [currentSignatures, setCurrentSignatures] = useState([]);
-    const [transactionHash, setTransactionHash] = useState('');
+    const [transactionHash, setTransactionHash] = useState("");
     const [txInfo, setTxInfo] = useState(null)
     const [multisig, setMultisig] = useState(null)
     const { chain, wrapper } = useContext(ChainContext)
@@ -37,7 +37,7 @@ const TransactionView = ({ }) => {
                 setCurrentSignatures([...transaction.signatures.data])
             }
             catch (e) {
-                openNotification('error', 'fail to retrieve transaction from database ' + e.message)
+                openNotification("error", "fail to retrieve transaction from database " + e.message)
             }
         })()
     }, [transactionID])
@@ -46,17 +46,17 @@ const TransactionView = ({ }) => {
         (async () => {
             try {
                 if (!multisigID) return
-                const multisig = await getMultisigFromAddress(multisigID)
-                const id = prefixToId[`${multisig.prefix}`]
-                const current = localStorage.getItem('current')
+                const multisigInfo = await getMultisigFromAddress(multisigID)
+                const id = prefixToId[`${multisigInfo.prefix}`]
+                const current = localStorage.getItem("current")
                 if (!current || current !== id) {
                     wrapper(id)
-                    localStorage.setItem('current', id)
+                    localStorage.setItem("current", id)
                 }
-                multisig && setMultisig(multisig)
+                multisigInfo && setMultisig(multisigInfo)
             }
             catch (e) {
-                openNotification('error', 'fail to retrieve multisig from database ' + e.message)
+                openNotification("error", "fail to retrieve multisig from database " + e.message)
             }
         })()
     }, [multisigID])
@@ -84,7 +84,7 @@ const TransactionView = ({ }) => {
     }
 
     const broadcastTx = async () => {
-        openLoadingNotification('open', 'Broadcasting transaction')
+        openLoadingNotification("open", "Broadcasting transaction")
         try {
             const signatures = new Map();
             currentSignatures.forEach((signature) => {
@@ -110,11 +110,11 @@ const TransactionView = ({ }) => {
                 multisigID: multisigID
             });
             setTransactionHash(result.transactionHash);
-            openLoadingNotification('close')
-            openNotification('success', 'Broadcast successfully')
+            openLoadingNotification("close")
+            openNotification("success", "Broadcast successfully")
         } catch (e) {
-            openLoadingNotification('close')
-            openNotification('error', e.message)
+            openLoadingNotification("close")
+            openNotification("error", e.message)
         }
     }
 
@@ -122,22 +122,22 @@ const TransactionView = ({ }) => {
         <div
             style={{
 
-                backgroundColor: '#ffffff',
-                boxShadow: ' 0px 0px 20px 2px rgba(0, 0, 0, 0.25)',
-                padding: '2em 3em',
-                borderRadius: '30px',
-                position: 'relative',
+                backgroundColor: "#ffffff",
+                boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                padding: "2em 3em",
+                borderRadius: "30px",
+                position: "relative",
                 zIndex: 1,
-                width: '100%'
+                width: "100%"
             }}
         >
             <h1
                 style={{
-                    textAlign: 'center'
+                    textAlign: "center"
                 }}
             >
                 {
-                    transactionHash ? 'Completed Transaction' : 'In Progress Transaction'
+                    transactionHash ? "Completed Transaction" : "In Progress Transaction"
                 }
             </h1>
             {
@@ -150,9 +150,9 @@ const TransactionView = ({ }) => {
                 ) : (
                     <div
                         style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            marginTop: '20px'
+                            width: "100%",
+                            textAlign: "center",
+                            marginTop: "20px"
                         }}
                     >
                         <Spin size="large" />
@@ -172,12 +172,12 @@ const TransactionView = ({ }) => {
                 ) : (
                     <div
                         style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            marginTop: '20px',
-                            padding: '1em 1.5em',
-                            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                            borderRadius: '10px'
+                            width: "100%",
+                            textAlign: "center",
+                            marginTop: "20px",
+                            padding: "1em 1.5em",
+                            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                            borderRadius: "10px"
                         }}
                     >
                         <Spin size="large" />
@@ -195,12 +195,12 @@ const TransactionView = ({ }) => {
                 ) : (
                     <div
                         style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            marginTop: '20px',
-                            padding: '1em 1.5em',
-                            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-                            borderRadius: '10px'
+                            width: "100%",
+                            textAlign: "center",
+                            marginTop: "20px",
+                            padding: "1em 1.5em",
+                            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                            borderRadius: "10px"
                         }}
                     >
                         <Spin size="large" />
@@ -208,7 +208,10 @@ const TransactionView = ({ }) => {
                 )
             }
             {
-                !transactionHash && multisig && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold) && (
+                !transactionHash 
+                && multisig 
+                && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold, 10) 
+                && (
                     <BroadcastButton
                         broadcastTx={broadcastTx}
                         multisig={multisig}
