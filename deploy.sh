@@ -8,5 +8,10 @@ if [ -f "../env-multisig" ]; then
 fi
 npm install
 npm run build
-systemctl restart multisig.service
-systemctl is-active --quiet multisig.service && echo "Multisg web server restarted successfully." || echo "Multisig web server failed to restart."
+if [ $? -eq 0 ]; then
+    systemctl restart multisig.service
+    systemctl is-active --quiet multisig.service && echo "Multisg web server restarted successfully." || echo "Multisig web server failed to restart."
+else
+    echo "npm run build failed with error. Stopped restarting the web server."
+    exit 1
+fi
