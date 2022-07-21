@@ -140,7 +140,7 @@ const SendMsgForm = ({ address, chain, router, checked, setChecked }) => {
                     handleKeyGroupChange(e);
                 }}
                 value={txBody.amount}
-                label={`Amount (${chain.denom.split("u")[1].toUpperCase()})`}
+                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
                 name="amount"
                 type="number"
                 placeholder="Amount"

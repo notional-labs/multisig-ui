@@ -23,7 +23,7 @@ const VoteMsg = ({ tx, style, chain }) => {
                         style={style.value}
                     >
                         <a
-                            href={`${chain.explorer}proposals/${tx.msgs[0].value.proposalId}`}
+                            href={`${chain.govExplorer}${tx.msgs[0].value.proposalId}`}
                             target="_blank"
                             rel="noreferrer"
                         >

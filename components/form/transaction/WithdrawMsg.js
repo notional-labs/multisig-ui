@@ -6,6 +6,7 @@ import { openLoadingNotification, openNotification } from "../../ulti/Notificati
 import ValidatorRow from "../../data_view/ValidatorRow"
 import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
+import { getValueFromDenom } from "../../../libs/stringConvert"
 
 const style = {
     input: {
@@ -194,7 +195,7 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                                                         }}
                                                     >
                                                         <a
-                                                            href={`${chain.explorer}validators/${reward.validator_address}`}
+                                                            href={`${chain.valExplorer}${reward.validator_address}`}
                                                             target={"_blank"}
                                                             rel="noreferrer"
                                                         >
@@ -210,7 +211,8 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                                                             paddingTop: "1em"
                                                         }}
                                                     >
-                                                        {(parseFloat(reward.reward[0].amount) / 1000000).toFixed(2)} {reward.reward[0].denom.split("u")[1].toUpperCase()}
+                                                        {getValueFromDenom(reward.reward[0].denom, reward.reward[0].amount)} 
+                                                        {reward.reward[0].denom.substring(1).toUpperCase()}
                                                     </td>
                                                 </tr>
                                             )

@@ -1,6 +1,7 @@
 import { StargateClient } from "@cosmjs/stargate";
 import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
+import { chainObj } from "../data/experimentalChain";
 
 export const getKeplrAccount = async (chainId) => {
     try {
@@ -8,7 +9,6 @@ export const getKeplrAccount = async (chainId) => {
             alert("Keplr Wallet not detected, please install extension");
             throw new Error("Keplr not found")
         } else {
-            // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
             await window.keplr.enable(chainId)
             const offlineSigner = window.keplr.getOfflineSigner(chainId);
             const accounts = await offlineSigner.getAccounts();
@@ -30,14 +30,19 @@ export const getKey = async (chainId) => {
             alert("Keplr Wallet not detected, please install extension");
             throw new Error("Keplr not found")
         } else {
-            // await window.keplr.experimentalSuggestChain(anoneTestnetChain)
-            await window.keplr.enable(chainId)
+            try {
+                await window.keplr.enable(chainId)
+            }
+            catch (e) {
+                const experimentalChain = chainObj[chainId]
+                if (!experimentalChain) throw e
+                await window.keplr.experimentalSuggestChain(experimentalChain)
+            }
             const account = await window.keplr.getKey(chainId);
             return account
         }
     }
     catch (e) {
-        alert(e.message)
         throw e
     }
 }

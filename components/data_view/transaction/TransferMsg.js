@@ -1,3 +1,5 @@
+import { getValueFromDenom } from "../../../libs/stringConvert"
+
 const TransferMsg = ({ tx, style }) => {
     return (
         <>
@@ -12,7 +14,8 @@ const TransferMsg = ({ tx, style }) => {
                 <div
                     style={style.value}
                 >
-                    {`${(tx.msgs[0].value.amount[0].amount / 1000000).toFixed(3)} `} {tx.msgs[0].value.amount[0].denom.split("u")[1].toUpperCase()}
+                    {`${getValueFromDenom(tx.msgs[0].value.amount[0].denom, tx.msgs[0].value.amount[0].amount)} `} 
+                    {tx.msgs[0].value.amount[0].denom.substring(1).toUpperCase()}
                 </div>
             </div>
             <div
