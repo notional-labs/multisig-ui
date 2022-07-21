@@ -27,5 +27,5 @@ jobs:
         with:
           node-version: '16'
       - run: npm install
-      - run: cp .env.local
+      - run: cp .env.sample .env.local
       - run: npm run build
