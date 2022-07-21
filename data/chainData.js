@@ -137,15 +137,15 @@ export const prefixToId = {
     "osmo": 0,
     "juno": 1,
     "cosmos": 2,
-//     "akash": 3,
-//     "emoney": 4,
-//     "sif": 5,
-//     "stars": 6,
-//     "kava": 7,
-//     "regen": 8,
-//     "omniflix": 9,
-//     "cheqd": 10,
-//     "bcna": 11
+    "akash": 3,
+    "emoney": 4,
+    "sif": 5,
+    "stars": 6,
+    "kava": 7,
+    "regen": 8,
+    "omniflix": 9,
+    "cheqd": 10,
+    "bcna": 11
 }
 
 
@@ -153,13 +153,13 @@ export const chainIdToId = {
     0: "osmosis-1",
     1: "juno-1",
     2: "cosmoshub-4",
-//     3: "akashnet-2",
-//     4: "emoney-3",
-//     5: "sifchain-1",
-//     6: "stargaze-1",
-//     7: "kava_2222-10",
-//     8: "regen-1",
-//     9: "omniflixhub-1",
-//     10: "cheqd-mainnet-1",
-//     11: "bitcanna-1"
+    3: "akashnet-2",
+    4: "emoney-3",
+    5: "sifchain-1",
+    6: "stargaze-1",
+    7: "kava_2222-10",
+    8: "regen-1",
+    9: "omniflixhub-1",
+    10: "cheqd-mainnet-1",
+    11: "bitcanna-1"
 }
