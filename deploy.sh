@@ -5,4 +5,4 @@ git pull
 cp ../env-multisig .env.local
 npm install
 npm run build
-npm run start
+systemctl restart multisig.service
