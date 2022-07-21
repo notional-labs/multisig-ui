@@ -6,7 +6,7 @@ if [ -f "../env-multisig" ]; then
     echo "Multisig env file exists."
     cp ../env-multisig .env.local
 fi
-which npm
 npm install
 npm run build
 systemctl restart multisig.service
+systemctl is-active --quiet multisig.service && echo "Multisg web server restarted successfully." || echo "Multisig web server failed to restart."
