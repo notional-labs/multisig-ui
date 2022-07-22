@@ -3,6 +3,13 @@ import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 import { chainObj } from "../data/experimentalChain";
 
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
+    'Access-Control-Allow-Methods': '*',
+    "Content-Type": "application/json"
+};
+
 export const getKeplrAccount = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
@@ -97,6 +104,27 @@ export const getAccount = async (rpc, address) => {
     }
     catch (e) {
         throw new Error(e.message)
+    }
+}
+
+export const getPubkeyByAPI = async (api, address) => {
+    try {
+        const { data } = await axios.get(`${api}cosmos/auth/v1beta1/accounts/${address}`)
+        const accountOnChain = data.account
+        if (!accountOnChain || !accountOnChain.pub_key) {
+            throw new Error(
+                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+            );
+        }
+        return accountOnChain.pub_key.key;
+    }
+    catch (e) {
+        if (e.code === "ERR_BAD_REQUEST") {
+            throw new Error(
+                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+            )
+        }
+        throw e
     }
 }
 
