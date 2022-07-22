@@ -50,9 +50,9 @@ const AccountInfo = ({
         (async () => {
             try {
                 setLoading(true)
-                const signAccount = await getAccount(chain.rpc, address)
+                const signAccount = await getSequence(chain.api, address)
                 setAccount({
-                    accountNumber: `${signAccount.accountNumber}`,
+                    accountNumber: `${signAccount.account_number}`,
                     sequence: `${signAccount.sequence}`
                 })
                 setLoading(false)

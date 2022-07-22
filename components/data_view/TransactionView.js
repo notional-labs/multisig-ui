@@ -12,7 +12,7 @@ import { prefixToId } from "../../data/chainData";
 import TransationSign from "../form/TransactionSign";
 import { decode } from "uint8-to-base64";
 import { StargateClient, makeMultisignedTx } from "@cosmjs/stargate";
-import { getAccount } from "../../libs/keplrClient";
+import { getAccount, getSequence } from "../../libs/keplrClient";
 import axios from "axios";
 import BroadcastButton from "../input/BroadcastButton";
 import HashView from "./HashView";
@@ -93,7 +93,7 @@ const TransactionView = () => {
 
             const bodyBytes = decode(currentSignatures[0].bodyBytes);
             const pubkey = JSON.parse(multisig.pubkeyJSON)
-            const account = await getAccount(chain.rpc, multisigID)
+            const account = await getSequence(chain.api, multisigID)
             const signedTx = makeMultisignedTx(
                 pubkey,
                 account.sequence,
