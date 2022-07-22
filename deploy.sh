@@ -10,7 +10,7 @@ npm install
 npm run build
 if [ $? -eq 0 ]; then
     systemctl restart multisig.service
-    systemctl is-active --quiet multisig.service && echo "Multisg web server restarted successfully." || echo "Multisig web server failed to restart."
+    systemctl is-active --quiet multisig.service && echo "Multisg web server restarted successfully." || (echo "Multisig web server failed to restart." && exit 1)
 else
     echo "npm run build failed with error. Stopped restarting the web server."
     exit 1
