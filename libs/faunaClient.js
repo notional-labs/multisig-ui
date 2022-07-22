@@ -202,9 +202,9 @@ export const createSignature = async (signature, transactionId) => {
             _id
             address
             signature
-            address
             accountNumber
             sequence
+            bodyBytes
           }
         }
       `,
@@ -230,7 +230,7 @@ export const updateSignature = async (signature, transactionId) => {
               _id
               address
               signature
-              address
+              bodyBytes
               accountNumber
               sequence
             }
