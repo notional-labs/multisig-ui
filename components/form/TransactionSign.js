@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
 import { SigningStargateClient, } from "@cosmjs/stargate";
-import { getAccount, getKey } from "../../libs/keplrClient"
+import { getAccount, getKey, getSequence } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
@@ -91,11 +91,11 @@ const TransationSign = ({
             const offlineSigner = window.getOfflineSigner(
                 chain.chain_id
             );
-            const signAccount = await getAccount(chain.rpc, multisigID)
+            const signAccount = await getSequence(chain.api, multisigID)
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.accountNumber, 10),
+                accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
@@ -122,7 +122,7 @@ const TransationSign = ({
                     bodyBytes: bases64EncodedBodyBytes,
                     signature: bases64EncodedSignature,
                     address: account.bech32Address,
-                    accountNumber: signAccount.accountNumber,
+                    accountNumber: signAccount.account_number,
                     sequence: signAccount.sequence
                 };
                 const res = await axios.post(

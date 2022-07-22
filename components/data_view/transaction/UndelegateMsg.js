@@ -1,3 +1,5 @@
+import { getValueFromDenom } from "../../../libs/stringConvert"
+
 const UndelegateMsg = ({ tx, style }) => {
     return (
         <>
@@ -12,8 +14,8 @@ const UndelegateMsg = ({ tx, style }) => {
                 <div
                     style={style.value}
                 >
-                    {`${(tx.msgs[0].value.amount.amount / 1000000).toFixed(3)} `}
-                    {tx.msgs[0].value.amount.denom.split("u")[1].toUpperCase()}
+                    {`${getValueFromDenom(tx.msgs[0].value.amount.denom, tx.msgs[0].value.amount.amount)} `}
+                    {tx.msgs[0].value.amount.denom.substring(1).toUpperCase()}
                 </div>
             </div>
             <div

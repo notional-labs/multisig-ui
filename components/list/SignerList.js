@@ -51,11 +51,11 @@ const SignerList = ({
             const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chain.chain_id
             );
-            const signAccount = await getAccount(chain.rpc, address)
+            const signAccount = await getSequence(chain.api, address)
 
             const signingClient = await SigningStargateClient.offline(offlineSigner);
             const signerData = {
-                accountNumber: parseInt(signAccount.accountNumber, 10),
+                accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
@@ -75,7 +75,7 @@ const SignerList = ({
                 id: id,
                 bodyBytes: bases64EncodedBodyBytes,
                 signature: bases64EncodedSignature,
-                accountNumber: signAccount.accountNumber,
+                accountNumber: signAccount.account_number,
                 sequence: signAccount.sequence,
                 address: walletAccount.bech32Address,
             };

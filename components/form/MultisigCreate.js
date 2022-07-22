@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import Button from "../input/Button"
 import Input from "../input/Input"
 import { checkAddress } from "../../libs/checkTool"
-import { getPubkey } from "../../libs/keplrClient"
+import { getPubkey, getPubkeyByAPI } from "../../libs/keplrClient"
 import { ChainContext } from "../Context"
 import FlexRow from "../flex_box/FlexRow"
 import { InputNumber } from "antd"
@@ -69,7 +69,7 @@ const MultisigCreate = () => {
                 if (checkDuplicate(address, index)) {
                     throw new Error("Duplicate address")
                 }
-                const pubkey = await getPubkey(chain.rpc, address)
+                const pubkey = await getPubkeyByAPI(chain.api, address)
                 const newPubkeys = [...pubkeys]
                 newPubkeys[index].pubkey = pubkey;
                 newPubkeys[index].error = "";

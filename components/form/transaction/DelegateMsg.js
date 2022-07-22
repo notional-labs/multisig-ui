@@ -6,6 +6,7 @@ import { checkIfHasPendingTx, createDelegateMsg } from "../../../libs/transactio
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import axios from "axios"
 import WarningModal from "../../ulti/WarningModal"
+import { getValueFromDenom } from "../../../libs/stringConvert"
 
 const style = {
     input: {
@@ -170,7 +171,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                     handleKeyGroupChange(e);
                 }}
                 value={txBody.amount}
-                label={`Amount (${chain.denom.split("u")[1].toUpperCase()})`}
+                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
                 name="amount"
                 type="number"
                 placeholder="Amount"

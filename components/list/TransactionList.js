@@ -379,7 +379,7 @@ const TransactionList = () => {
                                                                         title="View in block explorer"
                                                                     >
                                                                         <a
-                                                                            href={`${chain.explorer}txs/${transaction.txHash}`}
+                                                                            href={`${chain.txExplorer}${transaction.txHash}`}
                                                                             target="_blank"
                                                                             rel="noreferrer"
                                                                             style={style.actionButton}

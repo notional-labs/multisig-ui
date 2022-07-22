@@ -8,11 +8,16 @@ const Account = ({ chainId, chainName }) => {
     const [account, setAccount] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
-        const keplrAccount = await getAccount(chainId)
-        const currentAccount = localStorage.getItem("account")
-        if (currentAccount && currentAccount !== "") {
-            localStorage.setItem("account", JSON.stringify(keplrAccount))
-            setAccount(JSON.stringify(keplrAccount))
+        try {
+            const keplrAccount = await getAccount(chainId)
+            const currentAccount = localStorage.getItem("account")
+            if (currentAccount && currentAccount !== "") {
+                localStorage.setItem("account", JSON.stringify(keplrAccount))
+                setAccount(JSON.stringify(keplrAccount))
+            }
+        }
+        catch (e) {
+            openNotification('error', e.message)
         }
     }, []);
 
@@ -35,7 +40,7 @@ const Account = ({ chainId, chainName }) => {
                 }
             }
             catch (e) {
-                alert(e.message)
+                openNotification('error', e.message)
             }
         })()
     }, [])

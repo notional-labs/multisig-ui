@@ -4,7 +4,7 @@ import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"
 import { getKey } from "../../libs/keplrClient"
 import ButtonList from "../input/ButtonList"
-import { chainIdToId } from "../../data/chainData"
+import { idToChainId } from "../../data/chainData"
 import { motion } from "framer-motion"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
@@ -61,7 +61,7 @@ const MultisigList = () => {
         try {
             setLoading(true)
             const currentId = localStorage.getItem("current")
-            const chainId = chainIdToId[currentId]
+            const chainId = idToChainId[currentId]
             const account = await getKey(chainId)
             const address = account.bech32Address
             const res = await getAllMultisigOfAddress(address)

@@ -94,7 +94,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                                 style={style.value}
                             >
                                 <a
-                                    href={`${chain.explorer}txs/${txHash}`}
+                                    href={`${chain.txExplorer}${txHash}`}
                                     target="_blank"
                                     rel="noreferrer"
                                 >

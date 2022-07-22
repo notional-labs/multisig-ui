@@ -274,7 +274,7 @@ const RedelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                     marginBottom: 0
                 }}
             >
-                {`Delegation amount (${chain.denom.split("u")[1].toUpperCase()})`}
+                {`Delegation amount (${chain.denom.substring(1).toUpperCase()})`}
             </h4>
             <div
                 style={{
@@ -293,7 +293,7 @@ const RedelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                     handleKeyGroupChange(e);
                 }}
                 value={txBody.amount}
-                label={`Amount (${chain.denom.split("u")[1].toUpperCase()})`}
+                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
                 name="amount"
                 type="number"
                 placeholder="Amount"
