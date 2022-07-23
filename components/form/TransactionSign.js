@@ -88,7 +88,7 @@ const TransationSign = ({
                     disableBalanceCheck: true,
                 },
             };
-            const offlineSigner = window.getOfflineSigner(
+            const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chain.chain_id
             );
             const signAccount = await getSequence(chain.api, multisigID)
