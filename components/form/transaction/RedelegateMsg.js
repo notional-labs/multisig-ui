@@ -6,6 +6,7 @@ import { createRedelegateMsg, checkIfHasPendingTx } from "../../../libs/transact
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
 import WarningModal from "../../ulti/WarningModal"
+import { convertValueFromDenom } from "../../../libs/stringConvert"
 import axios from "axios"
 
 const style = {
@@ -84,7 +85,7 @@ const RedelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                 address,
                 txBody.validatorSrc,
                 txBody.validatorDest,
-                txBody.amount * 1000000,
+                convertValueFromDenom(chain.base_denom, txBody.amount),
                 txBody.gas,
                 chain.denom,
                 txBody.memo,

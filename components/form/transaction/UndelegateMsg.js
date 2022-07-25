@@ -6,6 +6,7 @@ import { createUndelegateMsg, checkIfHasPendingTx } from "../../../libs/transact
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
 import WarningModal from "../../ulti/WarningModal"
+import { convertValueFromDenom } from "../../../libs/stringConvert"
 import axios from "axios"
 
 const style = {
@@ -77,7 +78,7 @@ const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
             const tx = createUndelegateMsg(
                 address,
                 txBody.validator,
-                txBody.amount * 1000000,
+                convertValueFromDenom(chain.base_denom, txBody.amount),
                 txBody.gas,
                 chain.denom,
                 txBody.memo,

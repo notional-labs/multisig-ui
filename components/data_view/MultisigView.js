@@ -249,34 +249,12 @@ const MultisigView = () => {
                                         </tr>
                                     ) : holding.map((balance, index) => {
                                         return (
-                                            <tr
-                                                key={index}
-                                                style={{
-                                                    borderBottom: "solid .25px #d6d6d6",
-                                                }}
-                                            >
-                                                <td
-                                                    style={{
-                                                        width: "50%",
-                                                        padding: "1em 0"
-                                                    }}
-                                                >
-                                                    <AssetRow
-                                                        chain={chain}
-                                                        ibcDenom={balance.denom}
-                                                    />
-                                                </td>
-                                                <td
-                                                    style={{
-                                                        width: "20%",
-                                                        padding: "1em 0",
-                                                    }}
-                                                >
-                                                    {
-                                                        (parseInt(balance.amount, 10) / 1000000).toFixed(6)
-                                                    }
-                                                </td>
-                                            </tr>
+                                            <AssetRow
+                                                index={index}
+                                                chain={chain}
+                                                ibcDenom={balance.denom}
+                                                balance={balance}
+                                            />
                                         )
                                     }) : (
                                         <>

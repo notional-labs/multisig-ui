@@ -4,6 +4,7 @@ import { isValidAddress } from "../../../libs/checkTool";
 import axios from "axios"
 import { openLoadingNotification, openNotification } from "../../ulti/Notification";
 import { createSendMsg, checkIfHasPendingTx } from "../../../libs/transaction";
+import { convertValueFromDenom } from "../../../libs/stringConvert";
 import WarningModal from "../../ulti/WarningModal";
 import ShareForm from "./ShareForm";
 
@@ -52,7 +53,7 @@ const SendMsgForm = ({ address, chain, router, checked, setChecked }) => {
             const tx = createSendMsg(
                 address,
                 txBody.toAddress,
-                txBody.amount * 1000000,
+                convertValueFromDenom(chain.base_denom, txBody.amount),
                 txBody.gas,
                 chain.denom,
                 txBody.memo,

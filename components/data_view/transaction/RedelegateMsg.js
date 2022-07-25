@@ -1,4 +1,4 @@
-import { getValueFromDenom } from "../../../libs/stringConvert"
+import { getValueFromDenom, getDisplayDenom } from "../../../libs/stringConvert"
 
 const RedelegateMsg = ({ tx, style }) => {
     return (
@@ -15,7 +15,7 @@ const RedelegateMsg = ({ tx, style }) => {
                     style={style.value}
                 >
                     {`${getValueFromDenom(tx.msgs[0].value.amount.denom, tx.msgs[0].value.amount.amount)} `} 
-                    {tx.msgs[0].value.amount.denom.substring(1).toUpperCase()}
+                    {getDisplayDenom(tx.msgs[0].value.amount.denom).toUpperCase()}
                 </div>
             </div>
             <div
