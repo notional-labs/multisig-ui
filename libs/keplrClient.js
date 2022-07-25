@@ -3,13 +3,6 @@ import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 import { chainObj } from "../data/experimentalChain";
 
-const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
-    'Access-Control-Allow-Methods': '*',
-    "Content-Type": "application/json"
-};
-
 export const getKeplrAccount = async (chainId) => {
     try {
         if (!window.getOfflineSigner || !window.keplr) {
@@ -73,9 +66,9 @@ export const getBalance = async (rpc, address) => {
 }
 
 export const getBalances = async (api, address) => {
-    const { data } = await axios.get(`${api}cosmos/bank/v1beta1/balances/${address}`)
+    const { data } = await axios.get(`${api}cosmos/bank/v1beta1/balances/osmo105rfyahwj8wu2hwz84l7tlpz2ujxul33uj75we`)
     const balances = data.balances ? data.balances : []
-    return balances
+    return balances.reverse()
 }
 
 export const getAccount = async (rpc, address) => {
@@ -85,7 +78,8 @@ export const getAccount = async (rpc, address) => {
 
         if (!account) {
             throw new Error(
-                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+                + "\n" + "(If it is newly made address please make sure to send some token to this address )"
             );
         }
         else if (!account.pubkey) {
@@ -119,7 +113,7 @@ export const getPubkeyByAPI = async (api, address) => {
         return accountOnChain.pub_key.key;
     }
     catch (e) {
-        if (e.code === "ERR_BAD_REQUEST") {
+        if (e.code === "ERR_BAD_REQUEST" || e.code === "ERR_NETWORK") {
             throw new Error(
                 "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
             )
@@ -138,7 +132,8 @@ export const getSequence = async (api, address) => {
 
         if (!data.account) {
             throw new Error(
-                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain. (If it is newly made address please make sure to send some token to this address )"
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+                + "\n" + "(If it is newly made address please make sure to send some token to this address )"
             );
         }
         return data.account;

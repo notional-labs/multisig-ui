@@ -77,6 +77,16 @@ export const getTx = async (rpc, txHash) => {
     }
 }
 
+export const getTxByRest = async (api, txHash) => {
+    try {
+        const { data } = await axios.get(`${api}cosmos/tx/v1beta1/txs/${txHash}`)
+        return data
+    }
+    catch (e) {
+        throw e
+    }
+}
+
 export const getProposals = async (api) => {
     try {
         const res = await axios.get(`${api}cosmos/gov/v1beta1/proposals?proposal_status=2`)

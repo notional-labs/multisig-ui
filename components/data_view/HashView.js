@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getTx } from "../../libs/queryClients"
+import { getTx, getTxByRest } from "../../libs/queryClients"
 import { CopyOutlined } from "@ant-design/icons"
 import FlexRow from "../flex_box/FlexRow";
 import Button from "../input/Button";
@@ -15,7 +15,7 @@ const HashView = ({ chain, txHash }) => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await getTx(chain.rpc, txHash)
+                const res = await getTxByRest(chain.api, txHash)
                 res && setTx(res.tx)
             }
             catch (e) {

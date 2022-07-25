@@ -6,7 +6,7 @@ import { checkIfHasPendingTx, createDelegateMsg } from "../../../libs/transactio
 import { openLoadingNotification, openNotification } from "../../ulti/Notification"
 import axios from "axios"
 import WarningModal from "../../ulti/WarningModal"
-import { getValueFromDenom } from "../../../libs/stringConvert"
+import { convertValueFromDenom } from "../../../libs/stringConvert"
 
 const style = {
     input: {
@@ -65,7 +65,7 @@ const DelegateMsg = ({ chain, router, address, checked, setChecked }) => {
             const tx = createDelegateMsg(
                 address,
                 txBody.toAddress,
-                txBody.amount * 1000000,
+                convertValueFromDenom(chain.base_denom, txBody.amount),
                 txBody.gas,
                 chain.denom,
                 txBody.memo,

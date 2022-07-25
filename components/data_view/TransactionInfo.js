@@ -128,7 +128,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 <label
                     style={style.label}
                 >
-                    Gas:
+                    Gas (wanted):
                 </label>
                 <div
                     style={style.value}
