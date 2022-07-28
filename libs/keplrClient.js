@@ -66,7 +66,7 @@ export const getBalance = async (rpc, address) => {
 }
 
 export const getBalances = async (api, address) => {
-    const { data } = await axios.get(`${api}cosmos/bank/v1beta1/balances/osmo105rfyahwj8wu2hwz84l7tlpz2ujxul33uj75we`)
+    const { data } = await axios.get(`${api}cosmos/bank/v1beta1/balances/${address}`)
     const balances = data.balances ? data.balances : []
     return balances.reverse()
 }

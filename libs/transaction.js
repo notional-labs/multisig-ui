@@ -1,6 +1,18 @@
 import { coins, coin } from "@cosmjs/amino";
 const gov_1 = require("cosmjs-types/cosmos/gov/v1beta1/gov")
 import axios from "axios"
+import { osmosis } from "osmojs";
+
+const {
+    joinPool,
+    exitPool,
+    exitSwapExternAmountOut,
+    exitSwapShareAmountIn,
+    joinSwapExternAmountIn,
+    joinSwapShareAmountOut,
+    swapExactAmountIn,
+    swapExactAmountOut
+} = osmosis.gamm.v1beta1.MessageComposer.withTypeUrl;
 
 const getFee = (gas, amount, denom) => {
     return {

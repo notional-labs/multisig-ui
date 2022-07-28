@@ -9,7 +9,7 @@ export const chainData = [
         name: "osmosis",
         prefix: "osmo",
         color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
-        rpc: "https://rpc.osmosis.zone/",
+        rpc: "https://rpc-osmosis-ia.notional.ventures/",
         api: "https://osmosis-api.polkachu.com/",
         explorer: "https://www.mintscan.io/osmosis/",
         txExplorer: "https://www.mintscan.io/osmosis/txs/",
