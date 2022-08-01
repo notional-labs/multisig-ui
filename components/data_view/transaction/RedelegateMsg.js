@@ -1,50 +1,100 @@
 import { getValueFromDenom, getDisplayDenom } from "../../../libs/stringConvert"
+import { motion } from "framer-motion"
 
-const RedelegateMsg = ({ tx, style }) => {
+const style = {
+    label: {
+        width: "20%",
+        textAlign: "center",
+        fontWeight: "bold",
+        padding: '1em'
+    },
+    value: {
+        width: "80%",
+        padding: '1em'
+    }
+}
+
+const RedelegateMsg = ({ parentStyle, msg }) => {
     return (
         <>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     Amount:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {`${getValueFromDenom(tx.msgs[0].value.amount.denom, tx.msgs[0].value.amount.amount)} `} 
-                    {getDisplayDenom(tx.msgs[0].value.amount.denom).toUpperCase()}
-                </div>
+                    {`${getValueFromDenom(msg.value.amount.denom, msg.value.amount.amount)} `}
+                    {getDisplayDenom(msg.value.amount.denom).toUpperCase()}
+                </motion.div>
             </div>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     From:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {tx.msgs[0].value.validatorSrcAddress}
-                </div>
+                    {msg.value.validatorSrcAddress}
+                </motion.div>
             </div>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     To:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {tx.msgs[0].value.validatorDstAddress}
-                </div>
+                    {msg.value.validatorDstAddress}
+                </motion.div>
             </div>
         </>
     )

@@ -36,41 +36,50 @@ const style = {
 
 const TransactionInfo = ({ tx, txHash, chain }) => {
 
-    const msgInfo = {
-        "/cosmos.bank.v1beta1.MsgSend": (
-            <TransferMsg
-                tx={tx}
-                style={style}
-            />
-        ),
-        "/cosmos.staking.v1beta1.MsgDelegate": (
-            <DelegateMsg
-                tx={tx}
-                style={style}
-            />
-        ),
-        "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward": (
-            <div></div>
-        ),
-        "/cosmos.staking.v1beta1.MsgBeginRedelegate": (
-            <RedelegateMsg
-                tx={tx}
-                style={style}
-            />
-        ),
-        "/cosmos.staking.v1beta1.MsgUndelegate": (
-            <UndelegateMsg
-                tx={tx}
-                style={style}
-            />
-        ),
-        "/cosmos.gov.v1beta1.MsgVote": (
-            <VoteMsg
-                tx={tx}
-                style={style}
-                chain={chain}
-            />
-        )
+    const msgInfo = (type, msg) => {
+        let jsx
+        switch (type) {
+            case "/cosmos.bank.v1beta1.MsgSend":
+                jsx = <TransferMsg
+                    msg={msg}
+                    parentStyle={style}
+                />
+                break;
+            case "/cosmos.staking.v1beta1.MsgDelegate":
+                jsx = <DelegateMsg
+                    msg={msg}
+                    parentStyle={style}
+                />
+                break;
+
+            case "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward":
+                jsx = <div></div>
+                break;
+
+            case "/cosmos.staking.v1beta1.MsgBeginRedelegate":
+                jsx = <RedelegateMsg
+                    msg={msg}
+                    parentStyle={style}
+                />
+                break;
+
+            case "/cosmos.staking.v1beta1.MsgUndelegate":
+                jsx = <UndelegateMsg
+                    msg={msg}
+                    parentStyle={style}
+                />
+                break;
+
+            case "/cosmos.gov.v1beta1.MsgVote":
+                jsx = <VoteMsg
+                    msg={msg}
+                    parentStyle={style}
+                    chain={chain}
+                />
+                break;
+        }
+
+        return jsx
     }
 
     return (
@@ -108,20 +117,69 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
             <div
                 style={style.flexRow}
             >
-                <label
-                    style={style.label}
-                >
-                    Msg:
-                </label>
                 <div
-                    style={style.value}
+                    style={{
+                        ...style.label,
+                        height: '55px'
+                    }}
                 >
-                    {tx.msgs[0].typeUrl}
+                    Msgs:
+                </div>
+                <div
+                    style={{
+                        backgroundColor: "#D9D9D9",
+                        width: "80%"
+                    }}
+                >
+                    {
+                        tx.msgs.map((msg, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    style={{
+                                        borderBottom: 'solid 2px white'
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "start",
+                                            color: "#ffffff",
+                                            fontSize: "1rem",
+                                            width: "100%",
+                                            textAlign: "left",
+                                            overflowX: "hidden",
+                                            backgroundColor: "#757575",
+                                            height: '55px'
+                                        }}
+                                    >
+                                        <label
+                                            style={{
+                                                width: "20%",
+                                                textAlign: 'center',
+                                                padding: "1em",
+                                            }}
+                                        >
+                                            @Type
+                                        </label>
+                                        <div
+                                            style={{
+                                                width: "80%",
+                                                padding: "1em",
+                                            }}
+                                        >
+                                            {msg.typeUrl}
+                                        </div>
+                                    </div>
+                                    {
+                                        msgInfo(msg.typeUrl, msg)
+                                    }
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
-            {
-                msgInfo[`${tx.msgs[0].typeUrl}`]
-            }
             <div
                 style={style.flexRow}
             >

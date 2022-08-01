@@ -1,36 +1,70 @@
 import { getValueFromDenom, getDisplayDenom } from "../../../libs/stringConvert"
+import { motion } from "framer-motion"
 
-const TransferMsg = ({ tx, style }) => {
+const style = {
+    label: {
+        width: "20%",
+        textAlign: "center",
+        fontWeight: "bold",
+        padding: '1em'
+    },
+    value: {
+        width: "80%",
+        padding: '1em'
+    }
+}
+
+const TransferMsg = ({ parentStyle, msg }) => {
     return (
         <>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     Amount:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {`${getValueFromDenom(tx.msgs[0].value.amount[0].denom, tx.msgs[0].value.amount[0].amount)} `} 
-                    {getDisplayDenom(tx.msgs[0].value.amount[0].denom).toUpperCase()}
-                </div>
+                    {`${getValueFromDenom(msg.value.amount[0].denom, msg.value.amount[0].amount)} `}
+                    {getDisplayDenom(msg.value.amount[0].denom).toUpperCase()}
+                </motion.div>
             </div>
             <div
                 style={style.flexRow}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     To:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {tx.msgs[0].value.toAddress}
-                </div>
+                    {msg.value.toAddress}
+                </motion.div>
             </div>
         </>
     )

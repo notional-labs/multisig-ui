@@ -58,18 +58,23 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const convertCLITransaction = (tx_json_parsed) => {
         const msgValue = {}
-        const msg = tx_json_parsed.body.messages[0]
-        msgValue["type"] = msg["@type"]
-        msgValue["value"] = {}
-        for (const key in msg) {
-            if (key === "type") continue;
-            msgValue["value"][key] = msg[key];
-        }
+        const messages = tx_json_parsed.body.messages
+        msgValue["messages"] = messages.map(message => {
+            const msg = {}
+            msg["type"] = message["@type"]
+            msg["value"] = {}
+            for (const key in message) {
+                if (key === "type") continue;
+                msg["value"][key] = message[key];
+            }
+            return msg
+        })
 
         const fee = tx_json_parsed.auth_info.fee;
         msgValue["fee"] = {}
         msgValue["fee"]["gas"] = fee.gas_limit;
         msgValue["fee"]["amount"] = fee.amount;
+        msgValue["memo"] = tx_json_parsed.memo;
 
         return msgValue;
     }
@@ -129,10 +134,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             fee = tx_json_parsed.fee
             memo = tx_json_parsed.memo || ""
         } else {
-            // const msg = convertCLITransaction(tx_json_parsed);
-            // msgList = msg.value;
-            // type = msg.type;
-            // fee = msg.fee;
+            const msg = convertCLITransaction(tx_json_parsed);
+            msgList = msg.messages;
+            fee = msg.fee;
+            memo = msg.memo || ""
             throw new Error('Unsupported tx format')
         }
 
