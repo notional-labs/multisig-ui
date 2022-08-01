@@ -74,29 +74,9 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return msgValue;
     }
 
-    const createTransaction = () => {
-        let tx_json_parsed;
-        try {
-            tx_json_parsed = JSON.parse(tx);
-        } catch (err) {
-            throw new Error("Invalid Tx Json. Check TX Again!")
-        }
-
-        let msgValue;
-        let type;
-        let fee;
-        let memo
-        if ("msgs" in tx_json_parsed) {
-            msgValue = tx_json_parsed.msgs[0].value;
-            type = tx_json_parsed.msgs[0].typeUrl || tx_json_parsed.msgs[0].type;
-            fee = tx_json_parsed.fee
-            memo = tx_json_parsed.memo || ""
-        } else {
-            const msg = convertCLITransaction(tx_json_parsed);
-            msgValue = msg.value;
-            type = msg.type;
-            fee = msg.fee;
-        }
+    const convertSinleMsg = (msg) => {
+        let msgValue = msg.value;
+        let type = msg.typeUrl || msg.type;
 
         try {
             checkMsg(chain.prefix, msgValue)
@@ -127,14 +107,42 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
         // console.log(msgValue);
 
-        const msg = {
+        return {
             value: msgValue,
             typeUrl: type,
-        };
+        }
+    }
+
+    const createTransaction = () => {
+        let tx_json_parsed;
+        try {
+            tx_json_parsed = JSON.parse(tx);
+        } catch (err) {
+            throw new Error("Invalid Tx Json. Check TX Again!")
+        }
+
+        let msgList
+        let fee
+        let memo
+        if ("msgs" in tx_json_parsed) {
+            msgList = tx_json_parsed.msgs
+            fee = tx_json_parsed.fee
+            memo = tx_json_parsed.memo || ""
+        } else {
+            // const msg = convertCLITransaction(tx_json_parsed);
+            // msgList = msg.value;
+            // type = msg.type;
+            // fee = msg.fee;
+            throw new Error('Unsupported tx format')
+        }
+
+        const msgs = msgList.map(msg => {
+            return convertSinleMsg(msg)
+        })
 
         return {
             chainId: chain.chain_id,
-            msgs: [msg],
+            msgs: [...msgs],
             fee: fee,
             memo: memo,
         };
@@ -174,7 +182,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(multisigID)
         console.log(checked)
-        if ( check && !checked ) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {
