@@ -15,6 +15,7 @@ const style = {
 }
 
 const TransferMsg = ({ parentStyle, msg }) => {
+    console.log(msg)
     return (
         <>
             <div
@@ -40,12 +41,16 @@ const TransferMsg = ({ parentStyle, msg }) => {
                         style.value
                     }
                 >
-                    {`${getValueFromDenom(msg.value.amount[0].denom, msg.value.amount[0].amount)} `}
-                    {getDisplayDenom(msg.value.amount[0].denom).toUpperCase()}
+                    {`${msg.value.amount.length > 0 && getValueFromDenom(msg.value.amount[0].denom, msg.value.amount[0].amount)} `}
+                    {msg.value.amount.length > 0 && getDisplayDenom(msg.value.amount[0].denom).toUpperCase()}
                 </motion.div>
             </div>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
                 <motion.label
                     whileTap={{ scale: 0.9 }}

@@ -49,6 +49,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 jsx = <DelegateMsg
                     msg={msg}
                     parentStyle={style}
+                    chain={chain}
                 />
                 break;
 
@@ -60,6 +61,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 jsx = <RedelegateMsg
                     msg={msg}
                     parentStyle={style}
+                    chain={chain}
                 />
                 break;
 
@@ -67,6 +69,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 jsx = <UndelegateMsg
                     msg={msg}
                     parentStyle={style}
+                    chain={chain}
                 />
                 break;
 

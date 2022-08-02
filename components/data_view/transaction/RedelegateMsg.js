@@ -14,7 +14,7 @@ const style = {
     }
 }
 
-const RedelegateMsg = ({ parentStyle, msg }) => {
+const RedelegateMsg = ({ chain, parentStyle, msg }) => {
     return (
         <>
             <div
@@ -67,7 +67,13 @@ const RedelegateMsg = ({ parentStyle, msg }) => {
                         style.value
                     }
                 >
-                    {msg.value.validatorSrcAddress}
+                    <a
+                        href={`${chain.valExplorer}${msg.value.validatorSrcAddress}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {msg.value.validatorSrcAddress}
+                    </a>
                 </motion.div>
             </div>
             <div
@@ -93,7 +99,13 @@ const RedelegateMsg = ({ parentStyle, msg }) => {
                         style.value
                     }
                 >
-                    {msg.value.validatorDstAddress}
+                    <a
+                        href={`${chain.valExplorer}${msg.value.validatorDstAddress}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {msg.value.validatorDstAddress}
+                    </a>
                 </motion.div>
             </div>
         </>

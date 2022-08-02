@@ -15,7 +15,7 @@ const style = {
 }
 
 
-const DelegateMsg = ({ parentStyle, msg }) => {
+const DelegateMsg = ({ chain, parentStyle, msg }) => {
     return (
         <>
             <div
@@ -36,7 +36,7 @@ const DelegateMsg = ({ parentStyle, msg }) => {
                 </motion.label>
                 <motion.div
                     whileTap={{ scale: 0.9 }}
-                    whileHover={{scale: 1.05}}
+                    whileHover={{ scale: 1.05 }}
                     style={
                         style.value
                     }
@@ -52,7 +52,7 @@ const DelegateMsg = ({ parentStyle, msg }) => {
                     borderBottom: 'solid .5px white'
                 }}
             >
-                 <motion.label
+                <motion.label
                     whileTap={{ scale: 0.9 }}
                     whileHover={{ scale: 1.05 }}
                     style={
@@ -63,12 +63,18 @@ const DelegateMsg = ({ parentStyle, msg }) => {
                 </motion.label>
                 <motion.div
                     whileTap={{ scale: 0.9 }}
-                    whileHover={{scale: 1.05}}
+                    whileHover={{ scale: 1.05 }}
                     style={
                         style.value
                     }
                 >
-                    {msg.value.validatorAddress}
+                    <a
+                        href={`${chain.valExplorer}${msg.value.validatorAddress}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {msg.value.validatorAddress}
+                    </a>
                 </motion.div>
             </div>
         </>

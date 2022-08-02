@@ -14,7 +14,7 @@ const style = {
     }
 }
 
-const UndelegateMsg = ({ parentStyle, msg }) => {
+const UndelegateMsg = ({ chain, parentStyle, msg }) => {
     return (
         <>
             <div
@@ -66,7 +66,13 @@ const UndelegateMsg = ({ parentStyle, msg }) => {
                         style.value
                     }
                 >
-                    {msg.value.validatorAddress}
+                    <a
+                        href={`${chain.valExplorer}${msg.value.validatorAddress}`}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        {msg.value.validatorAddress}
+                    </a>
                 </motion.div>
             </div>
         </>
