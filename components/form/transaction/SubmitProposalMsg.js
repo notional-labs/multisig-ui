@@ -6,21 +6,9 @@ import { openLoadingNotification, openNotification } from "../../ulti/Notificati
 import { Radio, Space } from "antd";
 import WarningModal from "../../ulti/WarningModal"
 import axios from "axios"
+import Button from "../../input/Button"
 
-const style = {
-    input: {
-        marginBottom: "10px",
-        color: "black"
-    },
-    button: {
-        border: 0,
-        borderRadius: "10px",
-        width: "40%",
-        padding: ".5em 1em"
-    }
-}
-
-const SubmitProposalMsg = ({ chain, router, address, checked, setChecked }) => {
+const SubmitProposalMsg = ({ address, chain, addMsg, style }) => {
     const [proposals, setProposals] = useState([])
     const [txBody, setTxBody] = useState({
         proposalType: "",

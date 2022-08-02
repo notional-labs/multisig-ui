@@ -1,26 +1,11 @@
 import { useEffect, useState } from "react"
 import { getProposals } from "../../../libs/queryClients"
-import ShareForm from "./ShareForm"
-import { createVoteMsg, checkIfHasPendingTx } from "../../../libs/transaction"
-import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import { createVoteMsg } from "../../../libs/transaction"
+import { openNotification } from "../../ulti/Notification"
 import { Radio, Space } from "antd";
-import WarningModal from "../../ulti/WarningModal"
-import axios from "axios"
+import Button from "../../input/Button"
 
-const style = {
-    input: {
-        marginBottom: "10px",
-        color: "black"
-    },
-    button: {
-        border: 0,
-        borderRadius: "10px",
-        width: "40%",
-        padding: ".5em 1em"
-    }
-}
-
-const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
+const VoteMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [proposals, setProposals] = useState([])
     const [txBody, setTxBody] = useState({
         option: 1,
@@ -29,7 +14,6 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
         fee: 0,
         memo: "",
     })
-    const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
         return txBody.option === 0 || txBody.proposalId === ""
@@ -58,50 +42,18 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
         })()
     }, [chain])
 
-    const handleCreate = async () => {
-        openLoadingNotification("open", "Creating transaction")
+    const createMsg = () => {
         try {
-            const tx = createVoteMsg(
+            const msg = createVoteMsg(
                 txBody.option,
                 txBody.proposalId,
                 address,
-                txBody.gas,
-                chain.denom,
-                txBody.memo,
-                chain.chain_id,
-                txBody.fee,
-
-            );
-            const dataJSON = JSON.stringify(tx);
-            const data = {
-                dataJSON,
-                createBy: address,
-                status: "PENDING"
-            }
-            const res = await axios.post("/api/transaction/create", data);
-            const { _id } = res.data;
-            router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification("close")
-            openNotification("success", "Created successfully")
+            )
+            setMsgs([...msgs, msg])
+            openNotification('success', 'Adding successfully')
         }
         catch (e) {
-            openLoadingNotification("close")
-            openNotification("error", e.message)
-        }
-    }
-
-    const handleKeyGroupChange = (e) => {
-        if (e.target.name === "fee" || e.target.name === "gas") {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: parseFloat(e.target.value)
-            })
-        }
-        else {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: e.target.value
-            })
+            openNotification('success', 'Adding unsuccessfully')
         }
     }
 
@@ -113,25 +65,6 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
         setTxBody({
             ...newTx,
         })
-    }
-
-    const handleClose = () => {
-        setShowWarning(false)
-    }
-
-    const handleProcced = async () => {
-        const check = await checkIfHasPendingTx(address)
-        if (check && !checked) {
-            setShowWarning(true)
-        }
-        else {
-            await handleCreate()
-        }
-    }
-
-    const handleCancel = () => {
-        setShowWarning(false)
-        openNotification("error", "Cancel create transaction")
     }
 
     return (
@@ -211,24 +144,19 @@ const VoteMsg = ({ chain, router, address, checked, setChecked }) => {
                     </Space>
                 </Radio.Group>
             </div>
-            <ShareForm
-                txBody={txBody}
-                handleKeyGroupChange={(e) => {
-                    handleKeyGroupChange(e);
+            <Button
+                text={"Add Message"}
+                style={{
+                    backgroundColor: disabled() ? "#808080" : "black",
+                    color: "white",
+                    padding: "1em",
+                    width: "100%",
+                    borderRadius: "10px",
+                    marginTop: "20px",
+                    border: 0
                 }}
-                handleCreate={handleProcced}
-                chain={chain}
-                style={style}
-                disabled={disabled()}
-            />
-            <WarningModal
-                style={style}
-                handleClose={handleClose}
-                handleCreate={handleCreate}
-                showWarning={showWarning}
-                handleCancel={handleCancel}
-                checked={checked}
-                setChecked={setChecked}
+                clickFunction={createMsg}
+                disable={disabled()}
             />
         </div>
     )

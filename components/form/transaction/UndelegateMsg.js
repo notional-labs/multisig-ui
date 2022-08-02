@@ -1,45 +1,24 @@
 import { useEffect, useState } from "react"
 import { getDelegations, } from "../../../libs/queryClients"
 import Input from "../../input/Input"
-import ShareForm from "./ShareForm"
-import { createUndelegateMsg, checkIfHasPendingTx } from "../../../libs/transaction"
-import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import { createUndelegateMsg } from "../../../libs/transaction"
+import { openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
-import WarningModal from "../../ulti/WarningModal"
 import { convertValueFromDenom } from "../../../libs/stringConvert"
-import axios from "axios"
+import Button from "../../input/Button"
 
-const style = {
-    input: {
-        marginBottom: "10px",
-        color: "black"
-    },
-    button: {
-        border: 0,
-        borderRadius: "10px",
-        width: "40%",
-        padding: ".5em 1em"
-    }
-}
-
-
-const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
+const UndelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [delegations, setdelegations] = useState([])
     const [txBody, setTxBody] = useState({
         validator: "",
         amount: 0,
-        gas: 200000,
-        fee: 0,
-        memo: "",
     })
-    const [showWarning, setShowWarning] = useState(false)
     const [amountError, setAmountError] = useState("")
     const [maxAmount, setMaxAmount] = useState(0)
 
     const invalidForm = () => {
         for (let key in txBody) {
-            if (key !== "memo" && txBody[key] === "") return true
-            else if (key === "amount" && txBody[key] === 0) return true
+            if (key === "amount" && txBody[key] === 0) return true
         }
         return false
     }
@@ -72,35 +51,19 @@ const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
         })()
     }, [chain])
 
-    const handleCreate = async () => {
-        openLoadingNotification("open", "Creating transaction")
+    const createMsg = () => {
         try {
-            const tx = createUndelegateMsg(
+            const msg = createUndelegateMsg(
                 address,
                 txBody.validator,
                 convertValueFromDenom(chain.base_denom, txBody.amount),
-                txBody.gas,
-                chain.denom,
-                txBody.memo,
-                chain.chain_id,
-                txBody.fee,
-
-            );
-            const dataJSON = JSON.stringify(tx);
-            const data = {
-                dataJSON,
-                createBy: address,
-                status: "PENDING"
-            }
-            const res = await axios.post("/api/transaction/create", data);
-            const { _id } = res.data;
-            router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification("close")
-            openNotification("success", "Created successfully")
+                chain.denom
+            )
+            setMsgs([...msgs, msg])
+            openNotification('success', 'Adding successfully')
         }
         catch (e) {
-            openLoadingNotification("close")
-            openNotification("error", e.message)
+            openNotification('success', 'Adding unsuccessfully')
         }
     }
 
@@ -114,12 +77,6 @@ const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
             if (parseFloat(e.target.value) > maxAmount) {
                 setAmountError("Amount should be lower than delegation amount")
             }
-        }
-        else if (e.target.name === "fee" || e.target.name === "gas") {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: parseInt(e.target.value, 10)
-            })
         }
         else {
             setTxBody({
@@ -137,25 +94,6 @@ const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
         const filter = delegations.filter(del => del.delegation.validatorAddress === e.target.value)
         const delegation = filter[0]
         setMaxAmount(parseInt(delegation.balance.amount, 10) / 1000000)
-    }
-
-    const handleClose = () => {
-        setShowWarning(false)
-    }
-
-    const handleProcced = async () => {
-        const check = await checkIfHasPendingTx(address)
-        if (check && !checked) {
-            setShowWarning(true)
-        }
-        else {
-            await handleCreate()
-        }
-    }
-
-    const handleCancel = () => {
-        setShowWarning(false)
-        openNotification("error", "Cancel create transaction")
     }
 
     return (
@@ -242,24 +180,19 @@ const UndelegateMsg = ({ chain, router, address, checked, setChecked }) => {
                 style={style.input}
                 error={amountError}
             />
-            <ShareForm
-                txBody={txBody}
-                handleKeyGroupChange={(e) => {
-                    handleKeyGroupChange(e);
+            <Button
+                text={"Add Message"}
+                style={{
+                    backgroundColor: disabled() ? "#808080" : "black",
+                    color: "white",
+                    padding: "1em",
+                    width: "100%",
+                    borderRadius: "10px",
+                    marginTop: "20px",
+                    border: 0
                 }}
-                handleCreate={handleProcced}
-                chain={chain}
-                style={style}
-                disabled={disabled()}
-            />
-            <WarningModal
-                style={style}
-                handleClose={handleClose}
-                handleCreate={handleCreate}
-                showWarning={showWarning}
-                handleCancel={handleCancel}
-                checked={checked}
-                setChecked={setChecked}
+                clickFunction={createMsg}
+                disable={disabled()}
             />
         </div>
     )

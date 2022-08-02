@@ -47,10 +47,8 @@ export const checkIfHasPendingTx = async(address) => {
     }
 }
 
-export const createSendMsg = (
-    fromAddress,
-    toAddress,
-    amount,
+export const makeTxBody = (
+    msgs,
     gas,
     denom,
     memo,
@@ -58,6 +56,21 @@ export const createSendMsg = (
     feeAmount
 ) => {
     const fee = getFee(gas, feeAmount, denom)
+
+    return {
+        chainId: chainId,
+        msgs: [...msgs],
+        fee: fee,
+        memo: memo,
+    };
+}
+
+export const createSendMsg = (
+    fromAddress,
+    toAddress,
+    amount,
+    denom,
+) => {
     const msgSend = {
         fromAddress: fromAddress,
         toAddress: toAddress,
@@ -68,25 +81,15 @@ export const createSendMsg = (
         value: msgSend,
     };
 
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    };
+    return msg
 }
 
 export const createDelegateMsg = (
     delegator_address,
     validator_address,
     amount,
-    gas,
     denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgDelegate = {
         delegatorAddress: delegator_address,
         validatorAddress: validator_address,
@@ -96,25 +99,15 @@ export const createDelegateMsg = (
         typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
         value: msgDelegate,
     }
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    };
+    return msg
 }
 
 export const createUndelegateMsg = (
     delegatorAddress,
     validatorAddress,
     amount,
-    gas,
     denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgUndelegate = {
         delegatorAddress: delegatorAddress,
         validatorAddress: validatorAddress,
@@ -124,24 +117,13 @@ export const createUndelegateMsg = (
         typeUrl: "/cosmos.staking.v1beta1.MsgUndelegate",
         value: msgUndelegate,
     };
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    };
+    return msg
 }
 
 export const createWithdrawRewardsMsg = (
     delegatorAddress,
     validatorAddresses,
-    gas,
-    denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     let msgs = []
     validatorAddresses.map(validator_address => {
         const msgWithDraw = {
@@ -154,12 +136,7 @@ export const createWithdrawRewardsMsg = (
         };
         msgs.push(msg)
     })
-    return {
-        chainId: chainId,
-        msgs: [...msgs],
-        fee: fee,
-        memo: memo,
-    };
+    return msgs
 }
 
 export const createRedelegateMsg = (
@@ -167,13 +144,8 @@ export const createRedelegateMsg = (
     validatorSrcAddress,
     validatorDstAddress,
     amount,
-    gas,
     denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgRedelegate = {
         delegatorAddress: delegatorAddress,
         validatorSrcAddress: validatorSrcAddress,
@@ -184,12 +156,7 @@ export const createRedelegateMsg = (
         typeUrl: "/cosmos.staking.v1beta1.MsgBeginRedelegate",
         value: msgRedelegate,
     };
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    };
+    return msg
 }
 
 export const createSubmitProposalMsg = (
@@ -198,13 +165,8 @@ export const createSubmitProposalMsg = (
     description,
     proposer,
     deposit,
-    gas,
     denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgSubmitProposal = {
         content: {
             typeUrl: typeUrl,
@@ -222,25 +184,14 @@ export const createSubmitProposalMsg = (
         value: msgSubmitProposal,
     }
 
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    }
+    return msg
 }
 
 export const createVoteMsg = (
     option,
     proposal_id,
     voter,
-    gas,
-    denom,
-    memo,
-    chainId,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgVote = {
         option: option,
         proposalId: proposal_id,
@@ -251,24 +202,15 @@ export const createVoteMsg = (
         typeUrl: "/cosmos.gov.v1beta1.MsgVote",
         value: msgVote,
     }
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    }
+    return msg
 }
 
 export const createDepositMsg = (
     amount,
     depositor,
     proposal_id,
-    gas,
     denom,
-    memo,
-    feeAmount
 ) => {
-    const fee = getFee(gas, feeAmount, denom)
     const msgDeposit = {
         amount: [coin(amount, denom)],
         depositor: depositor,
@@ -280,12 +222,7 @@ export const createDepositMsg = (
         value: msgDeposit
     }
 
-    return {
-        chainId: chainId,
-        msgs: [msg],
-        fee: fee,
-        memo: memo,
-    }
+    return msg
 }
 
 
