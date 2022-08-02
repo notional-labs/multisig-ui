@@ -12,6 +12,7 @@ import { motion } from "framer-motion"
 const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
     const [txType, setTxType] = useState(0)
     const [checked, setChecked] = useState(false)
+    const [msgs, setMsgs] = useState([])
 
     const txTypes = [
         {
@@ -19,6 +20,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <SendMsgForm
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -30,6 +33,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <DelegateMsgForm
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -41,6 +46,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <UndelegateMsg
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -52,6 +59,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <WithdrawMsg
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -63,6 +72,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <RedelegateMsg
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -75,6 +86,8 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
             component: (
                 <VoteMsg
                     chain={chain}
+                    msgs={msgs}
+                    addMsg={addMsg}
                     router={router}
                     address={multisigID}
                     checked={checked}
@@ -93,6 +106,10 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const getForm = () => {
         return txTypes[txType].component
+    }
+
+    const addMsg = (msg) => {
+        setMsgs([...msgs.push(msg)])
     }
 
     return (
