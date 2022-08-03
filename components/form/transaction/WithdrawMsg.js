@@ -35,6 +35,7 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
 
     const createMsg = () => {
         try {
+            const validator_addresses = rewards.map(reward => reward.validator_address)
             const messages = createWithdrawRewardsMsg(
                 address,
                 validator_addresses,

@@ -315,10 +315,10 @@ const TransactionList = () => {
                                                             }}
                                                         >
                                                             {
-                                                                JSON.parse(transaction.dataJSON).msgs.map((msg, index) => {
+                                                                JSON.parse(transaction.dataJSON).msgs.map((msg, i) => {
                                                                     return (
                                                                         <div
-                                                                            key={index}
+                                                                            key={i}
                                                                             style={{
                                                                                 width: '100%'
                                                                             }}
