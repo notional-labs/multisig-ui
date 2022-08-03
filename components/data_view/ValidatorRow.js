@@ -24,7 +24,7 @@ const ValidatorRow = ({ chain, address }) => {
         <div>
             {
                 loading ? (
-                    <Skeleton active rows={1} paragraph={{ rows: 0 }} />
+                    <Skeleton active rows={1} paragraph={{ rows: 0 }} style={{marginTop: '20px'}}/>
                 ) : validator ? validator.description.moniker : address
             }
         </div>

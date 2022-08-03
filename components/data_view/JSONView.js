@@ -12,22 +12,29 @@ const convertKelprTransaction = (transaction) => {
     const cosmos_tx = {};
     const body = {};
     const auth_info = {};
-    const msgValue = {};
-    const msg = transaction.msgs[0]
-    msgValue["@type"] = msg["typeUrl"]
+    const msgs = transaction.msgs
+    // msgValue["@type"] = msg["typeUrl"]
 
-    for (const key in msg.value) {
-        if (key === "type") continue;
-        msgValue[key] = msg.value[key];
+    const newMsgs = msgs.map(msg => {
+        const msgValue = {};
+        msgValue["@type"] = msg["typeUrl"]
 
-        for (let i = 0; i < addressAmino.length; i++) {
-            if (!(addressConversion[i] == key)) continue;
-            msgValue[addressAmino[i]] = msgValue[addressConversion[i]];
-
-            delete msgValue[addressConversion[i]];
+        for (const key in msg.value) {
+            if (key === "type") continue;
+            msgValue[key] = msg.value[key];
+    
+            for (let i = 0; i < addressAmino.length; i++) {
+                if (!(addressConversion[i] == key)) continue;
+                msgValue[addressAmino[i]] = msgValue[addressConversion[i]];
+    
+                delete msgValue[addressConversion[i]];
+            }
         }
-    }
-    body["messages"] = [msgValue];
+        return msgValue
+    })
+
+   
+    body["messages"] = [...msgs];
     body["memo"] = transaction.memo;
     body["timeout_height"] = "0";
     body["extension_options"] = [];
