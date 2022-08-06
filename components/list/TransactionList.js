@@ -119,9 +119,8 @@ const TransactionList = () => {
         setViewTransactions([...pagingList])
     }, [params, filterTransactions])
 
-    const getType = (tx) => {
-        const txInfo = JSON.parse(tx.dataJSON)
-        const type = txInfo.msgs[0].typeUrl
+    const getType = (msg) => {
+        const type = msg.typeUrl
         return type.split("Msg")[1]
     }
 
@@ -225,7 +224,7 @@ const TransactionList = () => {
                                         textAlign: "left"
                                     }}
                                 >
-                                    Type
+                                    Type(s)
                                 </th>
                                 <th
                                     style={{
@@ -308,12 +307,27 @@ const TransactionList = () => {
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
                                                             style={{
-                                                                width: "30%",
                                                                 fontSize: "1rem",
                                                                 padding: "1em 0.5em",
+                                                                display: 'block',
+                                                                overflow: 'auto',
+                                                                height: '60px',
                                                             }}
                                                         >
-                                                            {getType(transaction)}
+                                                            {
+                                                                JSON.parse(transaction.dataJSON).msgs.map((msg, i) => {
+                                                                    return (
+                                                                        <div
+                                                                            key={i}
+                                                                            style={{
+                                                                                width: '100%'
+                                                                            }}
+                                                                        >
+                                                                            {getType(msg)}
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                            }
                                                         </motion.td>
                                                         <motion.td
                                                             whileTap={{ scale: 0.9 }}
@@ -331,7 +345,9 @@ const TransactionList = () => {
                                                                     backgroundColor: transaction.status === "PENDING" ? "#D82D2C" : "#189A01",
                                                                     borderRadius: "50%",
                                                                     display: "inline-block",
-                                                                    margin: "auto 10px"
+                                                                    margin: "auto 10px",
+                                                                    position: "relative",
+                                                                    top: "3px"
                                                                 }}
                                                             />
                                                             <span

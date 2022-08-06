@@ -1,40 +1,15 @@
 import { useEffect, useState } from "react"
-import ShareForm from "./ShareForm"
 import { getRewards } from "../../../libs/queryClients"
-import { createWithdrawRewardsMsg, checkIfHasPendingTx } from "../../../libs/transaction"
-import { openLoadingNotification, openNotification } from "../../ulti/Notification"
+import { createWithdrawRewardsMsg } from "../../../libs/transaction"
+import { openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
-import WarningModal from "../../ulti/WarningModal"
-import axios from "axios"
 import { getValueFromDenom } from "../../../libs/stringConvert"
+import Button from "../../input/Button"
 
-const style = {
-    input: {
-        marginBottom: "10px",
-        color: "black"
-    },
-    button: {
-        border: 0,
-        borderRadius: "10px",
-        width: "40%",
-        padding: ".5em 1em"
-    }
-}
-
-
-const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
+const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [rewards, setRewards] = useState([])
-    const [txBody, setTxBody] = useState({
-        gas: 200000,
-        fee: 0,
-        memo: "",
-    })
-    const [showWarning, setShowWarning] = useState(false)
 
     const invalidForm = () => {
-        for (let key in txBody) {
-            if (key !== "memo" && txBody[key] === "") return true
-        }
         if (rewards.length === 0) return true
         return false
     }
@@ -58,70 +33,19 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
         })()
     }, [chain])
 
-    const handleCreate = async () => {
-        openLoadingNotification("open", "Creating transaction")
+    const createMsg = () => {
         try {
             const validator_addresses = rewards.map(reward => reward.validator_address)
-            const tx = createWithdrawRewardsMsg(
+            const messages = createWithdrawRewardsMsg(
                 address,
                 validator_addresses,
-                txBody.gas,
-                chain.denom,
-                txBody.memo,
-                chain.chain_id,
-                txBody.fee,
-
-            );
-            const dataJSON = JSON.stringify(tx);
-            const data = {
-                dataJSON,
-                createBy: address,
-                status: "PENDING"
-            }
-            const res = await axios.post("/api/transaction/create", data);
-            const { _id } = res.data;
-            router.push(`/multisig/${address}/transaction/${_id}`)
-            openLoadingNotification("close")
-            openNotification("success", "Created successfully")
+            )
+            setMsgs([...msgs, ...messages])
+            openNotification('success', 'Adding successfully')
         }
         catch (e) {
-            openLoadingNotification("close")
-            openNotification("error", e.message)
+            openNotification('success', 'Adding unsuccessfully')
         }
-    }
-
-    const handleKeyGroupChange = (e) => {
-        if (e.target.name === "fee" || e.target.name === "gas") {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: parseInt(e.target.value, 10)
-            })
-        }
-        else {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: e.target.value
-            })
-        }
-    }
-
-    const handleClose = () => {
-        setShowWarning(false)
-    }
-
-    const handleProcced = async () => {
-        const check = await checkIfHasPendingTx(address)
-        if (check && !checked) {
-            setShowWarning(true)
-        }
-        else {
-            await handleCreate()
-        }
-    }
-
-    const handleCancel = () => {
-        setShowWarning(false)
-        openNotification("error", "Cancel create transaction")
     }
 
     return (
@@ -236,25 +160,20 @@ const WithdrawMsg = ({ chain, router, address, checked, setChecked }) => {
                 }
 
             </div>
-            <ShareForm
-                txBody={txBody}
-                handleKeyGroupChange={(e) => {
-                    handleKeyGroupChange(e);
+            <Button
+                text={"Add Message"}
+                style={{
+                    backgroundColor: disabled() ? "#808080" : "black",
+                    color: "white",
+                    padding: "1em",
+                    width: "100%",
+                    borderRadius: "10px",
+                    marginTop: "20px",
+                    border: 0
                 }}
-                handleCreate={handleProcced}
-                chain={chain}
-                style={style}
-                disabled={disabled()}
-            />
-            <WarningModal
-                style={style}
-                handleClose={handleClose}
-                handleCreate={handleCreate}
-                showWarning={showWarning}
-                handleCancel={handleCancel}
-                checked={checked}
-                setChecked={setChecked}
-            />
+                clickFunction={createMsg}
+                disable={disabled()}
+            /> 
         </div>
     )
 }
