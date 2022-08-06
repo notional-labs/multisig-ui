@@ -30,6 +30,15 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 1. Osmosis
 2. Gaia (cosmoshub)
 3. Juno
+4. Akash
+5. Emoney
+6. Sifchain
+7. Stargaze
+8. Kava
+9. Rengen
+10. Omniflix
+11. Cheqd
+12. Bitcanna
 
 Will add more chains in the future
 
