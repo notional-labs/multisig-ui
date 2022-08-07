@@ -27,6 +27,17 @@ const typeMsgConversion = [
     "/cosmos.staking.v1beta1.MsgBeginRedelegate"
 ]
 
+const gammTypeMsg = [
+    "/osmosis.gamm.v1beta1.MsgJoinPool",
+    "/osmosis.gamm.v1beta1.MsgExitPool",
+    "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
+    "/osmosis.gamm.v1beta1.MsgSwapExactAmountOut",
+    "/osmosis.gamm.v1beta1.MsgJoinSwapExternAmountIn",
+    "/osmosis.gamm.v1beta1.MsgJoinSwapShareAmountOut",
+    "/osmosis.gamm.v1beta1.MsgExitSwapExternAmountOut",
+    "/osmosis.gamm.v1beta1.MsgExitSwapShareAmountIn"
+]
+
 const style = {
     input: {
         marginBottom: "10px",
