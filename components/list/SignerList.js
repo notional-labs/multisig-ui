@@ -9,6 +9,7 @@ import { SigningStargateClient } from "@cosmjs/stargate/build/signingstargatecli
 import { encode } from "uint8-to-base64"
 import { getAccount, getSequence } from "../../libs/keplrClient"
 import { useState } from "react"
+import { getSignningSuperClient } from "../../libs/CustomSigner"
 
 const SignerList = ({
     currentSignatures,
@@ -53,7 +54,7 @@ const SignerList = ({
             );
             const signAccount = await getSequence(chain.api, address)
 
-            const signingClient = await SigningStargateClient.offline(offlineSigner);
+            const signingClient = await getSignningSuperClient(offlineSigner);
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),

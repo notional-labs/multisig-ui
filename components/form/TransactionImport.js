@@ -104,8 +104,11 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         const posi = typeMsg.indexOf(type);
         if (posi > -1) {
             type = typeMsgConversion[posi];
-        } else if (!typeMsgConversion.includes(type)) {
-            throw new Error("Unsupported or Wrong Transaction Type. Check Again Your Transaction Type")
+        }
+        else if (!typeMsgConversion.includes(type)) {
+            if (!gammTypeMsg.includes(type)) {
+                throw new Error("Unsupported or Wrong Transaction Type. Check Again Your Transaction Type")
+            }
         }
 
         // convert to compatible field
