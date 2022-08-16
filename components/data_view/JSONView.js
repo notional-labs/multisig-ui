@@ -57,8 +57,6 @@ const convertKelprTransaction = (transaction) => {
 const JSONView = ({ tx }) => {
     const [showJSON, setShowJSON] = useState(false)
 
-    console.log(tx)
-
     const handleShowJSON = () => {
         setShowJSON(!showJSON)
     }
