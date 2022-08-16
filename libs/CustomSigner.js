@@ -1,9 +1,9 @@
 import {
     AminoTypes,
-    SigningStargateClient
+    SigningStargateClient,
+    defaultRegistryTypes
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
-import { defaultRegistryTypes } from '@cosmjs/stargate';
 import { osmosis } from 'osmojs';
 import { cosmwasm } from 'osmojs';
 
@@ -56,7 +56,7 @@ export const getSignningSuperClient = async (signer) => {
 
     // aminotypes
     const aminoTypes = new AminoTypes({
-        ...cosmwasm.v1.wasm.AminoConverter,
+        ...cosmwasm.wasm.v1.AminoConverter,
         ...osmosis.gamm.v1beta1.AminoConverter,
         ...osmosis.lockup.AminoConverter,
         ...osmosis.superfluid.AminoConverter

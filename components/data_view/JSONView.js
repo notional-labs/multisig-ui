@@ -34,7 +34,7 @@ const convertKelprTransaction = (transaction) => {
     })
 
    
-    body["messages"] = [...msgs];
+    body["messages"] = [...newMsgs];
     body["memo"] = transaction.memo;
     body["timeout_height"] = "0";
     body["extension_options"] = [];
@@ -56,6 +56,8 @@ const convertKelprTransaction = (transaction) => {
 
 const JSONView = ({ tx }) => {
     const [showJSON, setShowJSON] = useState(false)
+
+    console.log(tx)
 
     const handleShowJSON = () => {
         setShowJSON(!showJSON)
