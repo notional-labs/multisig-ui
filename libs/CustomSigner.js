@@ -4,7 +4,6 @@ import {
     defaultRegistryTypes
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
-import { defaultRegistryTypes } from '@cosmjs/stargate';
 import { osmosis, cosmwasm } from 'osmojs';
 
 export const getSignningSuperClient = async (signer) => {
@@ -32,12 +31,13 @@ export const getSignningSuperClient = async (signer) => {
     return client;
 }
 
-export const getCustomCLient = async (types, chainName) => {
+export const getCustomCLient = async (types) => {
+    const uniqTypes = [...new Set(types)]
     // get path to file
-    const paths = types.map(type => {
-        type = type.slice(0,1)
-        return type.replaceAll('.', '/')
+    const paths = uniqTypes.map(type => {
+        type = type.slice(1,type.length)
+        const splitType = type.split(".")
+        splitType.pop()
+        return splitType.join('/')
     })
-
-
 }

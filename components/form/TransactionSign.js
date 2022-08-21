@@ -8,7 +8,7 @@ import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
 import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
-import { getSignningSuperClient } from "../../libs/CustomSigner";
+import { getSignningSuperClient, getCustomCLient } from "../../libs/CustomSigner";
 
 const TransationSign = ({
     tx,
@@ -94,7 +94,11 @@ const TransationSign = ({
             );
             const signAccount = await getSequence(chain.api, multisigID)
 
-            const signingClient = await getSignningSuperClient(offlineSigner);
+            const types = tx.msgs.map(msg => {
+                return msg.typeUrl
+            })
+
+            const signingClient = await getCustomCLient(types, chain.name);
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),
