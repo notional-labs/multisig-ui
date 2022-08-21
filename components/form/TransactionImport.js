@@ -90,7 +90,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return msgValue;
     }
 
-    const convertSinleMsg = (msg) => {
+    const convertSingleMsg = (msg) => {
         let msgValue = msg.value;
         let type = msg.typeUrl || msg.type;
 
@@ -152,11 +152,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msgList = msg.messages;
             fee = msg.fee;
             memo = msg.memo || ""
-            throw new Error('Unsupported tx format')
         }
 
         const msgs = msgList.map(msg => {
-            return convertSinleMsg(msg)
+            return convertSingleMsg(msg)
         })
 
         return {

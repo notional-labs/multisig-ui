@@ -1,6 +1,7 @@
 import {
     AminoTypes,
-    SigningStargateClient
+    SigningStargateClient,
+    defaultRegistryTypes
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
 import { defaultRegistryTypes } from '@cosmjs/stargate';
