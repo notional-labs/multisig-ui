@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from "react"
 import Button from "../input/Button"
 import { openNotification, openLoadingNotification } from "../ulti/Notification"
-import { SigningStargateClient, } from "@cosmjs/stargate";
 import { getKey, getSequence } from "../../libs/keplrClient"
 import { encode } from "uint8-to-base64";
 import { multisigHasAddr } from "../../libs/checkTool";
 import axios from "axios";
 import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
-import { getSignningSuperClient, getCustomCLient } from "../../libs/CustomSigner";
+import { getCustomClient } from "../../libs/CustomSigner";
 
 const TransationSign = ({
     tx,
@@ -98,7 +97,7 @@ const TransationSign = ({
                 return msg.typeUrl
             })
 
-            const signingClient = await getCustomCLient(types, chain.name);
+            const signingClient = await getCustomClient(types, offlineSigner);
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),
