@@ -31,24 +31,27 @@ export const getSignningSuperClient = async (signer) => {
     return client;
 }
 
-const getAminoTypes = (animoConverters) => {
-
-}
-
 export const getCustomClient = async (types, signer) => {
+    // registry
     const registry = new Registry(defaultRegistryTypes);
     const uniqTypes = [...new Set(types)]
 
-    // get path to package
-    const paths = uniqTypes.map(type => {
+    //filter types from default registry
+    uniqTypes.filter(type => {
+        const filter = defaultRegistryTypes.filter(registry => {
+            registry[0] === type
+        })
+        if (filter.length > 0) {
+            return true
+        }
+        return false
+    })
+
+    // get amino converter from each types
+    const aminoConverters = uniqTypes.map(type => {
         type = type.slice(1, type.length)
         const splitType = type.split(".")
         splitType.pop()
-        return splitType.join('.')
-    })
-
-    const aminoConverters = paths.map(path => {
-        const splitType = path.split(".")
         let value = telescopePackage
         splitType.forEach(element => {
             if (value[element] !== null) {
@@ -59,10 +62,9 @@ export const getCustomClient = async (types, signer) => {
         return value.AminoConverter || []
     })
 
-    const spreadAminoObj = {}
+    var animoObjs = Object.assign({}, ...aminoConverters);
 
-    var animoObjs = Object.assign({}, spreadAminoObj, ...aminoConverters);
-
+    // aminotypes
     const aminoTypes = new AminoTypes({...animoObjs})
 
     const client = await SigningStargateClient.offline(
