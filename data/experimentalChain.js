@@ -218,5 +218,49 @@ export const chainObj = {
             average: 0.025,
             high: 0.03,
         },
+    },
+    "gravity-bridge-3": {
+        chainId: "gravity-bridge-3",
+        chainName: "gravity bridge",
+        rpc: "https://rpc-gravitybridge-ia.notional.ventures/",
+        rest: "https://api-gravitybridge-ia.notional.ventures/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "gravity",
+            bech32PrefixAccPub: "gravity" + "pub",
+            bech32PrefixValAddr: "gravity" + "valoper",
+            bech32PrefixValPub: "gravity" + "valoperpub",
+            bech32PrefixConsAddr: "gravity" + "valcons",
+            bech32PrefixConsPub: "gravity" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "GRAVITON",
+                coinMinimalDenom: "ugraviton",
+                coinDecimals: 6,
+                coinGeckoId: "graviton",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "GRAVITON",
+                coinMinimalDenom: "ugraviton",
+                coinDecimals: 6,
+                coinGeckoId: "graviton",
+            },
+        ],
+        stakeCurrency: {
+            coinDenom: "GRAVITON",
+            coinMinimalDenom: "ugraviton",
+            coinDecimals: 6,
+            coinGeckoId: "graviton",
+        },
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03,
+        },
     }
 }

@@ -216,6 +216,24 @@ export const chainData = [
         logo: "/images/logo/bcna.png"
     },
     {
+        chain_id: "gravity-bridge-3",
+        denom: "ugraviton",
+        base_denom: {
+            "denom": "ugraviton",
+            "exponent": 6
+        },
+        name: "gravitybridge",
+        prefix: "gravity",
+        color: "linear-gradient(to right, #08b788, #32d6aa 81%)",
+        rpc: "https://rpc-gravitybridge-ia.notional.ventures/",
+        api: "https://api-gravitybridge-ia.notional.ventures/",
+        explorer: "https://www.mintscan.io/gravity-bridge/",
+        txExplorer: "https://www.mintscan.io/gravity-bridge/txs/",
+        valExplorer: "https://www.mintscan.io/gravity-bridge/validators/",
+        govExplorer: "https://www.mintscan.io/gravity-bridge/proposals/",
+        logo: "/images/logo/grav.png"
+    },
+    {
         chain_id: "pylons-testnet-3",
         denom: "ubedrock",
         base_denom: {
