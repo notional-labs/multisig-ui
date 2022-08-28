@@ -5,6 +5,7 @@ import {
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
 import * as telescopePackage from 'osmojs';
+import * as multisigjs from 'multisigjs'
 
 export const getSignningSuperClient = async (signer) => {
     // registry
@@ -52,7 +53,7 @@ export const getCustomClient = async (types, signer) => {
         type = type.slice(1, type.length)
         const splitType = type.split(".")
         splitType.pop()
-        let value = telescopePackage
+        let value = multisigjs
         splitType.forEach(element => {
             if (value[element] !== null) {
                 value = value[element]
