@@ -75,7 +75,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msg["type"] = message["@type"]
             msg["value"] = {}
             for (const key in message) {
-                if (key === "type") continue;
+                if (key === "@type") continue;
                 msg["value"][key] = message[key];
             }
             return msg

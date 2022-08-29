@@ -215,6 +215,42 @@ export const chainData = [
         govExplorer: "https://www.mintscan.io/bitcanna/proposals/",
         logo: "/images/logo/bcna.png"
     },
+    {
+        chain_id: "gravity-bridge-3",
+        denom: "ugraviton",
+        base_denom: {
+            "denom": "ugraviton",
+            "exponent": 6
+        },
+        name: "gravitybridge",
+        prefix: "gravity",
+        color: "linear-gradient(to right, #08b788, #32d6aa 81%)",
+        rpc: "https://rpc-gravitybridge-ia.notional.ventures/",
+        api: "https://api-gravitybridge-ia.notional.ventures/",
+        explorer: "https://www.mintscan.io/gravity-bridge/",
+        txExplorer: "https://www.mintscan.io/gravity-bridge/txs/",
+        valExplorer: "https://www.mintscan.io/gravity-bridge/validators/",
+        govExplorer: "https://www.mintscan.io/gravity-bridge/proposals/",
+        logo: "/images/logo/grav.png"
+    },
+    {
+        chain_id: "pylons-testnet-3",
+        denom: "ubedrock",
+        base_denom: {
+            "denom": "ubedrock",
+            "exponent": 6
+        },
+        name: "pylons",
+        prefix: "pylo",
+        color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
+        rpc: "https://rpc-pylons-ia.notional.ventures/",
+        api: "https://api-pylons-ia.notional.ventures/",
+        explorer: "https://pylons.explorers.guru/",
+        txExplorer: "https://pylons.explorers.guru/transaction/",
+        valExplorer: "https://pylons.explorers.guru/validator/",
+        govExplorer: "https://pylons.explorers.guru/proposal/",
+        logo: "/images/logo/pylons.png"
+    },
 ]
 
 export const prefixToId = {
@@ -229,7 +265,9 @@ export const prefixToId = {
     "regen": 8,
     "omniflix": 9,
     "cheqd": 10,
-    "bcna": 11
+    "bcna": 11,
+    "gravity": 12,
+    "pylo": 13
 }
 
 
@@ -245,7 +283,9 @@ export const idToChainId = {
     8: "regen-1",
     9: "omniflixhub-1",
     10: "cheqd-mainnet-1",
-    11: "bitcanna-1"
+    11: "bitcanna-1",
+    12: "gravity-bridge-3",
+    13: "pylons-testnet-3"
 }
 
 
