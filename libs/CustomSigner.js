@@ -59,14 +59,14 @@ export const getCustomClient = async (types, signer) => {
                 value = value[element]
             }
         });
-        value.load && typeof value.load === 'function' && value.load(registry)
-        return value.AminoConverter || []
+        value && value.load && typeof value.load === 'function' && value.load(registry)
+        return value ? value.AminoConverter : {}
     })
 
     var animoObjs = Object.assign({}, ...aminoConverters);
 
     // aminotypes
-    const aminoTypes = new AminoTypes({...animoObjs})
+    const aminoTypes = new AminoTypes({ ...animoObjs })
 
     const client = await SigningStargateClient.offline(
         signer,
@@ -74,4 +74,22 @@ export const getCustomClient = async (types, signer) => {
     );
 
     return client;
+}
+
+export const getCustomAminoConverter = (type) => {
+    let aminoConverter
+
+    type = type.slice(1, type.length)
+    const splitType = type.split(".")
+    splitType.pop()
+    let value = multisigjs
+    splitType.forEach(element => {
+        if (value[element] !== null) {
+            value = value[element]
+        }
+    });
+
+    aminoConverter = value ? value.AminoConverter : null
+
+    return aminoConverter;
 }

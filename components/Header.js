@@ -30,7 +30,7 @@ const logo = (
     </Link>
 )
 
-const Header = ({ enableSelectChain }) => {
+const Header = ({ enableSelectChain, checkType }) => {
     const { chain } = useContext(ChainContext)
 
     return (
@@ -46,24 +46,35 @@ const Header = ({ enableSelectChain }) => {
                 zIndex: 5
             }}
         >
-            <FlexRow
-                components={[
-                    logo,
+            {
+                !checkType ? (
                     <FlexRow
                         components={[
-                            <SelectChain
-                                enableSelectChain={enableSelectChain}
+                            logo,
+                            <FlexRow
+                                components={[
+                                    <SelectChain
+                                        enableSelectChain={enableSelectChain}
+                                    />,
+                                    <Account
+                                        chainId={chain.chain_id}
+                                        chainName={chain.name}
+                                    />
+                                ]}
+                                justifyContent={"space-between"}
                             />,
-                            <Account
-                                chainId={chain.chain_id}
-                                chainName={chain.name}
-                            />
                         ]}
                         justifyContent={"space-between"}
-                    />,
-                ]}
-                justifyContent={"space-between"}
-            />
+                    />
+                ) : (
+                    <FlexRow
+                        components={[
+                            logo,
+                        ]}
+                        justifyContent={"space-between"}
+                    />
+                )
+            }
         </div>
     )
 }
