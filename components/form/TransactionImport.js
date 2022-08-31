@@ -1,5 +1,5 @@
 import Button from "../input/Button"
-import { CloseOutlined } from "@ant-design/icons"
+import { CloseOutlined, QuestionCircleOutlined } from "@ant-design/icons"
 import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
@@ -79,7 +79,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return msgValue;
     }
 
-    const convertSinleMsg = (msg) => {
+    const convertSingleMsg = (msg) => {
         let msgValue = msg.value;
         let type = msg.typeUrl || msg.type;
 
@@ -93,8 +93,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         const posi = typeMsg.indexOf(type);
         if (posi > -1) {
             type = typeMsgConversion[posi];
-        } else if (!typeMsgConversion.includes(type)) {
-            throw new Error("Unsupported or Wrong Transaction Type. Check Again Your Transaction Type")
         }
 
         // convert to compatible field
@@ -138,11 +136,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msgList = msg.messages;
             fee = msg.fee;
             memo = msg.memo || ""
-            throw new Error('Unsupported tx format')
         }
 
         const msgs = msgList.map(msg => {
-            return convertSinleMsg(msg)
+            return convertSingleMsg(msg)
         })
 
         return {
@@ -259,7 +256,29 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     marginBottom: "20px"
                 }}
             >
-                *Currently support Send, WithdrawDelegatorReward, Delegate, Undelegate, BeginRedelegate type message
+                *Currently supported type message can be check in the link below
+            </div>
+            <div
+                style={{
+                    fontStyle: "italic",
+                    color: "#636363",
+                    marginBottom: "20px"
+                }}
+            >
+                <QuestionCircleOutlined />
+                <span
+                    style={{
+                        marginLeft: "10px"
+                    }}
+                >
+                    <a
+                        href={'/check'}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Check type support
+                    </a>
+                </span>
             </div>
             <div>
                 <TextArea

@@ -5,10 +5,9 @@ import { deleteSignature, updateSignature } from "../../libs/faunaClient"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import Tooltip from "antd/lib/tooltip"
 import { RetweetOutlined, DeleteOutlined } from "@ant-design/icons"
-import { SigningStargateClient } from "@cosmjs/stargate/build/signingstargateclient"
 import { encode } from "uint8-to-base64"
-import { getAccount, getSequence } from "../../libs/keplrClient"
-import { useState } from "react"
+import { getSequence } from "../../libs/keplrClient"
+import { getCustomClient } from "../../libs/CustomSigner"
 
 const SignerList = ({
     currentSignatures,
@@ -53,7 +52,11 @@ const SignerList = ({
             );
             const signAccount = await getSequence(chain.api, address)
 
-            const signingClient = await SigningStargateClient.offline(offlineSigner);
+            const types = tx.msgs.map(msg => {
+                return msg.typeUrl
+            })
+
+            const signingClient = await getCustomClient(types, offlineSigner);
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),

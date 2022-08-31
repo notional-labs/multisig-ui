@@ -1,6 +1,6 @@
 import FlexRow from "./flex_box/FlexRow"
 import Button from "./input/Button"
-import { GithubFilled, TwitterOutlined, GlobalOutlined } from "@ant-design/icons"
+import { GithubFilled, TwitterOutlined, GlobalOutlined, CheckCircleOutlined } from "@ant-design/icons"
 
 const style = {
     button: {
@@ -21,6 +21,36 @@ const Footer = () => {
                 color: "white",
             }}
         >
+            <div
+                style={{
+                   marginBottom: "20px"
+                }}
+            >
+                <div>
+                    <h3
+                        style={{
+                            color: "white"
+                        }}
+                    >
+                        Tools
+                    </h3>
+                    <Button
+                        style={{
+                            ...style.button,
+                            fontSize: "12px"
+                        }}
+                        text={(
+                            <div>
+                                <CheckCircleOutlined /> Check Msg Type
+                            </div>
+                        )}
+                        type={"a"}
+                        url={"/check"}
+                        index={1}
+                    />
+                </div>
+            </div>
+            <hr/>
             <FlexRow
                 components={[
                     <FlexRow
@@ -28,7 +58,7 @@ const Footer = () => {
                             <Button
                                 style={style.button}
                                 text={(
-                                    <GithubFilled style={{}}/>
+                                    <GithubFilled style={{}} />
                                 )}
                                 type={"a"}
                                 url={"https://github.com/notional-labs/"}
@@ -73,6 +103,9 @@ const Footer = () => {
                     </text>
                 ]}
                 justifyContent={"space-between"}
+                style={{
+                    marginTop: "20px"
+                }}
             />
         </div>
     )

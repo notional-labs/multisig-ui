@@ -2,13 +2,14 @@ import Header from "../Header"
 import Footer from "../Footer";
 import TopUpButton from "../input/TopUpButton";
 
-const Page = ({ enableSelectChain = true, children }) => {
+const Page = ({ enableSelectChain = true, checkType = false, children }) => {
     return (
         <div
             className="page-container"
         >
             <Header
                 enableSelectChain={enableSelectChain}
+                checkType={checkType}
             />
             <div
                 style={{

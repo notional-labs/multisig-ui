@@ -97,6 +97,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     border: "solid 1px black",
                     borderRadius: "10px",
                     padding: ".5em",
+                    overFlow: "hidden"
                 }}
                 clickFunction={() => handleSelect(index)}
             />
@@ -129,7 +130,8 @@ const SelectChain = ({ enableSelectChain }) => {
                     backgroundColor: "#FFFFFF",
                     padding:  enableSelectChain ? ".75em 1em" : ".75em",
                     width: enableSelectChain && "170px",
-                    height: "100%"
+                    height: "100%",
+                    overFlow: "hidden"
                 }}
                 disable={!enableSelectChain}
             />
@@ -144,6 +146,7 @@ const SelectChain = ({ enableSelectChain }) => {
                         backgroundColor: "#ffffff",
                         borderRadius: "10px",
                         padding: ".05em",
+                        width: '100%'
                     }}
                 >
                     <text
@@ -156,7 +159,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     <div
                         style={{
                             display: "grid",
-                            gridTemplateColumns: "repeat(3, 1fr)",
+                            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
                             gridRowGap: "10px",
                             gridColumnGap: "10px",
                             marginTop: "10px"
