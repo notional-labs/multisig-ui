@@ -7,8 +7,7 @@ import Button from "../components/input/Button";
 import FlexRow from "../components/flex_box/FlexRow";
 import { motion } from "framer-motion";
 import Input from "antd/lib/input";
-import JSONInput from "react-json-editor-ajrm";
-import locale from "react-json-editor-ajrm/locale/en";
+import SupportMsg from "../components/list/SupportMsg";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons"
 
 const style = {
@@ -156,20 +155,8 @@ export default function Check() {
                         </h3>
                         {
                             suggest && (
-                                <JSONInput
-                                    id="json_view"
-                                    placeholder={suggest}
-                                    locale={locale}
-                                    height="250px"
-                                    width={"100%"}
-                                    viewOnly={true}
-                                    style={{
-                                        body: {
-                                            fontSize: "1rem",
-                                            borderRadius: "10px",
-                                            padding: ".5em"
-                                        },
-                                    }}
+                                <SupportMsg
+                                    aminoConverter={suggest}
                                 />
                             )
                         }
