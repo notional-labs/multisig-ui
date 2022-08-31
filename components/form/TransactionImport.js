@@ -274,7 +274,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     <a
                         href={'/check'}
                         target="_blank"
-                        
+                        rel="noreferrer"
                     >
                         Check type support
                     </a>
