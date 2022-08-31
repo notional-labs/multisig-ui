@@ -43,6 +43,7 @@ export default function Check() {
         }
         else {
             setSuggest(null)
+            setCheck(false)
         }
     }
 
