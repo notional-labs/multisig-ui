@@ -224,7 +224,7 @@ export const chainData = [
         },
         name: "gravitybridge",
         prefix: "gravity",
-        color: "linear-gradient(to right, #08b788, #32d6aa 81%)",
+        color: "linear-gradient(to right, #181ed9, #181ed9 81%)",
         rpc: "https://rpc-gravitybridge-ia.notional.ventures/",
         api: "https://api-gravitybridge-ia.notional.ventures/",
         explorer: "https://www.mintscan.io/gravity-bridge/",
