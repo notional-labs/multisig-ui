@@ -19,7 +19,6 @@ echo "Service file copied!"
 
 npm install
 npm run build
-npm start
 
 if [ $? -eq 0 ]; then
     systemctl restart multisig.notional.ventures.service
