@@ -22,11 +22,7 @@
     "framer-motion": "^6.3.16",
     "fs": "^0.0.1-security",
     "json-formatter-js": "^2.3.4",
-<<<<<<< HEAD
     "multisigjs": "^0.1.1",
-=======
-    "multisigjs": "^0.1.0",
->>>>>>> 706c382003b7b2f9bae380c124e17dc74bb27889
     "next": "12.1.6",
     "nextjs-progressbar": "^0.0.14",
     "osmojs": "^0.9.3",
