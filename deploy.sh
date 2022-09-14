@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 git stash
 git pull
 if ! [ $? -eq 0 ]; then
