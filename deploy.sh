@@ -1,6 +1,5 @@
 #!/bin/bash
 source ~/.bashrc
-which npm
 git stash
 git pull
 if ! [ $? -eq 0 ]; then
