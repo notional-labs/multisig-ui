@@ -13,6 +13,7 @@ if [ -f "../env-multisig" ]; then
 fi
   
 cp multisig.notional.ventures.service /etc/systemd/system/multisig.notional.ventures.service
+systemctl daemon-reload
 echo "Service file copied!"
 
 if [ $? -eq 0 ]; then
