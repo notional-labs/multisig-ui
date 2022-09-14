@@ -2,6 +2,7 @@
 source ~/.bashrc
 git stash
 git pull
+export PATH=/root/.nvm/versions/node/v18.9.0/bin:$PATH
 if ! [ $? -eq 0 ]; then
     echo "git pull failed with errors."
     exit 1
@@ -15,6 +16,10 @@ fi
 cp multisig.notional.ventures.service /etc/systemd/system/multisig.notional.ventures.service
 systemctl daemon-reload
 echo "Service file copied!"
+
+npm install
+npm run build
+npm start
 
 if [ $? -eq 0 ]; then
     systemctl restart multisig.notional.ventures.service
