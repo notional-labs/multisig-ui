@@ -5,7 +5,7 @@ Description=Multisig Deploy Service
 Restart=always
 RestartSec=3
 WorkingDirectory=/root/multisig.notional.ventures
-ExecStart=/root/.nvm/versions/node/v18.9.0/bin/npminstall && /root/.nvm/versions/node/v18.9.0/bin/npmrun build && /root/.nvm/versions/node/v18.9.0/bin/npmstart
+ExecStart=/root/.nvm/versions/node/v18.9.0/bin/npm install && /root/.nvm/versions/node/v18.9.0/bin/npm run build && /root/.nvm/versions/node/v18.9.0/bin/npm start
 
 [Install]
 WantedBy=multi-user.target
