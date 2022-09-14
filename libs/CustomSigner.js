@@ -4,33 +4,32 @@ import {
     defaultRegistryTypes
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
-import * as telescopePackage from 'osmojs';
 import * as multisigjs from 'multisigjs'
 
-export const getSignningSuperClient = async (signer) => {
-    // registry
-    const registry = new Registry(defaultRegistryTypes);
+// export const getSignningSuperClient = async (signer) => {
+//     // registry
+//     const registry = new Registry(defaultRegistryTypes);
 
-    // aminotypes
-    const aminoTypes = new AminoTypes({
-        ...telescopePackage.cosmwasm.wasm.v1.AminoConverter,
-        ...telescopePackage.osmosis.gamm.v1beta1.AminoConverter,
-        ...telescopePackage.osmosis.lockup.AminoConverter,
-        ...telescopePackage.osmosis.superfluid.AminoConverter
-    });
+//     // aminotypes
+//     const aminoTypes = new AminoTypes({
+//         ...telescopePackage.cosmwasm.wasm.v1.AminoConverter,
+//         ...telescopePackage.osmosis.gamm.v1beta1.AminoConverter,
+//         ...telescopePackage.osmosis.lockup.AminoConverter,
+//         ...telescopePackage.osmosis.superfluid.AminoConverter
+//     });
 
-    telescopePackage.cosmwasm.wasm.v1.load(registry);
-    telescopePackage.osmosis.gamm.v1beta1.load(registry);
-    telescopePackage.osmosis.lockup.load(registry);
-    telescopePackage.osmosis.superfluid.load(registry);
+//     telescopePackage.cosmwasm.wasm.v1.load(registry);
+//     telescopePackage.osmosis.gamm.v1beta1.load(registry);
+//     telescopePackage.osmosis.lockup.load(registry);
+//     telescopePackage.osmosis.superfluid.load(registry);
 
-    const client = await SigningStargateClient.offline(
-        signer,
-        { registry, aminoTypes }
-    );
+//     const client = await SigningStargateClient.offline(
+//         signer,
+//         { registry, aminoTypes }
+//     );
 
-    return client;
-}
+//     return client;
+// }
 
 export const getCustomClient = async (types, signer) => {
     // registry
@@ -59,14 +58,14 @@ export const getCustomClient = async (types, signer) => {
                 value = value[element]
             }
         });
-        value.load && typeof value.load === 'function' && value.load(registry)
-        return value.AminoConverter || []
+        value && value.load && typeof value.load === 'function' && value.load(registry)
+        return value ? value.AminoConverter : {}
     })
 
     var animoObjs = Object.assign({}, ...aminoConverters);
 
     // aminotypes
-    const aminoTypes = new AminoTypes({...animoObjs})
+    const aminoTypes = new AminoTypes({ ...animoObjs })
 
     const client = await SigningStargateClient.offline(
         signer,
@@ -74,4 +73,22 @@ export const getCustomClient = async (types, signer) => {
     );
 
     return client;
+}
+
+export const getCustomAminoConverter = (type) => {
+    let aminoConverter
+
+    type = type.slice(1, type.length)
+    const splitType = type.split(".")
+    splitType.pop()
+    let value = multisigjs
+    splitType.forEach(element => {
+        if (value[element] !== null) {
+            value = value[element]
+        }
+    });
+
+    aminoConverter = value ? value.AminoConverter : null
+
+    return aminoConverter;
 }

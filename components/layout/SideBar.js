@@ -103,7 +103,8 @@ const SideBar = ({ option }) => {
                 zIndex: 5,
                 backgroundColor: "#ffffff",
                 padding: "0 30em",
-                boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.25)"
+                boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.25)",
+                display: option === -1 && "none"
             }}
         >
             {

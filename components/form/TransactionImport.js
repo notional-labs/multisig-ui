@@ -1,5 +1,5 @@
 import Button from "../input/Button"
-import { CloseOutlined } from "@ant-design/icons"
+import { CloseOutlined, QuestionCircleOutlined } from "@ant-design/icons"
 import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
@@ -25,17 +25,6 @@ const typeMsgConversion = [
     "/cosmos.bank.v1beta1.MsgSend",
     "/cosmos.staking.v1beta1.MsgUndelegate",
     "/cosmos.staking.v1beta1.MsgBeginRedelegate"
-]
-
-const gammTypeMsg = [
-    "/osmosis.gamm.v1beta1.MsgJoinPool",
-    "/osmosis.gamm.v1beta1.MsgExitPool",
-    "/osmosis.gamm.v1beta1.MsgSwapExactAmountIn",
-    "/osmosis.gamm.v1beta1.MsgSwapExactAmountOut",
-    "/osmosis.gamm.v1beta1.MsgJoinSwapExternAmountIn",
-    "/osmosis.gamm.v1beta1.MsgJoinSwapShareAmountOut",
-    "/osmosis.gamm.v1beta1.MsgExitSwapExternAmountOut",
-    "/osmosis.gamm.v1beta1.MsgExitSwapShareAmountIn"
 ]
 
 const style = {
@@ -75,7 +64,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msg["type"] = message["@type"]
             msg["value"] = {}
             for (const key in message) {
-                if (key === "type") continue;
+                if (key === "@type") continue;
                 msg["value"][key] = message[key];
             }
             return msg
@@ -104,11 +93,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         const posi = typeMsg.indexOf(type);
         if (posi > -1) {
             type = typeMsgConversion[posi];
-        }
-        else if (!typeMsgConversion.includes(type)) {
-            if (!gammTypeMsg.includes(type)) {
-                throw new Error("Unsupported or Wrong Transaction Type. Check Again Your Transaction Type")
-            }
         }
 
         // convert to compatible field
@@ -272,7 +256,29 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     marginBottom: "20px"
                 }}
             >
-                *Currently support Send, WithdrawDelegatorReward, Delegate, Undelegate, BeginRedelegate type message
+                *Currently supported type message can be check in the link below
+            </div>
+            <div
+                style={{
+                    fontStyle: "italic",
+                    color: "#636363",
+                    marginBottom: "20px"
+                }}
+            >
+                <QuestionCircleOutlined />
+                <span
+                    style={{
+                        marginLeft: "10px"
+                    }}
+                >
+                    <a
+                        href={'/check'}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Check type support
+                    </a>
+                </span>
             </div>
             <div>
                 <TextArea

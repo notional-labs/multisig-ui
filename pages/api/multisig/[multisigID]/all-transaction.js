@@ -6,10 +6,9 @@ export default async function handler(req, res) {
             try {
                 const {multisigID} = req.query
                 const saveRes = await getTransactionsOfMultisig(multisigID);
-                console.log(saveRes.data)
                 res.status(200).send(saveRes.data.data.getTxByMultisig.data);
             } catch (err) {
-                console.log(err.message)
+                console.log(err.message) 
                 res.status(400).send(err.message);
             }
     }
