@@ -11,13 +11,9 @@ if [ -f "../env-multisig" ]; then
     echo "Multisig env file exists."
     cp ../env-multisig .env
 fi
-
-if [ -f "/etc/systemd/system/multisig.notional.ventures.service" ]; then
-    echo "Found service file!"
-else    
-    cp multisig.notional.ventures.service /etc/systemd/system/multisig.notional.ventures.service
-    echo "Service file copied!"
-fi
+  
+cp multisig.notional.ventures.service /etc/systemd/system/multisig.notional.ventures.service
+echo "Service file copied!"
 
 if [ $? -eq 0 ]; then
     systemctl restart multisig.notional.ventures.service
