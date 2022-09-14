@@ -19,9 +19,6 @@ else
     echo "Service file copied!"
 fi
 
-npm install
-npm run build
-
 if [ $? -eq 0 ]; then
     systemctl restart multisig.notional.ventures.service
     systemctl is-active --quiet multisig.notional.ventures.service && echo "Multisg web server restarted successfully." || (echo "Multisig web server failed to restart." && exit 1)
