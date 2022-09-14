@@ -1,8 +1,8 @@
 #!/bin/bash
-source ~/.bashrc
 git stash
 git pull
 export PATH=/root/.nvm/versions/node/v18.9.0/bin:$PATH
+
 if ! [ $? -eq 0 ]; then
     echo "git pull failed with errors."
     exit 1
@@ -22,7 +22,7 @@ npm run build
 
 if [ $? -eq 0 ]; then
     systemctl restart multisig.notional.ventures.service
-    systemctl is-active --quiet multisig.notional.ventures.service && echo "Multisg web server restarted successfully." || (echo "Multisig web server failed to restart." && exit 1)
+    systemctl is-active --quiet multisig.notional.ventures.service && echo "Multisig web server restarted successfully." || (echo "Multisig web server failed to restart." && exit 1)
 else
     echo "npm run build failed with error. Stopped restarting the web server."
     exit 1
