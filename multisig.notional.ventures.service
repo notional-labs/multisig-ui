@@ -2,8 +2,6 @@
 Description=Multisig Deploy Service
 
 [Service]
-Restart=always
-RestartSec=3
 WorkingDirectory=/root/multisig.notional.ventures
 ExecStart=/bin/bash -c "PATH=/root/.nvm/versions/node/v18.9.0/bin:$PATH /root/.nvm/versions/node/v18.9.0/bin/npm start"
 

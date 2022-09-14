@@ -12,8 +12,9 @@ if [ -f "../env-multisig" ]; then
     echo "Multisig env file exists."
     cp ../env-multisig .env
 fi
-  
+
 cp multisig.notional.ventures.service /etc/systemd/system/multisig.notional.ventures.service
+systemctl stop multisig.notional.ventures.service
 systemctl daemon-reload
 echo "Service file copied!"
 
