@@ -4,7 +4,8 @@ Description=Multisig Deploy Service
 [Service]
 Restart=always
 RestartSec=3
-ExecStart=cd /root/multisig.notional.ventures && $(which npm) start
+WorkingDirectory=/root/multisig.notional.ventures
+ExecStart=$(which npm) start
 
 [Install]
 WantedBy=multi-user.target
