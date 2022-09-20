@@ -12,8 +12,12 @@ const Account = ({ chainId, chainName }) => {
             const keplrAccount = await getAccount(chainId)
             const currentAccount = localStorage.getItem("account")
             if (currentAccount && currentAccount !== "") {
-                localStorage.setItem("account", JSON.stringify(keplrAccount))
-                setAccount(JSON.stringify(keplrAccount))
+                const acc = {
+                    ...keplrAccount,
+                    type: "keplr"
+                }
+                localStorage.setItem("account", JSON.stringify(acc))
+                setAccount(JSON.stringify(acc))
             }
         }
         catch (e) {
@@ -28,22 +32,6 @@ const Account = ({ chainId, chainName }) => {
             window.removeEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
         }
     }, []);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const currentAccount = localStorage.getItem("account")
-                if (currentAccount && currentAccount !== "") {
-                    const keplrAccount = await getAccount(chainId)
-                    localStorage.setItem("account", JSON.stringify(keplrAccount))
-                    setAccount(JSON.stringify(keplrAccount))
-                }
-            }
-            catch (e) {
-                openNotification('error', e.message)
-            }
-        })()
-    }, [])
 
     useEffect(() => {
         (async () => {

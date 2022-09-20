@@ -11,7 +11,7 @@ const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
         window.keplr && window.addEventListener("keplr_keystorechange", async () => {
             try {
                 const acc = await getKey(chain.chain_id)
-            setAccount(acc)
+                setAccount({ ...acc, type: "keplr" })
             }
             catch (e) {
                 alert(e.message)

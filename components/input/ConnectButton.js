@@ -1,6 +1,5 @@
 import Button from "./Button"
 import { getKey } from "../../libs/keplrClient"
-import { useRouter } from "next/router"
 import { openNotification } from "../ulti/Notification"
 import { useState } from "react"
 import { Modal } from "antd"
@@ -58,7 +57,7 @@ const ConnectButton = ({ chainId, setAccount }) => {
     const connectKeplr = async () => {
         try {
             const account = await getKey(chainId)
-            localStorage.setItem("account", JSON.stringify(account))
+            localStorage.setItem("account", JSON.stringify({...account, type: "keplr"}))
             window.dispatchEvent(new Event("storage"))
             setAccount(JSON.stringify(account))
         }
@@ -70,6 +69,7 @@ const ConnectButton = ({ chainId, setAccount }) => {
     const connectLedger = async () => {
         try {
             await getLedgerAccount()
+            window.dispatchEvent(new Event("storage"))
         }
         catch (e) {
             openNotification("error", e.message)

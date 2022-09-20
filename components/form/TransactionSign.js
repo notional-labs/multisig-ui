@@ -8,6 +8,7 @@ import axios from "axios";
 import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
 import { getCustomClient } from "../../libs/CustomSigner";
+import { getLedgerSigner } from "../../libs/ledger";
 
 const TransationSign = ({
     tx,
@@ -25,13 +26,34 @@ const TransationSign = ({
     const [accountError, setAccountError] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
-        try{
+        try {
             const currentAccount = await getKey(chain.chain_id)
             const checkHasSigned = currentSignatures.some(
                 (sig) => sig.address === currentAccount.bech32Address
             );
             setHasSigned(checkHasSigned)
-            setAccount(currentAccount)
+            setAccount({ ...currentAccount, type: "keplr" })
+        }
+        catch (e) {
+            alert(e.message)
+        }
+    }, []);
+
+    const storageListener = useCallback(async (event) => {
+        try {
+            const account = localStorage.getItem("account")
+            const acc = JSON.parse(account)
+            let checkHasSigned
+            if (acc && acc !== "") {
+                checkHasSigned = currentSignatures.some(
+                    (sig) => sig.address === acc.bech32Address
+                );
+            }
+            else {
+                checkHasSigned = false
+            }
+            setHasSigned(checkHasSigned)
+            setAccount(acc)
         }
         catch (e) {
             alert(e.message)
@@ -40,16 +62,18 @@ const TransationSign = ({
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
-
+        window.addEventListener("storage", storageListener)
         return () => {
             window.removeEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
+            window.removeEventListener("storage", storageListener)
         }
     }, []);
 
     useEffect(() => {
         (async () => {
             try {
-                const acc = await getKey(chain.chain_id)
+                const storageAcc = localStorage.getItem("account")
+                const acc = JSON.parse(storageAcc)
                 const checkHasSigned = currentSignatures.some(
                     (sig) => sig.address === acc.bech32Address
                 );
@@ -81,16 +105,26 @@ const TransationSign = ({
     const signTransaction = async () => {
         openLoadingNotification("open", "Creating signature")
         try {
-            window.keplr.defaultOptions = {
-                sign: {
-                    preferNoSetMemo: true,
-                    preferNoSetFee: true,
-                    disableBalanceCheck: true,
-                },
-            };
-            const offlineSigner = window.getOfflineSignerOnlyAmino(
-                chain.chain_id
-            );
+            let offlineSigner
+            if (account.type === "keplr") {
+                // keplr offlineSigner
+                window.keplr.defaultOptions = {
+                    sign: {
+                        preferNoSetMemo: true,
+                        preferNoSetFee: true,
+                        disableBalanceCheck: true,
+                    },
+                };
+                offlineSigner = window.getOfflineSignerOnlyAmino(
+                    chain.chain_id
+                );
+
+            }
+            else {
+                // ledger offlineSigner
+                offlineSigner = await getLedgerSigner()
+            }
+
             const signAccount = await getSequence(chain.api, multisigID)
 
             const types = tx.msgs.map(msg => {
@@ -202,6 +236,7 @@ const TransationSign = ({
                 setHasSigned={setHasSigned}
                 removeSignature={removeSignature}
                 editSignature={editSignature}
+                currentSigner={account}
             />
         </div>
     )

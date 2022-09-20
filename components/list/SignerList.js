@@ -8,6 +8,7 @@ import { RetweetOutlined, DeleteOutlined } from "@ant-design/icons"
 import { encode } from "uint8-to-base64"
 import { getSequence } from "../../libs/keplrClient"
 import { getCustomClient } from "../../libs/CustomSigner"
+import { getLedgerSigner } from "../../libs/ledger"
 
 const SignerList = ({
     currentSignatures,
@@ -21,6 +22,7 @@ const SignerList = ({
     transactionID,
     removeSignature,
     editSignature,
+    currentSigner
 }) => {
     const deleteSig = async (id) => {
         openLoadingNotification("open", "Deleting Signature")
@@ -40,16 +42,25 @@ const SignerList = ({
     const updateSig = async (id) => {
         openLoadingNotification("open", "Resigning Signature")
         try {
-            window.keplr.defaultOptions = {
-                sign: {
-                    preferNoSetMemo: true,
-                    preferNoSetFee: true,
-                    disableBalanceCheck: true,
-                },
-            };
-            const offlineSigner = window.getOfflineSignerOnlyAmino(
-                chain.chain_id
-            );
+            let offlineSigner
+            if (currentSigner.type === "keplr") {
+                // keplr offlineSigner
+                window.keplr.defaultOptions = {
+                    sign: {
+                        preferNoSetMemo: true,
+                        preferNoSetFee: true,
+                        disableBalanceCheck: true,
+                    },
+                };
+                offlineSigner = window.getOfflineSignerOnlyAmino(
+                    chain.chain_id
+                );
+
+            }
+            else {
+                // ledger offlineSigner
+                offlineSigner = await getLedgerSigner()
+            }
             const signAccount = await getSequence(chain.api, address)
 
             const types = tx.msgs.map(msg => {

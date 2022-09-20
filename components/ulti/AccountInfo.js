@@ -37,7 +37,8 @@ const AccountInfo = ({
     transactionID,
     walletAccount,
     setHasSigned,
-    tx
+    tx,
+    currentSigner
 }) => {
     const [account, setAccount] = useState({
         accountNumber: "",
@@ -198,6 +199,7 @@ const AccountInfo = ({
                 transactionID={transactionID}
                 removeSignature={removeSignature}
                 editSignature={editSignature}
+                currentSigner={currentSigner}
             />
         </div>
     )
