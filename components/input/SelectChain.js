@@ -83,7 +83,8 @@ const SelectChain = ({ enableSelectChain }) => {
                                         fontSize: "1rem",
                                         color: "#000000",
                                         position: "relative",
-                                        top: "3px"
+                                        top: "3px",
+                                        maxWidth: "200px"
                                     }}
                                 >
                                     {chainInfo.name.toUpperCase()}
@@ -97,7 +98,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     border: "solid 1px black",
                     borderRadius: "10px",
                     padding: ".5em",
-                    overFlow: "hidden"
+                    overflow: "hidden"
                 }}
                 clickFunction={() => handleSelect(index)}
             />
@@ -131,7 +132,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     padding:  enableSelectChain ? ".75em 1em" : ".75em",
                     width: enableSelectChain && "170px",
                     height: "100%",
-                    overFlow: "hidden"
+                    overflow: "hidden"
                 }}
                 disable={!enableSelectChain}
             />
@@ -140,6 +141,7 @@ const SelectChain = ({ enableSelectChain }) => {
                 footer={null}
                 closable={false}
                 onCancel={handleClose}
+                width={"50%"}
             >
                 <div
                     style={{
