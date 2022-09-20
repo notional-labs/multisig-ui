@@ -13,11 +13,10 @@ const style = {
         color: "black",
         borderRadius: "10px",
         fontSize: "1.25rem",
-        padding: ".25em 1em",
+        padding: ".5em 1em",
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        padding: ".5em"
     }
 }
 
