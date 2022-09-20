@@ -10,8 +10,7 @@ import { Image } from "antd"
 
 const style = {
     button: {
-        border: "solid 2px #63b9ff",
-        backgroundColor: "#a6c8ff",
+        border: "solid 1px black",
         color: "black",
         borderRadius: "10px",
         fontSize: "1.25rem",
@@ -89,9 +88,9 @@ const ConnectButton = ({ chainId, setAccount }) => {
                 clickFunction={connect}
                 text={"Connect"}
                 style={{
-                    border: "solid 2px white",
-                    backgroundImage: "linear-gradient(93.58deg, #D9D9D9 0%, #808080 100%)",
-                    color: "black",
+                    border: "solid 1px white",
+                    backgroundColor: "#808080",
+                    color: "white",
                     borderRadius: "10px",
                     fontSize: "1.25rem",
                     padding: ".25em 1em",
@@ -133,6 +132,7 @@ const ConnectButton = ({ chainId, setAccount }) => {
                         style={{
                             ...style.button,
                             marginBottom: "10px",
+                            marginTop: "10px"
                         }}
                     />
                     <Button
