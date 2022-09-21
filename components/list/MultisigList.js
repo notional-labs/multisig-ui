@@ -4,13 +4,14 @@ import MultisigRowView from "../data_view/MultisigRowView"
 import { ChainContext } from "../Context"
 import { getKey } from "../../libs/keplrClient"
 import ButtonList from "../input/ButtonList"
-import { idToChainId } from "../../data/chainData"
+import { idToChainId, chainData } from "../../data/chainData"
 import { motion } from "framer-motion"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ReloadOutlined } from "@ant-design/icons";
 import { openNotification } from "../ulti/Notification"
 import EmptyPage from "../ulti/EmptyPage"
+import { getLedgerAccount } from "../../libs/ledger"
 
 const MultisigList = () => {
     const [multisigs, setMultisigs] = useState([])
@@ -27,6 +28,17 @@ const MultisigList = () => {
     const keplrKeystorechangeListener = useCallback(async (event) => {
         try {
             setLoading(true)
+            const currentAcc = localStorage.getItem("account")
+            if (!currentAcc || currentAcc === "") {
+                setLoading(false)
+                setMultisigs([])
+                return
+            }
+            const type = currentAcc && JSON.parse(currentAcc).type || ""
+            if (type === "ledger") {
+                setLoading(false)
+                return
+            }
             const account = await getKey(chain.chain_id)
             const address = account.bech32Address
             const res = await getAllMultisigOfAddress(address)
@@ -62,8 +74,23 @@ const MultisigList = () => {
             setLoading(true)
             const currentId = localStorage.getItem("current")
             const chainId = idToChainId[currentId]
-            const account = await getKey(chainId)
-            const address = account.bech32Address
+            const currentAcc = localStorage.getItem("account")
+            if (!currentAcc || currentAcc === "") {
+                setMultisigs([])
+                setParams({ ...params, total: 0 })
+                setLoading(false)
+            } 
+            let address
+            const type = JSON.parse(currentAcc).type
+            if (type === "keplr") {
+                const account = await getKey(chainId)
+                address = account.bech32Address
+            } 
+            else {
+                const prefix = chainData[currentId].prefix
+                const account = await getLedgerAccount(prefix)
+                address = account.address
+            }
             const res = await getAllMultisigOfAddress(address)
             setMultisigs([...res])
             setParams({ ...params, total: res.length })

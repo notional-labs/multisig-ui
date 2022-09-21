@@ -59,7 +59,7 @@ const SignerList = ({
             }
             else {
                 // ledger offlineSigner
-                offlineSigner = await getLedgerSigner()
+                offlineSigner = await getLedgerSigner(chain.prefix)
             }
             const signAccount = await getSequence(chain.api, address)
 

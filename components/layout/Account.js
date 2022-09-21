@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react"
 import { getKeplrAccount, getKey } from "../../libs/keplrClient"
+import { getLedgerAccount } from "../../libs/ledger"
 import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
 import { openNotification } from "../ulti/Notification"
@@ -38,9 +39,17 @@ const Account = ({ prefix, chainId, chainName }) => {
             try {
                 const currentAccount = localStorage.getItem("account")
                 if (currentAccount === "" || !currentAccount) return
-                const keplrAccount = await getAccount(chainId)
-                localStorage.setItem("account", JSON.stringify(keplrAccount))
-                setAccount(JSON.stringify(keplrAccount))
+                const type = JSON.parse(currentAccount).type || ""
+                let acc
+                if (type === "keplr") {
+                    acc = await getAccount(chainId)
+                    localStorage.setItem("account", JSON.stringify({...acc, type: "keplr"}))
+                }
+                else {
+                    account = await getLedgerAccount(prefix)
+                    localStorage.setItem("account", JSON.stringify({...acc, type: "ledger"}))
+                }
+                setAccount(JSON.stringify(acc))
             }
             catch (e) {
                 openNotification("error", e.message)

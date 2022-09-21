@@ -14,12 +14,11 @@ export const getLedgerAccount = async (prefix) => {
     }
 }
 
-export const getLedgerSigner = async () => {
+export const getLedgerSigner = async (prefix) => {
     try{
         const transport = await TransportWebUSB.create();
-        const signer = new LedgerSigner(transport)
+        const signer = new LedgerSigner(transport, {prefix: prefix})
 
-        console.log(signer)
         return signer
     }
     catch (e) {
