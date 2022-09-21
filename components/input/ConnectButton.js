@@ -6,6 +6,7 @@ import { Modal } from "antd"
 import { getLedgerAccount } from "../../libs/ledger"
 import FlexRow from "../flex_box/FlexRow"
 import { Image } from "antd"
+import { convertLedgerToKeplr } from "../../libs/stringConvert"
 
 const style = {
     button: {
@@ -42,7 +43,7 @@ const buttonText = (name, logo) => {
     )
 }
 
-const ConnectButton = ({ chainId, setAccount }) => {
+const ConnectButton = ({ prefix, chainId, setAccount }) => {
     const [showConnect, setShowConnect] = useState(false)
 
     const connect = () => {
@@ -67,8 +68,11 @@ const ConnectButton = ({ chainId, setAccount }) => {
 
     const connectLedger = async () => {
         try {
-            await getLedgerAccount()
+            const ledgerAcc = await getLedgerAccount(prefix)
+            const account = convertLedgerToKeplr(ledgerAcc)
+            localStorage.setItem("account", JSON.stringify(account))
             window.dispatchEvent(new Event("storage"))
+            setAccount(JSON.stringify(account))
         }
         catch (e) {
             openNotification("error", e.message)

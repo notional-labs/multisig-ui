@@ -1,14 +1,13 @@
 import { LedgerSigner } from "@cosmjs/ledger-amino"
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb"
 
-export const getLedgerAccount = async () => {
+export const getLedgerAccount = async (prefix) => {
     try{
         const transport = await TransportWebUSB.create();
-        const signer = new LedgerSigner(transport)
+        const signer = new LedgerSigner(transport, {prefix: prefix})
 
         const accounts = await signer.getAccounts()
-        console.log(accounts)
-        return accounts
+        return accounts && accounts.length > 0 && accounts[0]
     }
     catch (e) {
         throw e

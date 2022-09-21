@@ -4,7 +4,7 @@ import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
 import { openNotification } from "../ulti/Notification"
 
-const Account = ({ chainId, chainName }) => {
+const Account = ({ prefix, chainId, chainName }) => {
     const [account, setAccount] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
@@ -65,6 +65,7 @@ const Account = ({ chainId, chainName }) => {
         />
     ) : (
         <ConnectButton
+            prefix={prefix}
             chainId={chainId}
             setAccount={wrapperSetAccount}
         />
