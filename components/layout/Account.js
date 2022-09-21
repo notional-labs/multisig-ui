@@ -46,7 +46,7 @@ const Account = ({ prefix, chainId, chainName }) => {
                     localStorage.setItem("account", JSON.stringify({...acc, type: "keplr"}))
                 }
                 else {
-                    account = await getLedgerAccount(prefix)
+                    acc = await getLedgerAccount(prefix)
                     localStorage.setItem("account", JSON.stringify({...acc, type: "ledger"}))
                 }
                 setAccount(JSON.stringify(acc))
