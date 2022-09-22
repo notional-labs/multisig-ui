@@ -64,11 +64,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msg["type"] = message["@type"]
             msg["value"] = {}
             for (const key in message) {
-<<<<<<< HEAD
-                if (key === "type") continue;
-=======
                 if (key === "@type") continue;
->>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
                 msg["value"][key] = message[key];
             }
             return msg
@@ -83,11 +79,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return msgValue;
     }
 
-<<<<<<< HEAD
-    const convertSinleMsg = (msg) => {
-=======
     const convertSingleMsg = (msg) => {
->>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
         let msgValue = msg.value;
         let type = msg.typeUrl || msg.type;
 
@@ -144,18 +136,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msgList = msg.messages;
             fee = msg.fee;
             memo = msg.memo || ""
-<<<<<<< HEAD
-            throw new Error('Unsupported tx format')
-        }
-
-        const msgs = msgList.map(msg => {
-            return convertSinleMsg(msg)
-=======
         }
 
         const msgs = msgList.map(msg => {
             return convertSingleMsg(msg)
->>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
         })
 
         return {
