@@ -34,7 +34,11 @@ const convertKelprTransaction = (transaction) => {
     })
 
    
+<<<<<<< HEAD
     body["messages"] = [...msgs];
+=======
+    body["messages"] = [...newMsgs];
+>>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
     body["memo"] = transaction.memo;
     body["timeout_height"] = "0";
     body["extension_options"] = [];

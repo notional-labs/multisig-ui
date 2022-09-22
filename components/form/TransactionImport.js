@@ -1,5 +1,5 @@
 import Button from "../input/Button"
-import { CloseOutlined } from "@ant-design/icons"
+import { CloseOutlined, QuestionCircleOutlined } from "@ant-design/icons"
 import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
@@ -64,7 +64,11 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msg["type"] = message["@type"]
             msg["value"] = {}
             for (const key in message) {
+<<<<<<< HEAD
                 if (key === "type") continue;
+=======
+                if (key === "@type") continue;
+>>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
                 msg["value"][key] = message[key];
             }
             return msg
@@ -79,7 +83,11 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         return msgValue;
     }
 
+<<<<<<< HEAD
     const convertSinleMsg = (msg) => {
+=======
+    const convertSingleMsg = (msg) => {
+>>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
         let msgValue = msg.value;
         let type = msg.typeUrl || msg.type;
 
@@ -93,8 +101,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         const posi = typeMsg.indexOf(type);
         if (posi > -1) {
             type = typeMsgConversion[posi];
-        } else if (!typeMsgConversion.includes(type)) {
-            throw new Error("Unsupported or Wrong Transaction Type. Check Again Your Transaction Type")
         }
 
         // convert to compatible field
@@ -138,11 +144,18 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             msgList = msg.messages;
             fee = msg.fee;
             memo = msg.memo || ""
+<<<<<<< HEAD
             throw new Error('Unsupported tx format')
         }
 
         const msgs = msgList.map(msg => {
             return convertSinleMsg(msg)
+=======
+        }
+
+        const msgs = msgList.map(msg => {
+            return convertSingleMsg(msg)
+>>>>>>> 862ecad4b2e45570259ee4c6e1ae3b3f28597fd5
         })
 
         return {
@@ -259,7 +272,29 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                     marginBottom: "20px"
                 }}
             >
-                *Currently support Send, WithdrawDelegatorReward, Delegate, Undelegate, BeginRedelegate type message
+                *Currently supported type message can be check in the link below
+            </div>
+            <div
+                style={{
+                    fontStyle: "italic",
+                    color: "#636363",
+                    marginBottom: "20px"
+                }}
+            >
+                <QuestionCircleOutlined />
+                <span
+                    style={{
+                        marginLeft: "10px"
+                    }}
+                >
+                    <a
+                        href={'/check'}
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Check type support
+                    </a>
+                </span>
             </div>
             <div>
                 <TextArea
