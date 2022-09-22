@@ -6,12 +6,14 @@ on:
       - master
       - main
   pull_request:
+    types: [ opened ]
 
 jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -23,6 +25,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -30,3 +33,27 @@ jobs:
       - run: npm install
       - run: cp .env.sample .env.local
       - run: npm run build
+      
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2   
+
+    - name: Update the repo from web server
+      uses: appleboy/ssh-action@v0.1.4      
+      env:
+        NODE_OPTIONS: --openssl-legacy-provider
+        CI: false
+      with:
+        host: ${{ secrets.WEB_SERVER }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIV_KEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        envs: CI, NODE_OPTIONS
+        script: |
+          cd ~/multisig.notional.ventures
+          bash deploy.sh
+          
+          
