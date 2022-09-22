@@ -292,15 +292,16 @@ export const prefixToId = {
     "cosmos": 2,
     "akash": 3,
     "emoney": 4,
-    "sif": 5,
-    "stars": 6,
-    "kava": 7,
-    "regen": 8,
-    "omniflix": 9,
-    "cheqd": 10,
-    "bcna": 11,
-    "gravity": 12,
-    "pylo": 13
+    "evmos": 5,
+    "sif": 6,
+    "stars": 7,
+    "kava": 8,
+    "regen": 9,
+    "omniflix": 10,
+    "cheqd": 11,
+    "bcna": 12,
+    "gravity": 13,
+    "pylo": 14
 }
 
 
@@ -310,15 +311,16 @@ export const idToChainId = {
     2: "cosmoshub-4",
     3: "akashnet-2",
     4: "emoney-3",
-    5: "sifchain-1",
-    6: "stargaze-1",
-    7: "kava_2222-10",
-    8: "regen-1",
-    9: "omniflixhub-1",
-    10: "cheqd-mainnet-1",
-    11: "bitcanna-1",
-    12: "gravity-bridge-3",
-    13: "pylons-testnet-3"
+    5: "evmos_9001-2",
+    6: "sifchain-1",
+    7: "stargaze-1",
+    8: "kava_2222-10",
+    9: "regen-1",
+    10: "omniflixhub-1",
+    11: "cheqd-mainnet-1",
+    12: "bitcanna-1",
+    13: "gravity-bridge-3",
+    14: "pylons-testnet-3"
 }
 
 
