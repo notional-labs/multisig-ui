@@ -1,5 +1,5 @@
 #!/bin/bash
-git stash
+git stash save --keep-index --include-untracked
 git pull
 export PATH=/root/.nvm/versions/node/v18.9.0/bin:$PATH
 
