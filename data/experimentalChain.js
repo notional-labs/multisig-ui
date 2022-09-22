@@ -262,5 +262,49 @@ export const chainObj = {
             average: 0.025,
             high: 0.03,
         },
+    },
+    "evmos_9001-2": {
+        chainId: "evmos_9001-2",
+        chainName: "evmos",
+        rpc: "https://rpc-evmos-ia.cosmosia.notional.ventures/",
+        rest: "https://api-evmos-ia.cosmosia.notional.ventures/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "evmos",
+            bech32PrefixAccPub: "evmos" + "pub",
+            bech32PrefixValAddr: "evmos" + "valoper",
+            bech32PrefixValPub: "evmos" + "valoperpub",
+            bech32PrefixConsAddr: "evmos" + "valcons",
+            bech32PrefixConsPub: "evmos" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "EVMOS",
+                coinMinimalDenom: "aevmos",
+                coinDecimals: 18,
+                coinGeckoId: "evmos",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "EVMOS",
+                coinMinimalDenom: "aevmos",
+                coinDecimals: 18,
+                coinGeckoId: "evmos",
+            },
+        ],
+        stakeCurrency:  {
+            coinDenom: "EVMOS",
+            coinMinimalDenom: "aevmos",
+            coinDecimals: 18,
+            coinGeckoId: "evmos",
+        },
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03,
+        },
     }
 }
