@@ -1,3 +1,4 @@
+name: CI
 on:
   # Push to long living branches or PRs
   push:

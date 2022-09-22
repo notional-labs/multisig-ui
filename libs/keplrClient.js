@@ -139,6 +139,11 @@ export const getSequence = async (api, address) => {
         return data.account;
     }
     catch (e) {
-        throw new Error(e.message)
+        if (e.code === "ERR_BAD_REQUEST" || e.code === "ERR_NETWORK") {
+            throw new Error(
+                "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+            )
+        }
+        throw e
     }
 }

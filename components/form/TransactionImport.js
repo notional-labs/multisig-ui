@@ -58,45 +58,30 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const convertCLITransaction = (tx_json_parsed) => {
         const msgValue = {}
-        const msg = tx_json_parsed.body.messages[0]
-        msgValue["type"] = msg["@type"]
-        msgValue["value"] = {}
-        for (const key in msg) {
-            if (key === "type") continue;
-            msgValue["value"][key] = msg[key];
-        }
+        const messages = tx_json_parsed.body.messages
+        msgValue["messages"] = messages.map(message => {
+            const msg = {}
+            msg["type"] = message["@type"]
+            msg["value"] = {}
+            for (const key in message) {
+                if (key === "type") continue;
+                msg["value"][key] = message[key];
+            }
+            return msg
+        })
 
         const fee = tx_json_parsed.auth_info.fee;
         msgValue["fee"] = {}
         msgValue["fee"]["gas"] = fee.gas_limit;
         msgValue["fee"]["amount"] = fee.amount;
+        msgValue["memo"] = tx_json_parsed.memo;
 
         return msgValue;
     }
 
-    const createTransaction = () => {
-        let tx_json_parsed;
-        try {
-            tx_json_parsed = JSON.parse(tx);
-        } catch (err) {
-            throw new Error("Invalid Tx Json. Check TX Again!")
-        }
-
-        let msgValue;
-        let type;
-        let fee;
-        let memo
-        if ("msgs" in tx_json_parsed) {
-            msgValue = tx_json_parsed.msgs[0].value;
-            type = tx_json_parsed.msgs[0].typeUrl || tx_json_parsed.msgs[0].type;
-            fee = tx_json_parsed.fee
-            memo = tx_json_parsed.memo || ""
-        } else {
-            const msg = convertCLITransaction(tx_json_parsed);
-            msgValue = msg.value;
-            type = msg.type;
-            fee = msg.fee;
-        }
+    const convertSinleMsg = (msg) => {
+        let msgValue = msg.value;
+        let type = msg.typeUrl || msg.type;
 
         try {
             checkMsg(chain.prefix, msgValue)
@@ -127,14 +112,42 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
         // console.log(msgValue);
 
-        const msg = {
+        return {
             value: msgValue,
             typeUrl: type,
-        };
+        }
+    }
+
+    const createTransaction = () => {
+        let tx_json_parsed;
+        try {
+            tx_json_parsed = JSON.parse(tx);
+        } catch (err) {
+            throw new Error("Invalid Tx Json. Check TX Again!")
+        }
+
+        let msgList
+        let fee
+        let memo
+        if ("msgs" in tx_json_parsed) {
+            msgList = tx_json_parsed.msgs
+            fee = tx_json_parsed.fee
+            memo = tx_json_parsed.memo || ""
+        } else {
+            const msg = convertCLITransaction(tx_json_parsed);
+            msgList = msg.messages;
+            fee = msg.fee;
+            memo = msg.memo || ""
+            throw new Error('Unsupported tx format')
+        }
+
+        const msgs = msgList.map(msg => {
+            return convertSinleMsg(msg)
+        })
 
         return {
             chainId: chain.chain_id,
-            msgs: [msg],
+            msgs: [...msgs],
             fee: fee,
             memo: memo,
         };
@@ -174,7 +187,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(multisigID)
         console.log(checked)
-        if ( check && !checked ) {
+        if (check && !checked) {
             setShowWarning(true)
         }
         else {

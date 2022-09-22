@@ -298,7 +298,8 @@ export const prefixToId = {
     "regen": 8,
     "omniflix": 9,
     "cheqd": 10,
-    "bcna": 11
+    "bcna": 11,
+    "pylo": 12
 }
 
 
@@ -314,7 +315,8 @@ export const idToChainId = {
     8: "regen-1",
     9: "omniflixhub-1",
     10: "cheqd-mainnet-1",
-    11: "bitcanna-1"
+    11: "bitcanna-1",
+    12: "pylons-testnet-3"
 }
 
 

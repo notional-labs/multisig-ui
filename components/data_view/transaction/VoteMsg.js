@@ -1,4 +1,18 @@
 import { Tooltip } from "antd"
+import { motion } from "framer-motion"
+
+const style = {
+    label: {
+        width: "20%",
+        textAlign: "center",
+        fontWeight: "bold",
+        padding: '1em'
+    },
+    value: {
+        width: "80%",
+        padding: '1em'
+    }
+}
 
 const options = {
     1: "yes",
@@ -7,44 +21,66 @@ const options = {
     4: "abstain"
 }
 
-const VoteMsg = ({ tx, style, chain }) => {
+const VoteMsg = ({ chain, parentStyle, msg }) => {
     return (
         <>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     Proposal Id:
-                </label>
+                </motion.label>
                 <Tooltip placement="bottom" title="Check proposal in block explorer">
-                    <div
-                        style={style.value}
+                    <motion.div
+                        style={
+                            style.value
+                        }
                     >
                         <a
-                            href={`${chain.govExplorer}${tx.msgs[0].value.proposalId}`}
+                            href={`${chain.govExplorer}${msg.value.proposalId}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            {(tx.msgs[0].value.proposalId)}
+                            {(msg.value.proposalId)}
                         </a>
-                    </div>
+                    </motion.div>
                 </Tooltip>
             </div>
             <div
-                style={style.flexRow}
+                style={{
+                    ...parentStyle.flexRow,
+                    marginBottom: 0,
+                    borderBottom: 'solid .5px white'
+                }}
             >
-                <label
-                    style={style.label}
+                <motion.label
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.label
+                    }
                 >
                     Option:
-                </label>
-                <div
-                    style={style.value}
+                </motion.label>
+                <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    style={
+                        style.value
+                    }
                 >
-                    {options[`${tx.msgs[0].value.option}`]}
-                </div>
+                    {options[`${msg.value.option}`]}
+                </motion.div>
             </div>
         </>
     )

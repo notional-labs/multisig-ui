@@ -2,10 +2,16 @@
 
 git stash
 git pull
+if ! [ $? -eq 0 ]; then
+    echo "git pull failed with errors."
+    exit 1
+fi
+
 if [ -f "../env-multisig" ]; then
     echo "Multisig env file exists."
     cp ../env-multisig .env.local
 fi
+
 npm install
 npm run build
 if [ $? -eq 0 ]; then
