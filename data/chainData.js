@@ -15,7 +15,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/osmosis/txs/",
         valExplorer: "https://www.mintscan.io/osmosis/validators/",
         govExplorer: "https://www.mintscan.io/osmosis/proposals/",
-        logo: "/images/logo/osmosis.png"
+        logo: "/images/logo/osmosis.png",
+        hyperLink: "https://osmosis.zone/"
     },
     {
         chain_id: "juno-1",
@@ -27,13 +28,14 @@ export const chainData = [
         name: "juno",
         prefix: "juno",
         color: "linear-gradient(270.1deg, #F0827D 0%, #C5585A 100%)",
-        rpc: "https://juno-rpc.polkachu.com/",
-        api: "https://lcd-juno.itastakers.com/",
+        rpc: "https://rpc-juno-ia.cosmosia.notional.ventures/",
+        api: "https://api-juno-ia.cosmosia.notional.ventures/",
         explorer: "https://www.mintscan.io/juno/",
         txExplorer: "https://www.mintscan.io/juno/txs/",
         valExplorer: "https://www.mintscan.io/juno/validators/",
         govExplorer: "https://www.mintscan.io/juno/proposals/",
-        logo: "/images/logo/juno.png"
+        logo: "/images/logo/juno.png",
+        hyperLink: "https://www.junonetwork.io/"
     },
     {
         chain_id: "cosmoshub-4",
@@ -51,7 +53,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/cosmos/txs/",
         valExplorer: "https://www.mintscan.io/cosmos/validators/",
         govExplorer: "https://www.mintscan.io/cosmos/proposals/",
-        logo: "/images/logo/atom.png"
+        logo: "/images/logo/atom.png",
+        hyperLink: "https://cosmos.network/"
     },
     {
         chain_id: "akashnet-2",
@@ -69,7 +72,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/akash/txs/",
         valExplorer: "https://www.mintscan.io/akash/validators/",
         govExplorer: "https://www.mintscan.io/akash/proposals/",
-        logo: "/images/logo/akt.png"
+        logo: "/images/logo/akt.png",
+        hyperLink: "https://akash.network/"
     },
     {
         chain_id: "emoney-3",
@@ -87,7 +91,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/emoney/txs/",
         valExplorer: "https://www.mintscan.io/emoney/validators/",
         govExplorer: "https://www.mintscan.io/emoney/proposals/",
-        logo: "/images/logo/ngm.png"
+        logo: "/images/logo/ngm.png",
+        hyperLink: "https://emoney.com/"
     },
     {
         chain_id: "evmos_9001-2",
@@ -105,7 +110,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/evmos/txs/",
         valExplorer: "https://www.mintscan.io/evmos/validators/",
         govExplorer: "https://www.mintscan.io/evmos/proposals/",
-        logo: "/images/logo/evmos.png"
+        logo: "/images/logo/evmos.png",
+        hyperLink: "https://evmos.org/"
     },
     {
         chain_id: "sifchain-1",
@@ -123,7 +129,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/sifchain/txs/",
         valExplorer: "https://www.mintscan.io/sifchain/validators/",
         govExplorer: "https://www.mintscan.io/sifchain/proposals/",
-        logo: "/images/logo/rowan.png"
+        logo: "/images/logo/rowan.png",
+        hyperLink: "https://www.sifchain.finance/"
     },
     {
         chain_id: "stargaze-1",
@@ -141,7 +148,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/stargaze/txs/",
         valExplorer: "https://www.mintscan.io/stargaze/validators/",
         govExplorer: "https://www.mintscan.io/stargaze/proposals/",
-        logo: "/images/logo/stars.png"
+        logo: "/images/logo/stars.png",
+        hyperLink: "https://www.stargaze.zone/"
     },
     {
         chain_id: "kava_2222-10",
@@ -159,7 +167,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/kava/txs/",
         valExplorer: "https://www.mintscan.io/kava/validators/",
         govExplorer: "https://www.mintscan.io/kava/proposals/",
-        logo: "/images/logo/kava.png"
+        logo: "/images/logo/kava.png",
+        hyperLink: "https://www.kava.io/"
     },
     {
         chain_id: "regen-1",
@@ -177,7 +186,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/regen/txs/",
         valExplorer: "https://www.mintscan.io/regen/validators/",
         govExplorer: "https://www.mintscan.io/regen/proposals/",
-        logo: "/images/logo/regen.png"
+        logo: "/images/logo/regen.png",
+        hyperLink: "https://www.regen.network/"
     },
     {
         chain_id: "omniflixhub-1",
@@ -195,7 +205,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/omniflix/txs/",
         valExplorer: "https://www.mintscan.io/omniflix/validators/",
         govExplorer: "https://www.mintscan.io/omniflix/proposals/",
-        logo: "/images/logo/flix.png"
+        logo: "/images/logo/flix.png",
+        hyperLink: "https://omniflix.network/"
     },
     {
         chain_id: "cheqd-mainnet-1",
@@ -213,7 +224,8 @@ export const chainData = [
         txExplorer: "https://ping.pub/cheqd/tx/",
         valExplorer: "https://ping.pub/cheqd/staking/",
         govExplorer: "https://ping.pub/cheqd/osmosis/gov/",
-        logo: "/images/logo/cheq.png"
+        logo: "/images/logo/cheq.png",
+        hyperLink: "https://cheqd.io/"
     },
     {
         chain_id: "bitcanna-1",
@@ -231,7 +243,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/bitcanna/txs/",
         valExplorer: "https://www.mintscan.io/bitcanna/validators/",
         govExplorer: "https://www.mintscan.io/bitcanna/proposals/",
-        logo: "/images/logo/bcna.png"
+        logo: "/images/logo/bcna.png",
+        hyperLink: "https://www.bitcanna.io/"
     },
     {
         chain_id: "gravity-bridge-3",
@@ -249,7 +262,8 @@ export const chainData = [
         txExplorer: "https://www.mintscan.io/gravity-bridge/txs/",
         valExplorer: "https://www.mintscan.io/gravity-bridge/validators/",
         govExplorer: "https://www.mintscan.io/gravity-bridge/proposals/",
-        logo: "/images/logo/grav.png"
+        logo: "/images/logo/grav.png",
+        hyperLink: "https://www.gravitybridge.net/"
     },
     {
         chain_id: "pylons-testnet-3",
@@ -267,7 +281,8 @@ export const chainData = [
         txExplorer: "https://pylons.explorers.guru/transaction/",
         valExplorer: "https://pylons.explorers.guru/validator/",
         govExplorer: "https://pylons.explorers.guru/proposal/",
-        logo: "/images/logo/pylons.png"
+        logo: "/images/logo/pylons.png",
+        hyperLink: "https://www.pylons.tech/home/"
     },
 ]
 

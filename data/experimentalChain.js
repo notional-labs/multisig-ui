@@ -2,8 +2,8 @@ export const chainObj = {
     "kava_2222-10": {
         chainId: "kava_2222-10",
         chainName: "kava",
-        rpc: "https://rpc-kava-ia.notional.ventures/",
-        rest: "https://api-kava-ia.notional.ventures/",
+        rpc: "https://rpc-kava-ia.cosmosia.notional.ventures/",
+        rest: "https://api-kava-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -46,8 +46,8 @@ export const chainObj = {
     "omniflixhub-1": {
         chainId: "omniflixhub-1",
         chainName: "omniflixhub",
-        rpc: "https://rpc-omniflixhub-ia.notional.ventures/",
-        rest: "https://api-omniflixhub-ia.notional.ventures/",
+        rpc: "https://rpc-omniflixhub-ia.cosmosia.notional.ventures/",
+        rest: "https://api-omniflixhub-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -90,8 +90,8 @@ export const chainObj = {
     "cheqd-mainnet-1": {
         chainId: "cheqd-mainnet-1",
         chainName: "cheqd",
-        rpc: "https://rpc-cheqd-ia.notional.ventures/",
-        rest: "https://api-cheqd-ia.notional.ventures/",
+        rpc: "https://rpc-cheqd-ia.cosmosia.notional.ventures/",
+        rest: "https://api-cheqd-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -134,8 +134,8 @@ export const chainObj = {
     "bitcanna-1": {
         chainId: "bitcanna-1",
         chainName: "bitcanna",
-        rpc: "https://rpc-bitcanna-ia.notional.ventures/",
-        rest: "https://api-bitcanna-ia.notional.ventures/",
+        rpc: "https://rpc-bitcanna-ia.cosmosia.notional.ventures/",
+        rest: "https://api-bitcanna-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -178,8 +178,8 @@ export const chainObj = {
     "pylons-testnet-3": {
         chainId: "pylons-testnet-3",
         chainName: "pylons",
-        rpc: "https://rpc-pylons-ia.notional.ventures/",
-        rest: "https://api-pylons-ia.notional.ventures/",
+        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
+        rest: "https://api-pylons-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -222,8 +222,8 @@ export const chainObj = {
     "gravity-bridge-3": {
         chainId: "gravity-bridge-3",
         chainName: "gravity bridge",
-        rpc: "https://rpc-gravitybridge-ia.notional.ventures/",
-        rest: "https://api-gravitybridge-ia.notional.ventures/",
+        rpc: "https://rpc-gravitybridge-ia.cosmosia.notional.ventures/",
+        rest: "https://api-gravitybridge-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
@@ -256,6 +256,50 @@ export const chainObj = {
             coinMinimalDenom: "ugraviton",
             coinDecimals: 6,
             coinGeckoId: "graviton",
+        },
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03,
+        },
+    },
+    "evmos_9001-2": {
+        chainId: "evmos_9001-2",
+        chainName: "evmos",
+        rpc: "https://rpc-evmos-ia.cosmosia.notional.ventures/",
+        rest: "https://api-evmos-ia.cosmosia.notional.ventures/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "evmos",
+            bech32PrefixAccPub: "evmos" + "pub",
+            bech32PrefixValAddr: "evmos" + "valoper",
+            bech32PrefixValPub: "evmos" + "valoperpub",
+            bech32PrefixConsAddr: "evmos" + "valcons",
+            bech32PrefixConsPub: "evmos" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "EVMOS",
+                coinMinimalDenom: "aevmos",
+                coinDecimals: 18,
+                coinGeckoId: "evmos",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "EVMOS",
+                coinMinimalDenom: "aevmos",
+                coinDecimals: 18,
+                coinGeckoId: "evmos",
+            },
+        ],
+        stakeCurrency:  {
+            coinDenom: "EVMOS",
+            coinMinimalDenom: "aevmos",
+            coinDecimals: 18,
+            coinGeckoId: "evmos",
         },
         gasPriceStep: {
             low: 0.01,
