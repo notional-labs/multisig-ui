@@ -33,7 +33,6 @@ const convertKelprTransaction = (transaction) => {
         return msgValue
     })
 
-   
     body["messages"] = [...newMsgs];
     body["memo"] = transaction.memo;
     body["timeout_height"] = "0";

@@ -67,32 +67,47 @@ const SelectChain = ({ enableSelectChain }) => {
             <Button
                 index={index}
                 text={
-                    <FlexRow
-                        components={[
-                            (
-                                <Image
-                                    src={chainInfo.logo}
-                                    alt="chain_logo"
-                                    width={"30px"}
-                                    preview={false}
-                                />
-                            ), (
-                                <text
-                                    style={{
-                                        margin: "0 0 0 .25em",
-                                        fontSize: "1rem",
-                                        color: "#000000",
-                                        position: "relative",
-                                        top: "3px",
-                                        maxWidth: "200px"
-                                    }}
-                                >
-                                    {chainInfo.name.toUpperCase()}
-                                </text>
-                            )
-                        ]}
-                        justifyContent={"start"}
-                    />
+                    <>
+                        <FlexRow
+                            components={[
+                                (
+                                    <Image
+                                        src={chainInfo.logo}
+                                        alt="chain_logo"
+                                        width={"30px"}
+                                        preview={false}
+                                    />
+                                ), (
+                                    <text
+                                        style={{
+                                            margin: "0 0 0 .25em",
+                                            fontSize: "1rem",
+                                            color: "#000000",
+                                            position: "relative",
+                                            top: "3px",
+                                            maxWidth: "200px"
+                                        }}
+                                    >
+                                        {chainInfo.name.toUpperCase()}
+                                    </text>
+                                )
+                            ]}
+                            justifyContent={"start"}
+                        />
+                        <div
+                            style={{
+                                textAlign: "left"
+                            }}
+                        >
+                            <a
+                                href={chainInfo.hyperLink || "#"}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {chainInfo.hyperLink}
+                            </a>
+                        </div>
+                    </>
                 }
                 style={{
                     border: "solid 1px black",
@@ -129,7 +144,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     border: "solid 1px white",
                     borderRadius: enableSelectChain ? "10px" : "50%",
                     backgroundColor: "#FFFFFF",
-                    padding:  enableSelectChain ? ".75em 1em" : ".75em",
+                    padding: enableSelectChain ? ".75em 1em" : ".75em",
                     width: enableSelectChain && "170px",
                     height: "100%",
                     overflow: "hidden"

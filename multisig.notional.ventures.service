@@ -1,0 +1,9 @@
+[Unit]
+Description=Multisig Deploy Service
+
+[Service]
+WorkingDirectory=/root/multisig.notional.ventures
+ExecStart=/bin/bash -c "PATH=/root/.nvm/versions/node/v18.9.0/bin:$PATH /root/.nvm/versions/node/v18.9.0/bin/npm start"
+
+[Install]
+WantedBy=multi-user.target

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3008",
+    "start": "next start -p 3003",
     "lint": "next lint",
     "test-telescope": "jest ./test/multisigjs.test"
   },
