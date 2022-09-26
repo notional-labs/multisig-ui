@@ -4,7 +4,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 notification.config({
-    placement: "bottomRight"
+    placement: "bottomRight",
+    maxCount: 1
 });
 
 export const openNotification = (type, message) => {
