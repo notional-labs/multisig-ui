@@ -34,6 +34,7 @@ export const getKey = async (chainId) => {
                 await window.keplr.enable(chainId)
             }
             catch (e) {
+                console.log(e.message)
                 const experimentalChain = chainObj[chainId]
                 if (!experimentalChain) throw e
                 await window.keplr.experimentalSuggestChain(experimentalChain)

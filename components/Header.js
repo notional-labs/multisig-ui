@@ -57,6 +57,7 @@ const Header = ({ enableSelectChain, checkType }) => {
                                         enableSelectChain={enableSelectChain}
                                     />,
                                     <Account
+                                        prefix={chain.prefix}
                                         chainId={chain.chain_id}
                                         chainName={chain.name}
                                     />

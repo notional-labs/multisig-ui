@@ -82,3 +82,12 @@ export const convertValueFromDenom = (baseDenom, value) => {
     return convertValue
 }
 
+export const convertLedgerToKeplr = (account) => {
+    return {
+        bech32Address: account.address,
+        algo: account.algo,
+        pubkey: account.pubkey,
+        type: "ledger"
+    }
+}
+

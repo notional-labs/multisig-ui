@@ -113,7 +113,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     border: "solid 1px black",
                     borderRadius: "10px",
                     padding: ".5em",
-                    overFlow: "hidden"
+                    overflow: "hidden"
                 }}
                 clickFunction={() => handleSelect(index)}
             />
@@ -147,7 +147,7 @@ const SelectChain = ({ enableSelectChain }) => {
                     padding: enableSelectChain ? ".75em 1em" : ".75em",
                     width: enableSelectChain && "170px",
                     height: "100%",
-                    overFlow: "hidden"
+                    overflow: "hidden"
                 }}
                 disable={!enableSelectChain}
             />

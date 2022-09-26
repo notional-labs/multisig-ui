@@ -178,7 +178,7 @@ export const chainObj = {
     "pylons-testnet-3": {
         chainId: "pylons-testnet-3",
         chainName: "pylons",
-        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
+        rpc: "http://65.108.137.37:80/pylons/",
         rest: "https://api-pylons-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
