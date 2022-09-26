@@ -26,8 +26,6 @@ const AssetRow = ({ chain, ibcDenom, balance, index }) => {
         })()
     }, [ibcDenom, index])
 
-    console.log(viewDenom)
-
     return (
         <tr
             key={index}

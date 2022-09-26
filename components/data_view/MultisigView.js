@@ -234,7 +234,7 @@ const MultisigView = () => {
                                                     fontWeight: "bold"
                                                 }}
                                             >
-                                                {chain.prefix.toUpperCase()}
+                                                {chain.displayDenom.toUpperCase()}
                                             </td>
                                             <td
                                                 style={{

@@ -2,6 +2,7 @@ export const chainData = [
     {
         chain_id: "osmosis-1",
         denom: "uosmo",
+        displayDenom: "osmo",
         base_denom: {
             "denom": "uosmo",
             "exponent": 6
@@ -20,6 +21,7 @@ export const chainData = [
     {
         chain_id: "juno-1",
         denom: "ujuno",
+        displayDenom: "juno",
         base_denom: {
             "denom": "ujuno",
             "exponent": 6
@@ -38,6 +40,7 @@ export const chainData = [
     {
         chain_id: "cosmoshub-4",
         denom: "uatom",
+        displayDenom: "atom",
         base_denom: {
             "denom": "uatom",
             "exponent": 6
@@ -56,6 +59,7 @@ export const chainData = [
     {
         chain_id: "akashnet-2",
         denom: "uakt",
+        displayDenom: "akt",
         base_denom: {
             "denom": "uakt",
             "exponent": 6
@@ -74,6 +78,7 @@ export const chainData = [
     {
         chain_id: "emoney-3",
         denom: "ungm",
+        displayDenom: "ngm",
         base_denom: {
             "denom": "ungm",
             "exponent": 6
@@ -92,6 +97,7 @@ export const chainData = [
     {
         chain_id: "evmos_9001-2",
         denom: "aevmos",
+        displayDenom: "evmos",
         base_denom: {
             "denom": "aevmos",
             "exponent": 18
@@ -110,6 +116,7 @@ export const chainData = [
     {
         chain_id: "sifchain-1",
         denom: "rowan",
+        displayDenom: "rowan",
         base_denom: {
             "denom": "rowan",
             "exponent": 18
@@ -128,6 +135,7 @@ export const chainData = [
     {
         chain_id: "stargaze-1",
         denom: "ustars",
+        displayDenom: "stars",
         base_denom: {
             "denom": "ustars",
             "exponent": 6
@@ -146,6 +154,7 @@ export const chainData = [
     {
         chain_id: "kava_2222-10",
         denom: "ukava",
+        displayDenom: "kava",
         base_denom: {
             "denom": "ukava",
             "exponent": 6
@@ -164,6 +173,7 @@ export const chainData = [
     {
         chain_id: "regen-1",
         denom: "uregen",
+        displayDenom: "regen",
         base_denom: {
             "denom": "uregen",
             "exponent": 6
@@ -182,6 +192,7 @@ export const chainData = [
     {
         chain_id: "omniflixhub-1",
         denom: "uflix",
+        displayDenom: "flix",
         base_denom: {
             "denom": "uflix",
             "exponent": 6
@@ -200,6 +211,7 @@ export const chainData = [
     {
         chain_id: "cheqd-mainnet-1",
         denom: "ncheq",
+        displayDenom: "cheq",
         base_denom: {
             "denom": "ncheq",
             "exponent": 9
@@ -218,6 +230,7 @@ export const chainData = [
     {
         chain_id: "bitcanna-1",
         denom: "ubcna",
+        displayDenom: "bcna",
         base_denom: {
             "denom": "ubcna",
             "exponent": 6
@@ -236,6 +249,7 @@ export const chainData = [
     {
         chain_id: "gravity-bridge-3",
         denom: "ugraviton",
+        displayDenom: "graviton",
         base_denom: {
             "denom": "ugraviton",
             "exponent": 6
@@ -254,6 +268,7 @@ export const chainData = [
     {
         chain_id: "pylons-testnet-3",
         denom: "ubedrock",
+        displayDenom: "bedrock",
         base_denom: {
             "denom": "ubedrock",
             "exponent": 6
@@ -261,7 +276,7 @@ export const chainData = [
         name: "pylons",
         prefix: "pylo",
         color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
-        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
+        rpc: "http://65.108.137.37:80/pylons/",
         api: "https://api-pylons-ia.cosmosia.notional.ventures/",
         explorer: "https://pylons.explorers.guru/",
         txExplorer: "https://pylons.explorers.guru/transaction/",
@@ -277,15 +292,16 @@ export const prefixToId = {
     "cosmos": 2,
     "akash": 3,
     "emoney": 4,
-    "sif": 5,
-    "stars": 6,
-    "kava": 7,
-    "regen": 8,
-    "omniflix": 9,
-    "cheqd": 10,
-    "bcna": 11,
-    "gravity": 12,
-    "pylo": 13
+    "evmos_9001-2": 5,
+    "sif": 6,
+    "stars": 7,
+    "kava": 8,
+    "regen": 9,
+    "omniflix": 10,
+    "cheqd": 11,
+    "bcna": 12,
+    "gravity": 13,
+    "pylo": 14
 }
 
 
@@ -295,15 +311,16 @@ export const idToChainId = {
     2: "cosmoshub-4",
     3: "akashnet-2",
     4: "emoney-3",
-    5: "sifchain-1",
-    6: "stargaze-1",
-    7: "kava_2222-10",
-    8: "regen-1",
-    9: "omniflixhub-1",
-    10: "cheqd-mainnet-1",
-    11: "bitcanna-1",
-    12: "gravity-bridge-3",
-    13: "pylons-testnet-3"
+    5: "evmos_9001-2",
+    6: "sifchain-1",
+    7: "stargaze-1",
+    8: "kava_2222-10",
+    9: "regen-1",
+    10: "omniflixhub-1",
+    11: "cheqd-mainnet-1",
+    12: "bitcanna-1",
+    13: "gravity-bridge-3",
+    14: "pylons-testnet-3"
 }
 
 
