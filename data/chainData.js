@@ -290,7 +290,7 @@ export const chainData = [
         name: "pylons",
         prefix: "pylo",
         color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
-        rpc: "http://65.108.137.37:80/pylons/",
+        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
         api: "https://api-pylons-ia.cosmosia.notional.ventures/",
         explorer: "https://pylons.explorers.guru/",
         txExplorer: "https://pylons.explorers.guru/transaction/",
