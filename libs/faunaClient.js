@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Cos } from "faunadb";
 const faunadb = require('faunadb')
 
 const client = new faunadb.Client({
@@ -122,7 +123,9 @@ export const createTransaction = async (transaction) => {
                 createBy: "${transaction.createBy}",
                 dataJSON: ${JSON.stringify(transaction.dataJSON)},
                 status: "PENDING"
-                createdOn: "${date.toISOString()}"
+                type:"Transaction"
+                createdOn: "${date.toISOString()
+                }"
               }) {
                 _id
               }
@@ -256,7 +259,7 @@ export const deleteSignature = async (id) => {
 }
 
 export const updateTransaction = async (txHash, transactionID, multisigID) => {
-  return graphqlReq({
+   const result=await graphqlReq({
     method: "POST",
     data: {
       query: `
@@ -266,6 +269,8 @@ export const updateTransaction = async (txHash, transactionID, multisigID) => {
               txHash: "${txHash}",
               status: "FINISHED",
               createBy: "${multisigID}"
+              type:"Transaction"
+
             }) {
             _id
             dataJSON
@@ -285,6 +290,7 @@ export const updateTransaction = async (txHash, transactionID, multisigID) => {
       `,
     },
   });
+  return result
 }
 
 export const deleteTransaction = async (id) => {

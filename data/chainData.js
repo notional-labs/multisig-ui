@@ -280,7 +280,7 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: "pylons-testnet-3",
+        chain_id: "pylons-testnet-1",
         denom: "ubedrock",
         displayDenom: "bedrock",
         base_denom: {
@@ -290,8 +290,8 @@ export const chainData = [
         name: "pylons",
         prefix: "pylo",
         color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
-        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
-        api: "https://api-pylons-ia.cosmosia.notional.ventures/",
+        rpc: "http://localhost:26657/",
+        api: "http://localhost:1317/",
         explorer: "https://pylons.explorers.guru/",
         txExplorer: "https://pylons.explorers.guru/transaction/",
         valExplorer: "https://pylons.explorers.guru/validator/",
@@ -335,7 +335,7 @@ export const idToChainId = {
     11: "cheqd-mainnet-1",
     12: "bitcanna-1",
     13: "gravity-bridge-3",
-    14: "pylons-testnet-3"
+    14: "pylons-testnet-1"
 }
 
 
