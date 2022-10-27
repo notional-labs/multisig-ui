@@ -45,13 +45,14 @@
     "resize-observer-polyfill" "^1.5.1"
 
 "@apidevtools/json-schema-ref-parser@https://github.com/bcherny/json-schema-ref-parser.git#984282d34a2993e5243aa35100fe32a63699164d":
-  "integrity" "sha512-sFdo2GDRdeOvcUu0GEcApnOvpj5a/9FX9r1cGnRU22+iMLohEclfXae9H0fKGKU5fuJvdgaPzqZs5Xqoh8x50g=="
-  "resolved" "git+ssh://git@github.com/bcherny/json-schema-ref-parser.git"
-  "version" "9.0.5"
+  "integrity" "sha512-VN1BtD3BKNgtwIFEKXE+vLkPeC3XB8TmjrAIMiJJ0Q1LhfyTNoaQUKsbqSUnozThV+SMM9s/Y+p+alyzSDCFvg=="
+  "resolved" "git+ssh://git@github.com/bcherny/json-schema-ref-parser.git#984282d34a2993e5243aa35100fe32a63699164d"
+  "version" "0.0.0-dev"
   dependencies:
     "@jsdevtools/ono" "^7.1.3"
+    "@types/json-schema" "^7.0.6"
     "call-me-maybe" "^1.0.1"
-    "js-yaml" "^3.13.1"
+    "js-yaml" "^4.1.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.18.6":
   "integrity" "sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q=="
@@ -2117,7 +2118,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/json-schema@^7.0.11":
+"@types/json-schema@^7.0.11", "@types/json-schema@^7.0.6":
   "integrity" "sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ=="
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.11.tgz"
   "version" "7.0.11"
