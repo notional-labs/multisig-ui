@@ -175,11 +175,11 @@ export const chainObj = {
             high: 0.03,
         },
     },
-    "pylons-testnet-1": {
-        chainId: "pylons-testnet-1",
+    "pylons-testnet-3": {
+        chainId: "pylons-testnet-3",
         chainName: "pylons",
-        rpc: "http://localhost:26657/",
-        rest: "http://localhost:1317/",
+        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
+        rest: "https://api-pylons-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },
