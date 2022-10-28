@@ -2,8 +2,8 @@ export const chainObj = {
     "kava_2222-10": {
         chainId: "kava_2222-10",
         chainName: "kava",
-        rpc: "https://rpc-kava-ia.cosmosia.notional.ventures/",
-        rest: "https://api-kava-ia.cosmosia.notional.ventures/",
+        rpc: "https://rpc.pylons.tech/",
+        rest: "https://lcd.pylons.tech/",
         bip44: {
             coinType: 118,
         },
