@@ -280,24 +280,24 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: process.env.NEXT_PUBLIC_CHAIN_ID,
-        denom: process.env.NEXT_PUBLIC_DENOM,
-        displayDenom: process.env.NEXT_PUBLIC_DISPLAY_DENOM,
+        chain_id: process.env.NEXT_PUBLIC_CHAIN_ID ? process.env.NEXT_PUBLIC_CHAIN_ID: "pylons-testnet-3",
+        denom: process.env.NEXT_PUBLIC_DENOM ? process.env.NEXT_PUBLIC_DENOM: "ubedrock",
+        displayDenom: process.env.NEXT_PUBLIC_DISPLAY_DENOM ? process.env.NEXT_PUBLIC_DISPLAY_DENOM:"bedrock",
         base_denom: {
-            "denom": process.env.NEXT_PUBLIC_DENOM,
-            "exponent":process.env.NEXT_PUBLIC_EXPONENT
+            "denom": process.env.NEXT_PUBLIC_DENOM ? process.env.NEXT_PUBLIC_DENOM: "ubedrock",
+            "exponent":process.env.NEXT_PUBLIC_EXPONENT ? process.env.NEXT_PUBLIC_EXPONENT : 6
         },
-        name: process.env.NEXT_PUBLIC_NAME,
-        prefix: process.env.NEXT_PUBLIC_PREFIX,
-        color: process.env.NEXT_PUBLIC_COLOR,
-        rpc: process.env.NEXT_PUBLIC_RPC,
-        api: process.env.NEXT_PUBLIC_API,
-        explorer: process.env.NEXT_PUBLIC_EXPLORER,
-        txExplorer: process.env.NEXT_PUBLIC_TX_EXPLORER,
-        valExplorer: process.env.NEXT_PUBLIC_VAL_EXPLORER,
-        govExplorer: process.env.NEXT_PUBLIC_GOV_EXPLORER,
-        logo: process.env.NEXT_PUBLIC_LOGO,
-        hyperLink: process.env.NEXT_PUBLIC_HYPERLINK
+        name: process.env.NEXT_PUBLIC_NAME ? process.env.NEXT_PUBLIC_NAME: "pylons",
+        prefix: process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX : "pylo",
+        color: process.env.NEXT_PUBLIC_COLOR ? process.env.NEXT_PUBLIC_COLOR: "linear-gradient(to right, #ef4421,#0a0049 81%)",
+        rpc: process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC :"https://rpc.pylons.tech/",
+        api: process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : "https://lcd.pylons.tech/",
+        explorer: process.env.NEXT_PUBLIC_EXPLORER ? process.env.NEXT_PUBLIC_EXPLORER:"https://pylons.explorers.guru/",
+        txExplorer: process.env.NEXT_PUBLIC_TX_EXPLORER ? process.env.NEXT_PUBLIC_TX_EXPLORER:"https://pylons.explorers.guru/transaction/",
+        valExplorer: process.env.NEXT_PUBLIC_VAL_EXPLORER ? process.env.NEXT_PUBLIC_VAL_EXPLORER :"https://pylons.explorers.guru/validator/",
+        govExplorer: process.env.NEXT_PUBLIC_GOV_EXPLORER ? process.env.NEXT_PUBLIC_GOV_EXPLORER:"https://pylons.explorers.guru/proposal/",
+        logo: process.env.NEXT_PUBLIC_LOGO ? process.env.NEXT_PUBLIC_LOGO: "/images/logo/pylons.png",
+        hyperLink: process.env.NEXT_PUBLIC_HYPERLINK ? process.env.NEXT_PUBLIC_HYPERLINK :"https://www.pylons.tech/home/"
     },
 ]
 
