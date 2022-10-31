@@ -1,46 +1,51 @@
-export const chainObj = {
-    "chain": {
-        chainId: process.env.NEXT_PUBLIC_CHAIN_ID ? process.env.NEXT_PUBLIC_CHAIN_ID:"pylons-testnet-3",
-        chainName: process.env.NEXT_PUBLIC_NAME ? process.env.NEXT_PUBLIC_NAME:"pylons",
-        rpc: process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC:"https://rpc.pylons.tech/",
-        rest: process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API:"https://lcd.pylons.tech/",
-        bip44: {
-            coinType: process.env.NEXT_PUBLIC_BIP44_COINTYPE,
+import { environment } from "../config/environment.config";
+export  const chainObj = [{
+    chainId: environment.chainid,
+    chainName: environment.chainname,
+    rpc: environment.rpc,
+    rest: environment.rest,
+    bip44: {
+        coinType: environment.bip44cointype,
+    },
+    bech32Config: {
+        bech32PrefixAccAddr: environment.bech32prefixaccaddr,
+        bech32PrefixAccPub: environment.bech32prefixaccpub,
+        bech32PrefixValAddr: environment.bech32prefixvaladdr,
+        bech32PrefixValPub: environment.bech32prefixvalpub,
+        bech32PrefixConsAddr: environment.bech32prefixconsaddr,
+        bech32PrefixConsPub: environment.bech32prefixconspub,
+    },
+    currencies: [
+        {
+            coinDenom: environment.currenciescoindenom,
+            coinMinimalDenom: environment.currenciescoinminimaldenom,
+            coinDecimals: environment.currenciescoindecimals,
+            coinGeckoId: environment.currenciescoingeckoid,
         },
-        bech32Config: {
-            bech32PrefixAccAddr: process.env.NEXT_PUBLIC_BECH32_PREFIX_ACC_ADDR ? process.env.NEXT_PUBLIC_BECH32_PREFIX_ACC_ADDR:"pylo",
-            bech32PrefixAccPub: process.env.NEXT_PUBLIC_BECH32_PREFIX_ACC_PUB ? process.env.NEXT_PUBLIC_BECH32_PREFIX_ACC_PUB:  "pylo" + "pub",
-            bech32PrefixValAddr: process.env.NEXT_PUBLIC_BECH32_PREFIX_VAL_ADDR ? process.env.NEXT_PUBLIC_BECH32_PREFIX_VAL_ADDR :"pylo" + "valoper",
-            bech32PrefixValPub: process.env.NEXT_PUBLIC_BECH32_PREFIX_VAL_PUB ? process.env.NEXT_PUBLIC_BECH32_PREFIX_VAL_PUB : "pylo" + "valoperpub",
-            bech32PrefixConsAddr:process.env.NEXT_PUBLIC_BECH32_PREFIX_CONS_ADDR ? process.env.NEXT_PUBLIC_BECH32_PREFIX_CONS_ADDR:"pylo" + "valcons",
-            bech32PrefixConsPub: process.env.NEXT_PUBLIC_BECH32_PREFIX_CONS_PUB ? process.env.NEXT_PUBLIC_BECH32_PREFIX_CONS_PUB:"pylo" + "valconspub",
-        },
-        currencies: [
-            {
-                coinDenom: process.env.NEXT_PUBLIC_COIN_DENOM ? process.env.NEXT_PUBLIC_COIN_DENOM:"BEDROCK" ,
-                coinMinimalDenom: process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM ? process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM:"ubedrock",
-                coinDecimals: process.env.NEXT_PUBLIC_COIN_DECIMALS ? process.env.NEXT_PUBLIC_COIN_DECIMALS :6,
-                coinGeckoId: process.env.NEXT_PUBLIC_COIN_GECKO_ID ? process.env.NEXT_PUBLIC_COIN_GECKO_ID :"pylon",
+    ],
+    feeCurrencies: [
+        {
+            coinDenom: environment.feecurrenciescoindenom,
+            coinMinimalDenom: environment.feecurrenciescoinminimaldenom,
+            coinDecimals: environment.feecurrenciescoindecimals,
+            coinGeckoId: environment.feecurrenciescoingeckoid,
+            gasPriceStep: {
+                low: environment.gaspricesteplow,
+                medium: environment.gaspricestepmedium,
+                high: environment.gaspricestephigh,
+                average: environment.gaspricestepaverage,
             },
-        ],
-        feeCurrencies: [
-            {
-                coinDenom: process.env.NEXT_PUBLIC_COIN_DENOM ? process.env.NEXT_PUBLIC_COIN_DENOM:"BEDROCK" ,
-                coinMinimalDenom: process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM ? process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM:"ubedrock",
-                coinDecimals: process.env.NEXT_PUBLIC_COIN_DECIMALS ? process.env.NEXT_PUBLIC_COIN_DECIMALS :6,
-                coinGeckoId: process.env.NEXT_PUBLIC_COIN_GECKO_ID ? process.env.NEXT_PUBLIC_COIN_GECKO_ID :"pylon",
-            },
-        ],
-        stakeCurrency: {
-            coinDenom: process.env.NEXT_PUBLIC_COIN_DENOM ? process.env.NEXT_PUBLIC_COIN_DENOM:"BEDROCK" ,
-                coinMinimalDenom: process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM ? process.env.NEXT_PUBLIC_COIN_MINIMAL_DENOM:"ubedrock",
-                coinDecimals: process.env.NEXT_PUBLIC_COIN_DECIMALS ? process.env.NEXT_PUBLIC_COIN_DECIMALS :6,
-                coinGeckoId: process.env.NEXT_PUBLIC_COIN_GECKO_ID ? process.env.NEXT_PUBLIC_COIN_GECKO_ID :"pylon",
         },
-        gasPriceStep: {
-            GAS_PRICE_STEP_LOW: process.env.NEXT_PUBLIC_GAS_PRICE_STEP_LOW ? process.env.NEXT_PUBLIC_GAS_PRICE_STEP_LOW:0.01,
-            GAS_PRICE_STEP_LOW: process.env.NEXT_PUBLIC_GAS_PRICE_STEP_MEDIUM ? process.env.NEXT_PUBLIC_GAS_PRICE_STEP_MEDIUM :0.025,
-            GAS_PRICE_STEP_LOW: process.env.NEXT_PUBLIC_GAS_PRICE_STEP_HIGH ? process.env.NEXT_PUBLIC_GAS_PRICE_STEP_HIGH :0.03,
-        },
-    }
-}
+    ],
+    stakeCurrency: {
+        coinDenom: environment.stakecurrencycoindenom,
+        coinMinimalDenom: environment.stakecurrencycoinminimaldenom,
+        coinDecimals: environment.stakecurrencycoindecimals,
+        coinGeckoId: environment.stakecurrencycoingeckoid,
+    },
+    gasPriceStep: {
+        low: environment.gaspricesteplow,
+        medium: environment.gaspricestepmedium,
+        high: environment.gaspricestephigh,
+    },
+}]

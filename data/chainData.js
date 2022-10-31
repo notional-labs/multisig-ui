@@ -1,3 +1,4 @@
+import { environment } from "../config/environment.config";
 export const chainData = [
     {
         chain_id: "osmosis-1",
@@ -280,24 +281,24 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: process.env.NEXT_PUBLIC_CHAIN_ID ? process.env.NEXT_PUBLIC_CHAIN_ID: "pylons-testnet-3",
-        denom: process.env.NEXT_PUBLIC_DENOM ? process.env.NEXT_PUBLIC_DENOM: "ubedrock",
-        displayDenom: process.env.NEXT_PUBLIC_DISPLAY_DENOM ? process.env.NEXT_PUBLIC_DISPLAY_DENOM:"bedrock",
+        chain_id: environment.chainid,
+        denom: environment.denom,
+        displayDenom: environment.displayDenom,
         base_denom: {
-            "denom": process.env.NEXT_PUBLIC_DENOM ? process.env.NEXT_PUBLIC_DENOM: "ubedrock",
-            "exponent":process.env.NEXT_PUBLIC_EXPONENT ? process.env.NEXT_PUBLIC_EXPONENT : 6
+            denom: environment.baseDenom,
+            exponent: environment.baseExponent
         },
-        name: process.env.NEXT_PUBLIC_NAME ? process.env.NEXT_PUBLIC_NAME: "pylons",
-        prefix: process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX : "pylo",
-        color: process.env.NEXT_PUBLIC_COLOR ? process.env.NEXT_PUBLIC_COLOR: "linear-gradient(to right, #ef4421,#0a0049 81%)",
-        rpc: process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC :"https://rpc.pylons.tech/",
-        api: process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : "https://lcd.pylons.tech/",
-        explorer: process.env.NEXT_PUBLIC_EXPLORER ? process.env.NEXT_PUBLIC_EXPLORER:"https://pylons.explorers.guru/",
-        txExplorer: process.env.NEXT_PUBLIC_TX_EXPLORER ? process.env.NEXT_PUBLIC_TX_EXPLORER:"https://pylons.explorers.guru/transaction/",
-        valExplorer: process.env.NEXT_PUBLIC_VAL_EXPLORER ? process.env.NEXT_PUBLIC_VAL_EXPLORER :"https://pylons.explorers.guru/validator/",
-        govExplorer: process.env.NEXT_PUBLIC_GOV_EXPLORER ? process.env.NEXT_PUBLIC_GOV_EXPLORER:"https://pylons.explorers.guru/proposal/",
-        logo: process.env.NEXT_PUBLIC_LOGO ? process.env.NEXT_PUBLIC_LOGO: "/images/logo/pylons.png",
-        hyperLink: process.env.NEXT_PUBLIC_HYPERLINK ? process.env.NEXT_PUBLIC_HYPERLINK :"https://www.pylons.tech/home/"
+        name: environment.name,
+        prefix: environment.prefix,
+        color: environment.color,
+        rpc: environment.rpc,
+        api: environment.rest,
+        explorer: environment.explorer,
+        txExplorer: environment.txExplorer,
+        valExplorer: environment.valExplorer,
+        govExplorer: environment.govExplorer,
+        logo: environment.logo,
+        hyperLink: environment.hyperLink
     },
 ]
 
@@ -335,7 +336,7 @@ export const idToChainId = {
     11: "cheqd-mainnet-1",
     12: "bitcanna-1",
     13: "gravity-bridge-3",
-    14: "pylons-testnet-3"
+    14: environment.chainid
 }
 
 
