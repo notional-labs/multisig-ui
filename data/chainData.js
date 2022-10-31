@@ -280,24 +280,24 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: process.env.NEXT_PUBLIC_CHAIN_ID,
-        denom: process.env.NEXT_PUBLIC_DENOM,
-        displayDenom: process.env.NEXT_PUBLIC_DISPLAY_DENOM,
+        chain_id: "pylons-testnet-3",
+        denom: "ubedrock",
+        displayDenom: "bedrock",
         base_denom: {
-            "denom": process.env.NEXT_PUBLIC_DENOM,
-            "exponent":process.env.NEXT_PUBLIC_EXPONENT
+            "denom": "ubedrock",
+            "exponent": 6
         },
-        name: process.env.NEXT_PUBLIC_NAME,
-        prefix: process.env.NEXT_PUBLIC_PREFIX,
-        color: process.env.NEXT_PUBLIC_COLOR,
-        rpc: process.env.NEXT_PUBLIC_RPC,
-        api: process.env.NEXT_PUBLIC_API,
-        explorer: process.env.NEXT_PUBLIC_EXPLORER,
-        txExplorer: process.env.NEXT_PUBLIC_TX_EXPLORER,
-        valExplorer: process.env.NEXT_PUBLIC_VAL_EXPLORER,
-        govExplorer: process.env.NEXT_PUBLIC_GOV_EXPLORER,
-        logo: process.env.NEXT_PUBLIC_LOGO,
-        hyperLink: process.env.NEXT_PUBLIC_HYPERLINK
+        name: "pylons",
+        prefix: "pylo",
+        color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
+        rpc: "https://rpc.pylons.tech/",
+        api: "https://lcd.pylons.tech/",
+        explorer: "https://pylons.explorers.guru/",
+        txExplorer: "https://pylons.explorers.guru/transaction/",
+        valExplorer: "https://pylons.explorers.guru/validator/",
+        govExplorer: "https://pylons.explorers.guru/proposal/",
+        logo: "/images/logo/pylons.png",
+        hyperLink: "https://www.pylons.tech/home/"
     },
 ]
 
