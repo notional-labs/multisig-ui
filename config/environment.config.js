@@ -12,8 +12,8 @@ export const environment = object()
   .shape({
     chainid: string().default('pylons-testnet-3'),
     chainname: string().default('pylons'),
-    rpc: string().default('http://localhost:26657'),
-    rest: string().default('http://localhost:1317/'),
+    rpc: string().default('https://rpc.pylons.tech'),
+    rest: string().default('https://lcd.pylons.tech/'),
     bip44cointype: number().default(118),
     bech32prefixaccaddr: string().default('pylo'),
     bech32prefixaccpub: string().default('pylo'+'pub'),
