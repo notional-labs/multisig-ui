@@ -1,4 +1,28 @@
-import { string, object, number } from "yup";
+import { string, object, number,addMethod } from "yup";
+
+/**
+ * convert empty string to undefined .
+ *
+ * Reason:
+ * This help prevents the string enviorment variable to set to empty,
+ * and taking default value.
+ */
+addMethod(string, 'stripEmptyString', function () {
+  return this.transform((value) => (value === '' ? undefined : value));
+});
+
+/**
+ * convert empty string to undefined .
+ *
+ * Reason:
+ * This help prevents the enviorment number variable to set to empty,
+ * and taking default value.
+ */
+ addMethod(number, 'stripEmptyString', function () {
+
+  return this.transform((value) => (isNaN(value) || value === '' ? undefined : value));
+
+});
 
 /**
  * contains all the validated environment variables.
@@ -7,49 +31,48 @@ import { string, object, number } from "yup";
  * This help prevents the application to start without environment variables. If not used you may still find the
  * error but a bit late.
  */
-
 export const environment = object()
   .shape({
-    chainid: string().default('pylons-testnet-3'),
-    chainname: string().default('pylons'),
-    rpc: string().default('https://rpc.pylons.tech'),
-    rest: string().default('https://lcd.pylons.tech/'),
-    bip44cointype: number().default(118),
-    bech32prefixaccaddr: string().default('pylo'),
-    bech32prefixaccpub: string().default('pylo'+'pub'),
-    bech32prefixvaladdr: string().default('pylo'+'valoper'),
-    bech32prefixvalpub: string().default('pylo'+'valoperpub'),
-    bech32prefixconsaddr: string().default('pylo'+'valcons'),
-    bech32prefixconspub: string().default('pylo'+'valconspub'),
-    currenciescoindenom: string().default('BEDROCK'),
-    currenciescoinminimaldenom: string().default('ubedrock'),
-    currenciescoindecimals: number().default(6),
-    currenciescoingeckoid: string().default('pylon'),
-    feecurrenciescoindenom: string().default('BEDROCK'),
-    feecurrenciescoinminimaldenom: string().default('ubedrock'),
-    feecurrenciescoindecimals: number().default(6),
-    feecurrenciescoingeckoid: string().default('pylon'),
-    stakecurrencycoindenom: string().default('BEDROCK'),
-    stakecurrencycoinminimaldenom: string().default('ubedrock'),
-    stakecurrencycoindecimals: number().default(6),
-    stakecurrencycoingeckoid: string().default('pylon'),
-    gaspricesteplow: number().default(0.01),
-    gaspricestepmedium: number().default(0.025),
-    gaspricestephigh: number().default(0.03),
-    gaspricestepaverage: number().default(0.03),
-    denom: string().default('ubedrock'),
-    displayDenom:string().default('bedrock'),
-    baseDenom:string().default('ubedrock'),
-    baseExponent: number().default(6),
-    name: string().default('pylons'),
-    prefix: string().default('pylo'),
-    color: string().default('linear-gradient(to right, #ef4421,#0a0049 81%)'),
-    explorer: string().default('https://pylons.explorers.guru/'),
-    txExplorer: string().default('https://pylons.explorers.guru/transaction/'),
-    valExplorer: string().default('https://pylons.explorers.guru/validator/'),
-    govExplorer: string().default('https://pylons.explorers.guru/proposal/'),
-    logo: string().default('/images/logo/pylons.png'),
-    hyperLink: string().default('https://www.pylons.tech/home/')
+    chainid: string().stripEmptyString().default('pylons-testnet-3'),
+    chainname: string().stripEmptyString().default('pylons'),
+    rpc: string().stripEmptyString().default('https://rpc.pylons.tech'),
+    rest: string().stripEmptyString().default('https://lcd.pylons.tech/'),
+    bip44cointype: number().stripEmptyString().default(118),
+    bech32prefixaccaddr: string().stripEmptyString().default('pylo'),
+    bech32prefixaccpub: string().stripEmptyString().default('pylo'+'pub'),
+    bech32prefixvaladdr: string().stripEmptyString().default('pylo'+'valoper'),
+    bech32prefixvalpub: string().stripEmptyString().default('pylo'+'valoperpub'),
+    bech32prefixconsaddr: string().stripEmptyString().default('pylo'+'valcons'),
+    bech32prefixconspub: string().stripEmptyString().default('pylo'+'valconspub'),
+    currenciescoindenom: string().stripEmptyString().default('BEDROCK'),
+    currenciescoinminimaldenom: string().stripEmptyString().default('ubedrock'),
+    currenciescoindecimals: number().stripEmptyString().default(6),
+    currenciescoingeckoid: string().stripEmptyString().default('pylon'),
+    feecurrenciescoindenom: string().stripEmptyString().default('BEDROCK'),
+    feecurrenciescoinminimaldenom: string().stripEmptyString().default('ubedrock'),
+    feecurrenciescoindecimals: number().stripEmptyString().default(6),
+    feecurrenciescoingeckoid: string().stripEmptyString().default('pylon'),
+    stakecurrencycoindenom: string().stripEmptyString().default('BEDROCK'),
+    stakecurrencycoinminimaldenom: string().stripEmptyString().default('ubedrock'),
+    stakecurrencycoindecimals: number().stripEmptyString().default(6),
+    stakecurrencycoingeckoid: string().stripEmptyString().default('pylon'),
+    gaspricesteplow: number().stripEmptyString().default(0.01),
+    gaspricestepmedium: number().stripEmptyString().default(0.025),
+    gaspricestephigh: number().stripEmptyString().default(0.03),
+    gaspricestepaverage: number().stripEmptyString().default(0.03),
+    denom: string().stripEmptyString().default('ubedrock'),
+    displayDenom:string().stripEmptyString().default('bedrock'),
+    baseDenom:string().stripEmptyString().default('ubedrock'),
+    baseExponent: number().stripEmptyString().default(6),
+    name: string().stripEmptyString().default('pylons'),
+    prefix: string().stripEmptyString().default('pylo'),
+    color: string().stripEmptyString().default('linear-gradient(to right, #ef4421,#0a0049 81%)'),
+    explorer: string().stripEmptyString().default('https://pylons.explorers.guru/'),
+    txExplorer: string().stripEmptyString().default('https://pylons.explorers.guru/transaction/'),
+    valExplorer: string().stripEmptyString().default('https://pylons.explorers.guru/validator/'),
+    govExplorer: string().stripEmptyString().default('https://pylons.explorers.guru/proposal/'),
+    logo: string().stripEmptyString().default('/images/logo/pylons.png'),
+    hyperLink: string().stripEmptyString().default('https://www.pylons.tech/home/')
   })
   .validateSync({
     chainid: process.env.NEXT_PUBLIC_CHAIN_ID,
