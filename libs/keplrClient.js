@@ -1,7 +1,7 @@
 import { StargateClient } from "@cosmjs/stargate";
 import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
-import { chainObj } from "../data/experimentalChain";
+import { getExperimentalChainDataById } from "../utils/common";
 
 export const getKeplrAccount = async (chainId) => {
     try {
@@ -34,7 +34,7 @@ export const getKey = async (chainId) => {
                 await window.keplr.enable(chainId)
             }
             catch (e) {
-                const experimentalChain = chainObj[chainId]
+                const experimentalChain = getExperimentalChainDataById(chainId)
                 if (!experimentalChain) throw e
                 await window.keplr.experimentalSuggestChain(experimentalChain)
             }

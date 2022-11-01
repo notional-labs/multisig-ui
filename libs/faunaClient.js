@@ -108,6 +108,7 @@ export const getMultisigOfAddress = async (address) => {
           `
     },
   })
+
   return res
 }
 
