@@ -2,9 +2,9 @@
 
 module.exports = {
   reactStrictMode: true,
-  env: {
-    HOST: process.env.HOST,
-    FAUNADB_SECRET: process.env.FAUNADB_SECRET
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    funadbSecret: process.env.NEXT_PUBLIC_FAUNADB_SECRET,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
