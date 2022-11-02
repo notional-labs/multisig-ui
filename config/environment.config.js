@@ -1,4 +1,7 @@
 import { string, object, number,addMethod } from "yup";
+import getConfig from 'next/config'
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
 /**
  * convert empty string to undefined .
@@ -33,6 +36,8 @@ addMethod(string, 'stripEmptyString', function () {
  */
 export const environment = object()
   .shape({
+    funadbSecret:string().stripEmptyString(),
+    publicHost: string().stripEmptyString().default('http://localhost:3000/'),
     chainid: string().stripEmptyString().default('pylons-testnet-3'),
     chainname: string().stripEmptyString().default('pylons'),
     rpc: string().stripEmptyString().default('https://rpc.pylons.tech'),
@@ -75,6 +80,8 @@ export const environment = object()
     hyperLink: string().stripEmptyString().default('https://www.pylons.tech/home/')
   })
   .validateSync({
+    funadbSecret: serverRuntimeConfig.funadbSecret,
+    publicHost: process.env.NEXT_PUBLIC_HOST,
     chainid: process.env.NEXT_PUBLIC_CHAIN_ID,
     chainname: process.env.NEXT_PUBLIC_CHAIN_NAME,
     rpc: process.env.NEXT_PUBLIC_RPC,

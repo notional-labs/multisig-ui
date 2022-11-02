@@ -1,9 +1,11 @@
 import axios from "axios";
 import { Cos } from "faunadb";
 const faunadb = require('faunadb')
+import { environment } from "../config/environment.config";
+
 
 const client = new faunadb.Client({
-  secret: process.env.NEXT_PUBLIC_FAUNADB_SECRET,
+  secret: environment.funadbSecret,
 })
 
 const q = faunadb.query
@@ -11,7 +13,7 @@ const q = faunadb.query
 const graphqlReq = axios.create({
   baseURL: "https://graphql.fauna.com/graphql",
   headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+    Authorization: `Bearer ${environment.funadbSecret}`,
   },
 });
 
