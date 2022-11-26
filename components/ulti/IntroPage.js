@@ -11,7 +11,7 @@ const IntroPage = () => {
                 backgroundSize: "cover",
                 minHeight: "100vh",
                 textAlign: "center",
-                padding: "1em 30em",
+                padding: "1em 20em",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",

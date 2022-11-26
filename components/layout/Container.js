@@ -21,7 +21,7 @@ const Container = ({ component, option = 0 }) => {
                     <div
                         style={{
                             marginTop: "6em",
-                            padding: "0 30em",
+                            padding: "0 20em",
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center"

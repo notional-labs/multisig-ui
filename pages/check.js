@@ -61,7 +61,7 @@ export default function Check() {
                     style={{
                         backgroundColor: "#ffffff",
                         boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
-                        margin: "12em 30em 6em 30em",
+                        margin: "12em 20em 6em 20em",
                         padding: "1em 3em 2em 3em",
                         borderRadius: "30px",
                         position: "relative",
