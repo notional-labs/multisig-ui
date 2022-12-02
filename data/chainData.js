@@ -298,7 +298,9 @@ export const chainData = [
         valExplorer: environment.valExplorer,
         govExplorer: environment.govExplorer,
         logo: environment.logo,
-        hyperLink: environment.hyperLink
+        hyperLink: environment.hyperLink,
+        supportedDenom: environment.supportedDenom, 
+        supportedDenomDisplay: environment.supportedDenomDisplay, 
     },
 ]
 

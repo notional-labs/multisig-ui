@@ -69,6 +69,8 @@ export const environment = object()
     displayDenom:string().stripEmptyString().default('bedrock'),
     baseDenom:string().stripEmptyString().default('ubedrock'),
     baseExponent: number().stripEmptyString().default(6),
+    supportedDenom: string().stripEmptyString().default("BEDROCK,PYLON,STRIPEUSD"),
+    supportedDenomDisplay: string().stripEmptyString().default("ubedrock,upylon,ustripeusd"),
     name: string().stripEmptyString().default('pylons'),
     prefix: string().stripEmptyString().default('pylo'),
     color: string().stripEmptyString().default('linear-gradient(to right, #ef4421,#0a0049 81%)'),
@@ -121,5 +123,7 @@ export const environment = object()
     valExplorer: process.env.NEXT_PUBLIC_VAL_EXPLORER,
     govExplorer: process.env.NEXT_PUBLIC_GOV_EXPLORER,
     logo: process.env.NEXT_PUBLIC_LOGO,
-    hyperLink: process.env.NEXT_PUBLIC_HYPERLINK
+    hyperLink: process.env.NEXT_PUBLIC_HYPERLINK,
+    supportedDenom: process.env.NEXT_PUBLIC_SUPPORTED_DENOM,
+    supportedDenomDisplay: process.env.NEXT_PUBLIC_SUPPORTED_DENOM_DISPLAY,
   });

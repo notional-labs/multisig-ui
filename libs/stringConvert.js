@@ -77,8 +77,8 @@ export const getValueFromDenom = (denom, value) => {
 }
 
 
-export const convertValueFromDenom = (baseDenom, value) => {
-    const convertValue = value * Math.pow(10, baseDenom.exponent)
-    return convertValue
-}
+export const convertValueFromDenom = (exponent, value) => {
+  const convertValue = value * Math.pow(10, exponent)
+  return convertValue
+};
 
