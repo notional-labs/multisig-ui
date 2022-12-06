@@ -280,24 +280,24 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: "pylons-testnet-3",
-        denom: "ubedrock",
-        displayDenom: "bedrock",
+        chain_id: "stride",
+        denom: "ustrd",
+        displayDenom: "strd",
         base_denom: {
-            "denom": "ubedrock",
+            "denom": "ustrd",
             "exponent": 6
         },
-        name: "pylons",
-        prefix: "pylo",
-        color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
-        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
-        api: "https://api-pylons-ia.cosmosia.notional.ventures/",
-        explorer: "https://pylons.explorers.guru/",
-        txExplorer: "https://pylons.explorers.guru/transaction/",
-        valExplorer: "https://pylons.explorers.guru/validator/",
-        govExplorer: "https://pylons.explorers.guru/proposal/",
-        logo: "/images/logo/pylons.png",
-        hyperLink: "https://www.pylons.tech/home/"
+        name: "stride",
+        prefix: "stride",
+        color: "linear-gradient(to right, #e91179,#e91179 81%)",
+        rpc: "https://stride-rpc.polkachu.com/",
+        api: "https://stride-api.polkachu.com/",
+        explorer: "https://www.mintscan.io/stride/",
+        txExplorer: "https://www.mintscan.io/stride/txs/",
+        valExplorer: "https://www.mintscan.io/stride/validators/",
+        govExplorer: "https://www.mintscan.io/stride/proposals/",
+        logo: "/images/logo/stride.png",
+        hyperLink: "https://stride.zone/"
     },
 ]
 
@@ -316,7 +316,7 @@ export const prefixToId = {
     "cheqd": 11,
     "bcna": 12,
     "gravity": 13,
-    "pylo": 14
+    "stride": 14
 }
 
 
@@ -335,7 +335,7 @@ export const idToChainId = {
     11: "cheqd-mainnet-1",
     12: "bitcanna-1",
     13: "gravity-bridge-3",
-    14: "pylons-testnet-3"
+    14: "stride-1"
 }
 
 
