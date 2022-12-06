@@ -175,50 +175,6 @@ export const chainObj = {
             high: 0.03,
         },
     },
-    "pylons-testnet-3": {
-        chainId: "pylons-testnet-3",
-        chainName: "pylons",
-        rpc: "https://rpc-pylons-ia.cosmosia.notional.ventures/",
-        rest: "https://api-pylons-ia.cosmosia.notional.ventures/",
-        bip44: {
-            coinType: 118,
-        },
-        bech32Config: {
-            bech32PrefixAccAddr: "pylo",
-            bech32PrefixAccPub: "pylo" + "pub",
-            bech32PrefixValAddr: "pylo" + "valoper",
-            bech32PrefixValPub: "pylo" + "valoperpub",
-            bech32PrefixConsAddr: "pylo" + "valcons",
-            bech32PrefixConsPub: "pylo" + "valconspub",
-        },
-        currencies: [
-            {
-                coinDenom: "BEDROCK",
-                coinMinimalDenom: "ubedrock",
-                coinDecimals: 6,
-                coinGeckoId: "pylon",
-            },
-        ],
-        feeCurrencies: [
-            {
-                coinDenom: "BEDROCK",
-                coinMinimalDenom: "ubedrock",
-                coinDecimals: 6,
-                coinGeckoId: "pylon",
-            },
-        ],
-        stakeCurrency: {
-            coinDenom: "BEDROCK",
-            coinMinimalDenom: "ubedrock",
-            coinDecimals: 6,
-            coinGeckoId: "pylon",
-        },
-        gasPriceStep: {
-            low: 0.01,
-            average: 0.025,
-            high: 0.03,
-        },
-    },
     "gravity-bridge-3": {
         chainId: "gravity-bridge-3",
         chainName: "gravity bridge",
