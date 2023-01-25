@@ -16,9 +16,9 @@ const style = {
 
 const options = {
     1: "yes",
-    2: "no",
-    3: "no with veto",
-    4: "abstain"
+    2: "abstain",
+    3: "no",
+    4: "no with veto"
 }
 
 const VoteMsg = ({ chain, parentStyle, msg }) => {
