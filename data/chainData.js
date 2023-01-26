@@ -299,6 +299,26 @@ export const chainData = [
         logo: "/images/logo/stride.png",
         hyperLink: "https://stride.zone/"
     },
+    {
+        chain_id: "pylons-mainnet-1",
+        denom: "ubedrock",
+        displayDenom: "bedrock",
+        base_denom: {
+            "denom": "ubedrock",
+            "exponent": 6
+        },
+        name: "pylons",
+        prefix: "pylo",
+        color: "linear-gradient(to right, #ef4421,#0a0049 81%)",
+        rpc: "https://rpc.pylons.tech/",
+        api: "https://lcd.pylons.tech/",
+        explorer: "https://pylons.explorers.guru/",
+        txExplorer: "https://pylons.explorers.guru/transactions",
+        valExplorer: "https://pylons.explorers.guru/validators/",
+        govExplorer: "https://pylons.explorers.guru/proposals/",
+        logo: "/images/logo/pylons.png",
+        hyperLink: "https://www.pylons.tech/"
+    },
 ]
 
 export const prefixToId = {
@@ -316,7 +336,8 @@ export const prefixToId = {
     "cheqd": 11,
     "bcna": 12,
     "gravity": 13,
-    "stride": 14
+    "stride": 14,
+    "pylons-mainnet-1": 15
 }
 
 
@@ -335,7 +356,8 @@ export const idToChainId = {
     11: "cheqd-mainnet-1",
     12: "bitcanna-1",
     13: "gravity-bridge-3",
-    14: "stride-1"
+    14: "stride-1",
+    15: "pylons-mainnet-1"
 }
 
 
