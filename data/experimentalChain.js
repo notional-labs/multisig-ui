@@ -266,8 +266,8 @@ export const chainObj = {
     "pylons-mainnet-1": {
         chainId: "pylons-mainnet-1",
         chainName: "pylons",
-        rpc: "https://rpc.pylons.tech/",
-        rest: "https://lcd.pylons.tech/",
+        rpc: "https://rpc.pylons.nodestake.top/",
+        rest: "https://api.pylons.nodestake.top/",
         bip44: {
             coinType: 118,
         },
