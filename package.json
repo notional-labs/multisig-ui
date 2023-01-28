@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3003",
+    "start": "next start -p 3002",
     "lint": "next lint",
     "test-telescope": "jest ./test/multisigjs.test"
   },
@@ -23,7 +23,7 @@
     "fs": "^0.0.1-security",
     "json-formatter-js": "^2.3.4",
     "multisigjs": "^0.1.2",
-    "next": "12.1.6",
+    "next": "12.3.3",
     "nextjs-progressbar": "^0.0.14",
     "osmojs": "^0.9.3",
     "react": "^18.2.0",

@@ -4,7 +4,6 @@ import { Image } from "antd"
 import { ChainContext } from "./Context"
 import Account from "./layout/Account"
 import { useContext } from "react"
-import "../styles/Header.module.css"
 import Link from "next/link"
 
 const logo = (

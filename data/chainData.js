@@ -337,7 +337,7 @@ export const prefixToId = {
     "bcna": 12,
     "gravity": 13,
     "stride": 14,
-    "pylons-mainnet-1": 15
+    "pylo": 15
 }
 
 
