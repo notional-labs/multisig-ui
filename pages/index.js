@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import { ChainProvider } from "../components/Context";
 import IntroPage from "../components/ulti/IntroPage";
 

@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import Page from "../components/layout/Page";
 import { ChainProvider } from "../components/Context";
 import Container from "../components/layout/Container";

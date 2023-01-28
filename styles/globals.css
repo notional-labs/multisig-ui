@@ -14,11 +14,6 @@ a {
   box-sizing: border-box;
 }
 
-
-.ant-notification-notice {
-  
-}
-
 .ant-notification-notice-message {
   font-size: 20px !important;
 }
@@ -48,5 +43,4 @@ a {
 .hover-nav-button:hover {
   font-size: 1.5em;
 }
-
 

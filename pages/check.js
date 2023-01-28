@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChainProvider } from "../components/Context";
 import { getCustomAminoConverter } from "../libs/CustomSigner";
-import "antd/dist/antd.css";
 import Page from "../components/layout/Page";
 import Button from "../components/input/Button";
 import FlexRow from "../components/flex_box/FlexRow";
