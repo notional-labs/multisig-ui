@@ -313,9 +313,9 @@ export const chainData = [
         rpc: "https://rpc.pylons.nodestake.top/",
         api: "https://api.pylons.nodestake.top/",
         explorer: "https://pylons.explorers.guru/",
-        txExplorer: "https://pylons.explorers.guru/transactions",
-        valExplorer: "https://pylons.explorers.guru/validators/",
-        govExplorer: "https://pylons.explorers.guru/proposals/",
+        txExplorer: "https://pylons.explorers.guru/transaction/",
+        valExplorer: "https://pylons.explorers.guru/validator/",
+        govExplorer: "https://pylons.explorers.guru/proposal/",
         logo: "/images/logo/pylons.png",
         hyperLink: "https://www.pylons.tech/"
     },
