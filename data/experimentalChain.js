@@ -306,5 +306,49 @@ export const chainObj = {
             average: 0.025,
             high: 0.03,
         },
+    },
+    "migaloo-1": {
+        chainId: "migaloo-1",
+        chainName: "migaloo",
+        rpc: "https://whitewhale-rpc.polkachu.com",
+        rest: "https://whitewhale-api.polkachu.com",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "migaloo",
+            bech32PrefixAccPub: "migaloo" + "pub",
+            bech32PrefixValAddr: "migaloo" + "valoper",
+            bech32PrefixValPub: "migaloo" + "valoperpub",
+            bech32PrefixConsAddr: "migaloo" + "valcons",
+            bech32PrefixConsPub: "migaloo" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "WHALE",
+                coinMinimalDenom: "uwhale",
+                coinDecimals: 6,
+                coinGeckoId: "TBD",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "WHALE",
+                coinMinimalDenom: "uwhale",
+                coinDecimals: 6,
+                coinGeckoId: "TBD",
+            },
+        ],
+        stakeCurrency: {
+            coinDenom: "WHALE",
+            coinMinimalDenom: "uwhale",
+            coinDecimals: 6,
+            coinGeckoId: "TBD",
+        },
+        gasPriceStep: {
+            low: 0.0,
+            average: 0.0,
+            high: 0.0,
+        },
     }
 }
