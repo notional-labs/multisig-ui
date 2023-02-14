@@ -40,7 +40,9 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 11. Cheqd
 12. Bitcanna
 13. Gravity bridge
-14. Pylon (testnet)
+14. Pylon
+15. Stride
+16. Migaloo ( White Whale )
 
 Will add more chains in the future
 
