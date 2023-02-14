@@ -72,3 +72,15 @@ export const checkMsg = (prefix, msgValue) => {
         }
     }
 }
+
+export const checkIfVestedAccount = (account) => {
+    if (!account || account === null) {
+        return false
+    }
+
+    if (account['@type'] === '/cosmos.vesting.v1beta1.ContinuousVestingAccount') {
+        return true
+    }
+
+    return false
+}

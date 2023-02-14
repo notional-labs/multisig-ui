@@ -27,6 +27,33 @@ export const createMultisigFromPubkeys = async (compressedPubkeys, threshold, pr
     }
 }
 
+export const importMultisigFromPubkeys = async (compressedPubkeys, threshold, prefix, components, address) => {
+    try {
+        let pubkeys = compressedPubkeys.map((compressedPubkey) => {
+            return {
+                type: "tendermint/PubKeySecp256k1",
+                value: compressedPubkey,
+            };
+        });
+        const multisigPubkey = createMultisigThresholdPubkey(pubkeys, threshold);
+        const multisigAddress = pubkeyToAddress(multisigPubkey, prefix);
+
+        const multisig = {
+            address: address,
+            pubkeyJSON: JSON.stringify(multisigPubkey),
+            components: components,
+            prefix: prefix
+        };
+        const check = await checkIfMultisigExist(address)
+        if (check) throw new Error("This multisig already exist, maybe try add more component addresses or change the current components")
+        const res = await axios.post("/api/multisig", multisig);
+        return res.data.address;
+    } catch (e) {
+        throw e;
+    }
+}
+
+
 export const getMultisigFromAddress = async (address) => {
     try {
         const res = await axios.post(`/api/multisig/${address}`, { address })
