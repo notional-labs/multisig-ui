@@ -36,7 +36,6 @@ export const importMultisigFromPubkeys = async (compressedPubkeys, threshold, pr
             };
         });
         const multisigPubkey = createMultisigThresholdPubkey(pubkeys, threshold);
-        const multisigAddress = pubkeyToAddress(multisigPubkey, prefix);
 
         const multisig = {
             address: address,
