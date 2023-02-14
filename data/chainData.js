@@ -319,6 +319,26 @@ export const chainData = [
         logo: "/images/logo/pylons.png",
         hyperLink: "https://www.pylons.tech/"
     },
+    {
+        chain_id: "migaloo-1",
+        denom: "uwhale",
+        displayDenom: "whale",
+        base_denom: {
+            "denom": "uwhale",
+            "exponent": 6
+        },
+        name: "migaloo",
+        prefix: "migaloo",
+        color: "linear-gradient(to right, #3ccd64,#1d1f31 75%)",
+        rpc: "https://whitewhale-rpc.polkachu.com",
+        api: "https://whitewhale-api.polkachu.com",
+        explorer: "https://explorer.silknodes.io/whitewhale",
+        txExplorer: "https://explorer.silknodes.io/whitewhale/blocks",
+        valExplorer: "https://explorer.silknodes.io/whitewhale/staking",
+        govExplorer: "https://explorer.silknodes.io/whitewhale/gov",
+        logo: "/images/logo/migaloo.png",
+        hyperLink: "https://migaloo.zone/"
+    },
 ]
 
 export const prefixToId = {
@@ -337,7 +357,8 @@ export const prefixToId = {
     "bcna": 12,
     "gravity": 13,
     "stride": 14,
-    "pylo": 15
+    "pylo": 15,
+    "migaloo": 16,
 }
 
 
@@ -357,7 +378,8 @@ export const idToChainId = {
     12: "bitcanna-1",
     13: "gravity-bridge-3",
     14: "stride-1",
-    15: "pylons-mainnet-1"
+    15: "pylons-mainnet-1",
+    16: "migaloo-1",
 }
 
 
