@@ -2,6 +2,7 @@ import { StargateClient } from "@cosmjs/stargate";
 import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 import { chainObj } from "../data/experimentalChain";
+import { checkIfVestedAccount } from "./checkTool";
 
 export const getKeplrAccount = async (chainId) => {
     try {
@@ -110,7 +111,39 @@ export const getPubkeyByAPI = async (api, address) => {
                 "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
             );
         }
+
+        if (checkIfVestedAccount(accountOnChain)) {
+            return accountOnChain.base_vesting_account.base_account.pub_key.key
+        }
+
         return accountOnChain.pub_key.key;
+    }
+    catch (e) {
+        if (e.code === "ERR_BAD_REQUEST" || e.code === "ERR_NETWORK") {
+            throw new Error(
+                "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+            )
+        }
+        throw e
+    }
+}
+
+export const getMultisigAccountByAPI = async (api, address) => {
+    try {
+        const { data } = await axios.get(`${api}cosmos/auth/v1beta1/accounts/${address}`)
+        let accountOnChain = data.account
+
+
+        if (!accountOnChain) {
+            throw new Error(
+                "Account not found, make sure to use the correct address"
+            );
+        }
+
+        if (checkIfVestedAccount(accountOnChain)) {
+            return accountOnChain.base_vesting_account.base_account
+        }
+        return accountOnChain;
     }
     catch (e) {
         if (e.code === "ERR_BAD_REQUEST" || e.code === "ERR_NETWORK") {
@@ -135,6 +168,10 @@ export const getSequence = async (api, address) => {
                 "Multisig Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
                 + "\n" + "(If it is newly made address please make sure to send some token to this address )"
             );
+        }
+
+        if (checkIfVestedAccount(data.account)) {
+            return data.account.base_vesting_account.base_account
         }
         return data.account;
     }
