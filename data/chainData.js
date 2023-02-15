@@ -333,7 +333,7 @@ export const chainData = [
         rpc: "https://whitewhale-rpc.polkachu.com/",
         api: "https://whitewhale-api.polkachu.com/",
         explorer: "https://explorer.silknodes.io/whitewhale/",
-        txExplorer: "https://explorer.silknodes.io/whitewhale/blocks/",
+        txExplorer: "https://explorer.silknodes.io/whitewhale/tx/",
         valExplorer: "https://explorer.silknodes.io/whitewhale/staking/",
         govExplorer: "https://explorer.silknodes.io/whitewhale/gov/",
         logo: "/images/logo/migaloo.png",
