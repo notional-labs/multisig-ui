@@ -16,7 +16,7 @@ const ShareForm = ({
                     handleKeyGroupChange(e);
                 }}
                 value={txBody.gas}
-                label={`Set gas (${chain.denom.toUpperCase()})`}
+                label={`Set gas`}
                 name="gas"
                 type="number"
                 placeholder="Gas Amount"
