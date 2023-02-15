@@ -78,7 +78,8 @@ export const checkIfVestedAccount = (account) => {
         return false
     }
 
-    if (account.base_vesting_account !== null) {
+    if (account.base_vesting_account) {
+        console.log(account.base_vesting_account)
         return true
     }
 
