@@ -5,7 +5,7 @@ import Profile from "../Profile"
 import { openNotification } from "../ulti/Notification"
 import { ChainContext } from "../Context"
 
-const Account = ({ chainId, chainName }) => {
+const Account = ({ chainName }) => {
     const [account, setAccount] = useState("")
     const { chain } = useContext(ChainContext)
 
