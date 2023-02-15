@@ -5,7 +5,7 @@ import { getMultisigAccountByAPI } from "../../libs/keplrClient";
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import { importMultisigFromPubkeys } from "../../libs/multisig";
 const { toBech32, fromBase64 } = require("@cosmjs/encoding");
-import {rawSecp256k1PubkeyToRawAddress} from "@cosmjs/tendermint-rpc"
+import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
 import { motion } from "framer-motion"
 import FlexRow from "../flex_box/FlexRow"
 import { InputNumber } from "antd"
@@ -37,6 +37,25 @@ const MultisigImport = ({ chain }) => {
     const [threshold, setThreshold] = useState(0)
     const router = useRouter()
 
+    const fetchData = async (address) => {
+        const acc = await getMultisigAccountByAPI(chain.api, address)
+        let componentsAddr = []
+        acc.pub_key.public_keys.map(
+            (item) => {
+                const addrUint8Array = fromBase64(item.key)
+                const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
+                const addr = toBech32(chain.prefix, rawAddr)
+                componentsAddr.push(addr)
+            }
+        );
+
+        return {
+            componentsAddr,
+            publicKeys: acc.pub_key.public_keys,
+            thres: acc.pub_key.threshold
+        }
+    }
+
     const handleOnBlur = async () => {
         try {
             if (!address || address === "") {
@@ -44,19 +63,10 @@ const MultisigImport = ({ chain }) => {
                 return
             }
             setErr("")
-            const acc = await getMultisigAccountByAPI(chain.api, address)
-            let componentsAddr = []
-            setPubkeys([...acc.pub_key.public_keys])
-            acc.pub_key.public_keys.map(
-                (item) => {
-                    const addrUint8Array = fromBase64(item.key)
-                    const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
-                    const addr = toBech32(chain.prefix, rawAddr)
-                    componentsAddr.push(addr)
-                }
-            );
+            const {componentsAddr, publicKeys, thres} = await fetchData(address)
+            setPubkeys([...publicKeys])
             setComponents([...componentsAddr])
-            setThreshold(acc.pub_key.threshold)
+            setThreshold(thres)
         }
         catch (e) {
             openLoadingNotification("close")
@@ -74,23 +84,46 @@ const MultisigImport = ({ chain }) => {
                 setErr("Address must not be empty")
                 return
             }
-            const compressedPubkeys = pubkeys.map(
-                (item) => {
-                    return item.key
-                }
-            );
-
-            openLoadingNotification("open", "Importing multisig")
-            const multisigAddress = await importMultisigFromPubkeys(
-                compressedPubkeys,
-                parseInt(threshold, 10),
-                chain.prefix,
-                components,
-                address
-            );
-            router.push(`/multisig/${multisigAddress}`);
-            openLoadingNotification("close")
-            openNotification("success", "Import successfully")
+            setErr("")
+            if (pubkeys.length > 0) {
+                const compressedPubkeys = pubkeys.map(
+                    (item) => {
+                        return item.key
+                    }
+                );
+    
+                openLoadingNotification("open", "Importing multisig")
+                const multisigAddress = await importMultisigFromPubkeys(
+                    compressedPubkeys,
+                    parseInt(threshold, 10),
+                    chain.prefix,
+                    components,
+                    address
+                );
+                router.push(`/multisig/${multisigAddress}`);
+                openLoadingNotification("close")
+                openNotification("success", "Import successfully")
+            }
+            else {
+                const {componentsAddr, publicKeys, thres} = await fetchData(address)
+                const compressedPubkeys = publicKeys.map(
+                    (item) => {
+                        return item.key
+                    }
+                );
+    
+                openLoadingNotification("open", "Importing multisig")
+                const multisigAddress = await importMultisigFromPubkeys(
+                    compressedPubkeys,
+                    parseInt(thres, 10),
+                    chain.prefix,
+                    componentsAddr,
+                    address
+                );
+                router.push(`/multisig/${multisigAddress}`);
+                openLoadingNotification("close")
+                openNotification("success", "Import successfully")
+            }
         }
         catch (e) {
             openLoadingNotification("close")
@@ -262,6 +295,7 @@ const MultisigImport = ({ chain }) => {
                     ...style.button,
                     backgroundColor: checkDisable() ? "#D9D9D9" : "black"
                 }}
+                disable={checkDisable()}
                 clickFunction={async () => await handleImport()}
             />
         </>

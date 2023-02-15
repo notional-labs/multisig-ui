@@ -78,7 +78,7 @@ export const checkIfVestedAccount = (account) => {
         return false
     }
 
-    if (account['@type'] === '/cosmos.vesting.v1beta1.ContinuousVestingAccount') {
+    if (account.base_vesting_account !== null) {
         return true
     }
 

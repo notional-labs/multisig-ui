@@ -112,6 +112,10 @@ export const getPubkeyByAPI = async (api, address) => {
             );
         }
 
+        if (checkIfVestedAccount(accountOnChain)) {
+            return accountOnChain.base_vesting_account.base_account.pub_key.key
+        }
+
         return accountOnChain.pub_key.key;
     }
     catch (e) {
@@ -129,15 +133,6 @@ export const getMultisigAccountByAPI = async (api, address) => {
         const { data } = await axios.get(`${api}cosmos/auth/v1beta1/accounts/${address}`)
         let accountOnChain = data.account
 
-        if (checkIfVestedAccount(accountOnChain)) {
-            if (!accountOnChain) {
-                throw new Error(
-                    "Account not found, make sure to use the correct address"
-                );
-            }
-
-            return accountOnChain.base_vesting_account.base_account
-        }
 
         if (!accountOnChain) {
             throw new Error(
@@ -145,6 +140,9 @@ export const getMultisigAccountByAPI = async (api, address) => {
             );
         }
 
+        if (checkIfVestedAccount(accountOnChain)) {
+            return accountOnChain.base_vesting_account.base_account
+        }
         return accountOnChain;
     }
     catch (e) {
