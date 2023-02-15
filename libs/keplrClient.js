@@ -171,6 +171,10 @@ export const getSequence = async (api, address) => {
                 + "\n" + "(If it is newly made address please make sure to send some token to this address )"
             );
         }
+
+        if (checkIfVestedAccount(data.account)) {
+            return data.account.base_vesting_account.base_account
+        }
         return data.account;
     }
     catch (e) {
