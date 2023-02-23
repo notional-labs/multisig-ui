@@ -46,3 +46,4 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 
 Will add more chains in the future
 
+
