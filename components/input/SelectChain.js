@@ -1,7 +1,7 @@
 import { chainData } from "../../data/chainData"
 import Button from "./Button"
 import FlexRow from "../flex_box/FlexRow"
-import { Image, Modal } from "antd"
+import { Image, Modal, Tooltip } from "antd"
 import { ChainContext } from "../Context"
 import { useContext, useState } from "react"
 
@@ -62,9 +62,17 @@ const SelectChain = ({ enableSelectChain }) => {
         window.dispatchEvent(new Event("chain_changed"))
     }
 
+    const checkDisable = (id) => {
+        if (id === 'evmos_9001-2') {
+            return true
+        }
+        return false
+    }
+
     const getGridButton = (chainInfo, index) => {
         return (
             <Button
+                disable={checkDisable(chainInfo.chain_id)}
                 index={index}
                 text={
                     <>
@@ -94,26 +102,37 @@ const SelectChain = ({ enableSelectChain }) => {
                             ]}
                             justifyContent={"start"}
                         />
-                        <div
-                            style={{
-                                textAlign: "left"
-                            }}
-                        >
-                            <a
-                                href={chainInfo.hyperLink || "#"}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {chainInfo.hyperLink}
-                            </a>
-                        </div>
+                        {
+                            checkDisable(chainInfo.chain_id) ?
+                                <div
+                                    style={{
+                                        textAlign: "left",
+                                        color: "red"
+                                    }}
+                                >
+                                    Currently disable for maintainance
+                                </div> : <div
+                                    style={{
+                                        textAlign: "left"
+                                    }}
+                                >
+                                    <a
+                                        href={chainInfo.hyperLink || "#"}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {chainInfo.hyperLink}
+                                    </a>
+                                </div>
+                        }
                     </>
                 }
                 style={{
                     border: "solid 1px black",
                     borderRadius: "10px",
                     padding: ".5em",
-                    overFlow: "hidden"
+                    overFlow: "hidden",
+                    opacity: checkDisable(chainInfo.chain_id) && 0.5
                 }}
                 clickFunction={() => handleSelect(index)}
             />
