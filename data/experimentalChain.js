@@ -310,8 +310,8 @@ export const chainObj = {
     "migaloo-1": {
         chainId: "migaloo-1",
         chainName: "migaloo",
-        rpc: "https://whitewhale-rpc.polkachu.com",
-        rest: "https://whitewhale-api.polkachu.com",
+        rpc: "https://rpc-whitewhale-ia.cosmosia.notional.ventures/",
+        rest: "https://api-whitewhale-ia.cosmosia.notional.ventures/",
         bip44: {
             coinType: 118,
         },

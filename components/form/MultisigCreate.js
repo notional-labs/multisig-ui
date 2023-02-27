@@ -9,6 +9,8 @@ import { InputNumber } from "antd"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import { createMultisigFromPubkeys } from "../../libs/multisig"
 import { useRouter } from "next/router"
+import CreateMultisigFilterButton from "../input/CreateMultisigFilterButton"
+import MultisigImport from "./MultisigImport"
 
 const emptyKeyInput = () => {
     return {
@@ -42,6 +44,7 @@ const MultisigCreate = () => {
         emptyKeyInput(), emptyKeyInput()
     ])
     const [threshold, setThreshold] = useState(2)
+    const [mode, setMode] = useState("Create")
     const router = useRouter()
 
     const handleKeyGroupChange = (e, index) => {
@@ -122,134 +125,148 @@ const MultisigCreate = () => {
     }
 
     return (
-        <div
-            style={{
-                
-                backgroundColor: "#ffffff",
-                boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
-                padding: "2em 3em",
-                borderRadius: "30px",
-                position: "relative",
-                zIndex: 1
-            }}
-        >
-            <h1
-                style={{
-                    textAlign: "center"
-                }}
-            >
-                Create Multisig
-            </h1>
-            <p
-                style={{ marginBottom: "10px" }}
-            >
-                Add the addresses that will make up this multisig.
-            </p>
-            {
-                pubkeys.map((pubkey, index) => {
-                    return (
-                        <div
-                            style={{
-                                marginBottom: "10px",
-                                position: "relative"
-                            }}
-                        >
-                            {
-                                pubkeys.length > 2 && (
-                                    <Button
-                                        text={"X"}
-                                        clickFunction={() => handleRemove(index)}
-                                        style={{
-                                            borderRadius: "50%",
-                                            border: 0,
-                                            aspectRatio: "1/1",
-                                            width: "30px",
-                                            position: "absolute",
-                                            left: "97%",
-                                            top: "10%",
-                                        }}
-                                    />
-                                )
-                            }
-                            <Input
-                                onChange={(e) => {
-                                    handleKeyGroupChange(e, index);
-                                }}
-                                value={pubkey.address}
-                                label="Address"
-                                name="address"
-                                placeholder="Address here"
-                                onBlur={async (e) => {
-                                    await handleKeyBlur(e, index);
-                                }}
-                                error={pubkey.error}
-                            />
-                        </div>
-                    )
-                })
-            }
-            <Button
-                text={"ADD ANOTHER ADDRESS"}
-                clickFunction={handleAddAddress}
-                style={style.button}
+        <>
+            <CreateMultisigFilterButton
+                currentFilter={mode}
+                setFilter={setMode}
             />
             <div
                 style={{
-                    marginTop: "30px"
+
+                    backgroundColor: "#ffffff",
+                    boxShadow: " 0px 0px 20px 2px rgba(0, 0, 0, 0.25)",
+                    padding: "2em 3em",
+                    borderRadius: "0 30px 30px 30px",
+                    position: "relative",
+                    zIndex: 1
                 }}
             >
-                <FlexRow
-                    components={[
-                        <InputNumber
-                            min={1}
-                            max={pubkeys.length}
-                            defaultValue={2}
-                            value={threshold}
-                            onChange={handleChangeThreshold}
-                            style={{
-                                ...style.inputNumberStyle,
-                                backgroundColor: "#F5F5F5"
-                            }}
-                        />,
-                        <text
-                            style={{
-                                fontSize: "1.5rem",
-                                position: "absolute",
-                                top: "10px"
-                            }}
-                        >
-                            Of
-                        </text>,
-                        <InputNumber
-                            value={pubkeys.length}
-                            disabled={true}
-                            style={style.inputNumberStyle}
-                        />
-                    ]}
+                <h1
                     style={{
-                        position: "relative"
+                        textAlign: "center"
                     }}
-                />
+                >
+                    {mode} Multisig
+                </h1>
+                {
+                    mode === 'Create' ? (
+                        <>
+                            <p
+                                style={{ marginBottom: "10px" }}
+                            >
+                                Add the addresses that will make up this multisig.
+                            </p>
+                            {
+                                pubkeys.map((pubkey, index) => {
+                                    return (
+                                        <div
+                                            style={{
+                                                marginBottom: "10px",
+                                                position: "relative"
+                                            }}
+                                        >
+                                            {
+                                                pubkeys.length > 2 && (
+                                                    <Button
+                                                        text={"X"}
+                                                        clickFunction={() => handleRemove(index)}
+                                                        style={{
+                                                            borderRadius: "50%",
+                                                            border: 0,
+                                                            aspectRatio: "1/1",
+                                                            width: "30px",
+                                                            position: "absolute",
+                                                            left: "97%",
+                                                            top: "10%",
+                                                        }}
+                                                    />
+                                                )
+                                            }
+                                            <Input
+                                                onChange={(e) => {
+                                                    handleKeyGroupChange(e, index);
+                                                }}
+                                                value={pubkey.address}
+                                                label="Address"
+                                                name="address"
+                                                placeholder="Address here"
+                                                onBlur={async (e) => {
+                                                    await handleKeyBlur(e, index);
+                                                }}
+                                                error={pubkey.error}
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+                            <Button
+                                text={"ADD ANOTHER ADDRESS"}
+                                clickFunction={handleAddAddress}
+                                style={style.button}
+                            />
+                            <div
+                                style={{
+                                    marginTop: "30px"
+                                }}
+                            >
+                                <FlexRow
+                                    components={[
+                                        <InputNumber
+                                            min={1}
+                                            max={pubkeys.length}
+                                            defaultValue={2}
+                                            value={threshold}
+                                            onChange={handleChangeThreshold}
+                                            style={{
+                                                ...style.inputNumberStyle,
+                                                backgroundColor: "#F5F5F5"
+                                            }}
+                                        />,
+                                        <text
+                                            style={{
+                                                fontSize: "1.5rem",
+                                                position: "absolute",
+                                                top: "10px"
+                                            }}
+                                        >
+                                            Of
+                                        </text>,
+                                        <InputNumber
+                                            value={pubkeys.length}
+                                            disabled={true}
+                                            style={style.inputNumberStyle}
+                                        />
+                                    ]}
+                                    style={{
+                                        position: "relative"
+                                    }}
+                                />
+                            </div>
+                            <p
+                                style={{
+                                    marginTop: "20px",
+                                    fontSize: ".75rem"
+                                }}
+                            >
+                                {`This means that each transaction this multisig makes will require ${threshold} 
+                                of the members to sign it for it to be accepted by the validators.`}
+                            </p>
+                            <Button
+                                text={"CREATE MULTISIG"}
+                                style={{
+                                    ...style.button,
+                                    backgroundColor: checkDisable() ? "#D9D9D9" : "black"
+                                }}
+                                clickFunction={async () => await handleCreate()}
+                                disable={checkDisable()}
+                            />
+                        </>
+                    ) : (
+                        <MultisigImport chain={chain}/>
+                    )
+                }
             </div>
-            <p
-                style={{
-                    marginTop: "20px",
-                    fontSize: ".75rem"
-                }}
-            >
-                {`This means that each transaction this multisig makes will require ${threshold} 
-                of the members to sign it for it to be accepted by the validators.`}
-            </p>
-            <Button
-                text={"CREATE MULTISIG"}
-                style={{
-                    ...style.button,
-                    backgroundColor: checkDisable() ? "#D9D9D9" : "black"
-                }}
-                clickFunction={async () => await handleCreate()} 
-                disable={checkDisable()}
-            />
-        </div>
+        </>
     )
 }
 

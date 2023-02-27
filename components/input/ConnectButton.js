@@ -4,7 +4,6 @@ import { useRouter } from "next/router"
 import { openNotification } from "../ulti/Notification"
 
 const ConnectButton = ({ chainId, setAccount }) => {
-    const router = useRouter()
 
     const connect = async () => {
         try {

@@ -72,3 +72,16 @@ export const checkMsg = (prefix, msgValue) => {
         }
     }
 }
+
+export const checkIfVestedAccount = (account) => {
+    if (!account || account === null) {
+        return false
+    }
+
+    if (account.base_vesting_account) {
+        console.log(account.base_vesting_account)
+        return true
+    }
+
+    return false
+}

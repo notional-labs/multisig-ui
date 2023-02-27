@@ -1,15 +1,17 @@
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useContext } from "react"
 import { getKeplrAccount, getKey } from "../../libs/keplrClient"
 import ConnectButton from "../input/ConnectButton"
 import Profile from "../Profile"
 import { openNotification } from "../ulti/Notification"
+import { ChainContext } from "../Context"
 
-const Account = ({ chainId, chainName }) => {
+const Account = ({ chainName }) => {
     const [account, setAccount] = useState("")
+    const { chain } = useContext(ChainContext)
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         try {
-            const keplrAccount = await getAccount(chainId)
+            const keplrAccount = await getAccount(chain.chain_id)
             const currentAccount = localStorage.getItem("account")
             if (currentAccount && currentAccount !== "") {
                 localStorage.setItem("account", JSON.stringify(keplrAccount))
@@ -19,7 +21,7 @@ const Account = ({ chainId, chainName }) => {
         catch (e) {
             openNotification('error', e.message)
         }
-    }, []);
+    }, [chain]);
 
     useEffect(() => {
         window.keplr && window.addEventListener("keplr_keystorechange", keplrKeystorechangeHandler)
@@ -34,7 +36,7 @@ const Account = ({ chainId, chainName }) => {
             try {
                 const currentAccount = localStorage.getItem("account")
                 if (currentAccount && currentAccount !== "") {
-                    const keplrAccount = await getAccount(chainId)
+                    const keplrAccount = await getAccount(chain.chain_id)
                     localStorage.setItem("account", JSON.stringify(keplrAccount))
                     setAccount(JSON.stringify(keplrAccount))
                 }
@@ -43,29 +45,14 @@ const Account = ({ chainId, chainName }) => {
                 openNotification('error', e.message)
             }
         })()
-    }, [])
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const currentAccount = localStorage.getItem("account")
-                if (currentAccount === "" || !currentAccount) return
-                const keplrAccount = await getAccount(chainId)
-                localStorage.setItem("account", JSON.stringify(keplrAccount))
-                setAccount(JSON.stringify(keplrAccount))
-            }
-            catch (e) {
-                openNotification("error", e.message)
-            }
-        })()
-    }, [chainId])
+    }, [chain.chain_id])
 
     const wrapperSetAccount = (acc) => {
         setAccount(acc)
     }
 
     const getAccount = async () => {
-        const acc = await getKey(chainId)
+        const acc = await getKey(chain.chain_id)
         return acc
     }
 
@@ -77,7 +64,7 @@ const Account = ({ chainId, chainName }) => {
         />
     ) : (
         <ConnectButton
-            chainId={chainId}
+            chainId={chain.chain_id}
             setAccount={wrapperSetAccount}
         />
     )
