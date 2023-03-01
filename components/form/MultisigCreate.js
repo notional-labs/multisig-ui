@@ -133,9 +133,17 @@ const MultisigCreate = () => {
     const handleKeyBlurPubkeyMode = (e, index) => {
         const pubkey = e.target.value
         const newPubkeys = [...pubkeys]
-        newPubkeys[index].pubkey = e.target.value;
-        newPubkeys[index].error = "";
-        setPubkeys([...newPubkeys])
+        try{
+            const address = 
+            newPubkeys[index].pubkey = e.target.value;
+            newPubkeys[index].error = "";
+            setPubkeys([...newPubkeys])
+        }
+        catch (err) {
+            const newPubkeys = [...pubkeys]
+            newPubkeys[index].error = err.message;
+            setPubkeys([...newPubkeys])
+        }
     }
 
     const changeMode = (index, mode) => {
