@@ -16,7 +16,8 @@ const emptyKeyInput = () => {
     return {
         address: "",
         pubkey: "",
-        error: ""
+        error: "",
+        mode: "address"
     }
 }
 
@@ -47,9 +48,14 @@ const MultisigCreate = () => {
     const [mode, setMode] = useState("Create")
     const router = useRouter()
 
-    const handleKeyGroupChange = (e, index) => {
+    const handleKeyGroupChange = (e, index, mode = "address") => {
         const newPubkeys = [...pubkeys]
-        newPubkeys[index].address = e.target.value
+        if ( mode === "address" ) {
+            newPubkeys[index].address = e.target.value
+        }
+        else {
+            newPubkeys[index].pubkey = e.target.value
+        }
         setPubkeys([...newPubkeys])
     }
 
@@ -124,6 +130,21 @@ const MultisigCreate = () => {
         }
     }
 
+    const handleKeyBlurPubkeyMode = (e, index) => {
+        const pubkey = e.target.value
+        const newPubkeys = [...pubkeys]
+        newPubkeys[index].pubkey = e.target.value;
+        newPubkeys[index].error = "";
+        setPubkeys([...newPubkeys])
+    }
+
+    const changeMode = (index, mode) => {
+        const newPubkeys = [...pubkeys]
+        newPubkeys[index].mode = mode;
+        newPubkeys[index].error = "";
+        setPubkeys([...newPubkeys])
+    }
+
     return (
         <>
             <CreateMultisigFilterButton
@@ -184,14 +205,19 @@ const MultisigCreate = () => {
                                             }
                                             <Input
                                                 onChange={(e) => {
-                                                    handleKeyGroupChange(e, index);
+                                                    handleKeyGroupChange(e, index, pubkey.mode);
                                                 }}
                                                 value={pubkey.address}
                                                 label="Address"
                                                 name="address"
                                                 placeholder="Address here"
                                                 onBlur={async (e) => {
-                                                    await handleKeyBlur(e, index);
+                                                    if (pubkey.mode === "address"){
+                                                        await handleKeyBlur(e, index);
+                                                    }
+                                                    else {
+
+                                                    }
                                                 }}
                                                 error={pubkey.error}
                                             />
@@ -262,7 +288,7 @@ const MultisigCreate = () => {
                             />
                         </>
                     ) : (
-                        <MultisigImport chain={chain}/>
+                        <MultisigImport chain={chain} />
                     )
                 }
             </div>
