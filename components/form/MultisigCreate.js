@@ -11,6 +11,9 @@ import { createMultisigFromPubkeys } from "../../libs/multisig"
 import { useRouter } from "next/router"
 import CreateMultisigFilterButton from "../input/CreateMultisigFilterButton"
 import MultisigImport from "./MultisigImport"
+import { fromBase64, toBech32 } from "@cosmjs/encoding"
+import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
+import { PublicKey } from "@injectivelabs/sdk-ts";
 
 const emptyKeyInput = () => {
     return {
@@ -133,10 +136,26 @@ const MultisigCreate = () => {
     const handleKeyBlurPubkeyMode = (e, index) => {
         const pubkey = e.target.value
         const newPubkeys = [...pubkeys]
+        newPubkeys[index].error = ""
         try{
-            const address = 
-            newPubkeys[index].pubkey = e.target.value;
-            newPubkeys[index].error = "";
+            if (chain.chain_id.startsWith('evmos')) {
+                const address = PublicKey.fromBase64(fromBase64(pubkey))
+                address.type = '/ethermint.crypto.v1.ethsecp256k1.PubKey'
+                const addr = address.toAddress().toBech32('evmos')
+                newPubkeys[index].address = addr;
+            }
+            else if (chain.chain_id.startsWith('injective')) {
+                const address = PublicKey.fromBase64(fromBase64(pubkey))
+                address.type = '/injective.crypto.v1beta1.ethsecp256k1.PubKey'
+                const addr = address.toAddress().toBech32('inj')
+                newPubkeys[index].address = addr;
+            }
+            else {
+                const addrUint8Array = fromBase64(pubkey)
+                const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
+                const addr = toBech32(chain.prefix, rawAddr)
+                newPubkeys[index].address = addr;
+            }
             setPubkeys([...newPubkeys])
         }
         catch (err) {
@@ -147,8 +166,9 @@ const MultisigCreate = () => {
     }
 
     const changeMode = (index, mode) => {
+        const newMode = mode === "address" ? "pubkey" : "address"
         const newPubkeys = [...pubkeys]
-        newPubkeys[index].mode = mode;
+        newPubkeys[index].mode = newMode;
         newPubkeys[index].error = "";
         setPubkeys([...newPubkeys])
     }
@@ -183,7 +203,7 @@ const MultisigCreate = () => {
                             <p
                                 style={{ marginBottom: "10px" }}
                             >
-                                Add the addresses that will make up this multisig.
+                                Add the components that will make up this multisig.
                             </p>
                             {
                                 pubkeys.map((pubkey, index) => {
@@ -215,20 +235,38 @@ const MultisigCreate = () => {
                                                 onChange={(e) => {
                                                     handleKeyGroupChange(e, index, pubkey.mode);
                                                 }}
-                                                value={pubkey.address}
-                                                label="Address"
+                                                value={pubkey.mode === "address" ? pubkey.address : pubkey.pubkey}
+                                                label={pubkey.mode === "address" ? "Address" : "Pubkey"}
                                                 name="address"
-                                                placeholder="Address here"
+                                                placeholder={pubkey.mode === "address" ? "Address here" : "Pubkey here"}
                                                 onBlur={async (e) => {
                                                     if (pubkey.mode === "address"){
                                                         await handleKeyBlur(e, index);
                                                     }
                                                     else {
-
+                                                        handleKeyBlurPubkeyMode(e, index)
                                                     }
                                                 }}
                                                 error={pubkey.error}
                                             />
+                                           
+                                            <Button
+                                                text={pubkey.mode === "address" ? "Use Pubkey" : "Use Address"}
+                                                clickFunction={() => {
+                                                    changeMode(index, pubkey.mode)
+                                                }}
+                                                style={{
+                                                    border: 0,
+                                                    aspectRatio: "1/1",
+                                                    backgroundColor: "transparent",
+                                                    textDecoration: "underline",
+                                                    fontStyle: "italic",
+                                                    width: "100%",
+                                                    textAlign: "right",
+                                                    height: "30px"
+                                                }}
+                                            />
+                                            
                                         </div>
                                     )
                                 })

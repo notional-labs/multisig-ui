@@ -2,7 +2,7 @@ import { StargateClient } from "@cosmjs/stargate";
 import axios from "axios";
 import { getMultisigFromAddress } from "./multisig";
 import { chainObj } from "../data/experimentalChain";
-import { checkIfVestedAccount } from "./checkTool";
+import { checkIfVestedAccount, checkEthermintAcccount } from "./checkTool";
 
 export const getKeplrAccount = async (chainId) => {
     try {
@@ -113,8 +113,23 @@ export const getPubkeyByAPI = async (api, address) => {
         }
 
         if (checkIfVestedAccount(accountOnChain)) {
+            if ( !accountOnChain.base_vesting_account.base_account.pub_key ) {
+                throw new Error(
+                    "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+                );
+            }
             return accountOnChain.base_vesting_account.base_account.pub_key.key
         }
+
+        if (checkEthermintAcccount(accountOnChain)) {
+            if ( !accountOnChain.base_account.pub_key ) {
+                throw new Error(
+                    "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
+                );
+            }
+            return accountOnChain.base_account.pub_key.key
+        }
+
 
         return accountOnChain.pub_key.key;
     }
@@ -142,6 +157,10 @@ export const getMultisigAccountByAPI = async (api, address) => {
 
         if (checkIfVestedAccount(accountOnChain)) {
             return accountOnChain.base_vesting_account.base_account
+        }
+
+        if (checkEthermintAcccount(accountOnChain)) {
+            return accountOnChain.base_account
         }
         return accountOnChain;
     }
@@ -172,6 +191,10 @@ export const getSequence = async (api, address) => {
 
         if (checkIfVestedAccount(data.account)) {
             return data.account.base_vesting_account.base_account
+        }
+
+        if (checkEthermintAcccount(data.account)) {
+            return data.account.base_account
         }
         return data.account;
     }
