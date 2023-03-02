@@ -60,8 +60,8 @@ const MultisigView = () => {
                 setMultisigErr("")
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
-                id && wrapper(id)
-                id && localStorage.setItem("current", id)
+                !id && id !== "" && wrapper(id)
+                !id && id !== "" && localStorage.setItem("current", id)
                 const balances = await getBalances(chain.api, multisigID)
                 setHolding([...balances])
                 setLoading(false)
