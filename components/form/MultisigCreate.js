@@ -13,7 +13,7 @@ import CreateMultisigFilterButton from "../input/CreateMultisigFilterButton"
 import MultisigImport from "./MultisigImport"
 import { fromBase64, toBech32 } from "@cosmjs/encoding"
 import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
-import { PublicKey } from "@injectivelabs/sdk-ts";
+import { PublicKey } from "@injectivelabs/sdk-ts/dist/core/accounts/PublicKey";
 
 const emptyKeyInput = () => {
     return {
