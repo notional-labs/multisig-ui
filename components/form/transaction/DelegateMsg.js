@@ -125,7 +125,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                         width: "100%",
                         borderRadius: "10px",
                         border: "solid 1px black",
-                        padding: "10px"
+                        padding: "10px 0"
                     }}
                 />
             </div>
