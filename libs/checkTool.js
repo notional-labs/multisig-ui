@@ -85,3 +85,15 @@ export const checkIfVestedAccount = (account) => {
 
     return false
 }
+
+export const checkEthermintAcccount = (account) => {
+    if (!account || account === null) {
+        return false
+    }
+
+    if (account.base_account) {
+        return true
+    }
+
+    return false
+}
