@@ -5,6 +5,8 @@ import { createDelegateMsg } from "../../../libs/transaction"
 import { openNotification } from "../../ulti/Notification"
 import { convertValueFromDenom } from "../../../libs/stringConvert"
 import Button from "../../input/Button"
+import { InputNumber } from 'antd';
+
 
 const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [validators, setValidators] = useState([])
@@ -55,19 +57,11 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         }
     }
 
-    const handleKeyGroupChange = (e) => {
-        if (e.target.name === "amount") {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: parseFloat(e.target.value)
-            })
-        }
-        else {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: e.target.value
-            })
-        }
+    const handleInputNumber = (val) => {
+        setTxBody({
+            ...txBody,
+            amount: parseFloat(val)
+        })
     }
 
     const handleSelect = (e) => {
@@ -112,17 +106,29 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 </select>
 
             </div>
-            <Input
-                onChange={(e) => {
-                    handleKeyGroupChange(e);
-                }}
-                value={txBody.amount}
-                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
-                name="amount"
-                type="number"
-                placeholder="Amount"
-                style={style.input}
-            />
+            <div>
+                <h4
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    {`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                </h4>
+                <InputNumber
+                    onChange={handleInputNumber}
+                    value={txBody.amount}
+                    label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    name="amount"
+                    placeholder="Amount"
+                    style={{
+                        ...style.input,
+                        width: "100%",
+                        borderRadius: "10px",
+                        border: "solid 1px black",
+                        padding: "10px"
+                    }}
+                />
+            </div>
             <Button
                 text={"Add Message"}
                 style={{
