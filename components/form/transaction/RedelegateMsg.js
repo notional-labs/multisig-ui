@@ -6,6 +6,7 @@ import { openNotification } from "../../ulti/Notification"
 import ValidatorRow from "../../data_view/ValidatorRow"
 import { convertValueFromDenom } from "../../../libs/stringConvert"
 import Button from "../../input/Button"
+import { InputNumber } from 'antd';
 
 const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [validators, setValidators] = useState([])
@@ -73,25 +74,6 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         }
     }
 
-    const handleKeyGroupChange = (e) => {
-        if (e.target.name === "amount") {
-            setAmountError("")
-            setTxBody({
-                ...txBody,
-                [e.target.name]: parseFloat(e.target.value)
-            })
-            if (parseFloat(e.target.value) > maxAmount) {
-                setAmountError("Amount should be lower than delegation amount")
-            }
-        }
-        else {
-            setTxBody({
-                ...txBody,
-                [e.target.name]: e.target.value
-            })
-        }
-    }
-
     const handleSelect = (e) => {
         setTxBody({
             ...txBody,
@@ -102,6 +84,13 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         const filter = delegations.filter(del => del.delegation.validatorAddress === e.target.value)
         const delegation = filter[0]
         setMaxAmount(parseInt(delegation.balance.amount, 10) / 1000000)
+    }
+
+    const handleInputNumber = (val) => {
+        setTxBody({
+            ...txBody,
+            amount: parseFloat(val)
+        })
     }
 
     const handleSelectVal = (e) => {
@@ -226,18 +215,29 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
             >
                 {maxAmount}
             </div>
-            <Input
-                onChange={(e) => {
-                    handleKeyGroupChange(e);
-                }}
-                value={txBody.amount}
-                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
-                name="amount"
-                type="number"
-                placeholder="Amount"
-                style={style.input}
-                error={amountError}
-            />
+            <div>
+                <h4
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    {`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                </h4>
+                <InputNumber
+                    onChange={handleInputNumber}
+                    value={txBody.amount}
+                    label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    name="amount"
+                    placeholder="Amount"
+                    style={{
+                        ...style.input,
+                        width: "100%",
+                        borderRadius: "10px",
+                        border: "solid 1px black",
+                        padding: "10px"
+                    }}
+                />
+            </div>
             <Button
                 text={"Add Message"}
                 style={{
