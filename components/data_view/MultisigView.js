@@ -11,6 +11,7 @@ import { prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
 import TransactionImport from "../form/TransactionImport"
 import AssetRow from "./AssetRow"
+import { chainData } from "../../data/chainData"
 
 const { Paragraph } = Typography;
 
@@ -60,9 +61,9 @@ const MultisigView = () => {
                 setMultisigErr("")
                 const res = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${res.prefix}`]
-                !id && id !== "" && wrapper(id)
-                !id && id !== "" && localStorage.setItem("current", id)
-                const balances = await getBalances(chain.api, multisigID)
+                id && wrapper(id)
+                id && localStorage.setItem("current", id)
+                const balances = await getBalances(chainData[id].api, multisigID)
                 setHolding([...balances])
                 setLoading(false)
             }
