@@ -7,10 +7,23 @@ const ShareForm = ({
     handleCreate,
     chain,
     style,
-    disabled
+    disabled,
+    handleEstimateGas
 }) => {
     return (
         <>
+            <Button
+                text={"Estimate gas"}
+                clickFunction={async () => await handleEstimateGas()}
+                style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    padding: "0",
+                    margin: "20px 0",
+                    textDecoration: "underline",
+                    fontStyle: "italic",
+                }}
+            />
             <Input
                 onChange={(e) => {
                     handleKeyGroupChange(e);

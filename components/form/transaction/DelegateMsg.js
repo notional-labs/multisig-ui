@@ -41,7 +41,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         })()
     }, [chain])
 
-    const createMsg = () => {
+    const createMsg = async () => {
         try {
             const msg = createDelegateMsg(
                 address,
@@ -49,7 +49,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 convertValueFromDenom(chain.base_denom, txBody.amount),
                 chain.denom
             )
-            setMsgs([...msgs, msg])
+            await setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
@@ -140,7 +140,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={createMsg}
+                clickFunction={async () => await createMsg()}
                 disable={disabled()}
             />
         </div>

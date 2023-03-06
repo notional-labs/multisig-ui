@@ -14,6 +14,9 @@ import axios from "axios"
 import ShareForm from "./transaction/ShareForm"
 import WarningModal from "../ulti/WarningModal"
 import MsgList from "../list/MsgList"
+import { calculateGas } from "../../libs/transaction"
+import { getKey, getSequence } from "../../libs/keplrClient"
+import { SigningStargateClient } from "@cosmjs/stargate"
 
 const style = {
     input: {
@@ -28,7 +31,7 @@ const style = {
     }
 }
 
-const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
+const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount }) => {
     const [txType, setTxType] = useState(0)
     const [checked, setChecked] = useState(false)
     const [msgs, setMsgs] = useState([])
@@ -38,6 +41,37 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
         memo: "",
     })
     const [showWarning, setShowWarning] = useState(false)
+
+    const handleEstimateGas = async () => {
+        openLoadingNotification("open", "Estimating gas and fee")
+        try {
+            if (msgs.length === 0) {
+                throw new Error("Transaction must have messages")
+            }
+
+            const multisigAcc = await getSequence(chain.api, multisigID)
+
+            const offlineSigner = window.keplr.getOfflineSigner(chain.chain_id)
+
+            const signingClient = await SigningStargateClient.connectWithSigner(chain.rpc, offlineSigner)
+
+            const pubkey = JSON.parse(multisigAccount.pubkeyJSON)
+
+            const { fee } = await calculateGas(signingClient, msgs, txBody.memo, "0.025uatom", chain.rpc, multisigAcc.sequence, pubkey.value.threshold, pubkey)
+            setTxBody({
+                ...txBody,
+                fee: fee.amount[0].amount,
+                gas: parseInt(fee.gas)
+            })
+            openLoadingNotification("close")
+            openNotification("success", "Estimate successfully")
+        }
+        catch (e) {
+            console.log(e.message)
+            openLoadingNotification("close")
+            openNotification("error", "fail to estimate " + e.message)
+        }
+    }
 
     const txTypes = [
         {
@@ -328,6 +362,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose }) => {
                 chain={chain}
                 style={style}
                 disabled={disabled()}
+                handleEstimateGas={handleEstimateGas}
             />
             <WarningModal
                 style={style}
