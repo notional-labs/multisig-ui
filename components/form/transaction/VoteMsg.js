@@ -42,14 +42,14 @@ const VoteMsg = ({ chain, address, msgs, setMsgs, style }) => {
         })()
     }, [chain])
 
-    const createMsg = () => {
+    const createMsg = async () => {
         try {
             const msg = createVoteMsg(
                 txBody.option,
                 txBody.proposalId,
                 address,
             )
-            setMsgs([...msgs, msg])
+            await setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
@@ -155,7 +155,7 @@ const VoteMsg = ({ chain, address, msgs, setMsgs, style }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={createMsg}
+                clickFunction={async () => await createMsg()}
                 disable={disabled()}
             />
         </div>

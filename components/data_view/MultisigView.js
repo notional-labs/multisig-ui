@@ -52,6 +52,7 @@ const MultisigView = () => {
     const [showImport, setShowImport] = useState(false)
     const [multisigErr, setMultisigErr] = useState("")
     const [loading, setLoading] = useState(false)
+    const [multisigAccount, setMultisigAccount] = useState()
 
     useEffect(() => {
         (async () => {
@@ -60,6 +61,7 @@ const MultisigView = () => {
                 setLoading(true)
                 setMultisigErr("")
                 const res = await getMultisigFromAddress(multisigID)
+                setMultisigAccount(res)
                 const id = prefixToId[`${res.prefix}`]
                 id && wrapper(id)
                 id && localStorage.setItem("current", id)
@@ -329,6 +331,7 @@ const MultisigView = () => {
                         router={router}
                         chain={chain}
                         wrapSetClose={() => handleCLick("create", false)}
+                        multisigAccount={multisigAccount}
                     />
                 )
             }

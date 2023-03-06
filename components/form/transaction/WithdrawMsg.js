@@ -33,14 +33,14 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
         })()
     }, [chain])
 
-    const createMsg = () => {
+    const createMsg = async () => {
         try {
             const validator_addresses = rewards.map(reward => reward.validator_address)
             const messages = createWithdrawRewardsMsg(
                 address,
                 validator_addresses,
             )
-            setMsgs([...msgs, ...messages])
+            await setMsgs([...msgs, ...messages])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
@@ -171,7 +171,7 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={createMsg}
+                clickFunction={async () => await createMsg()}
                 disable={disabled()}
             /> 
         </div>

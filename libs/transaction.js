@@ -1,18 +1,68 @@
 import { coins, coin } from "@cosmjs/amino";
 const gov_1 = require("cosmjs-types/cosmos/gov/v1beta1/gov")
 import axios from "axios"
-import { osmosis } from "osmojs";
+import {
+    calculateFee,
+    GasPrice
+} from '@cosmjs/stargate';
+const amino_1 = require("@cosmjs/amino");
+const math_1 = require("@cosmjs/math");
+const utils_1 = require("@cosmjs/utils");
+const signing_1 = require("cosmjs-types/cosmos/tx/signing/v1beta1/signing");
+const service_1 = require("cosmjs-types/cosmos/tx/v1beta1/service");
+const tx_1 = require("cosmjs-types/cosmos/tx/v1beta1/tx");
+const long_1 = require("long")
+const proto_signing_1 = require("@cosmjs/proto-signing");
+const queryclient_1 = require("@cosmjs/stargate");
+import { QueryClient } from "@cosmjs/stargate";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
-const {
-    joinPool,
-    exitPool,
-    exitSwapExternAmountOut,
-    exitSwapShareAmountIn,
-    joinSwapExternAmountIn,
-    joinSwapShareAmountOut,
-    swapExactAmountIn,
-    swapExactAmountOut
-} = osmosis.gamm.v1beta1.MessageComposer.withTypeUrl;
+const simulate = async (signerClient, messages, memo, rpc, sequence, threshold, pk) => {
+    const anyMsgs = messages.map((m) => signerClient.registry.encodeAsAny(m));
+    const { gasInfo } = await sim(anyMsgs, memo, pk, sequence, rpc, threshold);
+    (0, utils_1.assertDefined)(gasInfo);
+    return math_1.Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
+}
+
+const sim = async (messages, memo, multisigPubkey, sequence, base, threshold ) => {
+    const tendermint = await Tendermint34Client.connect(base)
+    const baseQuery = new QueryClient(tendermint)
+    const rpc = (0, queryclient_1.createProtobufRpcClient)(baseQuery);
+    let queryService = new service_1.ServiceClientImpl(rpc);
+    let modeInfo = []
+    for (let i = 0; i < threshold; i++){
+        modeInfo[i] = { single: { mode: signing_1.SignMode.SIGN_MODE_UNSPECIFIED }}
+    }
+    const tx = tx_1.Tx.fromPartial({
+        authInfo: tx_1.AuthInfo.fromPartial({
+            fee: tx_1.Fee.fromPartial({}),
+            signerInfos: [
+                {
+                    publicKey: (0, proto_signing_1.encodePubkey)(multisigPubkey),
+                    sequence: long_1.fromNumber(sequence, true),
+                    modeInfo:{ multi: modeInfo},
+                },
+            ],
+        }),
+        body: tx_1.TxBody.fromPartial({
+            messages: Array.from(messages),
+            memo: memo,
+        }),
+        signatures: [new Uint8Array()],
+    });
+    const request = service_1.SimulateRequest.fromPartial({
+        txBytes: tx_1.Tx.encode(tx).finish(),
+    });
+    const response = await queryService.Simulate(request);
+    return response;
+}
+
+export const calculateGas = async (signingClient, msgs, memo, gas, rpc, sequence, threshold, pk) => {
+    const gasPrice = GasPrice.fromString(gas);
+    const gasEstimation = await simulate(signingClient, msgs, memo, rpc, sequence, threshold, pk);
+    const fee = calculateFee(Math.round(gasEstimation * 1.5), gasPrice);
+    return { fee, gasEstimation };
+}
 
 const getFee = (gas, amount, denom) => {
     return {
@@ -34,7 +84,7 @@ export const getTransactionById = async (id) => {
     }
 }
 
-export const checkIfHasPendingTx = async(address) => {
+export const checkIfHasPendingTx = async (address) => {
     try {
         const res = await axios.get(`/api/multisig/${address}/all-transaction`)
         if (!res.data || res.data === null) {
