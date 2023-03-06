@@ -32,17 +32,16 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 3. Juno
 4. Akash
 5. Emoney
-6. Sifchain
-7. Stargaze
-8. Kava
-9. Rengen
-10. Omniflix
-11. Cheqd
-12. Bitcanna
-13. Gravity bridge
-14. Pylon
-15. Stride
-16. Migaloo ( White Whale )
+6. Stargaze
+7. Kava
+8. Rengen
+9. Omniflix
+10. Cheqd
+11. Bitcanna
+12. Gravity bridge
+13. Pylon
+14. Stride
+15. Migaloo ( White Whale )
 
 Will add more chains in the future
 
