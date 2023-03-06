@@ -31,6 +31,10 @@ const style = {
     }
 }
 
+const makeGasPriceString = (denom) => {
+    return "0.025" + denom
+}
+
 const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount }) => {
     const [txType, setTxType] = useState(0)
     const [checked, setChecked] = useState(false)
@@ -57,7 +61,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
 
             const pubkey = JSON.parse(multisigAccount.pubkeyJSON)
 
-            const { fee } = await calculateGas(signingClient, msgs, txBody.memo, "0.025uatom", chain.rpc, multisigAcc.sequence, pubkey.value.threshold, pubkey)
+            const { fee } = await calculateGas(signingClient, msgs, txBody.memo, makeGasPriceString(chain.denom), chain.rpc, multisigAcc.sequence, pubkey.value.threshold, pubkey)
             setTxBody({
                 ...txBody,
                 fee: fee.amount[0].amount,
