@@ -11,10 +11,11 @@ export const ChainProvider = (props) => {
     useEffect(() => {
         (async () => {
             const index = localStorage.getItem("current")
-            if (index && index !== "") {
+            if (index && index !== "" && index < chainData.length) {
                 setChain(chainData[index])
             }
             else {
+                localStorage.setItem("current", 0)
                 setChain(chainData[0])
             }
         })()

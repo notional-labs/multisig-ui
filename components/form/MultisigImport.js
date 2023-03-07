@@ -37,8 +37,8 @@ const MultisigImport = ({ chain }) => {
     const [threshold, setThreshold] = useState(0)
     const router = useRouter()
 
-    const fetchData = async (address) => {
-        const acc = await getMultisigAccountByAPI(chain.api, address)
+    const fetchData = async (addrString) => {
+        const acc = await getMultisigAccountByAPI(chain.api, addrString)
         let componentsAddr = []
         acc.pub_key.public_keys.map(
             (item) => {

@@ -7,11 +7,10 @@ import { Typography, Tooltip, Skeleton } from "antd"
 import FlexRow from "../flex_box/FlexRow"
 import Button from "../input/Button"
 import { ChainContext } from "../Context"
-import { prefixToId } from "../../data/chainData"
+import { chainData, prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
 import TransactionImport from "../form/TransactionImport"
 import AssetRow from "./AssetRow"
-import { chainData } from "../../data/chainData"
 
 const { Paragraph } = Typography;
 
@@ -63,8 +62,8 @@ const MultisigView = () => {
                 const res = await getMultisigFromAddress(multisigID)
                 setMultisigAccount(res)
                 const id = prefixToId[`${res.prefix}`]
-                id && wrapper(id)
-                id && localStorage.setItem("current", id)
+                id && id !== "" && wrapper(id)
+                id && id !== "" && localStorage.setItem("current", id)
                 const balances = await getBalances(chainData[id].api, multisigID)
                 setHolding([...balances])
                 setLoading(false)

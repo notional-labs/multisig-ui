@@ -51,9 +51,9 @@ const MultisigCreate = () => {
     const [mode, setMode] = useState("Create")
     const router = useRouter()
 
-    const handleKeyGroupChange = (e, index, mode = "address") => {
+    const handleKeyGroupChange = (e, index, groupMode = "address") => {
         const newPubkeys = [...pubkeys]
-        if ( mode === "address" ) {
+        if ( groupMode === "address" ) {
             newPubkeys[index].address = e.target.value
         }
         else {
@@ -159,14 +159,13 @@ const MultisigCreate = () => {
             setPubkeys([...newPubkeys])
         }
         catch (err) {
-            const newPubkeys = [...pubkeys]
             newPubkeys[index].error = err.message;
             setPubkeys([...newPubkeys])
         }
     }
 
-    const changeMode = (index, mode) => {
-        const newMode = mode === "address" ? "pubkey" : "address"
+    const changeMode = (index, inputMode) => {
+        const newMode = inputMode === "address" ? "pubkey" : "address"
         const newPubkeys = [...pubkeys]
         newPubkeys[index].mode = newMode;
         newPubkeys[index].error = "";

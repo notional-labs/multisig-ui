@@ -65,7 +65,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
             setTxBody({
                 ...txBody,
                 fee: fee.amount[0].amount,
-                gas: parseInt(fee.gas)
+                gas: parseInt(fee.gas, 10)
             })
             openLoadingNotification("close")
             openNotification("success", "Estimate successfully")
