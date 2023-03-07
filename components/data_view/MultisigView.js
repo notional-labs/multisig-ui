@@ -11,6 +11,7 @@ import { chainData, prefixToId } from "../../data/chainData"
 import TransactionCreate from "../form/TransactionCreate"
 import TransactionImport from "../form/TransactionImport"
 import AssetRow from "./AssetRow"
+import { chainData } from "../../data/chainData"
 
 const { Paragraph } = Typography;
 
@@ -51,6 +52,7 @@ const MultisigView = () => {
     const [showImport, setShowImport] = useState(false)
     const [multisigErr, setMultisigErr] = useState("")
     const [loading, setLoading] = useState(false)
+    const [multisigAccount, setMultisigAccount] = useState()
 
     useEffect(() => {
         (async () => {
@@ -59,9 +61,15 @@ const MultisigView = () => {
                 setLoading(true)
                 setMultisigErr("")
                 const res = await getMultisigFromAddress(multisigID)
+                setMultisigAccount(res)
                 const id = prefixToId[`${res.prefix}`]
+<<<<<<< HEAD
                 id && id !== "" && wrapper(id)
                 id && id !== "" && localStorage.setItem("current", id)
+=======
+                id && wrapper(id)
+                id && localStorage.setItem("current", id)
+>>>>>>> main
                 const balances = await getBalances(chainData[id].api, multisigID)
                 setHolding([...balances])
                 setLoading(false)
@@ -328,6 +336,7 @@ const MultisigView = () => {
                         router={router}
                         chain={chain}
                         wrapSetClose={() => handleCLick("create", false)}
+                        multisigAccount={multisigAccount}
                     />
                 )
             }

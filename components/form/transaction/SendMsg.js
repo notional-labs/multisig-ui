@@ -5,6 +5,7 @@ import { openNotification } from "../../ulti/Notification";
 import { createSendMsg, } from "../../../libs/transaction";
 import { convertValueFromDenom } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
+import { InputNumber } from 'antd';
 
 const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
     const [txBody, setTxBody] = useState({
@@ -27,7 +28,14 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
         return false
     }
 
-    const createMsg = () => {
+    const handleInputNumber = (val) => {
+        setTxBody({
+            ...txBody,
+            amount: parseFloat(val)
+        })
+    }
+
+    const createMsg = async () => {
         try {
             const msg = createSendMsg(
                 address,
@@ -35,7 +43,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                 convertValueFromDenom(chain.base_denom, txBody.amount),
                 chain.denom
             )
-            setMsgs([...msgs, msg])
+            await setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
@@ -81,17 +89,29 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                 onBlur={handleKeyBlur}
                 style={style.input}
             />
-            <Input
-                onChange={(e) => {
-                    handleKeyGroupChange(e);
-                }}
-                value={txBody.amount}
-                label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
-                name="amount"
-                type="number"
-                placeholder="Amount"
-                style={style.input}
-            />
+            <div>
+                <h4
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    {`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                </h4>
+                <InputNumber
+                    onChange={handleInputNumber}
+                    value={txBody.amount}
+                    label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    name="amount"
+                    placeholder="Amount"
+                    style={{
+                        ...style.input,
+                        width: "100%",
+                        borderRadius: "10px",
+                        border: "solid 1px black",
+                        padding: "10px 0"
+                    }}
+                />
+            </div>
             <Button
                 text={"Add Message"}
                 style={{
@@ -103,7 +123,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={createMsg}
+                clickFunction={async () => await createMsg()}
                 disable={disabled()}
             />
         </div>
