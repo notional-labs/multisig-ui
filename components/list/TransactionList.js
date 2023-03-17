@@ -4,7 +4,6 @@ import ButtonList from "../input/ButtonList"
 import { useRouter } from "next/router";
 import { Tooltip } from "antd";
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
-import { getMultisigFromAddress } from "../../libs/multisig"
 import { prefixToId } from "../../data/chainData"
 import { Skeleton } from "antd"
 import axios from "axios";
@@ -19,6 +18,9 @@ import FlexRow from "../flex_box/FlexRow";
 import { ReloadOutlined, DeleteOutlined } from "@ant-design/icons";
 import { deleteTransaction } from "../../libs/faunaClient"
 import EmptyPage from "../ulti/EmptyPage";
+import { fromBase64, toBech32 } from "@cosmjs/encoding"
+import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
+import { PublicKey } from "@injectivelabs/sdk-ts";
 
 const style = {
     actionButton: {
@@ -29,7 +31,7 @@ const style = {
     },
 }
 
-const TransactionList = () => {
+const TransactionList = ({ multisig }) => {
     const [transactions, setTransactions] = useState([])
     const [filterTransactions, setFilterTransactions] = useState([])
     const [viewTransactions, setViewTransactions] = useState([])
@@ -67,8 +69,7 @@ const TransactionList = () => {
             setLoading(true)
             try {
                 const current = localStorage.getItem("current")
-                const multisigAccount = await getMultisigFromAddress(multisigID)
-                const id = prefixToId[`${multisigAccount.prefix}`]
+                const id = prefixToId[`${multisig.prefix}`]
                 if (parseInt(current, 10) !== id) {
                     wrapper(id)
                     localStorage.setItem("current", id)
@@ -94,6 +95,37 @@ const TransactionList = () => {
             page: 1
         })
     }, [toggleReload])
+
+    const checkUserPriviledge = () => {
+        const currentUserStr = localStorage.getItem("account")
+        const user = JSON.parse(currentUserStr)
+        const pubkeyJson = JSON.parse(multisig.pubkeyJSON)
+        const pubkeyListFromJSON = pubkeyJson.value.pubkeys
+        const listAddrs = pubkeyListFromJSON.map(pub => {
+            if (chain.chain_id.startsWith('evmos')) {
+                const pk = PublicKey.fromBase64(fromBase64(pub.value))
+                pk.type = '/ethermint.crypto.v1.ethsecp256k1.PubKey'
+                const addr = pk.toAddress().toBech32('evmos')
+                return addr
+            }
+            else if (chain.chain_id.startsWith('injective')) {
+                const pk = PublicKey.fromBase64(fromBase64(pub.value))
+                pk.type = '/injective.crypto.v1beta1.ethsecp256k1.PubKey'
+                const addr = pk.toAddress().toBech32('inj')
+                return addr
+            }
+            else {
+                const addrUint8Array = fromBase64(pub.value)
+                const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
+                const addr = toBech32(multisig.prefix, rawAddr)
+                return addr
+            }
+        })
+        const checkComponent = listAddrs.some(
+            (addr) => addr === user.bech32Address
+        );
+        return checkComponent
+    }
 
     useEffect(() => {
         (async () => {
@@ -127,11 +159,18 @@ const TransactionList = () => {
     const removeTransaction = async (id) => {
         try {
             openLoadingNotification("open", "Deleting transaction")
-            await deleteTransaction(id)
-            const newFilterTransactions = transactions.filter((tx) => tx._id !== id)
-            setTransactions([...newFilterTransactions])
-            openLoadingNotification("close")
-            openNotification("success", "Successfully delete transaction")
+            const check = checkUserPriviledge()
+            console.log(check)
+            if (check) {
+                await deleteTransaction(id)
+                const newFilterTransactions = transactions.filter((tx) => tx._id !== id)
+                setTransactions([...newFilterTransactions])
+                openLoadingNotification("close")
+                openNotification("success", "Successfully delete transaction")
+            }
+            else {
+                throw new Error("Not a comoponent account")
+            }
         }
         catch (e) {
             openLoadingNotification("close")
