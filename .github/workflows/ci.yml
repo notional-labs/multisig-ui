@@ -18,8 +18,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: npm install
-      - run: npm run lint
+      - run: yarn install
+      - run: yarn run lint
 
   build:
     runs-on: ubuntu-latest
@@ -30,9 +30,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - run: npm install
+      - run: yarn install
       - run: cp .env.sample .env.local
-      - run: npm run build
+      - run: yarn run build
       
 
     
