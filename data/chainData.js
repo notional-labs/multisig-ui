@@ -319,6 +319,26 @@ export const chainData = [
         logo: "/images/logo/migaloo.png",
         hyperLink: "https://migaloo.zone/"
     },
+    {
+        chain_id: "grand-1",
+        denom: "ulove",
+        displayDenom: "love",
+        base_denom: {
+            "denom": "ulove",
+            "exponent": 6
+        },
+        name: "noble",
+        prefix: "noble",
+        color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
+        rpc: "https://rpc.testnet.noble.strange.love/",
+        api: "https://api.testnet.noble.strange.love/",
+        explorer: "https://testnet.mintscan.io/noble-testnet/",
+        txExplorer: "https://testnet.mintscan.io/noble-testnet/txs/",
+        valExplorer: "https://testnet.mintscan.io/noble-testnet/validators/",
+        govExplorer: "https://testnet.mintscan.io/noble-testnet/proposals/",
+        logo: "/images/logo/noble.png",
+        hyperLink: "https://raw.githubusercontent.com/"
+    },
 ]
 
 export const prefixToId = {
@@ -338,6 +358,7 @@ export const prefixToId = {
     "stride": 13,
     "pylo": 14,
     "migaloo": 15,
+    "noble": 16,
 }
 
 
@@ -358,6 +379,7 @@ export const idToChainId = {
     13: "stride-1",
     14: "pylons-mainnet-1",
     15: "migaloo-1",
+    16: "grand-1"
 }
 
 
