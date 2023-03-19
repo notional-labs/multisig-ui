@@ -417,7 +417,7 @@
     "@cosmjs/math" "0.28.11"
     "@cosmjs/utils" "0.28.11"
 
-"@cosmjs/amino@0.28.13", "@cosmjs/amino@^0.28.10":
+"@cosmjs/amino@0.28.13":
   version "0.28.13"
   resolved "https://registry.npmjs.org/@cosmjs/amino/-/amino-0.28.13.tgz"
   integrity sha512-IHnH2zGwaY69qT4mVAavr/pfzx6YE+ud1NHJbvVePlbGiz68CXTi5LHR+K0lrKB5mQ7E+ZErWz2mw5U/x+V1wQ==
