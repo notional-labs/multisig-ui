@@ -350,5 +350,49 @@ export const chainObj = {
             average: 0.0,
             high: 0.0,
         },
-    }
+    }, 
+    "grand-1": {
+        chainId: "grand-1",
+        chainName: "noble",
+        rpc: "https://rpc.testnet.noble.strange.love/",
+        rest: "https://api.testnet.noble.strange.love/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "noble",
+            bech32PrefixAccPub: "noble" + "pub",
+            bech32PrefixValAddr: "noble" + "valoper",
+            bech32PrefixValPub: "noble" + "valoperpub",
+            bech32PrefixConsAddr: "noble" + "valcons",
+            bech32PrefixConsPub: "noble" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "LOVE",
+                coinMinimalDenom: "ulove",
+                coinDecimals: 6,
+                coinGeckoId: "TBD",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "LOVE",
+                coinMinimalDenom: "ulove",
+                coinDecimals: 6,
+                coinGeckoId: "TBD",
+            },
+        ],
+        stakeCurrency: {
+            coinDenom: "LOVE",
+            coinMinimalDenom: "ulove",
+            coinDecimals: 6,
+            coinGeckoId: "TBD",
+        },
+        gasPriceStep: {
+            low: 0.0,
+            average: 0.0,
+            high: 0.0,
+        },
+    }, 
 }

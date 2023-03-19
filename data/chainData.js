@@ -336,7 +336,7 @@ export const chainData = [
         txExplorer: "https://testnet.mintscan.io/noble-testnet/txs/",
         valExplorer: "https://testnet.mintscan.io/noble-testnet/validators/",
         govExplorer: "https://testnet.mintscan.io/noble-testnet/proposals/",
-        logo: "/strangelove-ventures/noble-networks/main/logo.png",
+        logo: "/images/logo/noble.png",
         hyperLink: "https://raw.githubusercontent.com/"
     },
 ]
@@ -358,6 +358,7 @@ export const prefixToId = {
     "stride": 13,
     "pylo": 14,
     "migaloo": 15,
+    "noble": 16,
 }
 
 
@@ -378,6 +379,7 @@ export const idToChainId = {
     13: "stride-1",
     14: "pylons-mainnet-1",
     15: "migaloo-1",
+    16: "grand-1"
 }
 
 
