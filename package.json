@@ -24,7 +24,7 @@
     "faunadb": "^4.6.0",
     "framer-motion": "^6.3.16",
     "multisigjs": "^0.1.2",
-    "next": "12.3.3",
+    "next": "13.2.4",
     "osmojs": "^0.9.3",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
