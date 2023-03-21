@@ -1,0 +1,29 @@
+name: Deploy
+on:
+  # Push to long living branches or PRs
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2   
+
+    - name: Update the repo from web server
+      uses: appleboy/ssh-action@v0.1.4      
+      env:
+        NODE_OPTIONS: --openssl-legacy-provider
+        CI: false
+      with:
+        host: ${{ secrets.WEB_SERVER }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIV_KEY }}
+        envs: CI, NODE_OPTIONS
+        script: |
+          cd ~/multisig.notional.ventures
+          bash deploy.sh
