@@ -5647,10 +5647,10 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-json-editor-ajrm@^2.5.13:
-  version "2.5.13"
-  resolved "https://registry.npmjs.org/react-json-editor-ajrm/-/react-json-editor-ajrm-2.5.13.tgz"
-  integrity sha512-uYRJFzY34w7coLxeWPFZGyQpWdBKK5e8R9jBZTJ5gAFp3WuGVG2DdGZ8oJKOVJy0hqkxS9DzJIzGmmxHHQ9afA==
+react-json-editor-ajrm@^2.5.14:
+  version "2.5.14"
+  resolved "https://registry.yarnpkg.com/react-json-editor-ajrm/-/react-json-editor-ajrm-2.5.14.tgz#45048c34e1f89fdc1bb040af9baf95c796ade232"
+  integrity sha512-z2035l5lnU0Wo73AUonj68d1Eh9vjVcLXEa8YogDEeFPcogzYkfT6R38fvYlLKDhP0oI+LyOO/IBWsFkXs4M0Q==
   dependencies:
     "@babel/runtime" "^7.0.0-rc.0"
 
