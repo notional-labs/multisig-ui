@@ -21,7 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 # Example .env.local file
 
 ```
-NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-4334
+NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-43349
 NEXT_PUBLIC_HOST=http://localhost:3000/
 ```
 
