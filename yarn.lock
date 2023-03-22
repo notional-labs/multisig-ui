@@ -320,7 +320,7 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@babel/runtime@^7.0.0-rc.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7":
+"@babel/runtime@^7.0.0-rc.0", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.19.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7":
   version "7.21.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -1809,14 +1809,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@osmonauts/helpers@^0.3.12":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@osmonauts/helpers/-/helpers-0.3.12.tgz#4f7587d15112b11a9160ed3b773a771eff4b1a73"
-  integrity sha512-H6vrxc206iZtDtT5cORnPDMCQW55bGkV2wRw0Sd5h+NaVHAyFFxbr5tR5+aAFtbXoURRxOqsK2ZeRWvyW4P6ZQ==
-  dependencies:
-    "@babel/runtime" "^7.18.3"
-    long "^5.2.0"
-    protobufjs "^6.11.3"
 "@osmonauts/helpers@^0.4.1":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@osmonauts/helpers/-/helpers-0.4.3.tgz#f73cce20c2d05cc4ab056efdd1f16bb1e9eef76e"
@@ -1831,10 +1823,10 @@
     long "^5.2.0"
     protobufjs "^6.11.3"
 
-"@osmonauts/lcd@^0.3.10":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@osmonauts/lcd/-/lcd-0.3.12.tgz#a7c9b8b524945db4fe44bec8d7b341f59afe8dfc"
-  integrity sha512-sc1HKLYsAVrYTGmunnScQxepX+9XXI6ZDgBH4pNPA5aOySFtNkR7fZFY5sJj4inMOmLGExicZ3aWkbrLTFd9fw==
+"@osmonauts/lcd@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@osmonauts/lcd/-/lcd-0.8.0.tgz#fcabba93edadd23f73b2046a5cad897b420a9c84"
+  integrity sha512-k7m2gAVnXc0H4m/eTq4z/8A6hFrr3MPS9wnLV4Xu9/K/WYltCnp2PpiObZm+feZUPK/svES6hxIQeO1bODLx8g==
   dependencies:
     "@babel/runtime" "^7.19.0"
     axios "0.27.2"
@@ -3668,10 +3660,10 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-framer-motion@^10.6.0:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.6.0.tgz#348a71ca894456ec1a7ce695a19a377c217d4768"
-  integrity sha512-RkZe8iBhdWNs1y2HfYh4WlM9Co11/Vu+JCSQzmLaP5alM3QbBiue6OkeXygfxsRDp4yCar95ExoHE0CZQNyuVQ==
+framer-motion@^10.8.4:
+  version "10.8.4"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.8.4.tgz#29635007b5eefdab9e5ffa4b2fde184cd018d5a1"
+  integrity sha512-dNcWapHLw1uTH9Yukqj1+uU87YM7GEkz2HjjR/k5Efo5ZKhzHpEeTsifrulwhTOqOR2N009JkMhtHnHEhMfKkg==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
