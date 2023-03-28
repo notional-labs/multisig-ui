@@ -3669,10 +3669,10 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-framer-motion@^10.6.0:
-  version "10.6.0"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.6.0.tgz#348a71ca894456ec1a7ce695a19a377c217d4768"
-  integrity sha512-RkZe8iBhdWNs1y2HfYh4WlM9Co11/Vu+JCSQzmLaP5alM3QbBiue6OkeXygfxsRDp4yCar95ExoHE0CZQNyuVQ==
+framer-motion@^10.9.2:
+  version "10.9.2"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.9.2.tgz#e5a667ea69ad62f69b3897b312edc8aeed49bdf1"
+  integrity sha512-qNhnSAO0rd4A2GI93Y5SlljdBQEP6u/y98tX6esz48WxGPhHfePRfEmp9acUHOvxE+e9p3M/RbSDsoGkXTeqRA==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
