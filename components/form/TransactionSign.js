@@ -97,6 +97,16 @@ const TransationSign = ({
                 return msg.typeUrl
             })
 
+            //Quick patch for execute contract tx
+            const msgs = tx.msgs.map(msg => {
+                if (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract") {
+                    let newMsg = msg
+                    newMsg.value.msg = Uint8Array.from(Buffer.from(msg.value.msg, 'base64'))
+                    return newMsg
+                }
+                return msg
+            })
+
             const signingClient = await getCustomClient(types, offlineSigner);
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
@@ -106,7 +116,7 @@ const TransationSign = ({
 
             const { bodyBytes, signatures } = await signingClient.sign(
                 account.bech32Address,
-                tx.msgs,
+                msgs,
                 tx.fee,
                 tx.memo,
                 signerData
