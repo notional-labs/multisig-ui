@@ -101,7 +101,8 @@ const TransationSign = ({
             const msgs = tx.msgs.map(msg => {
                 if (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract") {
                     let newMsg = msg
-                    newMsg.value.msg = Uint8Array.from(Buffer.from(msg.value.msg, 'base64'))
+                    const valueBase64 = btoa(JSON.stringify(newMsg.value.msg))
+                    newMsg.value.msg = Uint8Array.from(Buffer.from(valueBase64, 'base64'))
                     return newMsg
                 }
                 return msg
