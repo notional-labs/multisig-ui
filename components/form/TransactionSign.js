@@ -8,6 +8,7 @@ import axios from "axios";
 import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
 import { getCustomClient } from "../../libs/CustomSigner";
+import { Any } from "cosmjs-types/google/protobuf/any";
 
 const TransationSign = ({
     tx,
@@ -97,12 +98,24 @@ const TransationSign = ({
                 return msg.typeUrl
             })
 
-            //Quick patch for execute contract tx
+            //Quick patch for execute contract tx and gov submit
             const msgs = tx.msgs.map(msg => {
                 if (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract") {
                     let newMsg = msg
                     const valueBase64 = btoa(JSON.stringify(newMsg.value.msg))
                     newMsg.value.msg = Uint8Array.from(Buffer.from(valueBase64, 'base64'))
+                    return newMsg
+                }
+                if (msg.typeUrl === "/cosmos.gov.v1beta1.MsgSubmitProposal") {
+                    let newMsg = {...msg}
+                    let obj = {}
+                    obj.typeUrl = msg.value.content["@type"] ? msg.value.content["@type"] : msg.value.content["typeUrl"] ? msg.value.content["typeUrl"] : ""
+                    obj.value = {...msg.value.content}
+                    delete(obj.value["@type"])
+                    obj.value = btoa(JSON.stringify(obj.value))
+                    newMsg.value.content = Any.fromJSON(obj)
+                    newMsg.value.initialDeposit = msg.value.initial_deposit ? msg.value.initial_deposit : msg.value.initialDeposit ? msg.value.initialDeposit : []
+                    delete(newMsg.value.initial_deposit)
                     return newMsg
                 }
                 return msg
