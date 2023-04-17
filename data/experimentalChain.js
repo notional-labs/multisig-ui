@@ -346,9 +346,9 @@ export const chainObj = {
             coinGeckoId: "TBD",
         },
         gasPriceStep: {
-            low: 0.0,
-            average: 0.0,
-            high: 0.0,
+            low: 0.25,
+            average: 0.375,
+            high: 0.5,
         },
     }, 
     "grand-1": {
