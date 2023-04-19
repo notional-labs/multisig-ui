@@ -339,6 +339,26 @@ export const chainData = [
         logo: "/images/logo/noble.png",
         hyperLink: "https://raw.githubusercontent.com/"
     },
+    {
+        chain_id: "quicksilver-2",
+        denom: "uqck",
+        displayDenom: "qck",
+        base_denom: {
+            "denom": "uqck",
+            "exponent": 6
+        },
+        name: "quicksilver",
+        prefix: "quick",
+        color: "linear-gradient(to right, #000000, #383838 81%)",
+        rpc: "https://rpc-quicksilver-ia.cosmosia.notional.ventures/",
+        api: "https://api-quicksilver-ia.cosmosia.notional.ventures/",
+        explorer: "https://www.mintscan.io/quicksilver/",
+        txExplorer: "https://www.mintscan.io/quicksilver/txs/",
+        valExplorer: "https://www.mintscan.io/quicksilver/validators/",
+        govExplorer: "https://www.mintscan.io/quicksilver/proposals/",
+        logo: "https://raw.githubusercontent.com/cosmos/chain-registry/master/quicksilver/images/qck.png",
+        hyperLink: "https://quicksilver.zone/"
+    },
 ]
 
 export const prefixToId = {
@@ -359,6 +379,7 @@ export const prefixToId = {
     "pylo": 14,
     "migaloo": 15,
     "noble": 16,
+    "quick": 17,
 }
 
 
@@ -379,7 +400,8 @@ export const idToChainId = {
     13: "stride-1",
     14: "pylons-mainnet-1",
     15: "migaloo-1",
-    16: "grand-1"
+    16: "grand-1",
+    17: "quicksilver-2",
 }
 
 

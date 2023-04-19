@@ -38,18 +38,7 @@ const SelectChain = ({ enableSelectChain }) => {
                             margin: "auto 0"
                         }}
                     />
-                ), enableSelectChain && (
-                    <Image
-                        src={"/images/selectButton.png"}
-                        alt="prop_button"
-                        width={"15px"}
-                        preview={false}
-                        style={{
-                            position: "relative",
-                            top: "1px",
-                        }}
-                    />
-                )
+                ), 
             ]}
             justifyContent={"space-between"}
         />

@@ -395,4 +395,55 @@ export const chainObj = {
             high: 0.0,
         },
     }, 
+    "quicksilver-2": {
+        chainId: "quicksilver-2",
+        chainName: "quicksilver",
+        rpc: "https://quicksilver-rpc.polkachu.com",
+        rest: "https://quicksilver-api.polkachu.com",
+        bip44: {
+            coinType: 118
+        },
+        coinType: 118,
+        bech32Config: {
+            bech32PrefixAccAddr: "quick",
+            bech32PrefixAccPub: "quickpub",
+            bech32PrefixValAddr: "quickvaloper",
+            bech32PrefixValPub: "quickvaloperpub",
+            bech32PrefixConsAddr: "quickvalcons",
+            bech32PrefixConsPub: "quickvalconspub"
+        },
+        currencies: [
+            {
+                coinDenom: "QCK",
+                coinMinimalDenom: "uqck",
+                coinDecimals: 6,
+                coinGeckoId: "quicksilver"
+            }
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "QCK",
+                coinMinimalDenom: "uqck",
+                coinDecimals: 6,
+                coinGeckoId: "quicksilver",
+                gasPriceStep: {
+                    low: 0.01,
+                    average: 0.025,
+                    high: 0.03
+                }
+            }
+        ],
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03
+        },
+        stakeCurrency: {
+            coinDenom: "QCK",
+            coinMinimalDenom: "uqck",
+            coinDecimals: 6,
+            coinGeckoId: "quicksilver"
+        },
+    },
 }
+
