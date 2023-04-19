@@ -1,58 +1,30 @@
-name: CI
+name: Test
 on:
-  # Push to long living branches or PRs
   push:
-    branches:
-      - master
-      - main
   pull_request:
-    types: [ opened ]
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v3
+
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
-      - run: npm install
-      - run: npm run lint
+          node-version: "19"
+      - run: yarn install
+      - run: yarn lint
 
   build:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm install
-      - run: cp .env.sample .env.local
-      - run: npm run build
-      
-  deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2   
+      - uses: actions/checkout@v3
 
-    - name: Update the repo from web server
-      uses: appleboy/ssh-action@v0.1.4      
-      env:
-        NODE_OPTIONS: --openssl-legacy-provider
-        CI: false
-      with:
-        host: ${{ secrets.WEB_SERVER }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIV_KEY }}
-        envs: CI, NODE_OPTIONS
-        script: |
-          cd ~/multisig.notional.ventures
-          bash deploy.sh
-          
-          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "19"
+      - run: yarn install
+      - run: cp .env.sample .env.local
+      - run: yarn build
