@@ -26,7 +26,7 @@ const TransationSign = ({
     const [accountError, setAccountError] = useState("")
 
     const keplrKeystorechangeHandler = useCallback(async (event) => {
-        try{
+        try {
             const currentAccount = await getKey(chain.chain_id)
             const checkHasSigned = currentSignatures.some(
                 (sig) => sig.address === currentAccount.bech32Address
@@ -107,15 +107,16 @@ const TransationSign = ({
                     return newMsg
                 }
                 if (msg.typeUrl === "/cosmos.gov.v1beta1.MsgSubmitProposal") {
-                    let newMsg = {...msg}
+                    let newMsg = { ...msg }
                     let obj = {}
                     obj.typeUrl = msg.value.content["@type"] ? msg.value.content["@type"] : msg.value.content["typeUrl"] ? msg.value.content["typeUrl"] : ""
-                    obj.value = {...msg.value.content}
-                    delete(obj.value["@type"])
-                    obj.value = btoa(JSON.stringify(obj.value))
+                    obj.value = { ...msg.value.content }
+                    delete (obj.value["@type"])
+                    let b = Buffer.from(JSON.stringify(obj.value));
+                    obj.value = b.toString('base64')
                     newMsg.value.content = Any.fromJSON(obj)
                     newMsg.value.initialDeposit = msg.value.initial_deposit ? msg.value.initial_deposit : msg.value.initialDeposit ? msg.value.initialDeposit : []
-                    delete(newMsg.value.initial_deposit)
+                    delete (newMsg.value.initial_deposit)
                     return newMsg
                 }
                 return msg

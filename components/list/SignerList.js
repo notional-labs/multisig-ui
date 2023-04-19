@@ -71,7 +71,8 @@ const SignerList = ({
                     obj.typeUrl = msg.value.content["@type"] ? msg.value.content["@type"] : msg.value.content["typeUrl"] ? msg.value.content["typeUrl"] : ""
                     obj.value = {...msg.value.content}
                     delete(obj.value["@type"])
-                    obj.value = btoa(JSON.stringify(obj.value))
+                    let b = Buffer.from(JSON.stringify(obj.value));
+                    obj.value = b.toString('base64')
                     newMsg.value.content = Any.fromJSON(obj)
                     newMsg.value.initialDeposit = msg.value.initial_deposit ? msg.value.initial_deposit : msg.value.initialDeposit ? msg.value.initialDeposit : []
                     delete(newMsg.value.initial_deposit)
