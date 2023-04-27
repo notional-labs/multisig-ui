@@ -260,7 +260,7 @@ export const chainData = [
         hyperLink: "https://www.gravitybridge.net/"
     },
     {
-        chain_id: "stride",
+        chain_id: "stride-1",
         denom: "ustrd",
         displayDenom: "strd",
         base_denom: {

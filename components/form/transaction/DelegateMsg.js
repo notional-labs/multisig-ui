@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getValidators } from "../../../libs/queryClients"
+import { getValidators, statusList } from "../../../libs/queryClients"
 import Input from "../../input/Input"
 import { createDelegateMsg } from "../../../libs/transaction"
 import { openNotification } from "../../ulti/Notification"
@@ -14,6 +14,8 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         toAddress: "",
         amount: 0,
     })
+    const [status, setStatus] = useState(0)
+    const [loading, setLoading] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
@@ -32,14 +34,17 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await getValidators(chain.rpc)
+                setLoading(true)
+                const res = await getValidators(chain.rpc, statusList[status])
                 res.validators && setValidators([...res.validators])
+                setLoading(false)
             }
             catch (e) {
+                setLoading(false)
                 openNotification("error", e.message)
             }
         })()
-    }, [chain])
+    }, [chain, status])
 
     const createMsg = async () => {
         try {
@@ -83,7 +88,48 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 >
                     Validator
                 </h4>
-                <select
+                <div
+                    style={{
+                        marginBottom: "10px",
+                    }}
+                >
+                    <div
+                        style={{
+                            borderRadius: "5px",
+                            padding: "2px 5px",
+                            backgroundColor: "#ebebeb",
+                            width: "15%"
+                        }}
+                    >
+                        <Button
+                            text={"Active"}
+                            clickFunction={() => {
+                                setStatus(0)
+                            }}
+                            style={{
+                                border: 0,
+                                borderRadius: "5px",
+                                backgroundColor: status === 0 ? "black" : "transparent",
+                                color: status === 0 && "white",
+                                width: "50%"
+                            }}
+                        />
+                        <Button
+                            text={"Inactive"}
+                            clickFunction={() => {
+                                setStatus(1)
+                            }}
+                            style={{
+                                border: 0,
+                                width: "50%",
+                                borderRadius: "5px",
+                                backgroundColor: status === 1 ? "black" : "transparent",
+                                color: status === 1 && "white",
+                            }}
+                        />
+                    </div>
+                </div>
+                {!loading && <select
                     onChange={handleSelect}
                     style={{
                         width: "100%",
@@ -104,6 +150,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                         })
                     }
                 </select>
+                }
 
             </div>
             <div>

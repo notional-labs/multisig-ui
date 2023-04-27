@@ -2,19 +2,24 @@ import { setupStakingExtension, setupTxExtension, QueryClient, setupGovExtension
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import axios from "axios";
 
-export const getValidators = async (rpc) => {
+export const statusList = [
+    "BOND_STATUS_BONDED",
+    "BOND_STATUS_UNBONDING"
+]
+
+export const getValidators = async (rpc, status = "BOND_STATUS_BONDED") => {
     try {
         const tendermint = await Tendermint34Client.connect(rpc)
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
         let validators = []
-        let res = await extension.staking.validators("BOND_STATUS_BONDED")
+        let res = await extension.staking.validators(status)
         if ( !res.validators || res.validators.length === 0 ) {
             throw new Error("0 validators found")
         }
         validators.push(...res.validators)
         while (res.pagination.nextKey.length !== 0) {
-            res = await extension.staking.validators("BOND_STATUS_BONDED", res.pagination.nextKey)
+            res = await extension.staking.validators(status, res.pagination.nextKey)
             validators.push(...res.validators)
         }
         return {

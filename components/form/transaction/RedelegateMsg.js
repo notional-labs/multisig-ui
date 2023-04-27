@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getDelegations, getValidators, } from "../../../libs/queryClients"
+import { getDelegations, getValidators, statusList } from "../../../libs/queryClients"
 import Input from "../../input/Input"
 import { createRedelegateMsg } from "../../../libs/transaction"
 import { openNotification } from "../../ulti/Notification"
@@ -17,8 +17,10 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         amount: 0,
     })
     const [amountError, setAmountError] = useState("")
+    const [status, setStatus] = useState(0)
     const [valError, setValError] = useState("")
     const [maxAmount, setMaxAmount] = useState(0)
+    const [loading, setLoading] = useState(false)
 
     const invalidForm = () => {
         for (let key in txBody) {
@@ -56,6 +58,21 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
             }
         })()
     }, [chain])
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true)
+                const resVal = await getValidators(chain.rpc, statusList[status])
+                resVal.validators && setValidators([...resVal.validators])
+                setLoading(false)
+            }
+            catch (e) {
+                openNotification("error", e.message)
+                setLoading(false)
+            }
+        })()
+    }, [status])
 
     const createMsg = async () => {
         try {
@@ -165,7 +182,48 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 >
                     Validator
                 </h4>
-                <select
+                <div
+                    style={{
+                        marginBottom: "10px",
+                    }}
+                >
+                    <div
+                        style={{
+                            borderRadius: "5px",
+                            padding: "2px 5px",
+                            backgroundColor: "#ebebeb",
+                            width: "15%"
+                        }}
+                    >
+                        <Button
+                            text={"Active"}
+                            clickFunction={() => {
+                                setStatus(0)
+                            }}
+                            style={{
+                                border: 0,
+                                borderRadius: "5px",
+                                backgroundColor: status === 0 ? "black" : "transparent",
+                                color: status === 0 && "white",
+                                width: "50%"
+                            }}
+                        />
+                        <Button
+                            text={"Inactive"}
+                            clickFunction={() => {
+                                setStatus(1)
+                            }}
+                            style={{
+                                border: 0,
+                                width: "50%",
+                                borderRadius: "5px",
+                                backgroundColor: status === 1 ? "black" : "transparent",
+                                color: status === 1 && "white",
+                            }}
+                        />
+                    </div>
+                </div>
+                { !loading && <select
                     onChange={handleSelectVal}
                     style={{
                         width: "100%",
@@ -186,6 +244,7 @@ const RedelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                         })
                     }
                 </select>
+}
 
             </div>
             <text
