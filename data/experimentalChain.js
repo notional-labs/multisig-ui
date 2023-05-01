@@ -445,5 +445,49 @@ export const chainObj = {
             coinGeckoId: "quicksilver"
         },
     },
+    "chihuahua-1": {
+      chainId: "chihuahua-1",
+      chainName: "chihuahua",
+      rpc: "https://chihuahua-rpc.polkachu.com",
+      rest: "https://chihuahua-api.polkachu.com",
+      bip44: {
+          coinType: 118,
+      },
+      bech32Config: {
+          bech32PrefixAccAddr: "chihuahua",
+          bech32PrefixAccPub: "chihuahua" + "pub",
+          bech32PrefixValAddr: "chihuahua" + "valoper",
+          bech32PrefixValPub: "chihuahua" + "valoperpub",
+          bech32PrefixConsAddr: "chihuahua" + "valcons",
+          bech32PrefixConsPub: "chihuahua" + "valconspub",
+      },
+      currencies: [
+          {
+              coinDenom: "HUAHUA",
+              coinMinimalDenom: "uhuahua",
+              coinDecimals: 6,
+              coinGeckoId: "chihuahua-token",
+          },
+      ],
+      feeCurrencies: [
+          {
+              coinDenom: "HUAHUA",
+              coinMinimalDenom: "uhuahua",
+              coinDecimals: 6,
+              coinGeckoId: "chihuahua-token",
+          },
+      ],
+      stakeCurrency: {
+          coinDenom: "HUAHUA",
+          coinMinimalDenom: "uhuahua",
+          coinDecimals: 6,
+          coinGeckoId: "chihuahua-token",
+      },
+      gasPriceStep: {
+          low: 0.25,
+          average: 0.375,
+          high: 0.5,
+      },
+  }, 
 }
 
