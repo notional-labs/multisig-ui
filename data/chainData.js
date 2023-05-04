@@ -370,14 +370,14 @@ export const chainData = [
         name: "chihuahua",
         prefix: "chihuahua",
         color: "linear-gradient(to right, #6610f2,#F0A841 75%)",
-        rpc: "https://chihuahua-rpc.polkachu.com",
-        api: "https://chihuahua-api.polkachu.com",
-        explorer: "https://www.mintscan.io/chihuahua",
-        txExplorer: "https://www.mintscan.io/chihuahua/blocks",
-        valExplorer: "https://www.mintscan.io/chihuahua/validators",
-        govExplorer: "https://www.mintscan.io/chihuahua/proposals",
+        rpc: "https://chihuahua-rpc.polkachu.com/",
+        api: "https://chihuahua-api.polkachu.com/",
+        explorer: "https://www.mintscan.io/chihuahua/",
+        txExplorer: "https://www.mintscan.io/chihuahua/blocks/",
+        valExplorer: "https://www.mintscan.io/chihuahua/validators/",
+        govExplorer: "https://www.mintscan.io/chihuahua/proposals/",
         logo: "/images/logo/chihuahua.png",
-        hyperLink: "https://www.chihuahua.wtf"
+        hyperLink: "https://www.chihuahua.wtf/"
     },
 ]
 
