@@ -78,6 +78,21 @@ const SignerList = ({
                     delete(newMsg.value.initial_deposit)
                     return newMsg
                 }
+                if (msg.typeUrl === "/cosmos.authz.v1beta1.MsgGrant") {
+                    let newMsg = { ...msg }
+                    let obj = {}
+                    obj.typeUrl = msg.value.grant.authorization["@type"] ? msg.value.grant.authorization["@type"] : msg.value.grant.authorization["typeUrl"] ? msg.value.grant.authorization["typeUrl"] : ""
+                    obj.value = { ...msg.value.grant.authorization }
+                    delete (obj.value["@type"])
+                    let b = Buffer.from(JSON.stringify(obj.value));
+                    obj.value = b.toString('base64')
+                    newMsg.value.grant = {
+                        authorization: Any.fromJSON(obj),
+                        expiration: msg.value.grant.expiration
+                    }
+                    console.log(newMsg)
+                    return newMsg
+                }
                 return msg
             })
 
