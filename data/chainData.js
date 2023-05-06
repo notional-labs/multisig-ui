@@ -359,6 +359,26 @@ export const chainData = [
         logo: "https://raw.githubusercontent.com/cosmos/chain-registry/master/quicksilver/images/qck.png",
         hyperLink: "https://quicksilver.zone/"
     },
+     {
+        chain_id: "chihuahua-1",
+        denom: "uhuahua",
+        displayDenom: "huahua",
+        base_denom: {
+            "denom": "uhuahua",
+            "exponent": 6
+        },
+        name: "chihuahua",
+        prefix: "chihuahua",
+        color: "linear-gradient(to right, #6610f2,#F0A841 75%)",
+        rpc: "https://chihuahua-rpc.polkachu.com",
+        api: "https://chihuahua-api.polkachu.com",
+        explorer: "https://www.mintscan.io/chihuahua",
+        txExplorer: "https://www.mintscan.io/chihuahua/blocks",
+        valExplorer: "https://www.mintscan.io/chihuahua/validators",
+        govExplorer: "https://www.mintscan.io/chihuahua/proposals",
+        logo: "/images/logo/chihuahua.png",
+        hyperLink: "https://www.chihuahua.wtf"
+    },
 ]
 
 export const prefixToId = {
@@ -380,6 +400,7 @@ export const prefixToId = {
     "migaloo": 15,
     "noble": 16,
     "quick": 17,
+    "chihuahua": 18,
 }
 
 
@@ -402,6 +423,7 @@ export const idToChainId = {
     15: "migaloo-1",
     16: "grand-1",
     17: "quicksilver-2",
+    18: "chihuahua-1"
 }
 
 
