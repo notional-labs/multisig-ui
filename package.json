@@ -22,7 +22,7 @@
     "cosmjs-types": "^0.5.0",
     "eslint-plugin-react": "^7.32.2",
     "faunadb": "^4.6.0",
-    "framer-motion": "^10.6.0",
+    "framer-motion": "^10.12.9",
     "multisigjs": "^0.1.2",
     "next": "13.2.4",
     "osmojs": "^13.0.1",
