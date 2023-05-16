@@ -8,7 +8,7 @@ import { checkMsg } from "../../libs/checkTool"
 import { mockData } from "../../data/mockData"
 import { checkIfHasPendingTx } from "../../libs/transaction"
 import WarningModal from "../ulti/WarningModal"
-import { addressAmino, addressConversion } from "../../libs/stringConvert"
+import { convertObjProperties } from "../../libs/stringConvert"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 
 const typeMsg = [
@@ -96,17 +96,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         }
 
         // convert to compatible field
-        for (let i = 0; i < addressAmino.length; i++) {
-            if (!(addressAmino[i] in msgValue)) continue;
-
-            if (addressAmino[i] === "delegator_address" || addressAmino[i] === "from_address") {
-                msgValue[addressConversion[i]] = multisigID;
-            } else {
-                msgValue[addressConversion[i]] = msgValue[addressAmino[i]];
-            }
-
-            delete msgValue[addressAmino[i]];
-        }
+        msgValue = convertObjProperties(msg.value)
 
         // console.log(msgValue);
 

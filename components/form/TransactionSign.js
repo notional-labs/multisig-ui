@@ -9,7 +9,6 @@ import { CheckOutlined } from "@ant-design/icons"
 import AccountInfo from "../ulti/AccountInfo";
 import { getCustomClient } from "../../libs/CustomSigner";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import { convertObjProperties } from "../../libs/stringConvert";
 
 const TransationSign = ({
     tx,
@@ -116,11 +115,8 @@ const TransationSign = ({
                     let b = Buffer.from(JSON.stringify(obj.value));
                     obj.value = b.toString('base64')
                     newMsg.value.content = Any.fromJSON(obj)
-                    newMsg.value.initialDeposit = msg.value.initial_deposit ? msg.value.initial_deposit : msg.value.initialDeposit ? msg.value.initialDeposit : []
-                    delete (newMsg.value.initial_deposit)
                     return newMsg
                 }
-                msg.value = convertObjProperties(msg.value)
                 return msg
             })
 
