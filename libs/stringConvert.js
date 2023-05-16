@@ -82,3 +82,26 @@ export const convertValueFromDenom = (baseDenom, value) => {
     return convertValue
 }
 
+export const snakeToCamel = (str) => 
+    str.toLowerCase().replace(/([-_][a-z])/g, group =>
+    group
+      .toUpperCase()
+      .replace('-', '')
+      .replace('_', '')
+  );
+
+export const convertObjProperties = (obj) => {
+    let newObj = {}
+    for (const [key, value] of Object.entries(obj)) {
+        const camelCaseKey = snakeToCamel(key)
+        if (typeof value === 'object') {
+            const newVal = convertObjProperties(value)
+            newObj[camelCaseKey] = newVal
+            continue
+        }
+        newObj[camelCaseKey] = value
+    }
+
+    return newObj
+}
+

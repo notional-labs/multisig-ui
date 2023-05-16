@@ -82,8 +82,8 @@ const Profile = ({ account, chainName, setAccount }) => {
                             <Image
                                 src={"/images/avatar.png"}
                                 alt="avatar"
-                                width="35px"
-                                height="35px"
+                                width={35}
+                                height={35}
                             />
                         </div>,
                         addressCol(),

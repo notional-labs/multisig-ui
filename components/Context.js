@@ -27,7 +27,7 @@ export const ChainProvider = (props) => {
 
     return chain && (
         <AnimatePresence
-            exitBeforeEnter={true}
+            mode='wait'
         >
             <Head>
                 <link rel="shortcut icon" href="/images/favico.ico" />

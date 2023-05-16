@@ -9,6 +9,7 @@ import { encode } from "uint8-to-base64"
 import { getSequence } from "../../libs/keplrClient"
 import { getCustomClient } from "../../libs/CustomSigner"
 import { Any } from "cosmjs-types/google/protobuf/any";
+import { convertObjProperties } from "../../libs/stringConvert";
 
 const SignerList = ({
     currentSignatures,
@@ -78,21 +79,7 @@ const SignerList = ({
                     delete(newMsg.value.initial_deposit)
                     return newMsg
                 }
-                if (msg.typeUrl === "/cosmos.authz.v1beta1.MsgGrant") {
-                    let newMsg = { ...msg }
-                    let obj = {}
-                    obj.typeUrl = msg.value.grant.authorization["@type"] ? msg.value.grant.authorization["@type"] : msg.value.grant.authorization["typeUrl"] ? msg.value.grant.authorization["typeUrl"] : ""
-                    obj.value = { ...msg.value.grant.authorization }
-                    delete (obj.value["@type"])
-                    let b = Buffer.from(JSON.stringify(obj.value));
-                    obj.value = b.toString('base64')
-                    newMsg.value.grant = {
-                        authorization: Any.fromJSON(obj),
-                        expiration: msg.value.grant.expiration
-                    }
-                    console.log(newMsg)
-                    return newMsg
-                }
+                msg.value = convertObjProperties(msg.value)
                 return msg
             })
 
