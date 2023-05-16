@@ -98,7 +98,7 @@ const TransationSign = ({
                 return msg.typeUrl
             })
 
-            //Quick patch for execute contract tx and gov submit
+            // Quick patch for execute contract tx and gov submit
             const msgs = tx.msgs.map(msg => {
                 if (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract") {
                     let newMsg = msg
