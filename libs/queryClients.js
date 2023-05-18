@@ -4,7 +4,8 @@ import axios from "axios";
 
 export const statusList = [
     "BOND_STATUS_BONDED",
-    "BOND_STATUS_UNBONDING"
+    "BOND_STATUS_UNBONDING",
+    "BOND_STATUS_UNBONDED"
 ]
 
 export const getValidators = async (rpc, status = "BOND_STATUS_BONDED") => {
@@ -13,14 +14,35 @@ export const getValidators = async (rpc, status = "BOND_STATUS_BONDED") => {
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
         let validators = []
-        let res = await extension.staking.validators(status)
-        if ( !res.validators || res.validators.length === 0 ) {
-            throw new Error("0 validators found")
-        }
-        validators.push(...res.validators)
-        while (res.pagination.nextKey.length !== 0) {
-            res = await extension.staking.validators(status, res.pagination.nextKey)
+        if (status === "BOND_STATUS_BONDED") {
+            let res = await extension.staking.validators(status)
+            if (!res.validators || res.validators.length === 0) {
+                throw new Error("0 validators found")
+            }
             validators.push(...res.validators)
+            while (res.pagination.nextKey.length !== 0) {
+                res = await extension.staking.validators(status, res.pagination.nextKey)
+                validators.push(...res.validators)
+            }
+        }
+        else {
+            let res = await extension.staking.validators("BOND_STATUS_UNBONDING")
+            if (res.validators) {
+                validators.push(...res.validators)
+                while (res.pagination.nextKey.length !== 0) {
+                    res = await extension.staking.validators(status, res.pagination.nextKey)
+                    validators.push(...res.validators)
+                }
+            }
+
+            res = await extension.staking.validators("BOND_STATUS_UNBONDED")
+            if (res.validators) {
+                validators.push(...res.validators)
+                while (res.pagination.nextKey.length !== 0) {
+                    res = await extension.staking.validators(status, res.pagination.nextKey)
+                    validators.push(...res.validators)
+                }
+            }
         }
         return {
             validators
@@ -32,7 +54,7 @@ export const getValidators = async (rpc, status = "BOND_STATUS_BONDED") => {
 }
 
 export const getValidator = async (rpc, address) => {
-    try{
+    try {
         const tendermint = await Tendermint34Client.connect(rpc)
         const baseQuery = new QueryClient(tendermint)
         const extension = setupStakingExtension(baseQuery)
@@ -43,7 +65,7 @@ export const getValidator = async (rpc, address) => {
         throw e
     }
 }
-  
+
 export const getDelegations = async (rpc, delegator) => {
     try {
         const tendermint = await Tendermint34Client.connect(rpc)
