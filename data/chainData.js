@@ -467,7 +467,7 @@ export const idToChainId = {
     17: "quicksilver-2",
     18: "chihuahua-1",
     19: "sge-network-2",
-    19: "banksy-testnet-2"
+    20: "banksy-testnet-2"
 }
 
 
