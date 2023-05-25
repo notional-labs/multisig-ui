@@ -489,5 +489,49 @@ export const chainObj = {
           high: 0.5,
       },
   }, 
+  "sge-network-2": {
+    chainId: "sge-network-2",
+    chainName: "SGENETWORK TESTNET",
+    rpc: "https://rpc.testnet.sgenetwork.io/",
+    rest: "https://api.testnet.sgenetwork.io/",
+    bip44: {
+        coinType: 118,
+    },
+    bech32Config: {
+      bech32PrefixAccAddr: "sge",
+      bech32PrefixAccPub: "sge" + "pub",
+      bech32PrefixValAddr: "sge" + "valoper",
+      bech32PrefixValPub: "sge" + "valoperpub",
+      bech32PrefixConsAddr: "sge" + "valcons",
+      bech32PrefixConsPub: "sge" + "valconspub",
+    },
+    currencies: [
+      {
+        coinDenom: "sge",
+        coinMinimalDenom: "usge",
+        coinDecimals: 6,
+        coinGeckoId: "na",
+      },
+    ],
+    feeCurrencies: [
+      {
+        coinDenom: "sge",
+        coinMinimalDenom: "usge",
+        coinDecimals: 6,
+        coinGeckoId: "na",
+      },
+    ],
+    stakeCurrency: {
+      coinDenom: "sge",
+      coinMinimalDenom: "usge",
+      coinDecimals: 6,
+      coinGeckoId: "na",
+    },
+    gasPriceStep: {
+      low: 0.01,
+      average: 0.025,
+      high: 0.03,
+    },
+  },
 }
 
