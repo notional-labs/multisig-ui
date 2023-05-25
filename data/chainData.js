@@ -359,7 +359,7 @@ export const chainData = [
         logo: "https://raw.githubusercontent.com/cosmos/chain-registry/master/quicksilver/images/qck.png",
         hyperLink: "https://quicksilver.zone/"
     },
-     {
+    {
         chain_id: "chihuahua-1",
         denom: "uhuahua",
         displayDenom: "huahua",
@@ -398,7 +398,27 @@ export const chainData = [
         govExplorer: "https://blockexplorer.testnet.sgenetwork.io/proposals/",
         logo: "/images/logo/sge.png",
         hyperLink: "https://sgenetwork.io"
-    }
+    },
+    {
+        chain_id: "banksy-testnet-2",
+        denom: "upica",
+        displayDenom: "pica",
+        base_denom: {
+            "denom": "upica",
+            "exponent": 6
+        },
+        name: "banksy",
+        prefix: "banksy",
+        color: "linear-gradient(270.1deg, #000000 0%, #414141 74%)",
+        rpc: "http://65.108.128.139:26657/",
+        api: "http://65.108.128.139:1317/",
+        explorer: "https://explorer.nodexcapital.com/composable/",
+        txExplorer: "https://explorer.nodexcapital.com/composable/blocks/",
+        valExplorer: "https://explorer.nodexcapital.com/composable/staking/",
+        govExplorer: "https://explorer.nodexcapital.com/composable/gov/",
+        logo: "/images/logo/composable.png",
+        hyperLink: "https://www.composable.finance/"
+    },
 ]
 
 export const prefixToId = {
@@ -422,6 +442,7 @@ export const prefixToId = {
     "quick": 17,
     "chihuahua": 18,
     "sge": 19,
+    "banksy": 20,
 }
 
 
@@ -445,7 +466,8 @@ export const idToChainId = {
     16: "grand-1",
     17: "quicksilver-2",
     18: "chihuahua-1",
-    19: "sge-network-2"
+    19: "sge-network-2",
+    20: "banksy-testnet-2"
 }
 
 
