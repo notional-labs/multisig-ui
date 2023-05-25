@@ -12,7 +12,7 @@ const WarningModal = ({ style, handleCreate, handleClose, handleCancel, showWarn
 
     return (
         <Modal
-            visible={showWarning}
+            open={showWarning}
             footer={null}
             closable={false}
             onCancel={handleClose}

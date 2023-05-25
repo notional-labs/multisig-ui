@@ -153,14 +153,14 @@ const SelectChain = ({ enableSelectChain }) => {
                     borderRadius: enableSelectChain ? "10px" : "50%",
                     backgroundColor: "#FFFFFF",
                     padding: enableSelectChain ? ".75em 1em" : ".75em",
-                    width: enableSelectChain && "170px",
+                    width: enableSelectChain && "auto",
                     height: "100%",
                     overFlow: "hidden"
                 }}
                 disable={!enableSelectChain}
             />
             <Modal
-                visible={showDropDown}
+                open={showDropDown}
                 footer={null}
                 closable={false}
                 onCancel={handleClose}
