@@ -160,7 +160,7 @@ const SelectChain = ({ enableSelectChain }) => {
                 disable={!enableSelectChain}
             />
             <Modal
-                open={showDropDown}
+                visible={showDropDown}
                 footer={null}
                 closable={false}
                 onCancel={handleClose}
