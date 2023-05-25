@@ -380,6 +380,26 @@ export const chainData = [
         hyperLink: "https://www.chihuahua.wtf/"
     },
     {
+        chain_id: "sge-network-2",
+        denom: "usge",
+        displayDenom: "usge",
+        base_denom: {
+            "denom": "usge",
+            "exponent": 6
+        },
+        name: "SGENETWORK TESTNET",
+        prefix: "sge",
+        color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
+        rpc: "https://rpc.testnet.sgenetwork.io/",
+        api: "https://api.testnet.sgenetwork.io/",
+        explorer: "https://blockexplorer.testnet.sgenetwork.io/",
+        txExplorer: "https://blockexplorer.testnet.sgenetwork.io/txs/",
+        valExplorer: "https://blockexplorer.testnet.sgenetwork.io/validators/",
+        govExplorer: "https://blockexplorer.testnet.sgenetwork.io/proposals/",
+        logo: "/images/logo/sge.png",
+        hyperLink: "https://sgenetwork.io"
+    },
+    {
         chain_id: "banksy-testnet-2",
         denom: "upica",
         displayDenom: "pica",
@@ -421,7 +441,8 @@ export const prefixToId = {
     "noble": 16,
     "quick": 17,
     "chihuahua": 18,
-    "banksy": 19,
+    "sge": 19,
+    "banksy": 20,
 }
 
 
@@ -445,6 +466,7 @@ export const idToChainId = {
     16: "grand-1",
     17: "quicksilver-2",
     18: "chihuahua-1",
+    19: "sge-network-2",
     19: "banksy-testnet-2"
 }
 
