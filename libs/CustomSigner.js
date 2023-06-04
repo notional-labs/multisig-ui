@@ -5,6 +5,7 @@ import {
 } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
 import * as multisigjs from 'multisigjs'
+import * as stridejs from 'stridejs'
 
 // export const getSignningSuperClient = async (signer) => {
 //     // registry
@@ -46,21 +47,40 @@ export const getCustomClient = async (types, signer) => {
         }
         return false
     })
+    let aminoConverters
 
-    // get amino converter from each types
-    const aminoConverters = uniqTypes.map(type => {
-        type = type.slice(1, type.length)
-        const splitType = type.split(".")
-        splitType.pop()
-        let value = multisigjs
-        splitType.forEach(element => {
-            if (value[element] !== null) {
-                value = value[element]
-            }
-        });
-        value && value.load && typeof value.load === 'function' && value.load(registry)
-        return value ? value.AminoConverter : {}
-    })
+    if (signer.chainId === 'stride-1') {
+        // get amino converter from each types
+        aminoConverters = uniqTypes.map(type => {
+            type = type.slice(1, type.length)
+            const splitType = type.split(".")
+            splitType.pop()
+            let value = stridejs
+            splitType.forEach(element => {
+                if (value[element] !== null) {
+                    value = value[element]
+                }
+            });
+            value && value.load && typeof value.load === 'function' && value.load(registry)
+            return value ? value.AminoConverter : {}
+        })
+    }
+    else {
+        // get amino converter from each types
+        aminoConverters = uniqTypes.map(type => {
+            type = type.slice(1, type.length)
+            const splitType = type.split(".")
+            splitType.pop()
+            let value = multisigjs
+            splitType.forEach(element => {
+                if (value[element] !== null) {
+                    value = value[element]
+                }
+            });
+            value && value.load && typeof value.load === 'function' && value.load(registry)
+            return value ? value.AminoConverter : {}
+        })
+    }
 
     var animoObjs = Object.assign({}, ...aminoConverters);
 
