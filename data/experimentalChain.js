@@ -489,11 +489,11 @@ export const chainObj = {
             high: 0.5,
         },
     },
-    "banksy-testnet-2": {
-        chainId: "banksy-testnet-2",
-        chainName: "banksy testnet",
-        rpc: "http://65.108.128.139:26657/",
-        rest: "http://65.108.128.139:1317/",
+    "centuri-1": {
+        chainId: "centuri-1",
+        chainName: "composable",
+        rpc: "https://composable-rpc.polkachu.com/",
+        rest: "https://composable-api.polkachu.com/",
         bip44: {
             coinType: 118,
         },
@@ -508,23 +508,23 @@ export const chainObj = {
         currencies: [
             {
                 coinDenom: "PICA",
-                coinMinimalDenom: "upica",
-                coinDecimals: 6,
+                coinMinimalDenom: "ppica",
+                coinDecimals: 12,
                 coinGeckoId: "banksy-token",
             },
         ],
         feeCurrencies: [
             {
                 coinDenom: "PICA",
-                coinMinimalDenom: "upica",
-                coinDecimals: 6,
+                coinMinimalDenom: "ppica",
+                coinDecimals: 12,
                 coinGeckoId: "banksy-token",
             },
         ],
         stakeCurrency: {
             coinDenom: "PICA",
-            coinMinimalDenom: "upica",
-            coinDecimals: 6,
+            coinMinimalDenom: "ppica",
+            coinDecimals: 12,
             coinGeckoId: "banksy-token",
         },
         gasPriceStep: {
