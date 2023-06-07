@@ -400,22 +400,22 @@ export const chainData = [
         hyperLink: "https://sgenetwork.io"
     },
     {
-        chain_id: "banksy-testnet-2",
-        denom: "upica",
+        chain_id: "centuri-1",
+        denom: "ppica",
         displayDenom: "pica",
         base_denom: {
-            "denom": "upica",
-            "exponent": 6
+            "denom": "ppica",
+            "exponent": 12
         },
-        name: "banksy",
+        name: "composable",
         prefix: "banksy",
         color: "linear-gradient(270.1deg, #000000 0%, #414141 74%)",
-        rpc: "http://65.108.128.139:26657/",
-        api: "http://65.108.128.139:1317/",
-        explorer: "https://explorer.nodexcapital.com/composable/",
-        txExplorer: "https://explorer.nodexcapital.com/composable/blocks/",
-        valExplorer: "https://explorer.nodexcapital.com/composable/staking/",
-        govExplorer: "https://explorer.nodexcapital.com/composable/gov/",
+        rpc: "https://composable-rpc.polkachu.com/",
+        api: "https://composable-api.polkachu.com/",
+        explorer: "https://ping.pub/Composable/",
+        txExplorer: "https://ping.pub/Composable/block/",
+        valExplorer: "https://ping.pub/Composable/staking/",
+        govExplorer: "https://ping.pub/Composable/gov/",
         logo: "/images/logo/composable.png",
         hyperLink: "https://www.composable.finance/"
     },
@@ -467,7 +467,7 @@ export const idToChainId = {
     17: "quicksilver-2",
     18: "chihuahua-1",
     19: "sge-network-2",
-    20: "banksy-testnet-2"
+    20: "centuri-1"
 }
 
 
