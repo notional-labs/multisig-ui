@@ -408,7 +408,7 @@ export const chainData = [
             "exponent": 12
         },
         name: "composable",
-        prefix: "banksy",
+        prefix: "centauri",
         color: "linear-gradient(270.1deg, #000000 0%, #414141 74%)",
         rpc: "https://composable-rpc.polkachu.com/",
         api: "https://composable-api.polkachu.com/",
@@ -442,7 +442,7 @@ export const prefixToId = {
     "quick": 17,
     "chihuahua": 18,
     "sge": 19,
-    "banksy": 20,
+    "centauri": 20,
 }
 
 
