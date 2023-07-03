@@ -498,12 +498,12 @@ export const chainObj = {
             coinType: 118,
         },
         bech32Config: {
-            bech32PrefixAccAddr: "banksy",
-            bech32PrefixAccPub: "banksy" + "pub",
-            bech32PrefixValAddr: "banksy" + "valoper",
-            bech32PrefixValPub: "banksy" + "valoperpub",
-            bech32PrefixConsAddr: "banksy" + "valcons",
-            bech32PrefixConsPub: "banksy" + "valconspub",
+            bech32PrefixAccAddr: "centauri",
+            bech32PrefixAccPub: "centauri" + "pub",
+            bech32PrefixValAddr: "centauri" + "valoper",
+            bech32PrefixValPub: "centauri" + "valoperpub",
+            bech32PrefixConsAddr: "centauri" + "valcons",
+            bech32PrefixConsPub: "centauri" + "valconspub",
         },
         currencies: [
             {
