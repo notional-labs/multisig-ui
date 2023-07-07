@@ -35,10 +35,6 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
                                 transform: scaleY(1)
                             }
                         }
-                        @keyframes drop-down {
-                            from {height: 0px; display: none;}
-                            to {height: 100px; display: block;}
-                        }
 
                         #component {
                             animation: growDown 300ms ease-in-out forwards;
