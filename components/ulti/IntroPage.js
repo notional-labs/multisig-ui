@@ -125,7 +125,7 @@ const IntroPage = () => {
                     textDecoration: "underline"
                 }}
             />
-            <style jsx>{`
+            <style>{`
                 .text-gradient {
                     marginBottom: 0;
                     background-color: #f907fc;
