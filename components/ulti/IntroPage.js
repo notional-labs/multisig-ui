@@ -2,6 +2,8 @@ import { motion } from "framer-motion"
 import Button from "../input/Button"
 import { Image } from "antd"
 
+
+// Intro page
 const IntroPage = () => {
     return (
         <div
