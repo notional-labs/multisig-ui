@@ -11,7 +11,39 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
     }, [pubkeys])
 
     return (
-        <div>
+        <div
+            id="component"
+            style={{
+                borderRadius: "0 0 10px 10px",
+                textAlign: "center",
+                marginBottom: "5px",
+                border: "solid 1px #7a7a7a",
+                borderTop: "none",
+            }}
+        >
+            <style>
+                {
+                    `
+                        @keyframes growDown {
+                            0% {
+                                transform: scaleY(0)
+                            }
+                            80% {
+                                transform: scaleY(1.1)
+                            }
+                            100% {
+                                transform: scaleY(1)
+                            }
+                        }
+
+                        #component {
+                            animation: growDown 300ms ease-in-out forwards;
+                            transform-origin: top;
+                            display: block;
+                        }
+                    `
+                }
+            </style>
             {
                 pubkeyList.length > 0 && pubkeyList.map((pubkey, index) => {
                     return (
@@ -23,6 +55,7 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
                                 index={index}
                                 prefix={prefix}
                                 chain={chain}
+                                length={pubkeyList.length}
                             />
                         </div>
                     )
