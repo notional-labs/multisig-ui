@@ -22,6 +22,7 @@ const MultisigList = () => {
     })
     const [loading, setLoading] = useState(false)
     const [toggleReload, setToggleReload] = useState(false)
+    const [showIndex, setShowIndex] = useState(-1)
     const { chain } = useContext(ChainContext)
 
     const keplrKeystorechangeListener = useCallback(async (event) => {
@@ -198,7 +199,7 @@ const MultisigList = () => {
                                 style={{
                                     width: "30%",
                                     padding: ".5em",
-                                    textAlign: "left"
+                                    textAlign: "center"
                                 }}
                             >
                                 Components
@@ -228,6 +229,8 @@ const MultisigList = () => {
                                         address={multisig.address}
                                         index={index}
                                         chain={chain}
+                                        show={showIndex}
+                                        setShowIndex={setShowIndex}
                                     />
                                 )
                             }) : (

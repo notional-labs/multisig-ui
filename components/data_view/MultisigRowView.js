@@ -5,14 +5,15 @@ import { Skeleton } from "antd"
 import Link from "next/link"
 import { addressShortener } from "../../libs/stringConvert"
 import { motion } from "framer-motion"
+import Button from "../input/Button"
 
-const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
+const MultisigRowView = ({ address, index, loadingRow = false, chain, show, setShowIndex }) => {
     const [multisig, setMultisg] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         (async () => {
-            if(loadingRow) return
+            if (loadingRow) return
             setLoading(true)
             const res = await getMultisigFromAddress(address)
             setMultisg(res)
@@ -90,18 +91,40 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain }) => {
                         <td
                             style={{
                                 width: "100%",
-                                padding: ".5em",
+                                padding: "1em",
                                 overflow: "auto",
-                                maxHeight: "70px",
                                 display: "inline-block",
                                 textAlign: "center"
                             }}
                         >
-                            {<ComponentRow
-                                pubkeys={multisig.pubkeyJSON}
-                                prefix={multisig.prefix}
-                                chain={chain}
-                            />}
+                            {
+                                <div>
+                                    <Button
+                                        text={show === index ? "Hide components" : "Show components"}
+                                        clickFunction={() => {
+                                            if (index === show) {
+                                                setShowIndex(-1)
+                                            }
+                                            else {
+                                                setShowIndex(index)
+                                            }
+                                        }}
+                                        style={{
+                                            border: "solid 1px #7a7a7a",
+                                            borderRadius: show === index ? "10px 10px 0 0" : "10px",
+                                            width: "100%",
+                                            padding: "10px"
+                                        }}
+                                    />
+                                    {
+                                        show === index && <ComponentRow
+                                            pubkeys={multisig.pubkeyJSON}
+                                            prefix={multisig.prefix}
+                                            chain={chain}
+                                        />
+                                    }
+                                </div>
+                            }
                         </td>
                         <td
                             style={{

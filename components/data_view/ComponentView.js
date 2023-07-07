@@ -4,7 +4,7 @@ import { fromBase64, toBech32 } from "@cosmjs/encoding"
 import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
 import { PublicKey } from "@injectivelabs/sdk-ts";
 
-const ComponentView = ({ pubkey, index, prefix, chain }) => {
+const ComponentView = ({ pubkey, index, prefix, chain, length }) => {
     const [address, setAddress] = useState("")
 
     useEffect(() => {
@@ -32,19 +32,15 @@ const ComponentView = ({ pubkey, index, prefix, chain }) => {
         <div
             key={index}
             style={{
-                backgroundColor: "#dedede",
-                borderRadius: "10px",
                 textAlign: "center",
-                marginBottom: "5px"
+                padding: "10px",
+                borderBottom: length - 1 !== index && "solid .5px #7a7a7a"
             }}
         >
             <a
                 href={`${chain.explorer}account/${address}`}
                 target={"_blank"}
                 rel="noreferrer"
-                style={{
-                    color: "black"
-                }}
             >
                 {addressShortener(address)}
             </a>
