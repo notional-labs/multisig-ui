@@ -419,6 +419,26 @@ export const chainData = [
         logo: "/images/logo/composable.png",
         hyperLink: "https://www.composable.finance/"
     },
+    {
+        chain_id: "neutron-1",
+        denom: "untrn",
+        displayDenom: "ntrn",
+        base_denom: {
+            "denom": "untrn",
+            "exponent": 6
+        },
+        name: "neutron",
+        prefix: "neutron",
+        color: "linear-gradient(90deg, rgba(13,13,13,1) 0%, rgba(33,60,125,1) 35%, rgba(70,224,210,1) 100%)",
+        rpc: "https://neutron-rpc.polkachu.com/",
+        api: "https://neutron-api.polkachu.com/",
+        explorer: "https://www.mintscan.io/neutron",
+        txExplorer: "https://www.mintscan.io/neutron/blocks/",
+        valExplorer: "https://www.mintscan.io/neutron/validators/",
+        govExplorer: "https://www.mintscan.io/neutron/dao/",
+        logo: "/images/logo/neutron.png",
+        hyperLink: "https://neutron.org/"
+    },
 ]
 
 export const prefixToId = {
@@ -443,6 +463,7 @@ export const prefixToId = {
     "chihuahua": 18,
     "sge": 19,
     "centauri": 20,
+    "neutron": 21,
 }
 
 
@@ -467,7 +488,8 @@ export const idToChainId = {
     17: "quicksilver-2",
     18: "chihuahua-1",
     19: "sge-network-2",
-    20: "centuri-1"
+    20: "centuri-1",
+    21: "neutron-1"
 }
 
 

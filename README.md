@@ -42,6 +42,7 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 13. Pylon
 14. Stride
 15. Migaloo ( White Whale )
+16. Neutron
 
 Will add more chains in the future
 
