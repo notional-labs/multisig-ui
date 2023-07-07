@@ -69,7 +69,7 @@ const IntroPage = () => {
                             color: "#F195C6",
                         }}
                     >
-                        Create multisig, sign and broadcast transaction together!
+                        Create, sign and broadcast multisig transactions together!
                     </text>
                 </motion.div>
                 <motion.div
