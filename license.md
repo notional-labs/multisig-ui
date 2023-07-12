@@ -1,8 +1,8 @@
-Multisignature Tool 
+## Multisignature Tool 
 
-MIT License
+### MIT License
 
-Copyright (c) 2023 notional-labs
+_Copyright (c) 2023 notional-labs_
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use the Software for testing, audit or learning purposes only and subject to the following conditions:
 
