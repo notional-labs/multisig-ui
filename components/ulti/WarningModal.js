@@ -39,7 +39,7 @@ const WarningModal = ({ style, handleCreate, handleClose, handleCancel, showWarn
                         margin: "10px 0"
                     }}
                 >
-                    Make sure to update all signature in prior pending transaction because signing multiple transactions can lead to unverified signature cause by mismatch sequence
+                    Make sure to update all signatures in the prior pending transaction because signing multiple transactions can lead to unverified signing caused by sequence mismatch.
                 </div>
                 <Checkbox
                     checked={checked}
