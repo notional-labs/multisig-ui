@@ -577,5 +577,49 @@ export const chainObj = {
             high: 0.03,
         },
     },
+    "qwoyn-1": {
+        chainId: "qwoyn-1",
+        chainName: "qwoyn network",
+        rpc: "https://rpc.qwoyn.studio/",
+        rest: "https://api.qwoyn.studio/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "qwoyn",
+            bech32PrefixAccPub: "qwoyn" + "pub",
+            bech32PrefixValAddr: "qwoyn" + "valoper",
+            bech32PrefixValPub: "qwoyn" + "valoperpub",
+            bech32PrefixConsAddr: "qwoyn" + "valcons",
+            bech32PrefixConsPub: "qwoyn" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "qwoyn",
+                coinMinimalDenom: "uqwoyn",
+                coinDecimals: 6,
+                coinGeckoId: "na",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "qwoyn",
+                coinMinimalDenom: "uqwoyn",
+                coinDecimals: 6,
+                coinGeckoId: "na",
+            },
+        ],
+        stakeCurrency: {
+            coinDenom: "qwoyn",
+            coinMinimalDenom: "uqwoyn",
+            coinDecimals: 6,
+            coinGeckoId: "na",
+        },
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03,
+        },
+    },
 }
 
