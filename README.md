@@ -34,7 +34,7 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 5. Emoney
 6. Stargaze
 7. Kava
-8. Rengen
+8. Regen
 9. Omniflix
 10. Cheqd
 11. Bitcanna
@@ -43,6 +43,7 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 14. Stride
 15. Migaloo ( White Whale )
 16. Neutron
+17. Qwoyn Network
 
 Will add more chains in the future
 

@@ -439,6 +439,26 @@ export const chainData = [
         logo: "/images/logo/neutron.png",
         hyperLink: "https://neutron.org/"
     },
+    {
+        chain_id: "qwoyn-1",
+        denom: "uqwoyn",
+        displayDenom: "qwoyn",
+        base_denom: {
+            "denom": "uqwoyn",
+            "exponent": 6
+        },
+        name: "qwoyn",
+        prefix: "qwoyn",
+        color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
+        rpc: "https://rpc.qwoyn.studio",
+        api: "https://api.qwoyn.studio",
+        explorer: "https://explorer.theamsolutions.info/qwoyn-main",
+        txExplorer: "https://explorer.theamsolutions.info/qwoyn-main/tx/",
+        valExplorer: "https://explorer.theamsolutions.info/qwoyn-main/staking/",
+        govExplorer: "https://explorer.theamsolutions.info/qwoyn-main/gov/",
+        logo: "/images/logo/qwoyn.png",
+        hyperLink: "https://qwoyn.studio/"
+    }
 ]
 
 export const prefixToId = {
@@ -464,6 +484,7 @@ export const prefixToId = {
     "sge": 19,
     "centauri": 20,
     "neutron": 21,
+    "qwoyn": 22
 }
 
 
@@ -489,7 +510,8 @@ export const idToChainId = {
     18: "chihuahua-1",
     19: "sge-network-2",
     20: "centuri-1",
-    21: "neutron-1"
+    21: "neutron-1",
+    22: "qwoyn-1"
 }
 
 
