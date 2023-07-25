@@ -296,17 +296,6 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                     clickFunction={wrapSetClose}
                 />
             </div>
-            <h3
-                style={{
-                    marginBottom: 0
-                }}
-            >
-                Messages
-            </h3>
-            <MsgList
-                msgs={msgs}
-                removeMsg={removeMsg}
-            />
             <div
                 style={{
                     backgroundColor: "#ffffff",
@@ -357,6 +346,17 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                     getForm()
                 }
             </div>
+            <h3
+                style={{
+                    marginBottom: 0
+                }}
+            >
+                Messages
+            </h3>
+            <MsgList
+                msgs={msgs}
+                removeMsg={removeMsg}
+            />
             <ShareForm
                 txBody={txBody}
                 handleKeyGroupChange={(e) => {
