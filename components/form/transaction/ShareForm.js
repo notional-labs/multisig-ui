@@ -13,15 +13,15 @@ const ShareForm = ({
     return (
         <>
             <Button
-                text={"Estimate gas"}
+                text={"Estimate gas and fee"}
                 clickFunction={async () => await handleEstimateGas()}
                 style={{
-                    backgroundColor: "transparent",
+                    backgroundColor: "black",
                     border: "none",
-                    padding: "0",
+                    borderRadius: "5px",
+                    padding: "5px 10px",
                     margin: "20px 0",
-                    textDecoration: "underline",
-                    fontStyle: "italic",
+                    color: "white"
                 }}
             />
             <Input
