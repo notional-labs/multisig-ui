@@ -53,7 +53,7 @@ const MultisigCreate = () => {
 
     const handleKeyGroupChange = (e, index, groupMode = "address") => {
         const newPubkeys = [...pubkeys]
-        if ( groupMode === "address" ) {
+        if (groupMode === "address") {
             newPubkeys[index].address = e.target.value
         }
         else {
@@ -137,7 +137,7 @@ const MultisigCreate = () => {
         const pubkey = e.target.value
         const newPubkeys = [...pubkeys]
         newPubkeys[index].error = ""
-        try{
+        try {
             if (chain.chain_id.startsWith('evmos')) {
                 const address = PublicKey.fromBase64(fromBase64(pubkey))
                 address.type = '/ethermint.crypto.v1.ethsecp256k1.PubKey'
@@ -224,7 +224,7 @@ const MultisigCreate = () => {
                                                             aspectRatio: "1/1",
                                                             width: "30px",
                                                             position: "absolute",
-                                                            left: "97%",
+                                                            right: "-10px",
                                                             top: "10%",
                                                         }}
                                                     />
@@ -239,7 +239,7 @@ const MultisigCreate = () => {
                                                 name="address"
                                                 placeholder={pubkey.mode === "address" ? "Address here" : "Pubkey here"}
                                                 onBlur={async (e) => {
-                                                    if (pubkey.mode === "address"){
+                                                    if (pubkey.mode === "address") {
                                                         await handleKeyBlur(e, index);
                                                     }
                                                     else {
@@ -248,24 +248,26 @@ const MultisigCreate = () => {
                                                 }}
                                                 error={pubkey.error}
                                             />
-                                           
-                                            <Button
-                                                text={pubkey.mode === "address" ? "Use Pubkey" : "Use Address"}
-                                                clickFunction={() => {
-                                                    changeMode(index, pubkey.mode)
-                                                }}
+                                            <div
                                                 style={{
-                                                    border: 0,
-                                                    aspectRatio: "1/1",
-                                                    backgroundColor: "transparent",
-                                                    textDecoration: "underline",
-                                                    fontStyle: "italic",
-                                                    width: "100%",
                                                     textAlign: "right",
-                                                    height: "30px"
+                                                    padding: "5px",
                                                 }}
-                                            />
-                                            
+                                            >
+                                                <Button
+                                                    text={pubkey.mode === "address" ? "Use Pubkey" : "Use Address"}
+                                                    clickFunction={() => {
+                                                        changeMode(index, pubkey.mode)
+                                                    }}
+                                                    style={{
+                                                        border: 0,
+                                                        backgroundColor: "transparent",
+                                                        textDecoration: "underline",
+                                                        fontStyle: "italic",
+                                                        textAlign: "right",
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     )
                                 })
