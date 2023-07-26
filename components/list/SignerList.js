@@ -1,5 +1,5 @@
 import FlexRow from "../flex_box/FlexRow"
-import { addressShortener } from "../../libs/stringConvert"
+import { stringShortener } from "../../libs/stringConvert"
 import Button from "../input/Button"
 import { deleteSignature, updateSignature } from "../../libs/faunaClient"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
@@ -268,7 +268,7 @@ const SignerList = ({
                                             placement="top"
                                             title={sig.address}
                                         >
-                                            {addressShortener(sig.address)}
+                                            {stringShortener(sig.address)}
                                         </Tooltip>
                                     </td>
                                     <td

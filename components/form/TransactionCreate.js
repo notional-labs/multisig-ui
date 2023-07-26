@@ -36,7 +36,7 @@ const makeGasPriceString = (denom) => {
     return "0.025" + denom
 }
 
-const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount }) => {
+const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount, balances }) => {
     const [txType, setTxType] = useState(0)
     const [checked, setChecked] = useState(false)
     const [msgs, setMsgs] = useState([])
@@ -156,6 +156,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                     setMsgs={setMsgs}
                     address={multisigID}
                     style={style}
+                    balances={balances}
                 />
             )
         }

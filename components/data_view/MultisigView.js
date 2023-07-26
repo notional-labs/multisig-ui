@@ -331,6 +331,7 @@ const MultisigView = () => {
                         chain={chain}
                         wrapSetClose={() => handleCLick("create", false)}
                         multisigAccount={multisigAccount}
+                        balances={holding}
                     />
                 )
             }

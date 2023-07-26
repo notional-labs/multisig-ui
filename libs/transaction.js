@@ -287,7 +287,6 @@ export const createIbcTransferMsg = (
     const amt = `${amount}`
     const currentDate = new Date()
     const timeoutDate = new Date(currentDate.getTime() + 10 * 60 * 1000)
-    console.log(timeoutDate)
     const msgIbcTransfer = {
         sourcePort: sourcePort,
         sourceChannel: sourceChannel,
@@ -300,6 +299,7 @@ export const createIbcTransferMsg = (
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msgIbcTransfer,
     };
+    console.log(msg)
     return msg
 }
 

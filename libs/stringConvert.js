@@ -14,8 +14,8 @@ const SI_prefix = {
     "y": 24
 }
 
-export const addressShortener = (addr, start = 15, end = 4) => {
-    return addr && addr.slice(0, start) + "..." + addr.slice(addr.length - end, addr.length)
+export const stringShortener = (str, start = 15, end = 4) => {
+    return str && str.slice(0, start) + "..." + str.slice(str.length - end, str.length)
 }
 
 export const timeStampHandler = (time) => {
@@ -104,4 +104,3 @@ export const convertObjProperties = (obj) => {
 
     return newObj
 }
-

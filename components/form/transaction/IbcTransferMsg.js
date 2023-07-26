@@ -3,12 +3,24 @@ import Input from "../../input/Input"
 import { isValidAddress } from "../../../libs/checkTool";
 import { openNotification } from "../../ulti/Notification";
 import { createIbcTransferMsg } from "../../../libs/transaction";
-import { convertValueFromDenom } from "../../../libs/stringConvert";
+import { convertValueFromDenom, stringShortener } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber } from 'antd';
 import { getChainPair, getAllDstChain, getSourceChain } from "../../../libs/queryClients";
 
-const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
+const DENOM_SUBSTRING_START_LENGTH = 10
+const DENOM_SUBSTRING_END_LENGTH = 10
+
+
+const denomShortender = (denom) => {
+    if (denom.length > 20) {
+        return stringShortener(denom, DENOM_SUBSTRING_START_LENGTH, DENOM_SUBSTRING_END_LENGTH)
+    }
+
+    return denom
+}
+
+const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
     const [txBody, setTxBody] = useState({
         sourcePort: "",
         sourceChannel: "",
@@ -18,6 +30,7 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
             denom: ""
         }
     })
+    const [selectedToken, setSelectedToken] = useState(0)
     const [dstChains, setDstChains] = useState([])
     const [channels, setChannels] = useState([])
     const [loading, setLoading] = useState(false)
@@ -59,6 +72,11 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
         })
     }
 
+    const selectToken = (e) => {
+        console.log(e.target.value)
+        setSelectedToken(e.target.value)
+    }
+
     const invalidForm = () => {
         for (let key in txBody) {
             if (key === "token" && txBody[key].amount === 0) return true
@@ -74,12 +92,12 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
         return false
     }
 
-    const handleInputNumber = (val, denom) => {
+    const handleInputNumber = (val) => {
         setTxBody({
             ...txBody,
             token: {
                 amount: parseFloat(val),
-                denom: denom
+                denom: balances[selectedToken].denom
             }
         })
     }
@@ -89,8 +107,8 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
             const msg = createIbcTransferMsg(
                 address,
                 txBody.receiver,
-                convertValueFromDenom(chain.base_denom, txBody.token.amount),
-                chain.denom,
+                txBody.token.amount,
+                txBody.token.denom,
                 txBody.sourcePort,
                 txBody.sourceChannel,
             )
@@ -155,6 +173,40 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                     }
                 </select>}
             </div>
+            <div
+                style={{
+                    marginBottom: "10px"
+                }}
+            >
+                <h4
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    Token
+                </h4>
+                <select
+                    onChange={selectToken}
+                    style={{
+                        width: "100%",
+                        padding: "1em",
+                        borderRadius: "10px",
+                    }}
+                >
+                    {
+                        balances.length > 0 && balances.map((balance, index) => {
+                            return (
+                                <option
+                                    value={index}
+                                    key={index}
+                                >
+                                    {`${balance.amount} ${balance.denom}`}
+                                </option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
             <Input
                 onChange={(e) => {
                     handleKeyGroupChange(e);
@@ -172,14 +224,15 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                         margin: 0
                     }}
                 >
-                    {`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    {`Amount (${denomShortender(balances[selectedToken].denom).toUpperCase()})`}
                 </h4>
                 <InputNumber
                     onChange={handleInputNumber}
                     value={txBody.amount}
-                    label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    label={`Amount (${balances[selectedToken].denom.toUpperCase()})`}
                     name="amount"
                     placeholder="Amount"
+                    max={balances[selectedToken].amount}
                     style={{
                         ...style.input,
                         width: "100%",

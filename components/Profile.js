@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import FlexRow from "./flex_box/FlexRow"
 import Button from "./input/Button"
-import { addressShortener } from "../libs/stringConvert"
+import { stringShortener } from "../libs/stringConvert"
 import { LogoutOutlined } from "@ant-design/icons";
 import Image from "next/image"
 import { Typography, Tooltip } from "antd"
@@ -50,7 +50,7 @@ const Profile = ({ account, chainName, setAccount }) => {
                             fontSize: ".75rem"
                         }}
                     >
-                        {addressShortener(account.bech32Address)}
+                        {stringShortener(account.bech32Address)}
                     </Paragraph>
                 ]}
                 direction={"column"}
