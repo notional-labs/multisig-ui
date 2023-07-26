@@ -380,7 +380,7 @@ export const chainData = [
         hyperLink: "https://www.chihuahua.wtf/"
     },
     {
-        chain_id: "sge-network-2",
+        chain_id: "sge-network-3",
         denom: "usge",
         displayDenom: "usge",
         base_denom: {
@@ -392,10 +392,10 @@ export const chainData = [
         color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
         rpc: "https://rpc.testnet.sgenetwork.io/",
         api: "https://api.testnet.sgenetwork.io/",
-        explorer: "https://blockexplorer.testnet.sgenetwork.io/",
-        txExplorer: "https://blockexplorer.testnet.sgenetwork.io/txs/",
-        valExplorer: "https://blockexplorer.testnet.sgenetwork.io/validators/",
-        govExplorer: "https://blockexplorer.testnet.sgenetwork.io/proposals/",
+        explorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/",
+        txExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/tx/",
+        valExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/staking/",
+        govExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/gov/",
         logo: "/images/logo/sge.png",
         hyperLink: "https://sgenetwork.io"
     },
@@ -508,7 +508,7 @@ export const idToChainId = {
     16: "grand-1",
     17: "quicksilver-2",
     18: "chihuahua-1",
-    19: "sge-network-2",
+    19: "sge-network-3",
     20: "centuri-1",
     21: "neutron-1",
     22: "qwoyn-1"

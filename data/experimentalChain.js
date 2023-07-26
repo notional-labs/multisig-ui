@@ -533,8 +533,8 @@ export const chainObj = {
             high: 0.5,
         },
     },
-    "sge-network-2": {
-        chainId: "sge-network-2",
+    "sge-network-3": {
+        chainId: "sge-network-3",
         chainName: "SGENETWORK TESTNET",
         rpc: "https://rpc.testnet.sgenetwork.io/",
         rest: "https://api.testnet.sgenetwork.io/",
