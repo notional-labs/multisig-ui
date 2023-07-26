@@ -17,6 +17,7 @@ import MsgList from "../list/MsgList"
 import { calculateGas } from "../../libs/transaction"
 import { getKey, getSequence } from "../../libs/keplrClient"
 import { SigningStargateClient } from "@cosmjs/stargate"
+import IbcTransferMsgForm from "./transaction/IbcTransferMsg"
 
 const style = {
     input: {
@@ -138,6 +139,18 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
             type: "msgVoteProposal",
             component: (
                 <VoteMsg
+                    chain={chain}
+                    msgs={msgs}
+                    setMsgs={setMsgs}
+                    address={multisigID}
+                    style={style}
+                />
+            )
+        },
+        {
+            type: "msgIBCTransfer",
+            component: (
+                <IbcTransferMsgForm
                     chain={chain}
                     msgs={msgs}
                     setMsgs={setMsgs}

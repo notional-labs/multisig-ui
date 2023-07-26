@@ -35,7 +35,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
         })
     }
 
-    const createMsg = async () => {
+    const createMsg = () => {
         try {
             const msg = createSendMsg(
                 address,
@@ -43,11 +43,11 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                 convertValueFromDenom(chain.base_denom, txBody.amount),
                 chain.denom
             )
-            await setMsgs([...msgs, msg])
+            setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
-            openNotification('success', 'Adding unsuccessfully')
+            openNotification('error', e.message)
         }
     }
 
@@ -123,7 +123,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={async () => await createMsg()}
+                clickFunction={createMsg}
                 disable={disabled()}
             />
         </div>

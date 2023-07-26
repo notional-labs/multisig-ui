@@ -52,7 +52,7 @@ const UndelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         })()
     }, [chain])
 
-    const createMsg = async () => {
+    const createMsg = () => {
         try {
             const msg = createUndelegateMsg(
                 address,
@@ -60,11 +60,11 @@ const UndelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 convertValueFromDenom(chain.base_denom, txBody.amount),
                 chain.denom
             )
-            await setMsgs([...msgs, msg])
+            setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
         }
         catch (e) {
-            openNotification('success', 'Adding unsuccessfully')
+            openNotification('error', e.message)
         }
     }
 
@@ -191,7 +191,7 @@ const UndelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
                     marginTop: "20px",
                     border: 0
                 }}
-                clickFunction={async () => await createMsg()}
+                clickFunction={createMsg}
                 disable={disabled()}
             />
         </div>
