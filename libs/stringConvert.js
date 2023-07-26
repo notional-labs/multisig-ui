@@ -28,7 +28,6 @@ export const addressConversion = ["validatorAddress", "delegatorAddress", "fromA
 
 export const getDenom = async (api, ibcDenom) => {
     const { data } = await axios.get(`${api}ibc/apps/transfer/v1/denom_traces/${ibcDenom}`)
-    console.log(data.denom_trace)
     const denom = data.denom_trace ? data.denom_trace.base_denom : "unknown"
     return denom
 }

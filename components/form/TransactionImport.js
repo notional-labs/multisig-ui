@@ -157,7 +157,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             openNotification("success", "Successfully create transaction")
         }
         catch (e) {
-            console.log(e.message)
             openLoadingNotification("close")
             openNotification("error", "Unsuccessfully create transaction " + e.message)
         }

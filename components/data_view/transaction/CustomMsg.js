@@ -14,7 +14,6 @@ const style = {
 }
 
 const CustomMsg = ({ chain, parentStyle, msg }) => {
-    console.log(msg)
     return (
         <div>
              <>

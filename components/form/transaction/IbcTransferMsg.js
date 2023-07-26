@@ -73,7 +73,6 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
     }
 
     const selectToken = (e) => {
-        console.log(e.target.value)
         setSelectedToken(e.target.value)
     }
 

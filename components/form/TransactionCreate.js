@@ -72,7 +72,6 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
             openNotification("success", "Estimate successfully")
         }
         catch (e) {
-            console.log(e.message)
             openLoadingNotification("close")
             openNotification("error", "fail to estimate " + e.message)
         }
