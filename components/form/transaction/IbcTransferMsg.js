@@ -4,8 +4,9 @@ import { openNotification } from "../../ulti/Notification";
 import { createIbcTransferMsg } from "../../../libs/transaction";
 import { stringShortener } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
-import { InputNumber } from 'antd';
+import { InputNumber, Checkbox } from 'antd';
 import { getChainPair, getAllDstChain, getSourceChainChannel } from "../../../libs/queryClients";
+import FlexRow from "../../flex_box/FlexRow";
 
 const DENOM_SUBSTRING_START_LENGTH = 10
 const DENOM_SUBSTRING_END_LENGTH = 10
@@ -33,12 +34,13 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
     const [dstChains, setDstChains] = useState([])
     const [channels, setChannels] = useState([])
     const [addrError, setAddrError] = useState("")
+    const [advance, setAdvance] = useState(false)
 
     useEffect(() => {
         try {
             const res = getAllDstChain(chain.name)
             setDstChains([...res])
-            selectChain(res[0].chain_name)
+            res.length > 0 && selectChain(res[0].chain_name)
         }
         catch (e) {
             openNotification("error", e.message)
@@ -127,6 +129,10 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
         }
     }
 
+    const onChange = (e) => {
+        setAdvance(e.target.checked)
+    };
+
     return (
         <div>
             <div
@@ -141,30 +147,89 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                 >
                     {`Destination (${txBody.sourceChannel}/${txBody.sourcePort})`}
                 </h4>
-                <select
-                    onChange={(e) => {
-                        selectChain(e.target.value)
-                    }}
-                    style={{
-                        width: "100%",
-                        padding: "1em",
-                        borderRadius: "10px",
-                    }}
-                >
-                    {
-                        dstChains.length > 0 && dstChains.map((dstChain, index) => {
-                            return (
-                                <option
-                                    value={dstChain.chain_name}
-                                    key={index}
-                                >
-                                    {dstChain.chain_name}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
+                {
+                    dstChains.length > 0 ? <select
+                        onChange={(e) => {
+                            selectChain(e.target.value)
+                        }}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        {
+                            dstChains.map((dstChain, index) => {
+                                return (
+                                    <option
+                                        value={dstChain.chain_name}
+                                        key={index}
+                                    >
+                                        {dstChain.chain_name}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select> : <select
+                        disabled={true}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        <option>
+                            No connections found on chain registry
+                        </option>
+                    </select>
+                }
             </div>
+            <Checkbox
+                onChange={onChange}
+                style={{
+                    margin: "10px 0"
+                }}
+            >
+                Advance
+            </Checkbox>
+            {
+                advance && (
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(2, 1fr)",
+                            gap: "5%"
+                        }}
+                    >
+                        <Input
+                            onChange={(e) => {
+                                handleKeyGroupChange(e);
+                            }}
+                            value={txBody.sourcePort}
+                            label="Source port ID"
+                            name="sourcePort"
+                            placeholder="Port ID"
+                            style={{
+                                ...style.input,
+                                width: "100%"
+                            }}
+                        />
+                        <Input
+                            onChange={(e) => {
+                                handleKeyGroupChange(e);
+                            }}
+                            value={txBody.sourceChannel}
+                            label="Source channel ID"
+                            name="sourceChannel"
+                            placeholder="Channel ID"
+                            style={{
+                                ...style.input,
+                                width: "100%"
+                            }}
+                        />
+                    </div>
+                )
+            }
             <div
                 style={{
                     marginBottom: "10px"
@@ -177,27 +242,40 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                 >
                     Token
                 </h4>
-                <select
-                    onChange={selectToken}
-                    style={{
-                        width: "100%",
-                        padding: "1em",
-                        borderRadius: "10px",
-                    }}
-                >
-                    {
-                        balances.length > 0 && balances.map((balance, index) => {
-                            return (
-                                <option
-                                    value={index}
-                                    key={index}
-                                >
-                                    {`${balance.amount} ${balance.denom}`}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
+                {
+                    balances.length > 0 ? <select
+                        onChange={selectToken}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        {
+                            balances.map((balance, index) => {
+                                return (
+                                    <option
+                                        value={index}
+                                        key={index}
+                                    >
+                                        {`${balance.amount} ${balance.denom}`}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select> : <select
+                        disabled={true}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        <option>
+                            Empty balances
+                        </option>
+                    </select>
+                }
             </div>
             <Input
                 onChange={(e) => {
@@ -216,15 +294,15 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                         margin: 0
                     }}
                 >
-                    {`Amount (${denomShortender(balances[selectedToken].denom).toUpperCase()})`}
+                    {`Amount (${balances.length > 0 && denomShortender(balances[selectedToken].denom).toUpperCase()})`}
                 </h4>
                 <InputNumber
                     onChange={handleInputNumber}
                     value={txBody.amount}
-                    label={`Amount (${balances[selectedToken].denom.toUpperCase()})`}
+                    label={`Amount (${balances.length > 0 && balances[selectedToken].denom.toUpperCase()})`}
                     name="amount"
                     placeholder="Amount"
-                    max={balances[selectedToken].amount}
+                    max={balances.length > 0 && balances[selectedToken].amount}
                     style={{
                         ...style.input,
                         width: "100%",

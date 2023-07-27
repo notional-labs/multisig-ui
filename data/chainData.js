@@ -47,7 +47,7 @@ export const chainData = [
             "denom": "uatom",
             "exponent": 6
         },
-        name: "atom",
+        name: "cosmoshub",
         prefix: "cosmos",
         color: "linear-gradient(270.1deg, #000000 0%, #414141 74%)",
         rpc: "https://rpc-cosmoshub-ia.cosmosia.notional.ventures/",
@@ -187,7 +187,7 @@ export const chainData = [
             "denom": "uflix",
             "exponent": 6
         },
-        name: "omniflix",
+        name: "omniflixhub",
         prefix: "omniflix",
         color: "linear-gradient(to right, #0d0843, #060322 81%)",
         rpc: "https://rpc-omniflixhub-ia.cosmosia.notional.ventures/",
