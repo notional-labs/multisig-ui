@@ -6,11 +6,10 @@ import { stringShortener } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber, Checkbox } from 'antd';
 import { getChainPair, getAllDstChain, getSourceChainChannel } from "../../../libs/queryClients";
-import FlexRow from "../../flex_box/FlexRow";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const DENOM_SUBSTRING_START_LENGTH = 10
 const DENOM_SUBSTRING_END_LENGTH = 10
-
 
 const denomShortender = (denom) => {
     if (denom.length > 20) {
@@ -183,6 +182,15 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                         </option>
                     </select>
                 }
+            </div>
+            <div
+                style={{
+                    marginTop: "20px",
+                    fontStyle: "italic",
+                    fontSize: "85%"
+                }}
+            >
+                <ExclamationCircleOutlined style={{color: "#ffc72b"}}/> For IBC connections that are not registered on chain registry. Go to advance setting to fill in source port and source channel manually !
             </div>
             <Checkbox
                 onChange={onChange}
