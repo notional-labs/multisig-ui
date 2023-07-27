@@ -10,7 +10,7 @@ const AssetRow = ({ chain, ibcDenom, balance, index }) => {
             if (ibcDenom.substring(0, 3) === "ibc") {
                 const res = await getDenom(chain.api, ibcDenom.substring(4))
                 if (res.length < 20) {
-                    setViewDenom(getDisplayDenom(denom))
+                    setViewDenom(getDisplayDenom(res))
 
                 }
                 else {
