@@ -62,7 +62,6 @@ export const getPubkey = async (rpc, address) => {
 export const getBalance = async (rpc, address) => {
     const client = await StargateClient.connect(rpc);
     const res = await client.getAllBalances(address)
-    console.log(res)
     return res;
 }
 

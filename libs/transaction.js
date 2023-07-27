@@ -16,6 +16,7 @@ const proto_signing_1 = require("@cosmjs/proto-signing");
 const queryclient_1 = require("@cosmjs/stargate");
 import { QueryClient } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import Timestamp from "timestamp-nano";
 
 const simulate = async (signerClient, messages, memo, rpc, sequence, threshold, pk) => {
     const anyMsgs = messages.map((m) => signerClient.registry.encodeAsAny(m));
@@ -272,6 +273,33 @@ export const createDepositMsg = (
         value: msgDeposit
     }
 
+    return msg
+}
+
+export const createIbcTransferMsg = (
+    sender,
+    receiver,
+    amount,
+    denom,
+    sourcePort,
+    sourceChannel,
+) => {
+    const amt = `${amount}`
+    const currentDate = new Date()
+    // Default 10min timeout
+    const timeoutDate = new Date(currentDate.getTime() + 10 * 60 * 1000)
+    const msgIbcTransfer = {
+        sourcePort: sourcePort,
+        sourceChannel: sourceChannel,
+        sender: sender,
+        receiver: receiver,
+        token: coin(amt, denom),
+        timeoutTimestamp: (timeoutDate.getTime() * 1000000)
+    };
+    const msg = {
+        typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
+        value: msgIbcTransfer,
+    };
     return msg
 }
 

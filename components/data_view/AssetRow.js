@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getDenom, getValueFromDenom, getDisplayDenom } from "../../libs/stringConvert"
+import { getDenom, getValueFromDenom, getDisplayDenom, stringShortener} from "../../libs/stringConvert"
 
 const AssetRow = ({ chain, ibcDenom, balance, index }) => {
     const [name, setName] = useState("")
@@ -9,31 +9,37 @@ const AssetRow = ({ chain, ibcDenom, balance, index }) => {
         (async () => {
             if (ibcDenom.substring(0, 3) === "ibc") {
                 const res = await getDenom(chain.api, ibcDenom.substring(4))
-                const denom = res.substring(0, 2) !== "cw"
-                                && res.length < 20
-                                ? res : "unknown"
+                if (res.length < 20) {
+                    setViewDenom(getDisplayDenom(res))
+
+                }
+                else {
+                    setViewDenom(stringShortener(res, 10, 10))
+                } 
                 setName(res)
-                setViewDenom(getDisplayDenom(denom))
             }
             else if (ibcDenom.substring(0, 4) === "gamm") {
                 setName(ibcDenom)
                 setViewDenom(ibcDenom)
             }   
             else {
+                if (ibcDenom.length < 20) {
+                    setViewDenom(getDisplayDenom(ibcDenom))
+
+                }
+                else {
+                    setViewDenom(stringShortener(ibcDenom, 15, 15))
+                } 
                 setName(ibcDenom)
-                setViewDenom(getDisplayDenom(ibcDenom))
             }
         })()
     }, [ibcDenom, index])
-
-    console.log(viewDenom)
 
     return (
         <tr
             key={index}
             style={{
                 borderBottom: "solid .25px #d6d6d6",
-                display: viewDenom === 'unknown' && 'none'
             }}
         >
             <td

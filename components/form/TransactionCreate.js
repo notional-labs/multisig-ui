@@ -17,6 +17,7 @@ import MsgList from "../list/MsgList"
 import { calculateGas } from "../../libs/transaction"
 import { getKey, getSequence } from "../../libs/keplrClient"
 import { SigningStargateClient } from "@cosmjs/stargate"
+import IbcTransferMsgForm from "./transaction/IbcTransferMsg"
 
 const style = {
     input: {
@@ -35,7 +36,7 @@ const makeGasPriceString = (denom) => {
     return "0.025" + denom
 }
 
-const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount }) => {
+const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAccount, balances }) => {
     const [txType, setTxType] = useState(0)
     const [checked, setChecked] = useState(false)
     const [msgs, setMsgs] = useState([])
@@ -71,7 +72,6 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
             openNotification("success", "Estimate successfully")
         }
         catch (e) {
-            console.log(e.message)
             openLoadingNotification("close")
             openNotification("error", "fail to estimate " + e.message)
         }
@@ -143,6 +143,19 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                     setMsgs={setMsgs}
                     address={multisigID}
                     style={style}
+                />
+            )
+        },
+        {
+            type: "msgIBCTransfer",
+            component: (
+                <IbcTransferMsgForm
+                    chain={chain}
+                    msgs={msgs}
+                    setMsgs={setMsgs}
+                    address={multisigID}
+                    style={style}
+                    balances={balances}
                 />
             )
         }

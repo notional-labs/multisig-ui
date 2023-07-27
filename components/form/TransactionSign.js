@@ -57,7 +57,6 @@ const TransationSign = ({
                 setAccount(acc)
                 setHasSigned(checkHasSigned)
             } catch (e) {
-                console.log("enable err: ", e);
                 openNotification("error", "Failed to get account key")
             }
         })()

@@ -3,7 +3,7 @@ import { getMultisigFromAddress } from "../../libs/multisig"
 import ComponentRow from "./ComponentRow"
 import { Skeleton } from "antd"
 import Link from "next/link"
-import { addressShortener } from "../../libs/stringConvert"
+import { stringShortener } from "../../libs/stringConvert"
 import { motion } from "framer-motion"
 import Button from "../input/Button"
 
@@ -85,7 +85,7 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain, show, setS
                             <Link
                                 href={`/multisig/${address}`}
                             >
-                                {addressShortener(address, 20, 10)}
+                                {stringShortener(address, 20, 10)}
                             </Link>
                         </td>
                         <td

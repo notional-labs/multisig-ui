@@ -15,7 +15,6 @@ const style = {
 }
 
 const TransferMsg = ({ parentStyle, msg }) => {
-    console.log(msg)
     return (
         <>
             <div

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { addressShortener } from "../../libs/stringConvert"
+import { stringShortener } from "../../libs/stringConvert"
 import { fromBase64, toBech32 } from "@cosmjs/encoding"
 import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
 import { PublicKey } from "@injectivelabs/sdk-ts";
@@ -42,7 +42,7 @@ const ComponentView = ({ pubkey, index, prefix, chain, length }) => {
                 target={"_blank"}
                 rel="noreferrer"
             >
-                {addressShortener(address)}
+                {stringShortener(address)}
             </a>
         </div>
     )

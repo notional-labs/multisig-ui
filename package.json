@@ -19,6 +19,7 @@
     "@injectivelabs/sdk-ts": "^1.0.468",
     "antd": "^4.21.0",
     "axios": "^1.3.4",
+    "chain-registry": "^1.18.0",
     "cosmjs-types": "^0.5.0",
     "eslint-plugin-react": "^7.32.2",
     "faunadb": "^4.6.0",
@@ -31,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-json-editor-ajrm": "^2.5.13",
     "stridejs": "^0.6.2",
+    "timestamp-nano": "^1.0.1",
     "uint8-to-base64": "^0.2.0"
   },
   "devDependencies": {

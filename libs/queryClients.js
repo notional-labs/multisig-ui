@@ -1,6 +1,7 @@
-import { setupStakingExtension, setupTxExtension, QueryClient, setupGovExtension } from "@cosmjs/stargate";
+import { setupStakingExtension, setupTxExtension, QueryClient, setupIbcExtension } from "@cosmjs/stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import axios from "axios";
+import { ibc } from 'chain-registry';
 
 export const statusList = [
     "BOND_STATUS_BONDED",
@@ -134,3 +135,35 @@ export const getProposals = async (api) => {
         throw e
     }
 }
+
+const checkChainName = (ibc, chainName) => {
+    const check = ibc.chain_1.chain_name === chainName || ibc.chain_2.chain_name === chainName
+    return check
+}
+
+export const getChainPair = (sourceChainName, dstChainName) => {
+    const ibcPair = ibc.find((ibc) => checkChainName(ibc, sourceChainName) && checkChainName(ibc, dstChainName))
+    return ibcPair
+}
+
+const getCounterChain = (ibc, sourceChainName) => {
+    if (ibc.chain_1.chain_name === sourceChainName) {
+        return ibc.chain_2
+    }
+
+    return ibc.chain_1
+}
+
+export const getSourceChainChannel = (ibc, sourceChainName) => {
+    if (ibc.chain_1.chain_name === sourceChainName) {
+        return ibc.channels[0].chain_1
+    }
+
+    return ibc.channels[0].chain_2
+}
+
+export const getAllDstChain = (sourceChainName) => {
+    const ibcPairList = ibc.filter((ibc) => checkChainName(ibc, sourceChainName))
+    return ibcPairList.map((ibc) => getCounterChain(ibc, sourceChainName))
+}
+

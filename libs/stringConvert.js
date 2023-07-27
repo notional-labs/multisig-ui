@@ -14,8 +14,8 @@ const SI_prefix = {
     "y": 24
 }
 
-export const addressShortener = (addr, start = 15, end = 4) => {
-    return addr && addr.slice(0, start) + "..." + addr.slice(addr.length - end, addr.length)
+export const stringShortener = (str, start = 15, end = 4) => {
+    return str && str.slice(0, start) + "..." + str.slice(str.length - end, str.length)
 }
 
 export const timeStampHandler = (time) => {
@@ -28,8 +28,7 @@ export const addressConversion = ["validatorAddress", "delegatorAddress", "fromA
 
 export const getDenom = async (api, ibcDenom) => {
     const { data } = await axios.get(`${api}ibc/apps/transfer/v1/denom_traces/${ibcDenom}`)
-    console.log(data.denom_trace)
-    const denom = data.denom_trace ? data.denom_trace.base_denom : "unknown"
+    const denom = data.denom_trace ? data.denom_trace.base_denom : ibcDenom
     return denom
 }
 
@@ -42,7 +41,7 @@ export const getDisplayDenom = (denom) => {
         const displayDenom = prefix === 'u' 
                             || prefix === 'n'
                             || prefix === 'a' 
-                            ? denom.substring(1) : 'unknown'
+                            ? denom.substring(1) : denom
         return displayDenom
     }
 }
@@ -104,4 +103,3 @@ export const convertObjProperties = (obj) => {
 
     return newObj
 }
-
