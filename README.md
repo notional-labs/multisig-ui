@@ -42,8 +42,13 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 13. Pylon
 14. Stride
 15. Migaloo ( White Whale )
-16. Neutron
-17. Qwoyn Network
+16. Noble
+17. Quicksilver
+18. Chihuahua
+19. SGENETWORK Testnet
+20. Composable
+21. Neutron
+22. Qwoyn Network
 
 Will add more chains in the future
 
