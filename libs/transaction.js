@@ -299,6 +299,7 @@ export const createIbcTransferMsg = (
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
         value: msgIbcTransfer,
     };
+    console.log(msg)
     return msg
 }
 
