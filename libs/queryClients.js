@@ -154,7 +154,7 @@ const getCounterChain = (ibc, sourceChainName) => {
     return ibc.chain_1
 }
 
-export const getSourceChain = (ibc, sourceChainName) => {
+export const getSourceChainChannel = (ibc, sourceChainName) => {
     if (ibc.chain_1.chain_name === sourceChainName) {
         return ibc.channels[0].chain_1
     }

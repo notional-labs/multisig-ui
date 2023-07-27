@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import Input from "../../input/Input"
-import { isValidAddress } from "../../../libs/checkTool";
 import { openNotification } from "../../ulti/Notification";
 import { createIbcTransferMsg } from "../../../libs/transaction";
-import { convertValueFromDenom, stringShortener } from "../../../libs/stringConvert";
+import { stringShortener } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber } from 'antd';
-import { getChainPair, getAllDstChain, getSourceChain } from "../../../libs/queryClients";
+import { getChainPair, getAllDstChain, getSourceChainChannel } from "../../../libs/queryClients";
 
 const DENOM_SUBSTRING_START_LENGTH = 10
 const DENOM_SUBSTRING_END_LENGTH = 10
@@ -33,33 +32,27 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
     const [selectedToken, setSelectedToken] = useState(0)
     const [dstChains, setDstChains] = useState([])
     const [channels, setChannels] = useState([])
-    const [loading, setLoading] = useState(false)
     const [addrError, setAddrError] = useState("")
 
     useEffect(() => {
         try {
-            setLoading(true)
             const res = getAllDstChain(chain.name)
             setDstChains([...res])
-            setLoading(false)
+            selectChain(res[0].chain_name)
         }
         catch (e) {
-            setLoading(false)
             openNotification("error", e.message)
         }
     }, [])
 
     const selectChain = (dstChainName) => {
         try {
-            setLoading(true)
             const res = getChainPair(chain.name, dstChainName)
             setChannels([...res.channels])
-            const sourceChain = getSourceChain(res, chain.name)
+            const sourceChain = getSourceChainChannel(res, chain.name)
             selectChannel(sourceChain)
-            setLoading(false)
         }
         catch (e) {
-            setLoading(false)
             openNotification("error", e.message)
         }
     }
@@ -77,10 +70,10 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
     }
 
     const invalidForm = () => {
-        for (let key in txBody) {
-            if (key === "token" && txBody[key].amount === 0) return true
-            else if (key === "receiver" && txBody[key] === "") return true
-        }
+        if (txBody.token.amount === 0
+            || txBody.receiver === ""
+            || txBody.sourceChannel === ""
+            || txBody.sourcePort === "") return true
         return false
     }
 
@@ -146,9 +139,9 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                         margin: 0
                     }}
                 >
-                    Destination
+                    {`Destination (${txBody.sourceChannel}/${txBody.sourcePort})`}
                 </h4>
-                {!loading && <select
+                <select
                     onChange={(e) => {
                         selectChain(e.target.value)
                     }}
@@ -170,7 +163,7 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                             )
                         })
                     }
-                </select>}
+                </select>
             </div>
             <div
                 style={{
