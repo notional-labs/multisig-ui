@@ -7,6 +7,10 @@ import { convertValueFromDenom } from "../../../libs/stringConvert"
 import Button from "../../input/Button"
 import { InputNumber } from 'antd';
 
+const inputMode = [
+    'List select',
+    'Manually input'
+]
 
 const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [validators, setValidators] = useState([])
@@ -15,6 +19,7 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         amount: 0,
     })
     const [status, setStatus] = useState(0)
+    const [mode, setMode] = useState(0)
     const [loading, setLoading] = useState(false)
 
     const invalidForm = () => {
@@ -69,6 +74,13 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
         })
     }
 
+    const handleInput = (e) => {
+        setTxBody({
+            ...txBody,
+            toAddress: e.target.value
+        })
+    }
+
     const handleSelect = (e) => {
         setTxBody({
             ...txBody,
@@ -78,80 +90,165 @@ const DelegateMsg = ({ chain, address, msgs, setMsgs, style }) => {
 
     return (
         <div>
-            <div
-                style={style.input}
+            <h4
+                style={{
+                    marginBottom: 0
+                }}
             >
-                <h4
+                Validator
+            </h4>
+            <div
+                style={{
+                    ...style.input,
+                    backgroundColor: "#ffffff",
+                    boxShadow: " 0px 0px 10px 1px rgba(0, 0, 0, 0.25)",
+                    padding: "1em 2em",
+                    borderRadius: "10px",
+                    position: "relative",
+                    zIndex: 1,
+                    width: "100%",
+                    margin: "10px 0 20px 0"
+                }}
+            >
+                <div
                     style={{
                         marginBottom: 0
                     }}
                 >
-                    Validator
-                </h4>
+                    Input method
+                </div>
                 <div
                     style={{
-                        marginBottom: "10px",
+                        borderRadius: "5px",
+                        padding: "2px 5px",
+                        backgroundColor: "#ebebeb",
+                        width: "20%"
+                    }}
+                >
+                    <Button
+                        text={inputMode[0]}
+                        clickFunction={() => {
+                            setMode(0)
+                        }}
+                        style={{
+                            border: 0,
+                            borderRadius: "5px",
+                            backgroundColor: mode === 0 ? "black" : "transparent",
+                            color: mode === 0 && "white",
+                            width: "50%"
+                        }}
+                    />
+                    <Button
+                        text={inputMode[1]}
+                        clickFunction={() => {
+                            setMode(1)
+                        }}
+                        style={{
+                            border: 0,
+                            width: "50%",
+                            borderRadius: "5px",
+                            backgroundColor: mode === 1 ? "black" : "transparent",
+                            color: mode === 1 && "white",
+                        }}
+                    />
+                </div>
+                {mode === 0 ? <div
+                    style={{
+                        backgroundColor: "#ffffff",
+                        boxShadow: " 0px 0px 10px 1px rgba(0, 0, 0, 0.25)",
+                        padding: "1em 2em",
+                        borderRadius: "10px",
+                        position: "relative",
+                        zIndex: 1,
+                        width: "100%",
+                        margin: "20px 0 20px 0"
                     }}
                 >
                     <div
                         style={{
-                            borderRadius: "5px",
-                            padding: "2px 5px",
-                            backgroundColor: "#ebebeb",
-                            width: "15%"
+                            marginBottom: "10px",
                         }}
                     >
-                        <Button
-                            text={"Active"}
-                            clickFunction={() => {
-                                setStatus(0)
-                            }}
+                        <div
                             style={{
-                                border: 0,
                                 borderRadius: "5px",
-                                backgroundColor: status === 0 ? "black" : "transparent",
-                                color: status === 0 && "white",
-                                width: "50%"
+                                padding: "2px 5px",
+                                backgroundColor: "#ebebeb",
+                                width: "15%"
                             }}
-                        />
-                        <Button
-                            text={"Inactive"}
-                            clickFunction={() => {
-                                setStatus(1)
-                            }}
-                            style={{
-                                border: 0,
-                                width: "50%",
-                                borderRadius: "5px",
-                                backgroundColor: status === 1 ? "black" : "transparent",
-                                color: status === 1 && "white",
-                            }}
-                        />
+                        >
+                            <Button
+                                text={"Active"}
+                                clickFunction={() => {
+                                    setStatus(0)
+                                }}
+                                style={{
+                                    border: 0,
+                                    borderRadius: "5px",
+                                    backgroundColor: status === 0 ? "black" : "transparent",
+                                    color: status === 0 && "white",
+                                    width: "50%"
+                                }}
+                            />
+                            <Button
+                                text={"Inactive"}
+                                clickFunction={() => {
+                                    setStatus(1)
+                                }}
+                                style={{
+                                    border: 0,
+                                    width: "50%",
+                                    borderRadius: "5px",
+                                    backgroundColor: status === 1 ? "black" : "transparent",
+                                    color: status === 1 && "white",
+                                }}
+                            />
+                        </div>
                     </div>
-                </div>
-                {!loading && <select
-                    onChange={handleSelect}
+                    {!loading && <select
+                        onChange={handleSelect}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        {
+                            validators.length > 0 && validators.map((validator, index) => {
+                                return (
+                                    <option
+                                        value={validator.operatorAddress}
+                                        key={index}
+                                    >
+                                        {validator.description.moniker}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select>
+                    }
+                </div> : <div
                     style={{
-                        width: "100%",
-                        padding: "1em",
+                        backgroundColor: "#ffffff",
+                        boxShadow: " 0px 0px 10px 1px rgba(0, 0, 0, 0.25)",
+                        padding: "1em 2em",
                         borderRadius: "10px",
+                        position: "relative",
+                        zIndex: 1,
+                        width: "100%",
+                        margin: "20px 0 20px 0"
                     }}
                 >
-                    {
-                        validators.length > 0 && validators.map((validator, index) => {
-                            return (
-                                <option
-                                    value={validator.operatorAddress}
-                                    key={index}
-                                >
-                                    {validator.description.moniker}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
+                    <Input
+                        onChange={handleInput}
+                        value={txBody.toAddress}
+                        label="Operator address"
+                        name="toAddress"
+                        placeholder="Address here"
+                        style={style.input}
+                    />
+                </div>
                 }
-
             </div>
             <div>
                 <h4
