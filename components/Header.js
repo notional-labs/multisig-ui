@@ -38,7 +38,7 @@ const Header = ({ enableSelectChain, checkType }) => {
             style={{
                 backgroundImage: `${chain.color}`,
                 color: "#ffffff",
-                padding: "1em 20em",
+                padding: "1em 10%",
                 position: "fixed",
                 height: "80px",
                 width: "100%",
