@@ -233,7 +233,7 @@ const SideBar = ({ option }) => {
                     />
                 )
             }
-            <style jsx>{`
+            <style>{`
                 .hover-nav-button:hover {
                     color: black;
                     font-weight: bold;
