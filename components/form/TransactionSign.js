@@ -103,6 +103,9 @@ const TransationSign = ({
                     let newMsg = msg
                     const valueBase64 = btoa(JSON.stringify(newMsg.value.msg))
                     newMsg.value.msg = Uint8Array.from(Buffer.from(valueBase64, 'base64'))
+                    if (!Array.isArray(newMsg.value.funds)) {
+                        newMsg.value.funds = Object.values(newMsg.value.funds);
+                    }
                     return newMsg
                 }
                 if (msg.typeUrl === "/cosmos.gov.v1beta1.MsgSubmitProposal") {
