@@ -533,11 +533,11 @@ export const chainObj = {
             high: 0.5,
         },
     },
-    "sge-network-3": {
-        chainId: "sge-network-3",
-        chainName: "SGENETWORK TESTNET",
-        rpc: "https://rpc.testnet.sgenetwork.io/",
-        rest: "https://api.testnet.sgenetwork.io/",
+    "sgenet-1": {
+        chainId: "sgenet-1",
+        chainName: "SGE",
+        rpc: "https://sge-rpc.lavenderfive.com/",
+        rest: "https://sge-api.lavenderfive.com/",
         bip44: {
             coinType: 118,
         },
@@ -554,7 +554,7 @@ export const chainObj = {
                 coinDenom: "sge",
                 coinMinimalDenom: "usge",
                 coinDecimals: 6,
-                coinGeckoId: "na",
+                coinGeckoId: "sge",
             },
         ],
         feeCurrencies: [
@@ -562,14 +562,14 @@ export const chainObj = {
                 coinDenom: "sge",
                 coinMinimalDenom: "usge",
                 coinDecimals: 6,
-                coinGeckoId: "na",
+                coinGeckoId: "sge",
             },
         ],
         stakeCurrency: {
             coinDenom: "sge",
             coinMinimalDenom: "usge",
             coinDecimals: 6,
-            coinGeckoId: "na",
+            coinGeckoId: "sge",
         },
         gasPriceStep: {
             low: 0.01,
