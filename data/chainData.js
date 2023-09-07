@@ -380,22 +380,22 @@ export const chainData = [
         hyperLink: "https://www.chihuahua.wtf/"
     },
     {
-        chain_id: "sge-network-3",
+        chain_id: "sgenet-1",
         denom: "usge",
         displayDenom: "usge",
         base_denom: {
             "denom": "usge",
             "exponent": 6
         },
-        name: "SGENETWORK TESTNET",
+        name: "SGE",
         prefix: "sge",
         color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
-        rpc: "https://rpc.testnet.sgenetwork.io/",
-        api: "https://api.testnet.sgenetwork.io/",
-        explorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/",
-        txExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/tx/",
-        valExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/staking/",
-        govExplorer: "https://blockexplorer.testnet.sgenetwork.io/sge-network/gov/",
+        rpc: "https://sge-rpc.lavenderfive.com/",
+        api: "https://sge-api.lavenderfive.com/",
+        explorer: "https://exp.nodeist.net/Sge/",
+        txExplorer: "https://exp.nodeist.net/Sge/tx/",
+        valExplorer: "https://exp.nodeist.net/Sge/staking/",
+        govExplorer: "https://exp.nodeist.net/Sge/gov/",
         logo: "/images/logo/sge.png",
         hyperLink: "https://sgenetwork.io"
     },
