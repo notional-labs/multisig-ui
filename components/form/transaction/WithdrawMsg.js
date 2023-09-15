@@ -6,6 +6,16 @@ import ValidatorRow from "../../data_view/ValidatorRow"
 import { getValueFromDenom } from "../../../libs/stringConvert"
 import Button from "../../input/Button"
 
+const getRewardWithNativeDenom = (chain, rewards) => {
+    const filterReward = rewards.filter(reward => {
+        if (reward.denom === chain.denom) {
+            return true
+        }
+    })
+
+    return filterReward.length > 0 ? filterReward[0] : rewards[0]
+}
+
 const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
     const [rewards, setRewards] = useState([])
 
@@ -46,6 +56,12 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
         catch (e) {
             openNotification('error', e.message)
         }
+    }
+
+    const getRewardDisplay = (rewards) => {
+        const nativeReward = getRewardWithNativeDenom(chain, rewards)
+
+        return `${getValueFromDenom(nativeReward.denom, nativeReward.amount)} ${nativeReward.denom.substring(1).toUpperCase()}`
     }
 
     return (
@@ -135,8 +151,7 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
                                                             paddingTop: "1em"
                                                         }}
                                                     >
-                                                        {getValueFromDenom(reward.reward[0].denom, reward.reward[0].amount)} 
-                                                        {reward.reward[0].denom.substring(1).toUpperCase()}
+                                                        {getRewardDisplay(reward.reward)}
                                                     </td>
                                                 </tr>
                                             )
@@ -173,7 +188,7 @@ const WithdrawMsg = ({ chain, address, msgs, setMsgs, style }) => {
                 }}
                 clickFunction={createMsg}
                 disable={disabled()}
-            /> 
+            />
         </div>
     )
 }
