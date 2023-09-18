@@ -27,7 +27,8 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
         token: {
             amount: 0,
             denom: ""
-        }
+        },
+        memo: ""
     })
     const [selectedToken, setSelectedToken] = useState(0)
     const [dstChains, setDstChains] = useState([])
@@ -104,6 +105,7 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                 txBody.token.denom,
                 txBody.sourcePort,
                 txBody.sourceChannel,
+                txBody.memo,
             )
             setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
@@ -320,6 +322,17 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                     }}
                 />
             </div>
+            <Input
+                onChange={(e) => {
+                    handleKeyGroupChange(e);
+                }}
+                value={txBody.toAddress}
+                label="Memo"
+                name="memo"
+                placeholder="memo"
+                error={addrError}
+                style={style.input}
+            />
             <Button
                 text={"Add Message"}
                 style={{

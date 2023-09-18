@@ -283,6 +283,7 @@ export const createIbcTransferMsg = (
     denom,
     sourcePort,
     sourceChannel,
+    memo,
 ) => {
     const amt = `${amount}`
     const currentDate = new Date()
@@ -294,7 +295,8 @@ export const createIbcTransferMsg = (
         sender: sender,
         receiver: receiver,
         token: coin(amt, denom),
-        timeoutTimestamp: (timeoutDate.getTime() * 1000000)
+        timeoutTimestamp: (timeoutDate.getTime() * 1000000),
+        memo: memo,
     };
     const msg = {
         typeUrl: "/ibc.applications.transfer.v1.MsgTransfer",
