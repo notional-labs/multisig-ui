@@ -78,15 +78,10 @@ export const getCustomClient = async (types, signer) => {
     var animoObjs = Object.assign({}, ...aminoConverters);
 
     // aminotypes
-    const aminoTypes = new AminoTypes({ ...animoObjs })
-
-    const client = await SigningStargateClient.offline(
-        signer,
-        { registry, aminoTypes }
-    );
+    let aminoTypes = new AminoTypes({ ...animoObjs })
 
     // fix memo missing in amino converter in cosmjs
-    client.aminoTypes.register['/ibc.applications.transfer.v1.MsgTransfer'] = {
+    aminoTypes.register['/ibc.applications.transfer.v1.MsgTransfer'] = {
         aminoType: 'cosmos-sdk/MsgTransfer',
         toAmino: ({
             sourcePort,
@@ -110,7 +105,7 @@ export const getCustomClient = async (types, signer) => {
                 }
                 : {},
             timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
-            memo: omitDefault(memo)?.toString(),
+            memo: memo,
         }),
         fromAmino: ({
             source_port,
@@ -138,6 +133,15 @@ export const getCustomClient = async (types, signer) => {
                 memo: memo,
             }),
     }
+
+    // TODO: need to load the registry for custom type 
+    // eg: osmosis.gamm.v1beta1.load(registry);
+
+    const client = await SigningStargateClient.offline(
+        signer,
+        { registry, aminoTypes }
+    );
+
 
     return client;
 }
