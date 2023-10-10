@@ -25,14 +25,14 @@ const simulate = async (signerClient, messages, memo, rpc, sequence, threshold, 
     return math_1.Uint53.fromString(gasInfo.gasUsed.toString()).toNumber();
 }
 
-const sim = async (messages, memo, multisigPubkey, sequence, base, threshold ) => {
+const sim = async (messages, memo, multisigPubkey, sequence, base, threshold) => {
     const tendermint = await Tendermint34Client.connect(base)
     const baseQuery = new QueryClient(tendermint)
     const rpc = (0, queryclient_1.createProtobufRpcClient)(baseQuery);
     let queryService = new service_1.ServiceClientImpl(rpc);
     let modeInfo = []
-    for (let i = 0; i < threshold; i++){
-        modeInfo[i] = { single: { mode: signing_1.SignMode.SIGN_MODE_UNSPECIFIED }}
+    for (let i = 0; i < threshold; i++) {
+        modeInfo[i] = { single: { mode: signing_1.SignMode.SIGN_MODE_UNSPECIFIED } }
     }
     const tx = tx_1.Tx.fromPartial({
         authInfo: tx_1.AuthInfo.fromPartial({
@@ -41,7 +41,7 @@ const sim = async (messages, memo, multisigPubkey, sequence, base, threshold ) =
                 {
                     publicKey: (0, proto_signing_1.encodePubkey)(multisigPubkey),
                     sequence: long_1.fromNumber(sequence, true),
-                    modeInfo:{ multi: modeInfo},
+                    modeInfo: { multi: modeInfo },
                 },
             ],
         }),
@@ -73,29 +73,19 @@ const getFee = (gas, amount, denom) => {
 }
 
 export const getTransactionById = async (id) => {
-    try {
-        const res = await axios.get(`/api/transaction/${id}`)
-        if (!res.data || res.data === null) {
-            throw new Error("This transaction might not be created using this tool!")
-        }
-        return res.data
+    const res = await axios.get(`/api/transaction/${id}`)
+    if (!res.data || res.data === null) {
+        throw new Error("This transaction might not be created using this tool!")
     }
-    catch (e) {
-        throw e;
-    }
+    return res.data
 }
 
 export const checkIfHasPendingTx = async (address) => {
-    try {
-        const res = await axios.get(`/api/multisig/${address}/all-transaction`)
-        if (!res.data || res.data === null) {
-            throw new Error("Failed to check transaction!")
-        }
-        return res.data.some((tx) => tx.status === "PENDING")
+    const res = await axios.get(`/api/multisig/${address}/all-transaction`)
+    if (!res.data || res.data === null) {
+        throw new Error("Failed to check transaction!")
     }
-    catch (e) {
-        throw e;
-    }
+    return res.data.some((tx) => tx.status === "PENDING")
 }
 
 export const makeTxBody = (

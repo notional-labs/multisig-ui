@@ -192,7 +192,7 @@ const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) 
                     fontSize: "85%"
                 }}
             >
-                <ExclamationCircleOutlined style={{color: "#ffc72b"}}/> For IBC connections that are not registered on chain registry. Go to advance setting to fill in source port and source channel manually !
+                <ExclamationCircleOutlined style={{ color: "#ffc72b" }} /> For IBC connections that are not registered on chain registry. Go to advance setting to fill in source port and source channel manually !
             </div>
             <Checkbox
                 onChange={onChange}
