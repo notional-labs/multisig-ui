@@ -8,6 +8,7 @@ import * as multisigjs from 'multisigjs'
 import * as stridejs from 'stridejs'
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
+import { ibc } from 'osmojs';
 
 function omitDefault(input) {
     if (typeof input === "string") {
@@ -134,8 +135,8 @@ export const getCustomClient = async (types, signer) => {
             }),
     }
 
-    // TODO: need to load the registry for custom type 
-    // eg: osmosis.gamm.v1beta1.load(registry);
+    // reload the registry
+    ibc.applications.transfer.v1.load(registry);
 
     const client = await SigningStargateClient.offline(
         signer,
