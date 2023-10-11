@@ -1,8 +1,8 @@
-## This is a multisig UI.
+## This is a multisig UI
 
 # Getting Started
 
-Firstly, go to Faunadb (https://fauna.com/) create a database and import the schema from the schema.graphql file. 
+Firstly, go to Faunadb (<https://fauna.com/>) create a database and import the schema from the schema.graphql file.
 
 Secondly, get the Secret key from faunadb. Create a .env.local file in the root directory and add the secret key.
 
@@ -25,7 +25,7 @@ NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-43349
 NEXT_PUBLIC_HOST=http://localhost:3000/
 ```
 
-# Supported chains:
+# Supported chains
 
 1. Osmosis
 2. Gaia (cosmoshub)
@@ -51,5 +51,3 @@ NEXT_PUBLIC_HOST=http://localhost:3000/
 22. Qwoyn Network
 
 Will add more chains in the future
-
-

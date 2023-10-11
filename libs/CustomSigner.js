@@ -8,29 +8,30 @@ import * as multisigjs from 'multisigjs'
 import * as stridejs from 'stridejs'
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
+import { ibc } from 'osmojs';
 
 function omitDefault(input) {
     if (typeof input === "string") {
-      return input === "" ? undefined : input;
+        return input === "" ? undefined : input;
     }
-  
+
     if (typeof input === "number") {
-      return input === 0 ? undefined : input;
+        return input === 0 ? undefined : input;
     }
-  
+
     if (Long.isLong(input)) {
-      return input.isZero() ? undefined : input;
+        return input.isZero() ? undefined : input;
     }
-  
+
     throw new Error(`Got unsupported type '${typeof input}'`);
-  }
+}
 
 export const getCustomClient = async (types, signer) => {
     // registry
     const registry = new Registry(defaultRegistryTypes);
     const uniqTypes = [...new Set(types)]
 
-    //filter types from default registry
+    // filter types from default registry
     uniqTypes.filter(type => {
         const filter = defaultRegistryTypes.filter(registry => {
             registry[0] === type
@@ -44,8 +45,8 @@ export const getCustomClient = async (types, signer) => {
 
     if (signer.chainId === 'stride-1') {
         // get amino converter from each types
-        aminoConverters = uniqTypes.map(type => {
-            type = type.slice(1, type.length)
+        aminoConverters = uniqTypes.map(t => {
+            let type = t.slice(1, t.length)
             const splitType = type.split(".")
             splitType.pop()
             let value = stridejs
@@ -60,8 +61,8 @@ export const getCustomClient = async (types, signer) => {
     }
     else {
         // get amino converter from each types
-        aminoConverters = uniqTypes.map(type => {
-            type = type.slice(1, type.length)
+        aminoConverters = uniqTypes.map(t => {
+            let type = t.slice(1, t.length)
             const splitType = type.split(".")
             splitType.pop()
             let value = multisigjs
@@ -78,15 +79,10 @@ export const getCustomClient = async (types, signer) => {
     var animoObjs = Object.assign({}, ...aminoConverters);
 
     // aminotypes
-    const aminoTypes = new AminoTypes({ ...animoObjs })
-
-    const client = await SigningStargateClient.offline(
-        signer,
-        { registry, aminoTypes }
-    );
+    let aminoTypes = new AminoTypes({ ...animoObjs })
 
     // fix memo missing in amino converter in cosmjs
-    client.aminoTypes.register['/ibc.applications.transfer.v1.MsgTransfer'] = {
+    aminoTypes.register['/ibc.applications.transfer.v1.MsgTransfer'] = {
         aminoType: 'cosmos-sdk/MsgTransfer',
         toAmino: ({
             sourcePort,
@@ -97,21 +93,21 @@ export const getCustomClient = async (types, signer) => {
             timeoutHeight,
             timeoutTimestamp,
             memo,
-          }) => ({
+        }) => ({
             source_port: sourcePort,
             source_channel: sourceChannel,
             token: token,
             sender: sender,
             receiver: receiver,
             timeout_height: timeoutHeight
-              ? {
-                  revision_height: omitDefault(timeoutHeight.revisionHeight)?.toString(),
-                  revision_number: omitDefault(timeoutHeight.revisionNumber)?.toString(),
+                ? {
+                    revision_height: omitDefault(timeoutHeight.revisionHeight)?.toString(),
+                    revision_number: omitDefault(timeoutHeight.revisionNumber)?.toString(),
                 }
-              : {},
+                : {},
             timeout_timestamp: omitDefault(timeoutTimestamp)?.toString(),
-            memo: omitDefault(memo)?.toString(),
-          }),
+            memo: memo,
+        }),
         fromAmino: ({
             source_port,
             source_channel,
@@ -121,23 +117,32 @@ export const getCustomClient = async (types, signer) => {
             timeout_height,
             timeout_timestamp,
             memo,
-          }) =>
+        }) =>
             MsgTransfer.fromPartial({
-              sourcePort: source_port,
-              sourceChannel: source_channel,
-              token: token,
-              sender: sender,
-              receiver: receiver,
-              timeoutHeight: timeout_height
-                ? {
-                    revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
-                    revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
-                  }
-                : undefined,
-              timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
-              memo: omitDefault(memo)?.toString(),
+                sourcePort: source_port,
+                sourceChannel: source_channel,
+                token: token,
+                sender: sender,
+                receiver: receiver,
+                timeoutHeight: timeout_height
+                    ? {
+                        revisionHeight: Long.fromString(timeout_height.revision_height || "0", true),
+                        revisionNumber: Long.fromString(timeout_height.revision_number || "0", true),
+                    }
+                    : undefined,
+                timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
+                memo: memo,
             }),
-      }
+    }
+
+    // reload the registry
+    ibc.applications.transfer.v1.load(registry);
+
+    const client = await SigningStargateClient.offline(
+        signer,
+        { registry, aminoTypes }
+    );
+
 
     return client;
 }
@@ -145,8 +150,8 @@ export const getCustomClient = async (types, signer) => {
 export const getCustomAminoConverter = (type) => {
     let aminoConverter
 
-    type = type.slice(1, type.length)
-    const splitType = type.split(".")
+    let newType = type.slice(1, type.length)
+    const splitType = newType.split(".")
     splitType.pop()
     let value = multisigjs
     splitType.forEach(element => {
