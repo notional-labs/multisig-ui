@@ -281,7 +281,7 @@ export const createIbcTransferMsg = (
     const amt = `${amount}`
     const currentDate = new Date()
     // Default 10min timeout
-    const timeoutDate = new Date(currentDate.getTime() + 10 * 60 * 1000)
+    const timeoutDate = new Date(currentDate.getTime() + 5 * 60 * 60 * 1000)
     const msgIbcTransfer = {
         sourcePort: sourcePort,
         sourceChannel: sourceChannel,
