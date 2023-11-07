@@ -569,12 +569,12 @@ export const chainObj = {
             coinDenom: "sge",
             coinMinimalDenom: "usge",
             coinDecimals: 6,
-            coinGeckoId: "sge",
+            coinGeckoId: "six-sigma",
         },
         gasPriceStep: {
             low: 0.01,
-            average: 0.025,
-            high: 0.03,
+            average: 0.25,
+            high: 0.5,
         },
     },
     "qwoyn-1": {
@@ -622,4 +622,3 @@ export const chainObj = {
         },
     },
 }
-
