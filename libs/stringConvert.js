@@ -92,7 +92,7 @@ export const snakeToCamel = (str) =>
 export const convertObjProperties = (obj) => {
     let newObj = {}
     for (const [key, value] of Object.entries(obj)) {
-        if ( key !== 'msg' ) {
+        if ( key !== 'msg' && !Array.isArray(value) ) {
             const camelCaseKey = snakeToCamel(key)
             if (typeof value === 'object') {
                 const newVal = convertObjProperties(value)
