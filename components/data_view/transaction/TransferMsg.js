@@ -1,4 +1,4 @@
-import { getValueFromDenom, getDisplayDenom } from "../../../libs/stringConvert"
+import { getValueFromDenom, getDisplayDenom, denomShortender } from "../../../libs/stringConvert"
 import { motion } from "framer-motion"
 
 const style = {
@@ -40,8 +40,8 @@ const TransferMsg = ({ parentStyle, msg }) => {
                         style.value
                     }
                 >
-                    {`${msg.value.amount.length > 0 && getValueFromDenom(msg.value.amount[0].denom, msg.value.amount[0].amount)} `}
-                    {msg.value.amount.length > 0 && getDisplayDenom(msg.value.amount[0].denom).toUpperCase()}
+                    {`${msg.value.amount.length > 0 && msg.value.amount[0].amount} `}
+                    {msg.value.amount.length > 0 && denomShortender(msg.value.amount[0].denom.toUpperCase())}
                 </motion.div>
             </div>
             <div

@@ -87,6 +87,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                     setMsgs={setMsgs}
                     address={multisigID}
                     style={style}
+                    balances={balances}
                 />
             )
         }, {

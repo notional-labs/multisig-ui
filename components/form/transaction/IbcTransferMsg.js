@@ -2,22 +2,11 @@ import { useState, useEffect } from "react";
 import Input from "../../input/Input"
 import { openNotification } from "../../ulti/Notification";
 import { createIbcTransferMsg } from "../../../libs/transaction";
-import { stringShortener } from "../../../libs/stringConvert";
+import { denomShortender } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber, Checkbox } from 'antd';
 import { getChainPair, getAllDstChain, getSourceChainChannel } from "../../../libs/queryClients";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-
-const DENOM_SUBSTRING_START_LENGTH = 10
-const DENOM_SUBSTRING_END_LENGTH = 10
-
-const denomShortender = (denom) => {
-    if (denom.length > 20) {
-        return stringShortener(denom, DENOM_SUBSTRING_START_LENGTH, DENOM_SUBSTRING_END_LENGTH)
-    }
-
-    return denom
-}
 
 const IbcTransferMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
     const [txBody, setTxBody] = useState({
