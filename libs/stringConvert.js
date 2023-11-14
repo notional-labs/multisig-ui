@@ -1,6 +1,9 @@
 import axios from "axios"
 import { specialDenom } from "../data/chainData"
 
+const DENOM_SUBSTRING_START_LENGTH = 10
+const DENOM_SUBSTRING_END_LENGTH = 10
+
 const SI_prefix = {
     "d": 1,
     "c": 2,
@@ -16,6 +19,14 @@ const SI_prefix = {
 
 export const stringShortener = (str, start = 15, end = 4) => {
     return str && str.slice(0, start) + "..." + str.slice(str.length - end, str.length)
+}
+
+export const denomShortender = (denom) => {
+    if (denom.length > 20) {
+        return stringShortener(denom, DENOM_SUBSTRING_START_LENGTH, DENOM_SUBSTRING_END_LENGTH)
+    }
+
+    return denom
 }
 
 export const timeStampHandler = (time) => {

@@ -3,15 +3,17 @@ import Input from "../../input/Input"
 import { isValidAddress } from "../../../libs/checkTool";
 import { openNotification } from "../../ulti/Notification";
 import { createSendMsg, } from "../../../libs/transaction";
-import { convertValueFromDenom } from "../../../libs/stringConvert";
+import { denomShortender } from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber } from 'antd';
 
-const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
+const SendMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
     const [txBody, setTxBody] = useState({
         toAddress: "",
         amount: 0,
     })
+    const [selectedToken, setSelectedToken] = useState(0)
+
     const [addrError, setAddrError] = useState("")
 
     const invalidForm = () => {
@@ -19,6 +21,10 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
             if (key === "amount" && txBody[key] === 0) return true
         }
         return false
+    }
+
+    const selectToken = (e) => {
+        setSelectedToken(e.target.value)
     }
 
     const disabled = () => {
@@ -40,8 +46,8 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
             const msg = createSendMsg(
                 address,
                 txBody.toAddress,
-                convertValueFromDenom(chain.base_denom, txBody.amount),
-                chain.denom
+                txBody.amount,
+                balances[selectedToken].denom
             )
             setMsgs([...msgs, msg])
             openNotification('success', 'Adding successfully')
@@ -52,7 +58,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
     }
 
     const handleKeyGroupChange = (e) => {
-        if(e.target.name === "amount") {
+        if (e.target.name === "amount") {
             setTxBody({
                 ...txBody,
                 [e.target.name]: parseFloat(e.target.value)
@@ -89,18 +95,63 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs }) => {
                 onBlur={handleKeyBlur}
                 style={style.input}
             />
+            <div
+                style={{marginBottom: '10px'}}
+            >
+                <h4
+                    style={{
+                        margin: 0
+                    }}
+                >
+                    {`Select token to send`}
+                </h4>
+                {
+                    balances.length > 0 ? <select
+                        onChange={selectToken}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        {
+                            balances.map((balance, index) => {
+                                return (
+                                    <option
+                                        value={index}
+                                        key={index}
+                                    >
+                                        {`${balance.amount} ${balance.denom}`}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select> : <select
+                        disabled={true}
+                        style={{
+                            width: "100%",
+                            padding: "1em",
+                            borderRadius: "10px",
+                        }}
+                    >
+                        <option>
+                            Empty balances
+                        </option>
+                    </select>
+                }
+            </div>
             <div>
                 <h4
                     style={{
                         margin: 0
                     }}
                 >
-                    {`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    {`Amount (${balances.length > 0 && denomShortender(balances[selectedToken].denom).toUpperCase()})`}
                 </h4>
                 <InputNumber
                     onChange={handleInputNumber}
                     value={txBody.amount}
-                    label={`Amount (${chain.denom.substring(1).toUpperCase()})`}
+                    label={`Amount`}
                     name="amount"
                     placeholder="Amount"
                     style={{
