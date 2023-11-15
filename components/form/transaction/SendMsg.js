@@ -3,7 +3,10 @@ import Input from "../../input/Input"
 import { isValidAddress } from "../../../libs/checkTool";
 import { openNotification } from "../../ulti/Notification";
 import { createSendMsg, } from "../../../libs/transaction";
-import { denomShortender } from "../../../libs/stringConvert";
+import { denomShortender, 
+    getDisplayDenomWithChainInfo, 
+    getDisplayValueWithChainInfo, 
+    getValueWithChainInfo} from "../../../libs/stringConvert";
 import Button from "../../input/Button";
 import { InputNumber } from 'antd';
 
@@ -46,7 +49,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
             const msg = createSendMsg(
                 address,
                 txBody.toAddress,
-                txBody.amount,
+                getValueWithChainInfo(txBody.amount, balances[selectedToken].denom, chain),
                 balances[selectedToken].denom
             )
             setMsgs([...msgs, msg])
@@ -121,7 +124,8 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
                                         value={index}
                                         key={index}
                                     >
-                                        {`${balance.amount} ${balance.denom}`}
+                                        {`${getDisplayValueWithChainInfo(balance.amount, balance.denom, chain)} 
+                                        ${getDisplayDenomWithChainInfo(balance.denom, chain)}`}
                                     </option>
                                 )
                             })
@@ -146,7 +150,8 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
                         margin: 0
                     }}
                 >
-                    {`Amount (${balances.length > 0 && denomShortender(balances[selectedToken].denom).toUpperCase()})`}
+                    {`Amount (${balances.length > 0 
+                        && denomShortender(getDisplayDenomWithChainInfo(balances[selectedToken].denom, chain)).toUpperCase()})`}
                 </h4>
                 <InputNumber
                     onChange={handleInputNumber}

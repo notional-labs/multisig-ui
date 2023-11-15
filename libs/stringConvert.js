@@ -57,6 +57,29 @@ export const getDisplayDenom = (denom) => {
     }
 }
 
+export const getDisplayDenomWithChainInfo = (denom, chain) => {
+    if (denom === chain.denom) {
+        return chain.displayDenom
+    }
+    return denom
+}
+
+export const getDisplayValueWithChainInfo = (value, denom, chain) => {
+    if (denom === chain.denom) {
+        return getValueFromDenom(denom, value)
+    }
+    return value
+}
+
+export const getValueWithChainInfo = (value, denom, chain) => {
+    if (denom === chain.denom) {
+        return convertValueFromDenom(chain.base_denom, value)
+    }
+    return value
+}
+
+
+
 export const getValueFromDenom = (denom, value) => {
     let convertValue
     if (denom in specialDenom) {
