@@ -151,7 +151,7 @@ const SendMsgForm = ({ address, chain, style, msgs, setMsgs, balances }) => {
                     }}
                 >
                     {`Amount (${balances.length > 0 
-                        && denomShortender(getDisplayDenomWithChainInfo(balances[selectedToken].denom, chain)).toUpperCase()})`}
+                        ? denomShortender(getDisplayDenomWithChainInfo(balances[selectedToken].denom, chain)).toUpperCase() : ''})`}
                 </h4>
                 <InputNumber
                     onChange={handleInputNumber}
