@@ -43,6 +43,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 jsx = <TransferMsg
                     msg={msg}
                     parentStyle={style}
+                    chain={chain}
                 />
                 break;
             case "/cosmos.staking.v1beta1.MsgDelegate":
