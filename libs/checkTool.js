@@ -56,7 +56,6 @@ const checkValidatorAddressOsmoValid = (prefix, address) => {
 }
 
 export const checkMsg = (prefix, msgValue) => {
-    console.log(msgValue)
     for (const address of addressAmino) {
         if(!(address in msgValue)) continue;
   
