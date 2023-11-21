@@ -80,14 +80,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
     }
 
     const convertSingleMsg = (msg) => {
-        let msgValue = msg.value;
-        let type = msg.typeUrl || msg.type;
-
-        try {
-            checkMsg(chain.prefix, msgValue)
-        } catch (e) {
-            throw new Error(e.message)
-        }
+        let type = msg.typeUrl || msg.type || msg["@type"];
 
         // convert type
         const posi = typeMsg.indexOf(type);
@@ -95,10 +88,19 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             type = typeMsgConversion[posi];
         }
 
-        // convert to compatible field
-        msgValue = convertObjProperties(msg.value)
+        let msgValue
 
-        // console.log(msgValue);
+        if (!msg.value) {
+            // In case where value is not wrap in value key
+            // delete all type key possible and convert the remain object
+            delete msg['@type']
+            delete msg.typeUrl
+            delete msg.type
+            msgValue = convertObjProperties({ ...msg })
+        } else {
+            // convert to compatible field
+            msgValue = convertObjProperties(msg.value)
+        }
 
         return {
             value: msgValue,
