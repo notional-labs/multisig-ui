@@ -1,5 +1,6 @@
 import axios from "axios"
 import { specialDenom } from "../data/chainData"
+import { AcceptedMessageKeysFilter, ContractExecutionAuthorization, CombinedLimit, ContractMigrationAuthorization, MaxCallsLimit, MaxFundsLimit, AllowAllMessagesFilter, AcceptedMessagesFilter } from "cosmjs-types/cosmwasm/wasm/v1/authz";
 
 const DENOM_SUBSTRING_START_LENGTH = 10
 const DENOM_SUBSTRING_END_LENGTH = 10
@@ -140,4 +141,54 @@ export const convertObjProperties = (obj) => {
     }
 
     return newObj
+}
+
+export const encodeObjectToBytes = (obj) => {
+    // ContractExecutionAuthorization, ContractMigrationAuthorization both have grants struct
+    let grantCon = obj.value.grant.authorization.value.grants
+    for (let key in grantCon) {
+        // limit and field are optional in grants struct
+        if (grantCon[key].limit) {
+            // CombinedLimit, MaxCallsLimit, MaxFundsLimit in limit field
+            let lastVal = grantCon[key].limit.value;
+            delete grantCon[key].limit.value
+            let splitArr = grantCon[key].limit.typeUrl.split(".")
+            grantCon[key].limit["value"] = convertStruct(splitArr[splitArr.length-1], lastVal)
+        }
+        if (grantCon[key].filter) {
+            // AcceptedMessageKeysFilter, AllowAllMessagesFilter, AcceptedMessagesFilter in filter field
+            let lastVal = grantCon[key].filter.value;
+            delete grantCon[key].filter.value
+            let splitArr = grantCon[key].filter.typeUrl.split(".")
+            grantCon[key].filter["value"] = convertStruct(splitArr[splitArr.length-1], lastVal)
+        }
+    }
+    let lastValGrants = obj.value.grant.authorization.value
+    delete obj.value.grant.authorization.value
+    let splitArr = obj.value.grant.authorization.typeUrl.split(".")
+    obj.value.grant.authorization["value"] = convertStruct(splitArr[splitArr.length-1], lastValGrants)
+    return obj
+}
+
+export const convertStruct = (type, value) => {
+    switch (type) {
+        case "ContractExecutionAuthorization":
+            return ContractExecutionAuthorization.encode(value).finish()
+        case "ContractMigrationAuthorization":
+            return ContractMigrationAuthorization.encode(value).finish()
+        case "MaxCallsLimit":
+            return MaxCallsLimit.encode(value).finish()
+        case "MaxFundsLimit":
+            return MaxFundsLimit.encode(value).finish()
+        case "CombinedLimit":
+            return CombinedLimit.encode(value).finish()
+        case "AllowAllMessagesFilter":
+            return AllowAllMessagesFilter.encode(value).finish()
+        case "AcceptedMessageKeysFilter":
+            return AcceptedMessageKeysFilter.encode(value).finish()
+        case "AcceptedMessagesFilter":
+            return AcceptedMessagesFilter.encode(value).finish()
+        default:
+            throw "Type not supported"
+    }
 }

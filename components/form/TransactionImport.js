@@ -4,11 +4,10 @@ import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { checkMsg } from "../../libs/checkTool"
 import { mockData } from "../../data/mockData"
 import { checkIfHasPendingTx } from "../../libs/transaction"
 import WarningModal from "../ulti/WarningModal"
-import { convertObjProperties } from "../../libs/stringConvert"
+import { convertObjProperties, encodeObjectToBytes } from "../../libs/stringConvert"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 
 const typeMsg = [
@@ -100,6 +99,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         } else {
             // convert to compatible field
             msgValue = convertObjProperties(msg.value)
+            if (msg.type == "/cosmos.authz.v1beta1.MsgGrant" || msg.typeUrl == "/cosmos.authz.v1beta1.MsgGrant" || msg['@type'] == "/cosmos.authz.v1beta1.MsgGrant") {
+                // only for msg.Grant type
+                msgValue = encodeObjectToBytes(msgValue)
+            }
         }
 
         return {
