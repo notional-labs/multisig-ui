@@ -6,23 +6,23 @@ import { AnimatePresence } from "framer-motion";
 export const ChainContext = createContext();
 
 export const ChainProvider = (props) => {
-    const [chain, setChain] = useState(null);
+    const [chain, setChain] = useState(chainData[23]);
 
     useEffect(() => {
         (async () => {
             const index = localStorage.getItem("current")
             if (index && index !== "" && index < chainData.length) {
-                setChain(chainData[index])
+                setChain(chainData[23])
             }
             else {
                 localStorage.setItem("current", 0)
-                setChain(chainData[0])
+                setChain(chainData[23])
             }
         })()
     }, [])
 
     const wrapper = (index) => {
-        setChain(chainData[index])
+        setChain(chainData[23])
     }
 
     return chain && (

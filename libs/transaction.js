@@ -76,15 +76,19 @@ export const getTransactionById = async (id) => {
     // Sanitize the user input
     const sanitizedId = encodeURIComponent(id);
     const res = await axios.get(`/api/transaction/${sanitizedId}`)
+    console.log(res);
     if (!res.data || res.data === null) {
         throw new Error("This transaction might not be created using this tool!")
     }
-    return res.data
+    return res.data[0]
 }
 
 export const checkIfHasPendingTx = async (address) => {
     const sanitizedAddr = encodeURIComponent(address);
     const res = await axios.get(`/api/multisig/${sanitizedAddr}/all-transaction`)
+    if (!res.data) {
+        return false
+    }
     if (!res.data || res.data === null) {
         throw new Error("Failed to check transaction!")
     }

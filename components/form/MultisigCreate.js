@@ -108,6 +108,7 @@ const MultisigCreate = () => {
     }
 
     const handleCreate = async () => {
+        console.log(pubkeys);
         const compressedPubkeys = pubkeys.map(
             (item) => item.pubkey
         );

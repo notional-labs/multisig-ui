@@ -15,7 +15,8 @@ const typeMsg = [
     "cosmos-sdk/MsgDelegate",
     "cosmos-sdk/MsgSend",
     "cosmos-sdk/MsgUndelegate",
-    "cosmos-sdk/MsgBeginRedelegate"
+    "cosmos-sdk/MsgBeginRedelegate",
+    "cosmos-sdk/MsgGrant"
 ]
 
 const typeMsgConversion = [
@@ -23,7 +24,8 @@ const typeMsgConversion = [
     "/cosmos.staking.v1beta1.MsgDelegate",
     "/cosmos.bank.v1beta1.MsgSend",
     "/cosmos.staking.v1beta1.MsgUndelegate",
-    "/cosmos.staking.v1beta1.MsgBeginRedelegate"
+    "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+    "/cosmos.authz.v1beta1.MsgGrant"
 ]
 
 const style = {
@@ -118,7 +120,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         } catch (err) {
             throw new Error("Invalid Tx Json. Check TX Again!")
         }
-
+        console.log(tx_json_parsed);
         let msgList
         let fee
         let memo
@@ -136,7 +138,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         const msgs = msgList.map(msg => {
             return convertSingleMsg(msg)
         })
-
+        console.log(msgs);
         return {
             chainId: chain.chain_id,
             msgs: [...msgs],
@@ -157,11 +159,12 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
             }
             const res = await axios.post("/api/transaction/create", data);
             const { _id } = res.data;
-            router.push(`/multisig/${multisigID}/transaction/${_id}`)
+            router.push(`/multisig/${multisigID}/transaction/${res.data.id}`)
             openLoadingNotification("close")
             openNotification("success", "Successfully create transaction")
         }
         catch (e) {
+            console.log(e);
             openLoadingNotification("close")
             openNotification("error", "Unsuccessfully create transaction " + e.message)
         }
@@ -177,7 +180,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(multisigID)
-        console.log(checked)
         if (check && !checked) {
             setShowWarning(true)
         }

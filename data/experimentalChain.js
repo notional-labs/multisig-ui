@@ -621,4 +621,48 @@ export const chainObj = {
             high: 0.03,
         },
     },
+    "test-1": {
+        chainId: "test-1",
+        chainName: "test network",
+        rpc: "http://localhost:26657/",
+        rest: "http://localhost:1317/",
+        bip44: {
+            coinType: 118,
+        },
+        bech32Config: {
+            bech32PrefixAccAddr: "migaloo",
+            bech32PrefixAccPub: "migaloo" + "pub",
+            bech32PrefixValAddr: "migaloo" + "valoper",
+            bech32PrefixValPub: "migaloo" + "valoperpub",
+            bech32PrefixConsAddr: "migaloo" + "valcons",
+            bech32PrefixConsPub: "migaloo" + "valconspub",
+        },
+        currencies: [
+            {
+                coinDenom: "migaloo",
+                coinMinimalDenom: "umigaloo",
+                coinDecimals: 6,
+                coinGeckoId: "na",
+            },
+        ],
+        feeCurrencies: [
+            {
+                coinDenom: "migaloo",
+                coinMinimalDenom: "umigaloo",
+                coinDecimals: 6,
+                coinGeckoId: "na",
+            },
+        ],
+        stakeCurrency: {
+            coinDenom: "migaloo",
+            coinMinimalDenom: "umigaloo",
+            coinDecimals: 6,
+            coinGeckoId: "na",
+        },
+        gasPriceStep: {
+            low: 0.01,
+            average: 0.025,
+            high: 0.03,
+        },
+    },
 }

@@ -72,8 +72,9 @@ const TransationSign = ({
     }, [account])
 
     const checkAddrInMultisig = () => {
+        console.log("checkAddrInMultisig");
         if (!account) return false
-        const pubkeys = JSON.parse(multisig.pubkeyJSON).value.pubkeys
+        const pubkeys = JSON.parse(JSON.parse(multisig.pubkeyJSON)).value.pubkeys
         const check = multisigHasAddr(pubkeys, account.bech32Address, multisig.prefix)
         return check
     }
@@ -96,7 +97,7 @@ const TransationSign = ({
             const types = tx.msgs.map(msg => {
                 return msg.typeUrl
             })
-
+            console.log("checkpoint");
             // Quick patch for execute contract tx and gov submit
             const msgs = tx.msgs.map(msg => {
                 if (msg.typeUrl === "/cosmwasm.wasm.v1.MsgExecuteContract") {
@@ -119,15 +120,25 @@ const TransationSign = ({
                     newMsg.value.content = Any.fromJSON(obj)
                     return newMsg
                 }
+                console.log(msg);
+                if (msg.typeUrl === "/cosmos.authz.v1beta1.MsgGrant") {
+                    let newMsg = msg
+                    newMsg.value.grant.authorization.value = Uint8Array.from(Object.values(msg.value.grant.authorization.value))
+                    return newMsg
+                }
                 return msg
             })
-
+            console.log("checkpoint");
+            console.log("lock");
             const signingClient = await getCustomClient(types, offlineSigner);
+            console.log("lock");
+            
             const signerData = {
                 accountNumber: parseInt(signAccount.account_number, 10),
                 sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
+            console.log("checkpoint");
 
             const { bodyBytes, signatures } = await signingClient.sign(
                 account.bech32Address,
@@ -136,6 +147,7 @@ const TransationSign = ({
                 tx.memo,
                 signerData
             );
+            console.log("checkpoint");
 
             // check existing signatures
             const bases64EncodedSignature = encode(signatures[0]);
@@ -143,6 +155,7 @@ const TransationSign = ({
             const prevSigMatch = currentSignatures.findIndex(
                 (signature) => signature.signature === bases64EncodedSignature
             );
+            console.log("checkpoint");
 
             if (prevSigMatch > -1) {
                 throw new Error("This account has already signed")
@@ -161,6 +174,8 @@ const TransationSign = ({
                 addSignature(res.data);
                 setHasSigned(true)
             }
+            console.log("checkpoint");
+
             openLoadingNotification("close")
             openNotification("success", "Sign successfully")
         } catch (e) {

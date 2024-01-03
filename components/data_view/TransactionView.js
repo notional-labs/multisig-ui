@@ -17,6 +17,7 @@ import axios from "axios";
 import BroadcastButton from "../input/BroadcastButton";
 import HashView from "./HashView";
 import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx"
+import { createMultisigThresholdPubkey, pubkeyToAddress, } from "@cosmjs/amino";
 
 const TransactionView = () => {
     const [currentSignatures, setCurrentSignatures] = useState([]);
@@ -31,20 +32,23 @@ const TransactionView = () => {
         (async () => {
             try {
                 if (!transactionID) return
+                console.log("getTransactionById");
                 const transaction = await getTransactionById(transactionID)
-                transaction.dataJSON && setTxInfo(JSON.parse(transaction.dataJSON))
+                setTxInfo(JSON.parse(JSON.parse(transaction.dataJSON)))
                 setTransactionHash(transaction.txHash)
-                setCurrentSignatures([...transaction.signatures.data])
+                if (transaction.signatures && transaction.signatures.length > 0) {
+                    setCurrentSignatures([...transaction.signatures.data])
+                }
             }
             catch (e) {
                 openNotification("error", "fail to retrieve transaction from database " + e.message)
             }
         })()
     }, [transactionID])
-
     useEffect(() => {
         (async () => {
             try {
+                console.log("multisig");
                 if (!multisigID) return
                 const multisigInfo = await getMultisigFromAddress(multisigID)
                 const id = prefixToId[`${multisigInfo.prefix}`]
@@ -90,12 +94,12 @@ const TransactionView = () => {
             currentSignatures.forEach((signature) => {
                 signatures.set(signature.address, decode(signature.signature));
             });
-
             const bodyBytes = decode(currentSignatures[0].bodyBytes);
             const pubkey = JSON.parse(multisig.pubkeyJSON)
             const account = await getSequence(chain.api, multisigID)
+            console.log(JSON.parse(pubkey));
             const signedTx = makeMultisignedTx(
-                pubkey,
+                JSON.parse(pubkey),
                 account.sequence,
                 txInfo.fee,
                 bodyBytes,
@@ -113,6 +117,7 @@ const TransactionView = () => {
             openLoadingNotification("close")
             openNotification("success", "Broadcast successfully")
         } catch (e) {
+            console.log(e);
             openLoadingNotification("close")
             openNotification("error", e.message)
         }
@@ -189,7 +194,7 @@ const TransactionView = () => {
                 ) : multisig && txInfo ? (
                     <ThresholdInfo
                         signatures={currentSignatures}
-                        threshold={JSON.parse(multisig.pubkeyJSON).value.threshold}
+                        threshold={JSON.parse(JSON.parse(multisig.pubkeyJSON)).value.threshold}
                     />
                 ) : (
                     <div
@@ -209,7 +214,7 @@ const TransactionView = () => {
             {
                 !transactionHash 
                 && multisig 
-                && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold, 10) 
+                // && currentSignatures.length >= parseInt(JSON.parse(JSON.parse(multisig.pubkeyJSON)).value.threshold, 10) 
                 && (
                     <BroadcastButton
                         broadcastTx={broadcastTx}

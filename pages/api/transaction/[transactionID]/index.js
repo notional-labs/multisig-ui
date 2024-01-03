@@ -6,6 +6,7 @@ export default async function handler(req, res) {
             try {
                 const {transactionID} = req.query;
                 const saveRes = await getTransaction(transactionID);
+                console.log("findTransactionByID", saveRes);
                 res.status(200).send(saveRes.data.data.findTransactionByID);
             } catch (err) {
                 console.log(err.message)

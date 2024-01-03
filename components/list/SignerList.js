@@ -173,7 +173,7 @@ const SignerList = ({
     }
 
     const checkStatus = (key, value) => {
-        return parseInt(account[key], 10) === value
+        return parseInt(account[key], 10) == value
     }
 
     const circle = (key, value) => {
@@ -197,7 +197,8 @@ const SignerList = ({
             </Tooltip>
         )
     }
-
+    console.log(walletAccount);
+    console.log(currentSignatures);
     return (
         <div
             style={{

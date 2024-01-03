@@ -100,6 +100,7 @@ const TransactionList = ({ multisig }) => {
         const currentUserStr = localStorage.getItem("account")
         const user = JSON.parse(currentUserStr)
         const pubkeyJson = JSON.parse(multisig.pubkeyJSON)
+        console.log("checkUserPriviledge");
         const pubkeyListFromJSON = pubkeyJson.value.pubkeys
         const listAddrs = pubkeyListFromJSON.map(pub => {
             if (chain.chain_id.startsWith('evmos')) {

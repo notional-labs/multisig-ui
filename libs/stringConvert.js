@@ -116,36 +116,37 @@ export const convertValueFromDenom = (baseDenom, value) => {
     return convertValue
 }
 
-export const snakeToCamel = (str) => 
-    str.toLowerCase().replace(/([-_][a-z])/g, group =>
-    group
-      .toUpperCase()
-      .replace('-', '')
-      .replace('_', '')
-  );
+export const snakeToCamel = (str) =>
+    str.replace(/([-_][a-z])/g, group =>
+        group
+            .toUpperCase()
+            .replace('-', '')
+            .replace('_', '')
+    );
 
 export const convertObjProperties = (obj) => {
-    let newObj = {}
-    for (const [key, value] of Object.entries(obj)) {
-        if ( key !== 'msg' && !Array.isArray(value) ) {
-            const camelCaseKey = snakeToCamel(key)
-            if (typeof value === 'object') {
-                const newVal = convertObjProperties(value)
-                newObj[camelCaseKey] = newVal
-                continue
-            }
-            newObj[camelCaseKey] = value
-        } else {
-            newObj[key] = value
-        }
+    if (Array.isArray(obj)) {
+        return obj.map((o) => convertObjProperties(o));
+    } else if (typeof obj === "object" && obj !== null) {
+        return Object.entries(obj).reduce(
+            (r, [k, v]) => {
+                let key = snakeToCamel(k)
+                if (key == "type" || key == "@type") {
+                    key = "typeUrl"
+                }
+                return ({ ...r, [key]: convertObjProperties(v) })
+            },
+            {}
+        );
+    } else {
+        return obj;
     }
-
-    return newObj
 }
 
 export const encodeObjectToBytes = (obj) => {
+    console.log(obj);
     // ContractExecutionAuthorization, ContractMigrationAuthorization both have grants struct
-    let grantCon = obj.value.grant.authorization.value.grants
+    let grantCon = obj.grant.authorization.value.grants
     for (let key in grantCon) {
         // limit and field are optional in grants struct
         if (grantCon[key].limit) {
@@ -163,10 +164,11 @@ export const encodeObjectToBytes = (obj) => {
             grantCon[key].filter["value"] = convertStruct(splitArr[splitArr.length-1], lastVal)
         }
     }
-    let lastValGrants = obj.value.grant.authorization.value
-    delete obj.value.grant.authorization.value
-    let splitArr = obj.value.grant.authorization.typeUrl.split(".")
-    obj.value.grant.authorization["value"] = convertStruct(splitArr[splitArr.length-1], lastValGrants)
+    let lastValGrants = obj.grant.authorization.value
+    delete obj.grant.authorization.value
+    console.log();
+    let splitArr = obj.grant.authorization.typeUrl.split(".")
+    obj.grant.authorization["value"] = convertStruct(splitArr[splitArr.length-1], lastValGrants)
     return obj
 }
 

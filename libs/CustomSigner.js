@@ -9,6 +9,7 @@ import * as stridejs from 'stridejs'
 import { MsgTransfer } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import Long from "long";
 import { ibc } from 'osmojs';
+import { MsgGrant } from 'cosmjs-types/cosmos/authz/v1beta1/tx';
 
 function omitDefault(input) {
     if (typeof input === "string") {
@@ -133,6 +134,25 @@ export const getCustomClient = async (types, signer) => {
                 timeoutTimestamp: Long.fromString(timeout_timestamp || "0", true),
                 memo: memo,
             }),
+    }
+
+    aminoTypes.register['/cosmos.authz.v1beta1.MsgGrant'] = {
+        aminoType: 'cosmos-sdk/MsgGrant',
+        toAmino: ({ grant, grantee, granter }) => {
+            return ({
+                grant,
+                grantee,
+                granter,
+            });
+        },
+        fromAmino: ({ grant, grantee, granter }) => {
+            grant.authorization.value = Uint8Array.from(Object.values(grant.authorization.value))
+            return MsgGrant.fromPartial({
+                grant,
+                grantee,
+                granter,
+            })
+        },
     }
 
     // reload the registry

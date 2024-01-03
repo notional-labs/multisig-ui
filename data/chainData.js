@@ -458,6 +458,26 @@ export const chainData = [
         govExplorer: "https://explorer.theamsolutions.info/qwoyn-main/gov/",
         logo: "/images/logo/qwoyn.png",
         hyperLink: "https://qwoyn.studio/"
+    },
+    {
+        chain_id: "test-1",
+        denom: "uwhale",
+        displayDenom: "whale",
+        base_denom: {
+            "denom": "uwhale",
+            "exponent": 6
+        },
+        name: "whale network",
+        prefix: "migaloo",
+        color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
+        rpc: "http://localhost:26657/",
+        api: "http://localhost:1317/",
+        explorer: "https://zxczxc-main",
+        txExplorer: "https://zxczxc-main/tx/",
+        valExplorer: "https://zxczxc-main/staking/",
+        govExplorer: "https://zxczxc-main/gov/",
+        logo: "/images/logo/qwoyn.png",
+        hyperLink: "https://qwoyn.studio/"
     }
 ]
 
@@ -484,7 +504,8 @@ export const prefixToId = {
     "sge": 19,
     "centauri": 20,
     "neutron": 21,
-    "qwoyn": 22
+    "qwoyn": 22,
+    "whale": 23,
 }
 
 
@@ -511,7 +532,8 @@ export const idToChainId = {
     19: "sge-network-3",
     20: "centuri-1",
     21: "neutron-1",
-    22: "qwoyn-1"
+    22: "qwoyn-1",
+    23: "test-1",
 }
 
 
