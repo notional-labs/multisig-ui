@@ -12,17 +12,17 @@ export const ChainProvider = (props) => {
         (async () => {
             const index = localStorage.getItem("current")
             if (index && index !== "" && index < chainData.length) {
-                setChain(chainData[index])
+                setChain(chainData[22])
             }
             else {
                 localStorage.setItem("current", 0)
-                setChain(chainData[0])
+                setChain(chainData[22])
             }
         })()
     }, [])
 
     const wrapper = (index) => {
-        setChain(chainData[index])
+        setChain(chainData[22])
     }
 
     return chain && (

@@ -299,26 +299,26 @@ export const chainData = [
         logo: "/images/logo/pylons.png",
         hyperLink: "https://www.pylons.tech/"
     },
-    {
-        chain_id: "migaloo-1",
-        denom: "uwhale",
-        displayDenom: "whale",
-        base_denom: {
-            "denom": "uwhale",
-            "exponent": 6
-        },
-        name: "migaloo",
-        prefix: "migaloo",
-        color: "linear-gradient(to right, #3ccd64,#1d1f31 75%)",
-        rpc: "https://rpc-whitewhale-ia.cosmosia.notional.ventures/",
-        api: "https://api-whitewhale-ia.cosmosia.notional.ventures/",
-        explorer: "https://explorer.silknodes.io/migaloo/",
-        txExplorer: "https://explorer.silknodes.io/migaloo/tx/",
-        valExplorer: "https://explorer.silknodes.io/migaloo/staking/",
-        govExplorer: "https://explorer.silknodes.io/migaloo/gov/",
-        logo: "/images/logo/migaloo.png",
-        hyperLink: "https://migaloo.zone/"
-    },
+    // {
+    //     chain_id: "migaloo-1",
+    //     denom: "uwhale",
+    //     displayDenom: "whale",
+    //     base_denom: {
+    //         "denom": "uwhale",
+    //         "exponent": 6
+    //     },
+    //     name: "migaloo",
+    //     prefix: "migaloo",
+    //     color: "linear-gradient(to right, #3ccd64,#1d1f31 75%)",
+    //     rpc: "https://rpc-whitewhale-ia.cosmosia.notional.ventures/",
+    //     api: "https://api-whitewhale-ia.cosmosia.notional.ventures/",
+    //     explorer: "https://explorer.silknodes.io/migaloo/",
+    //     txExplorer: "https://explorer.silknodes.io/migaloo/tx/",
+    //     valExplorer: "https://explorer.silknodes.io/migaloo/staking/",
+    //     govExplorer: "https://explorer.silknodes.io/migaloo/gov/",
+    //     logo: "/images/logo/migaloo.png",
+    //     hyperLink: "https://migaloo.zone/"
+    // },
     {
         chain_id: "grand-1",
         denom: "ulove",
@@ -458,6 +458,26 @@ export const chainData = [
         govExplorer: "https://explorer.theamsolutions.info/qwoyn-main/gov/",
         logo: "/images/logo/qwoyn.png",
         hyperLink: "https://qwoyn.studio/"
+    },
+    {
+        chain_id: "test-1",
+        denom: "uwhale",
+        displayDenom: "whale",
+        base_denom: {
+            "denom": "uwhale",
+            "exponent": 6
+        },
+        name: "whale network",
+        prefix: "migaloo",
+        color: "linear-gradient(270.1deg, #5E12A0 0%, #390368 100%)",
+        rpc: "http://localhost:26657/",
+        api: "http://localhost:1317/",
+        explorer: "https://zxczxc-main",
+        txExplorer: "https://zxczxc-main/tx/",
+        valExplorer: "https://zxczxc-main/staking/",
+        govExplorer: "https://zxczxc-main/gov/",
+        logo: "/images/logo/qwoyn.png",
+        hyperLink: "https://qwoyn.studio/"
     }
 ]
 
@@ -484,7 +504,8 @@ export const prefixToId = {
     "sge": 19,
     "centauri": 20,
     "neutron": 21,
-    "qwoyn": 22
+    // "qwoyn": 22,
+    "migaloo": 22,
 }
 
 
@@ -504,14 +525,15 @@ export const idToChainId = {
     12: "gravity-bridge-3",
     13: "stride-1",
     14: "pylons-mainnet-1",
-    15: "migaloo-1",
+    // 15: "migaloo-1",
     16: "grand-1",
     17: "quicksilver-2",
     18: "chihuahua-1",
     19: "sge-network-3",
     20: "centuri-1",
     21: "neutron-1",
-    22: "qwoyn-1"
+    // 22: "qwoyn-1",
+    22: "test-1",
 }
 
 
