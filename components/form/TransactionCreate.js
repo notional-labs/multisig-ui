@@ -191,7 +191,7 @@ const TransactionCreate = ({ multisigID, chain, router, wrapSetClose, multisigAc
                 createBy: multisigID,
                 status: "PENDING"
             }
-            const res = await axios.post("/api/transaction/create", data);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/transaction/create`, data);
             const { _id } = res.data;
             router.push(`/multisig/${multisigID}/transaction/${_id}`)
             openLoadingNotification("close")

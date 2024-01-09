@@ -16,7 +16,6 @@ import Button from "../input/Button";
 import CopyToClipboard from "react-copy-to-clipboard";
 import FlexRow from "../flex_box/FlexRow";
 import { ReloadOutlined, DeleteOutlined } from "@ant-design/icons";
-import { deleteTransaction } from "../../libs/faunaClient"
 import EmptyPage from "../ulti/EmptyPage";
 import { fromBase64, toBech32 } from "@cosmjs/encoding"
 import { rawSecp256k1PubkeyToRawAddress } from "@cosmjs/tendermint-rpc"
@@ -74,7 +73,7 @@ const TransactionList = ({ multisig }) => {
                     wrapper(id)
                     localStorage.setItem("current", id)
                 }
-                let { data } = await axios.get(`/api/multisig/${multisigID}/all-transaction`)
+                let { data } = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/multisig/all-transaction?multisigID=${multisigID}`)
                 data = data.sort(compare)
                 setTransactions([...data])
                 setFilter("all")
@@ -99,7 +98,7 @@ const TransactionList = ({ multisig }) => {
     const checkUserPriviledge = () => {
         const currentUserStr = localStorage.getItem("account")
         const user = JSON.parse(currentUserStr)
-        const pubkeyJson = JSON.parse(multisig.pubkeyJSON)
+        const pubkeyJson = JSON.parse(JSON.parse(multisig.pubkeyJSON))
         const pubkeyListFromJSON = pubkeyJson.value.pubkeys
         const listAddrs = pubkeyListFromJSON.map(pub => {
             if (chain.chain_id.startsWith('evmos')) {
@@ -160,9 +159,8 @@ const TransactionList = ({ multisig }) => {
         try {
             openLoadingNotification("open", "Deleting transaction")
             const check = checkUserPriviledge()
-            console.log(check)
             if (check) {
-                await deleteTransaction(id)
+                await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/transaction/delete?id=${id}`);
                 const newFilterTransactions = transactions.filter((tx) => tx._id !== id)
                 setTransactions([...newFilterTransactions])
                 openLoadingNotification("close")
@@ -354,7 +352,7 @@ const TransactionList = ({ multisig }) => {
                                                             }}
                                                         >
                                                             {
-                                                                JSON.parse(transaction.dataJSON).msgs.map((msg, i) => {
+                                                                JSON.parse(JSON.parse(transaction.dataJSON)).msgs.map((msg, i) => {
                                                                     return (
                                                                         <div
                                                                             key={i}
@@ -406,7 +404,7 @@ const TransactionList = ({ multisig }) => {
                                                                 padding: "1em 0.5em"
                                                             }}
                                                         >
-                                                            {timeStampHandler(new Date(transaction.createdOn))}
+                                                            {timeStampHandler(new Date(transaction.createdAt))}
                                                         </motion.td>
                                                         <td
                                                             style={{
@@ -418,7 +416,7 @@ const TransactionList = ({ multisig }) => {
                                                         >
                                                             <Tooltip placement="top" title="Share transaction">
                                                                 <CopyToClipboard
-                                                                    text={`${process.env.NEXT_PUBLIC_HOST}/multisig/${multisigID}/transaction/${transaction._id}`}
+                                                                    text={`${process.env.NEXT_PUBLIC_DOMAIN}/multisig/${multisigID}/transaction/${transaction._id}`}
                                                                     onCopy={() => {
                                                                         openNotification("success", "Copy to clipboard !")
                                                                     }}
