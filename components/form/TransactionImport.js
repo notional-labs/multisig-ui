@@ -4,7 +4,6 @@ import TextArea from "antd/lib/input/TextArea"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { checkMsg } from "../../libs/checkTool"
 import { mockData } from "../../data/mockData"
 import { checkIfHasPendingTx } from "../../libs/transaction"
 import WarningModal from "../ulti/WarningModal"
@@ -152,7 +151,7 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
                 createBy: multisigID,
                 status: "PENDING"
             }
-            const res = await axios.post("/api/transaction/create", data);
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/transaction/create`, data);
             const { _id } = res.data;
             router.push(`/multisig/${multisigID}/transaction/${_id}`)
             openLoadingNotification("close")
@@ -174,7 +173,6 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
 
     const handleProcced = async () => {
         const check = await checkIfHasPendingTx(multisigID)
-        console.log(checked)
         if (check && !checked) {
             setShowWarning(true)
         }

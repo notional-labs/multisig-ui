@@ -75,7 +75,7 @@ const getFee = (gas, amount, denom) => {
 export const getTransactionById = async (id) => {
     // Sanitize the user input
     const sanitizedId = encodeURIComponent(id);
-    const res = await axios.get(`/api/transaction/${sanitizedId}`)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/transaction?transactionID=${sanitizedId}`)
     if (!res.data || res.data === null) {
         throw new Error("This transaction might not be created using this tool!")
     }
@@ -84,7 +84,7 @@ export const getTransactionById = async (id) => {
 
 export const checkIfHasPendingTx = async (address) => {
     const sanitizedAddr = encodeURIComponent(address);
-    const res = await axios.get(`/api/multisig/${sanitizedAddr}/all-transaction`)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/multisig/all-transaction?multisigID=${sanitizedAddr}`)
     if (!res.data || res.data === null) {
         throw new Error("Failed to check transaction!")
     }

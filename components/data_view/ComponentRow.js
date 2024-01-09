@@ -5,7 +5,7 @@ const ComponentRow = ({ pubkeys, prefix, chain }) => {
     const [pubkeyList, setPubkeyList] = useState([])
 
     useEffect(() => {
-        const pubkeyJson = JSON.parse(pubkeys)
+        const pubkeyJson = JSON.parse(JSON.parse(pubkeys))
         const pubkeyListFromJSON = pubkeyJson.value.pubkeys
         setPubkeyList([...pubkeyListFromJSON])
     }, [pubkeys])

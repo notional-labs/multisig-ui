@@ -34,7 +34,7 @@ const BroadcastButton = ({ broadcastTx, chain, multisig }) => {
 
     const checkAddrInMultisig = () => {
         if (!account) return false
-        const pubkeys = multisig && multisig.pubkeyJSON && JSON.parse(multisig.pubkeyJSON).value.pubkeys
+        const pubkeys = multisig && multisig.pubkeyJSON && JSON.parse(JSON.parse(multisig?.pubkeyJSON))?.value?.pubkeys
         if (!pubkeys) return false
         const check = multisigHasAddr(pubkeys, account.bech32Address, multisig.prefix)
         return check

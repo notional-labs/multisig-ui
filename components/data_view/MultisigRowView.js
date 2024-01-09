@@ -135,7 +135,7 @@ const MultisigRowView = ({ address, index, loadingRow = false, chain, show, setS
                             }}
                         >
                             {
-                                JSON.parse(multisig.pubkeyJSON).value.threshold
+                                multisig && multisig?.pubkeyJSON && JSON.parse(JSON.parse(multisig?.pubkeyJSON))?.value?.threshold
                             }
                         </td>
                     </>

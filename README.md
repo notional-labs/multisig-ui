@@ -2,13 +2,9 @@
 
 # Getting Started
 
-Firstly, go to Faunadb (<https://fauna.com/>) create a database and import the schema from the schema.graphql file.
+First, add the host directory in the .env.local file
 
-Secondly, get the Secret key from faunadb. Create a .env.local file in the root directory and add the secret key.
-
-Thirdly, add the host directory in the .env.local file
-
-Finally, run the development server:
+Second, run the development server:
 
 ```bash
 npm run dev
@@ -17,13 +13,6 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-# Example .env.local file
-
-```
-NEXT_PUBLIC_FAUNADB_SECRET=kfsdafsda89f8ffdf-43349
-NEXT_PUBLIC_HOST=http://localhost:3000/
-```
 
 # Supported chains
 

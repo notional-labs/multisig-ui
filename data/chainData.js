@@ -477,7 +477,7 @@ export const prefixToId = {
     "gravity": 12,
     "stride": 13,
     "pylo": 14,
-    "migaloo": 15,
+    // "migaloo": 15,
     "noble": 16,
     "quick": 17,
     "chihuahua": 18,

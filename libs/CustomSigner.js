@@ -140,7 +140,7 @@ export const getCustomClient = async (types, signer) => {
 
     const client = await SigningStargateClient.offline(
         signer,
-        { registry, aminoTypes }
+        // { registry, aminoTypes }
     );
 
 

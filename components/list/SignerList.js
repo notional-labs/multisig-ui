@@ -1,7 +1,6 @@
 import FlexRow from "../flex_box/FlexRow"
 import { stringShortener } from "../../libs/stringConvert"
 import Button from "../input/Button"
-import { deleteSignature, updateSignature } from "../../libs/faunaClient"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 import Tooltip from "antd/lib/tooltip"
 import { RetweetOutlined, DeleteOutlined } from "@ant-design/icons"
@@ -9,6 +8,7 @@ import { encode } from "uint8-to-base64"
 import { getSequence } from "../../libs/keplrClient"
 import { getCustomClient } from "../../libs/CustomSigner"
 import { Any } from "cosmjs-types/google/protobuf/any";
+import axios from "axios";
 
 const SignerList = ({
     currentSignatures,
@@ -26,7 +26,7 @@ const SignerList = ({
     const deleteSig = async (id) => {
         openLoadingNotification("open", "Deleting Signature")
         try {
-            await deleteSignature(id)
+            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/signature/delete?id=${id}`);
             removeSignature(id)
             setHasSigned(false)
             openLoadingNotification("close")
@@ -109,8 +109,11 @@ const SignerList = ({
                 address: walletAccount.bech32Address,
             };
 
-            const res = await updateSignature(signature, transactionID)
-            res.data.data && res.data.data.updateSignature ? editSignature(res.data.data.updateSignature) : editSignature(signature)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/signature/update`, {
+                signature,
+                transactionID
+            });
+            res.data && res.data ? editSignature(res.data) : editSignature(signature)
             setHasSigned(true)
             openLoadingNotification("close")
             openNotification("success", "Successfully update signature")
