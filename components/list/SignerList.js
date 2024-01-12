@@ -26,7 +26,7 @@ const SignerList = ({
     const deleteSig = async (id) => {
         openLoadingNotification("open", "Deleting Signature")
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/transaction/delete?id=${id}`);
+            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/signature/delete?id=${id}`);
             removeSignature(id)
             setHasSigned(false)
             openLoadingNotification("close")

@@ -3,6 +3,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
+    "es2020": true,  
   },
   globals: {
     process: "readonly",

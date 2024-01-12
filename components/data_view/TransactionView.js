@@ -103,6 +103,7 @@ const TransactionView = () => {
                 bodyBytes,
                 signatures
             );
+            console.log(signedTx);
             const broadcaster = await StargateClient.connect(chain.rpc);
             const result = await broadcaster.broadcastTx(
                 Uint8Array.from(TxRaw.encode(signedTx).finish())

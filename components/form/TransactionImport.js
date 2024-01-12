@@ -7,7 +7,7 @@ import axios from "axios"
 import { mockData } from "../../data/mockData"
 import { checkIfHasPendingTx } from "../../libs/transaction"
 import WarningModal from "../ulti/WarningModal"
-import { convertObjProperties } from "../../libs/stringConvert"
+import { convertObjProperties, encodeObjectToBytes } from "../../libs/stringConvert"
 import { openLoadingNotification, openNotification } from "../ulti/Notification"
 
 const typeMsg = [
@@ -15,7 +15,8 @@ const typeMsg = [
     "cosmos-sdk/MsgDelegate",
     "cosmos-sdk/MsgSend",
     "cosmos-sdk/MsgUndelegate",
-    "cosmos-sdk/MsgBeginRedelegate"
+    "cosmos-sdk/MsgBeginRedelegate",
+    "cosmos-sdk/MsgGrant"
 ]
 
 const typeMsgConversion = [
@@ -23,7 +24,8 @@ const typeMsgConversion = [
     "/cosmos.staking.v1beta1.MsgDelegate",
     "/cosmos.bank.v1beta1.MsgSend",
     "/cosmos.staking.v1beta1.MsgUndelegate",
-    "/cosmos.staking.v1beta1.MsgBeginRedelegate"
+    "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+    "/cosmos.authz.v1beta1.MsgGrant"
 ]
 
 const style = {
@@ -99,6 +101,10 @@ const TransactionImport = ({ multisigID, chain, router, wrapSetClose }) => {
         } else {
             // convert to compatible field
             msgValue = convertObjProperties(msg.value)
+            if (msg.type == "/cosmos.authz.v1beta1.MsgGrant" || msg.typeUrl == "/cosmos.authz.v1beta1.MsgGrant" || msg['@type'] == "/cosmos.authz.v1beta1.MsgGrant") {
+                // only for msg.Grant type
+                msgValue = encodeObjectToBytes(msgValue)
+            }
         }
 
         return {

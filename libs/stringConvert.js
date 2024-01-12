@@ -1,5 +1,7 @@
 import axios from "axios"
 import { specialDenom } from "../data/chainData"
+import { AcceptedMessageKeysFilter, ContractExecutionAuthorization, CombinedLimit, ContractMigrationAuthorization, MaxCallsLimit, MaxFundsLimit, AllowAllMessagesFilter, AcceptedMessagesFilter } from "cosmjs-types/cosmwasm/wasm/v1/authz";
+import Long from "long";
 
 const DENOM_SUBSTRING_START_LENGTH = 10
 const DENOM_SUBSTRING_END_LENGTH = 10
@@ -115,29 +117,81 @@ export const convertValueFromDenom = (baseDenom, value) => {
     return convertValue
 }
 
-export const snakeToCamel = (str) => 
-    str.toLowerCase().replace(/([-_][a-z])/g, group =>
-    group
-      .toUpperCase()
-      .replace('-', '')
-      .replace('_', '')
-  );
+export const snakeToCamel = (str) =>
+    str.replace(/([-_][a-z])/g, group =>
+        group
+            .toUpperCase()
+            .replace('-', '')
+            .replace('_', '')
+    );
 
 export const convertObjProperties = (obj) => {
-    let newObj = {}
-    for (const [key, value] of Object.entries(obj)) {
-        if ( key !== 'msg' && !Array.isArray(value) ) {
-            const camelCaseKey = snakeToCamel(key)
-            if (typeof value === 'object') {
-                const newVal = convertObjProperties(value)
-                newObj[camelCaseKey] = newVal
-                continue
-            }
-            newObj[camelCaseKey] = value
-        } else {
-            newObj[key] = value
+    if (Array.isArray(obj)) {
+        return obj.map((o) => convertObjProperties(o));
+    } else if (typeof obj === "object" && obj !== null) {
+        return Object.entries(obj).reduce(
+            (r, [k, v]) => {
+                let key = snakeToCamel(k)
+                if (key == "type" || key == "@type") {
+                    key = "typeUrl"
+                }
+                return ({ ...r, [key]: convertObjProperties(v) })
+            },
+            {}
+        );
+    } else {
+        return obj;
+    }
+}
+
+export const encodeObjectToBytes = (obj) => {
+    // ContractExecutionAuthorization, ContractMigrationAuthorization both have grants struct
+    let grantCon = obj.grant.authorization.value.grants
+    for (let key in grantCon) {
+        // limit and field are optional in grants struct
+        if (grantCon[key].limit) {
+            // CombinedLimit, MaxCallsLimit, MaxFundsLimit in limit field
+            let lastVal = grantCon[key].limit.value;
+            lastVal.callsRemaining = Long.fromString(lastVal.callsRemaining)
+            delete grantCon[key].limit.value
+            let splitArr = grantCon[key].limit.typeUrl.split(".")
+            grantCon[key].limit["value"] = convertStruct(splitArr[splitArr.length-1], lastVal)
+        }
+        if (grantCon[key].filter) {
+            // AcceptedMessageKeysFilter, AllowAllMessagesFilter, AcceptedMessagesFilter in filter field
+            let lastVal = grantCon[key].filter.value;
+            delete grantCon[key].filter.value
+            let splitArr = grantCon[key].filter.typeUrl.split(".")
+            grantCon[key].filter["value"] = convertStruct(splitArr[splitArr.length-1], lastVal)
         }
     }
+    let lastValGrants = obj.grant.authorization.value
+    delete obj.grant.authorization.value
+    let splitArr = obj.grant.authorization.typeUrl.split(".")
+    obj.grant.authorization["value"] = convertStruct(splitArr[splitArr.length-1], lastValGrants)
+    return obj
+}
 
-    return newObj
+export const convertStruct = (type, value) => {
+    console.log(type);
+    switch (type) {
+        case "ContractExecutionAuthorization":
+            return ContractExecutionAuthorization.encode(value).finish()
+        case "ContractMigrationAuthorization":
+            return ContractMigrationAuthorization.encode(value).finish()
+        case "MaxCallsLimit":
+            return MaxCallsLimit.encode(value).finish()
+        case "MaxFundsLimit":
+            return MaxFundsLimit.encode(value).finish()
+        case "CombinedLimit":
+            return CombinedLimit.encode(value).finish()
+        case "AllowAllMessagesFilter":
+            return AllowAllMessagesFilter.encode(value).finish()
+        case "AcceptedMessageKeysFilter":
+            return AcceptedMessageKeysFilter.encode(value).finish()
+        case "AcceptedMessagesFilter":
+            return AcceptedMessagesFilter.encode(value).finish()
+        default:
+            throw "Type not supported"
+    }
 }

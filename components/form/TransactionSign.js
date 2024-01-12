@@ -19,12 +19,12 @@ const TransationSign = ({
     multisig,
     multisigID,
     removeSignature,
-    editSignature
+    editSignature,
+    chainName
 }) => {
     const [hasSigned, setHasSigned] = useState(false)
     const [account, setAccount] = useState()
     const [accountError, setAccountError] = useState("")
-
     const keplrKeystorechangeHandler = useCallback(async (event) => {
         try {
             const currentAccount = await getKey(chain.chain_id)
@@ -88,7 +88,7 @@ const TransationSign = ({
                     disableBalanceCheck: true,
                 },
             };
-            const offlineSigner = window.getOfflineSigner(
+            const offlineSigner = window.getOfflineSignerOnlyAmino(
                 chain.chain_id
             );
             const signAccount = await getSequence(chain.api, multisigID)
@@ -119,6 +119,11 @@ const TransationSign = ({
                     newMsg.value.content = Any.fromJSON(obj)
                     return newMsg
                 }
+                if (msg.typeUrl === "/cosmos.authz.v1beta1.MsgGrant") {
+                    let newMsg = msg
+                    newMsg.value.grant.authorization.value = Uint8Array.from(Object.values(msg.value.grant.authorization.value))
+                    return newMsg
+                }
                 return msg
             })
 
@@ -128,7 +133,8 @@ const TransationSign = ({
                 sequence: parseInt(signAccount.sequence, 10),
                 chainId: chain.chain_id,
             };
-
+            console.log(signAccount);
+            console.log(account);
             const { bodyBytes, signatures } = await signingClient.sign(
                 account.bech32Address,
                 msgs,
@@ -136,7 +142,8 @@ const TransationSign = ({
                 tx.memo,
                 signerData
             );
-
+            console.log(bodyBytes);
+            console.log(signatures);
             // check existing signatures
             const bases64EncodedSignature = encode(signatures[0]);
             const bases64EncodedBodyBytes = encode(bodyBytes);
