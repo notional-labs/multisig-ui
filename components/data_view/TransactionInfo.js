@@ -136,7 +136,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                     }}
                 >
                     {
-                        tx.msgs.map((msg, index) => {
+                        tx?.msgs?.map((msg, index) => {
                             return (
                                 <div
                                     key={index}
@@ -195,7 +195,7 @@ const TransactionInfo = ({ tx, txHash, chain }) => {
                 <div
                     style={style.value}
                 >
-                    {tx.fee.gas}
+                    {tx?.fee?.gas}
                 </div>
             </div>
             <div

@@ -73,7 +73,7 @@ const TransationSign = ({
 
     const checkAddrInMultisig = () => {
         if (!account) return false
-        const pubkeys = JSON.parse(multisig.pubkeyJSON).value.pubkeys
+        const pubkeys = JSON.parse(JSON.parse(multisig?.pubkeyJSON))?.value?.pubkeys
         const check = multisigHasAddr(pubkeys, account.bech32Address, multisig.prefix)
         return check
     }
@@ -155,7 +155,7 @@ const TransationSign = ({
                     sequence: signAccount.sequence
                 };
                 const res = await axios.post(
-                    `/api/transaction/${transactionID}/signature`,
+                    `${process.env.NEXT_PUBLIC_HOST}/api/transaction/signature?transactionID=${transactionID}`,
                     signature
                 );
                 addSignature(res.data);

@@ -168,8 +168,11 @@ export const getMultisigAccountByAPI = async (api, address) => {
             throw new Error(
                 "Account has no pubkey on chain, this address will need to send a transaction to appear on chain."
             )
+        } else {
+            throw new Error(
+                "Invalid multisig address, please check your network or recreate it."
+            )
         }
-        throw e
     }
 }
 

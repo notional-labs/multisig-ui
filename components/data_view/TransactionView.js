@@ -32,9 +32,11 @@ const TransactionView = () => {
             try {
                 if (!transactionID) return
                 const transaction = await getTransactionById(transactionID)
-                transaction.dataJSON && setTxInfo(JSON.parse(transaction.dataJSON))
+                transaction.dataJSON && setTxInfo(JSON.parse(JSON.parse(transaction.dataJSON)))
                 setTransactionHash(transaction.txHash)
-                setCurrentSignatures([...transaction.signatures.data])
+                if (transaction.signatures && transaction.signatures.length > 0) {
+                    setCurrentSignatures([...transaction.signatures])
+                }
             }
             catch (e) {
                 openNotification("error", "fail to retrieve transaction from database " + e.message)
@@ -95,7 +97,7 @@ const TransactionView = () => {
             const pubkey = JSON.parse(multisig.pubkeyJSON)
             const account = await getSequence(chain.api, multisigID)
             const signedTx = makeMultisignedTx(
-                pubkey,
+                JSON.parse(pubkey),
                 account.sequence,
                 txInfo.fee,
                 bodyBytes,
@@ -105,7 +107,7 @@ const TransactionView = () => {
             const result = await broadcaster.broadcastTx(
                 Uint8Array.from(TxRaw.encode(signedTx).finish())
             );
-            await axios.post(`/api/transaction/${transactionID}/update`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/transaction/update?transactionID=${transactionID}`, {
                 txHash: result.transactionHash,
                 multisigID: multisigID
             });
@@ -189,7 +191,7 @@ const TransactionView = () => {
                 ) : multisig && txInfo ? (
                     <ThresholdInfo
                         signatures={currentSignatures}
-                        threshold={JSON.parse(multisig.pubkeyJSON).value.threshold}
+                        threshold={JSON.parse(JSON.parse(multisig?.pubkeyJSON))?.value?.threshold}
                     />
                 ) : (
                     <div
@@ -209,7 +211,7 @@ const TransactionView = () => {
             {
                 !transactionHash 
                 && multisig 
-                && currentSignatures.length >= parseInt(JSON.parse(multisig.pubkeyJSON).value.threshold, 10) 
+                && currentSignatures.length >= parseInt(JSON.parse(JSON.parse(multisig?.pubkeyJSON))?.value?.threshold, 10) 
                 && (
                     <BroadcastButton
                         broadcastTx={broadcastTx}

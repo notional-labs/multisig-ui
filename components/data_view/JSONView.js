@@ -15,7 +15,7 @@ const convertKelprTransaction = (transaction) => {
     const msgs = transaction.msgs
     // msgValue["@type"] = msg["typeUrl"]
 
-    const newMsgs = msgs.map(msg => {
+    const newMsgs = msgs?.map(msg => {
         const msgValue = {};
         msgValue["@type"] = msg["typeUrl"]
 

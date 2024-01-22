@@ -40,19 +40,25 @@ const MultisigImport = ({ chain }) => {
     const fetchData = async (addrString) => {
         const acc = await getMultisigAccountByAPI(chain.api, addrString)
         let componentsAddr = []
-        acc.pub_key.public_keys.map(
-            (item) => {
-                const addrUint8Array = fromBase64(item.key)
-                const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
-                const addr = toBech32(chain.prefix, rawAddr)
-                componentsAddr.push(addr)
+        try {
+            acc.pub_key.public_keys.map(
+                (item) => {
+                    const addrUint8Array = fromBase64(item.key)
+                    const rawAddr = rawSecp256k1PubkeyToRawAddress(addrUint8Array)
+                    const addr = toBech32(chain.prefix, rawAddr)
+                    componentsAddr.push(addr)
+                }
+            );
+    
+            return {
+                componentsAddr,
+                publicKeys: acc.pub_key.public_keys,
+                thres: acc.pub_key.threshold
             }
-        );
-
-        return {
-            componentsAddr,
-            publicKeys: acc.pub_key.public_keys,
-            thres: acc.pub_key.threshold
+        } catch (error) {
+            throw new Error(
+                "Please recreate your multisig address from your component addresses"
+            )
         }
     }
 
