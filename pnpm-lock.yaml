@@ -24,8 +24,8 @@ dependencies:
     specifier: ^0.32.2
     version: 0.32.2
   '@injectivelabs/sdk-ts':
-    specifier: ^1.0.468
-    version: 1.14.4(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.14.5
+    version: 1.14.5(react-dom@18.2.0)(react@18.2.0)
   antd:
     specifier: ^4.21.0
     version: 4.24.15(react-dom@18.2.0)(react@18.2.0)
@@ -555,6 +555,15 @@ packages:
       '@cosmjs/utils': 0.30.1
     dev: false
 
+  /@cosmjs/amino@0.31.3:
+    resolution: {integrity: sha512-36emtUq895sPRX8PTSOnG+lhJDCVyIcE0Tr5ct59sUbgQiI14y43vj/4WAlJ/utSOxy+Zhj9wxcs4AZfu0BHsw==}
+    dependencies:
+      '@cosmjs/crypto': 0.31.3
+      '@cosmjs/encoding': 0.31.3
+      '@cosmjs/math': 0.31.3
+      '@cosmjs/utils': 0.31.3
+    dev: false
+
   /@cosmjs/amino@0.32.2:
     resolution: {integrity: sha512-lcK5RCVm4OfdAooxKcF2+NwaDVVpghOq6o/A40c2mHXDUzUoRZ33VAHjVJ9Me6vOFxshrw/XEFn1f4KObntjYA==}
     dependencies:
@@ -612,6 +621,18 @@ packages:
       libsodium-wrappers: 0.7.13
     dev: false
 
+  /@cosmjs/crypto@0.31.3:
+    resolution: {integrity: sha512-vRbvM9ZKR2017TO73dtJ50KxoGcFzKtKI7C8iO302BQ5p+DuB+AirUg1952UpSoLfv5ki9O416MFANNg8UN/EQ==}
+    dependencies:
+      '@cosmjs/encoding': 0.31.3
+      '@cosmjs/math': 0.31.3
+      '@cosmjs/utils': 0.31.3
+      '@noble/hashes': 1.3.3
+      bn.js: 5.2.1
+      elliptic: 6.5.4
+      libsodium-wrappers-sumo: 0.7.13
+    dev: false
+
   /@cosmjs/crypto@0.32.2:
     resolution: {integrity: sha512-RuxrYKzhrPF9g6NmU7VEq++Hn1vZJjqqJpZ9Tmw9lOYOV8BUsv+j/0BE86kmWi7xVJ7EwxiuxYsKuM8IR18CIA==}
     dependencies:
@@ -656,6 +677,14 @@ packages:
       readonly-date: 1.0.0
     dev: false
 
+  /@cosmjs/encoding@0.31.3:
+    resolution: {integrity: sha512-6IRtG0fiVYwyP7n+8e54uTx2pLYijO48V3t9TLiROERm5aUAIzIlz6Wp0NYaI5he9nh1lcEGJ1lkquVKFw3sUg==}
+    dependencies:
+      base64-js: 1.5.1
+      bech32: 1.1.4
+      readonly-date: 1.0.0
+    dev: false
+
   /@cosmjs/encoding@0.32.2:
     resolution: {integrity: sha512-WX7m1wLpA9V/zH0zRcz4EmgZdAv1F44g4dbXOgNj1eXZw1PIGR12p58OEkLN51Ha3S4DKRtCv5CkhK1KHEvQtg==}
     dependencies:
@@ -692,6 +721,13 @@ packages:
       xstream: 11.14.0
     dev: false
 
+  /@cosmjs/json-rpc@0.31.3:
+    resolution: {integrity: sha512-7LVYerXjnm69qqYR3uA6LGCrBW2EO5/F7lfJxAmY+iII2C7xO3a0vAjMSt5zBBh29PXrJVS6c2qRP22W1Le2Wg==}
+    dependencies:
+      '@cosmjs/stream': 0.31.3
+      xstream: 11.14.0
+    dev: false
+
   /@cosmjs/json-rpc@0.32.2:
     resolution: {integrity: sha512-lan2lOgmz4yVE/HR8eCOSiII/1OudIulk8836koyIDCsPEpt6eKBuctnAD168vABGArKccLAo7Mr2gy9nrKrOQ==}
     dependencies:
@@ -719,6 +755,12 @@ packages:
 
   /@cosmjs/math@0.30.1:
     resolution: {integrity: sha512-yaoeI23pin9ZiPHIisa6qqLngfnBR/25tSaWpkTm8Cy10MX70UF5oN4+/t1heLaM6SSmRrhk3psRkV4+7mH51Q==}
+    dependencies:
+      bn.js: 5.2.1
+    dev: false
+
+  /@cosmjs/math@0.31.3:
+    resolution: {integrity: sha512-kZ2C6glA5HDb9hLz1WrftAjqdTBb3fWQsRR+Us2HsjAYdeE6M3VdXMsYCP5M3yiihal1WDwAY2U7HmfJw7Uh4A==}
     dependencies:
       bn.js: 5.2.1
     dev: false
@@ -777,6 +819,18 @@ packages:
       long: 4.0.0
     dev: false
 
+  /@cosmjs/proto-signing@0.31.3:
+    resolution: {integrity: sha512-24+10/cGl6lLS4VCrGTCJeDRPQTn1K5JfknzXzDIHOx8THR31JxA7/HV5eWGHqWgAbudA7ccdSvEK08lEHHtLA==}
+    dependencies:
+      '@cosmjs/amino': 0.31.3
+      '@cosmjs/crypto': 0.31.3
+      '@cosmjs/encoding': 0.31.3
+      '@cosmjs/math': 0.31.3
+      '@cosmjs/utils': 0.31.3
+      cosmjs-types: 0.8.0
+      long: 4.0.0
+    dev: false
+
   /@cosmjs/proto-signing@0.32.2:
     resolution: {integrity: sha512-UV4WwkE3W3G3s7wwU9rizNcUEz2g0W8jQZS5J6/3fiN0mRPwtPKQ6EinPN9ASqcAJ7/VQH4/9EPOw7d6XQGnqw==}
     dependencies:
@@ -828,6 +882,18 @@ packages:
     resolution: {integrity: sha512-r6MpDL+9N+qOS/D5VaxnPaMJ3flwQ36G+vPvYJsXArj93BjgyFB7BwWwXCQDzZ+23cfChPUfhbINOenr8N2Kow==}
     dependencies:
       '@cosmjs/stream': 0.30.1
+      isomorphic-ws: 4.0.1(ws@7.5.9)
+      ws: 7.5.9
+      xstream: 11.14.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /@cosmjs/socket@0.31.3:
+    resolution: {integrity: sha512-aqrDGGi7os/hsz5p++avI4L0ZushJ+ItnzbqA7C6hamFSCJwgOkXaOUs+K9hXZdX4rhY7rXO4PH9IH8q09JkTw==}
+    dependencies:
+      '@cosmjs/stream': 0.31.3
       isomorphic-ws: 4.0.1(ws@7.5.9)
       ws: 7.5.9
       xstream: 11.14.0
@@ -932,6 +998,27 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@cosmjs/stargate@0.31.3:
+    resolution: {integrity: sha512-53NxnzmB9FfXpG4KjOUAYAvWLYKdEmZKsutcat/u2BrDXNZ7BN8jim/ENcpwXfs9/Og0K24lEIdvA4gsq3JDQw==}
+    dependencies:
+      '@confio/ics23': 0.6.8
+      '@cosmjs/amino': 0.31.3
+      '@cosmjs/encoding': 0.31.3
+      '@cosmjs/math': 0.31.3
+      '@cosmjs/proto-signing': 0.31.3
+      '@cosmjs/stream': 0.31.3
+      '@cosmjs/tendermint-rpc': 0.31.3
+      '@cosmjs/utils': 0.31.3
+      cosmjs-types: 0.8.0
+      long: 4.0.0
+      protobufjs: 6.11.4
+      xstream: 11.14.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+    dev: false
+
   /@cosmjs/stargate@0.32.2:
     resolution: {integrity: sha512-AsJa29fT7Jd4xt9Ai+HMqhyj7UQu7fyYKdXj/8+/9PD74xe6lZSYhQPcitUmMLJ1ckKPgXSk5Dd2LbsQT0IhZg==}
     dependencies:
@@ -971,6 +1058,12 @@ packages:
 
   /@cosmjs/stream@0.30.1:
     resolution: {integrity: sha512-Fg0pWz1zXQdoxQZpdHRMGvUH5RqS6tPv+j9Eh7Q953UjMlrwZVo0YFLC8OTf/HKVf10E4i0u6aM8D69Q6cNkgQ==}
+    dependencies:
+      xstream: 11.14.0
+    dev: false
+
+  /@cosmjs/stream@0.31.3:
+    resolution: {integrity: sha512-8keYyI7X0RjsLyVcZuBeNjSv5FA4IHwbFKx7H60NHFXszN8/MvXL6aZbNIvxtcIHHsW7K9QSQos26eoEWlAd+w==}
     dependencies:
       xstream: 11.14.0
     dev: false
@@ -1057,6 +1150,25 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@cosmjs/tendermint-rpc@0.31.3:
+    resolution: {integrity: sha512-s3TiWkPCW4QceTQjpYqn4xttUJH36mTPqplMl+qyocdqk5+X5mergzExU/pHZRWQ4pbby8bnR7kMvG4OC1aZ8g==}
+    dependencies:
+      '@cosmjs/crypto': 0.31.3
+      '@cosmjs/encoding': 0.31.3
+      '@cosmjs/json-rpc': 0.31.3
+      '@cosmjs/math': 0.31.3
+      '@cosmjs/socket': 0.31.3
+      '@cosmjs/stream': 0.31.3
+      '@cosmjs/utils': 0.31.3
+      axios: 0.21.4
+      readonly-date: 1.0.0
+      xstream: 11.14.0
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - utf-8-validate
+    dev: false
+
   /@cosmjs/tendermint-rpc@0.32.2:
     resolution: {integrity: sha512-DXyJHDmcAfCix4H/7/dKR0UMdshP01KxJOXHdHxBCbLIpck94BsWD3B2ZTXwfA6sv98so9wOzhp7qGQa5malxg==}
     dependencies:
@@ -1090,6 +1202,10 @@ packages:
 
   /@cosmjs/utils@0.30.1:
     resolution: {integrity: sha512-KvvX58MGMWh7xA+N+deCfunkA/ZNDvFLw4YbOmX3f/XBIkqrVY7qlotfy2aNb1kgp6h4B6Yc8YawJPDTfvWX7g==}
+    dev: false
+
+  /@cosmjs/utils@0.31.3:
+    resolution: {integrity: sha512-VBhAgzrrYdIe0O5IbKRqwszbQa7ZyQLx9nEQuHQ3HUplQW7P44COG/ye2n6AzCudtqxmwdX7nyX8ta1J07GoqA==}
     dev: false
 
   /@cosmjs/utils@0.32.2:
@@ -1505,8 +1621,8 @@ packages:
   /@humanwhocodes/object-schema@2.0.2:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
 
-  /@injectivelabs/core-proto-ts@0.0.18:
-    resolution: {integrity: sha512-WSZS7SQ+I/m8jdc7fhzkMTUhA7i5nVTeKbN6QGqKmOwQ/F+PqM75vDHD9Y9NbLPx9P+m7hyUzSHz4zmajth5jw==}
+  /@injectivelabs/core-proto-ts@0.0.21:
+    resolution: {integrity: sha512-RBxSkRBCty60R/l55/D1jsSW0Aof5dyGFhCFdN3A010KjMv/SzZGGr+6DZPY/hflyFeaJzDv/VTopCymKNRBvQ==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
@@ -1523,12 +1639,12 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@injectivelabs/exceptions@1.14.4(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-mJVzDsw+anL85NzXl0l1Ortk7MEgHdD5EQwFp/XaI1U3cupsHKUfHpAuXjggD+XQVFeWoYOFzk4CJPCBgz6u+w==}
+  /@injectivelabs/exceptions@1.14.5(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-WQ+hxpKz4g4+ZXNTXLFKpf9D9uosleZLqC++2+wK81IQ/lcwi5GrTLYdasOhJeu3c+LKWxHQRHJfSsvt8TQWbA==}
     requiresBuild: true
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/ts-types': 1.14.5
       http-status-codes: 2.3.0
       link-module-alias: 1.2.0
       shx: 0.3.4
@@ -1561,8 +1677,8 @@ packages:
       google-protobuf: 3.21.2
     dev: false
 
-  /@injectivelabs/indexer-proto-ts@1.11.22:
-    resolution: {integrity: sha512-Mx90Q6F2lW03FlqXqw6MKCtKl3Rxuhla2CBlhhXe6XrmZWt+LpkiYinlZCyQDnmwjuqzCqurlMx4/sEjuy5WhA==}
+  /@injectivelabs/indexer-proto-ts@1.11.32:
+    resolution: {integrity: sha512-gCkbMlBq34MY2xZcauDEsCP0h5l/FgKMwCgJ8aWGaTkh27XBWpl1zvlreuWg/IpSvTPJZBoADW9KqixqyoBdJw==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
@@ -1570,8 +1686,8 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@injectivelabs/mito-proto-ts@1.0.52:
-    resolution: {integrity: sha512-esqrLXy9GheL5DAGTSxhUYOJZXE8g/3NnYVqz/x9MxZHQwYhj3LoV2G8CWB0Ly2i7VEOc0osesgJk08hrgLa+w==}
+  /@injectivelabs/mito-proto-ts@1.0.55:
+    resolution: {integrity: sha512-clFKpU/LCYvYiPg5PRjhVJFTxKcfJHzaj5saJHuL32LaOaB3Rd8L3CqP9qUrg78L7eKjjXjyG97U3NdRdZBlWg==}
     dependencies:
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       google-protobuf: 3.21.2
@@ -1579,13 +1695,13 @@ packages:
       rxjs: 7.8.1
     dev: false
 
-  /@injectivelabs/networks@1.14.4(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-2DbbaiI/v5PY+X90zhFMstVcVokpxEytMWZZvRKls6YqSBERhE3lxUF696lk0TEecfZ37CikuxZ7E9hx+eXg2A==}
+  /@injectivelabs/networks@1.14.5(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-9GINd/pPBX6Jyc26pmlLC54s7nLlXsBLZ/1fo8a0nvHkrrODRDE4IldP6KsA9OLVomMPk5TyBUgYLGgM3ST9GA==}
     requiresBuild: true
     dependencies:
-      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.4
-      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/exceptions': 1.14.5(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.5
+      '@injectivelabs/utils': 1.14.5(google-protobuf@3.21.2)
       link-module-alias: 1.2.0
       shx: 0.3.4
     transitivePeerDependencies:
@@ -1593,30 +1709,30 @@ packages:
       - google-protobuf
     dev: false
 
-  /@injectivelabs/sdk-ts@1.14.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Iw4y2YRxZ//p8lumqnSTUpXdoQGpt91wofm8R+eM65KOXX/T0p+6rpPYITWPxjT6E+koH4HXh9InnzzN4UzJQw==}
+  /@injectivelabs/sdk-ts@1.14.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-j/6EcvNgQn563L0P5x80cZDTbYYbsXmHgtIbj8DCzemzgPRadmZLtlMDBjMQZ0ZcMhDSMfVOCINBOB2bBz2qMw==}
     requiresBuild: true
     dependencies:
       '@apollo/client': 3.8.8(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
-      '@cosmjs/amino': 0.30.1
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
+      '@cosmjs/amino': 0.31.3
+      '@cosmjs/proto-signing': 0.31.3
+      '@cosmjs/stargate': 0.31.3
       '@ensdomains/ens-validation': 0.1.0
       '@ensdomains/eth-ens-namehash': 2.0.15
       '@ethersproject/bytes': 5.7.0
-      '@injectivelabs/core-proto-ts': 0.0.18
+      '@injectivelabs/core-proto-ts': 0.0.21
       '@injectivelabs/dmm-proto-ts': 1.0.19
-      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/exceptions': 1.14.5(google-protobuf@3.21.2)
       '@injectivelabs/grpc-web': 0.0.1(google-protobuf@3.21.2)
       '@injectivelabs/grpc-web-node-http-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
       '@injectivelabs/grpc-web-react-native-transport': 0.0.2(@injectivelabs/grpc-web@0.0.1)
-      '@injectivelabs/indexer-proto-ts': 1.11.22
-      '@injectivelabs/mito-proto-ts': 1.0.52
-      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/indexer-proto-ts': 1.11.32
+      '@injectivelabs/mito-proto-ts': 1.0.55
+      '@injectivelabs/networks': 1.14.5(google-protobuf@3.21.2)
       '@injectivelabs/test-utils': 1.14.3
-      '@injectivelabs/token-metadata': 1.14.4(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.4
-      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/token-metadata': 1.14.5(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.5
+      '@injectivelabs/utils': 1.14.5(google-protobuf@3.21.2)
       '@metamask/eth-sig-util': 4.0.1
       axios: 0.27.2
       bech32: 2.0.0
@@ -1631,7 +1747,6 @@ packages:
       jscrypto: 1.0.3
       keccak256: 1.0.6
       link-module-alias: 1.2.0
-      rxjs: 7.8.1
       secp256k1: 4.0.3
       shx: 0.3.4
       snakecase-keys: 5.5.0
@@ -1659,14 +1774,14 @@ packages:
       - debug
     dev: false
 
-  /@injectivelabs/token-metadata@1.14.4(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-g0jrIFpEdQ4kjUUaMcXWmXWu5owpIGE6GQPj7Gx07kkPTDNDiIfcaHUQ0nzTmcG02h0AhFx1eSpkHZFLSwyG/Q==}
+  /@injectivelabs/token-metadata@1.14.5(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-GiIiNDixfvbfEjzZG7ixtGYmJllFIcA2Xl1LnsK5yawT8Q+/SoSIJig4tE+0CC/AaGHS1GxDKySrIdMse7PZ0w==}
     requiresBuild: true
     dependencies:
-      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
-      '@injectivelabs/networks': 1.14.4(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.4
-      '@injectivelabs/utils': 1.14.4(google-protobuf@3.21.2)
+      '@injectivelabs/exceptions': 1.14.5(google-protobuf@3.21.2)
+      '@injectivelabs/networks': 1.14.5(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.5
+      '@injectivelabs/utils': 1.14.5(google-protobuf@3.21.2)
       '@types/lodash.values': 4.3.9
       copyfiles: 2.4.1
       jsonschema: 1.4.1
@@ -1679,20 +1794,20 @@ packages:
       - google-protobuf
     dev: false
 
-  /@injectivelabs/ts-types@1.14.4:
-    resolution: {integrity: sha512-c8g81bdrOQoi6S1CbeERRifkwNhjyLWB8lmF7liwRnPjyDciVHfHjikZjVWFLS9tJegNm44N9PWsM4RN9g0rXQ==}
+  /@injectivelabs/ts-types@1.14.5:
+    resolution: {integrity: sha512-dwmEJE90vMr1zkQhz5lX2280sBMe2GvAj98vOHoL2RLTo0OQkJZrirUHwsTkexJf7sFZIT2PlmLCfix9Ulcp5A==}
     requiresBuild: true
     dependencies:
       link-module-alias: 1.2.0
       shx: 0.3.4
     dev: false
 
-  /@injectivelabs/utils@1.14.4(google-protobuf@3.21.2):
-    resolution: {integrity: sha512-eyx6XpgqdmEhEhdwNT4zEDYx+wXOhW01foCGC6e0Dmmrcxv5Bjd+R2BuLopKJ9h22OYNJm6dAX3ZtcoFwpFYbQ==}
+  /@injectivelabs/utils@1.14.5(google-protobuf@3.21.2):
+    resolution: {integrity: sha512-L2ul/7rgop8RLJBhlXjt6Q/A6fXeRZ3hhCZFXGXmA63vz9RSqOFHILiRp6hAFsuZbiITjmVx0eubFPaQU0MymA==}
     requiresBuild: true
     dependencies:
-      '@injectivelabs/exceptions': 1.14.4(google-protobuf@3.21.2)
-      '@injectivelabs/ts-types': 1.14.4
+      '@injectivelabs/exceptions': 1.14.5(google-protobuf@3.21.2)
+      '@injectivelabs/ts-types': 1.14.5
       axios: 0.21.4
       bignumber.js: 9.1.2
       http-status-codes: 2.3.0
@@ -3097,6 +3212,13 @@ packages:
 
   /cosmjs-types@0.7.2:
     resolution: {integrity: sha512-vf2uLyktjr/XVAgEq0DjMxeAWh1yYREe7AMHDKd7EiHVqxBPCaBS+qEEQUkXbR9ndnckqr1sUG8BQhazh4X5lA==}
+    dependencies:
+      long: 4.0.0
+      protobufjs: 6.11.4
+    dev: false
+
+  /cosmjs-types@0.8.0:
+    resolution: {integrity: sha512-Q2Mj95Fl0PYMWEhA2LuGEIhipF7mQwd9gTQ85DdP9jjjopeoGaDxvmPa5nakNzsq7FnO1DMTatXTAx6bxMH7Lg==}
     dependencies:
       long: 4.0.0
       protobufjs: 6.11.4
