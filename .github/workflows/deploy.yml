@@ -3,8 +3,6 @@ on:
   # Push to long living branches or PRs
   push:
     branches:
-      - master
-      - main
       - staging
 
 jobs:
