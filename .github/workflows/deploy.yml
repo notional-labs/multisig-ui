@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - staging
 
 jobs:
   deploy:
@@ -25,5 +26,5 @@ jobs:
         key: ${{ secrets.PRIV_KEY }}
         envs: CI, NODE_OPTIONS
         script: |
-          cd ~/multisig.notional.ventures
+          cd ~/multisig-ui
           bash deploy.sh
