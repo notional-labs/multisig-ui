@@ -3,9 +3,7 @@ on:
   # Push to long living branches or PRs
   push:
     branches:
-      - master
       - main
-      - staging
 
 jobs:
   deploy:
@@ -26,5 +24,6 @@ jobs:
         key: ${{ secrets.PRIV_KEY }}
         envs: CI, NODE_OPTIONS
         script: |
-          cd ~/multisig-ui
+          cd ~/multisig-ui-prod
+          git checkout main
           bash deploy.sh
