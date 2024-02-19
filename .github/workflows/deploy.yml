@@ -25,4 +25,5 @@ jobs:
         envs: CI, NODE_OPTIONS
         script: |
           cd ~/multisig-ui
+          git checkout staging
           bash deploy.sh
