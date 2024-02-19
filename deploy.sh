@@ -12,7 +12,8 @@ npm install
 npm run build
 
 if [ $? -eq 0 ]; then
-    pm2 restart ecosystem.config.js --env prod
+    cd .next
+    pm2 restart multisig-ui
 else
     echo "npm run build failed with error. Stopped restarting the web server."
     exit 1
