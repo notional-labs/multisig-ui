@@ -3,7 +3,6 @@ on:
   # Push to long living branches or PRs
   push:
     branches:
-      - master
       - main
 
 jobs:
@@ -25,5 +24,5 @@ jobs:
         key: ${{ secrets.PRIV_KEY }}
         envs: CI, NODE_OPTIONS
         script: |
-          cd ~/multisig.notional.ventures
+          cd ~/multisig-ui-prod
           bash deploy.sh
