@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@ant-design/icons':
-    specifier: ^4.7.0
-    version: 4.8.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.8.2
+    version: 4.8.2(react-dom@18.2.0)(react@18.2.0)
   '@cosmjs/amino':
     specifier: ^0.32.2
     version: 0.32.2
@@ -112,8 +112,8 @@ packages:
     resolution: {integrity: sha512-4QBZg8ccyC6LPIRii7A0bZUk3+lEDCLnhB+FVsflGdcWPPmV+j3fire4AwwoqHV/BibgvBmR9ZIo4s867smv+g==}
     dev: false
 
-  /@ant-design/icons@4.8.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-JRAuiqllnMsiZIO8OvBOeFconprC3cnMpJ9MvXrHh+H5co9rlg8/aSHQfLf5jKKe18lUgRaIwC2pz8YxH9VuCA==}
+  /@ant-design/icons@4.8.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-I8J+xJMoPHWe+C50mCNkBp5s2EAEyuINeKCySyH9b5GMkBChDv3+nlqONhhwqhx6m+8BCW8J61zrcBf05x4r1A==}
     engines: {node: '>=8'}
     peerDependencies:
       react: '>=16.0.0'
@@ -2508,7 +2508,7 @@ packages:
       react-dom: '>=16.9.0'
     dependencies:
       '@ant-design/colors': 6.0.0
-      '@ant-design/icons': 4.8.1(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/icons': 4.8.2(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/react-slick': 1.0.2(react@18.2.0)
       '@babel/runtime': 7.23.6
       '@ctrl/tinycolor': 3.6.1
