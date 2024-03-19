@@ -13,7 +13,7 @@
     "child_process": false
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
+    "@ant-design/icons": "^5.3.4",
     "@cosmjs/amino": "^0.32.2",
     "@cosmjs/encoding": "^0.32.2",
     "@cosmjs/proto-signing": "^0.32.2",
