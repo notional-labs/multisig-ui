@@ -526,6 +526,7 @@ export const prefixToId = {
     "neutron": 21,
     "qwoyn": 22,
     "celestia": 23,
+    "quasar": 24,
 }
 
 
@@ -553,7 +554,8 @@ export const idToChainId = {
     20: "centuri-1",
     21: "neutron-1",
     22: "qwoyn-1",
-    23: "celestia"
+    23: "celestia",
+    24: "quasar"
 }
 
 
