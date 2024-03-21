@@ -478,6 +478,26 @@ export const chainData = [
         govExplorer: "https://mintscan.io/celestia/proposals/",
         logo: "/images/logo/celestia.png",
         hyperLink: "https://celestia.org/"
+    },
+    {
+        chain_id: "quasar",
+        denom: "uqsr",
+        displayDenom: "quasar",
+        base_denom: {
+            "denom": "uqsr",
+            "exponent": 6
+        },
+        name: "Quasar",
+        prefix: "quasar",
+        color: "linear-gradient(90deg, rgba(126,45,248,1) 9%, rgba(199,76,230,1) 36%, rgba(253,106,213,1) 69%, rgba(254,179,169,1) 99%)",
+        rpc: "https://quasar-rpc.polkachu.com/",
+        api: "https://quasar-api.polkachu.com/",
+        explorer: "https://mintscan.io/quasar",
+        txExplorer: "https://mintscan.io/quasar/tx/",
+        valExplorer: "https://mintscan.io/quasar/validators/",
+        govExplorer: "https://mintscan.io/quasar/proposals/",
+        logo: "/images/logo/quasar.png",
+        hyperLink: "https://quasar.fi/"
     }
 ]
 
@@ -506,6 +526,7 @@ export const prefixToId = {
     "neutron": 21,
     "qwoyn": 22,
     "celestia": 23,
+    "quasar": 24,
 }
 
 
@@ -533,7 +554,8 @@ export const idToChainId = {
     20: "centuri-1",
     21: "neutron-1",
     22: "qwoyn-1",
-    23: "celestia"
+    23: "celestia",
+    24: "quasar"
 }
 
 
