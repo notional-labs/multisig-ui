@@ -33,8 +33,8 @@ dependencies:
     specifier: ^1.3.4
     version: 1.6.3
   chain-registry:
-    specifier: ^1.18.0
-    version: 1.25.0
+    specifier: ^1.41.9
+    version: 1.41.9
   cosmjs-types:
     specifier: ^0.9.0
     version: 0.9.0
@@ -506,10 +506,8 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@chain-registry/types@0.17.1:
-    resolution: {integrity: sha512-O0CgrtJgIlqXvZm1CqDZe/7jZz068O/uuCIoyDXCegFHK03rdHacKcDGwEIUuI0MNUf8YV3jdE4xHQMSAX+79w==}
-    dependencies:
-      '@babel/runtime': 7.23.6
+  /@chain-registry/types@0.25.7:
+    resolution: {integrity: sha512-RJywPFbxPTnyhty1cH1FZlAaK0g2x9jGgJm/ai8zNXVIiK02Vx19j0IIQAWhanl/Kn9t7Qn3lsBEDVcxPBnAWQ==}
     dev: false
 
   /@confio/ics23@0.6.8:
@@ -2940,11 +2938,10 @@ packages:
   /caniuse-lite@1.0.30001571:
     resolution: {integrity: sha512-tYq/6MoXhdezDLFZuCO/TKboTzuQ/xR5cFdgXPfDtM7/kchBO3b4VWghE/OAi/DV7tTdhmLjZiZBZi1fA/GheQ==}
 
-  /chain-registry@1.25.0:
-    resolution: {integrity: sha512-u+i64OW5hBRGc1HZtZRr7Givgnj0uvcRV1XnJjPMBcSkEP0zTuMWg032HX7wpuu8C47I6aosQ00CGFDLfKtzSQ==}
+  /chain-registry@1.41.9:
+    resolution: {integrity: sha512-Y5rogFaa+d1ewPfzu4uRRfeVHwTePOJn6zvsbJKszz5ZMnPfFQLYPeUrA+FurzTPEckXj636n5U+EO9c6j7r9g==}
     dependencies:
-      '@babel/runtime': 7.23.6
-      '@chain-registry/types': 0.17.1
+      '@chain-registry/types': 0.25.7
     dev: false
 
   /chalk@2.4.2:
