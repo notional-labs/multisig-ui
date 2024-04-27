@@ -9,8 +9,8 @@ dependencies:
     specifier: ^5.3.6
     version: 5.3.6(react-dom@18.2.0)(react@18.2.0)
   '@cosmjs/amino':
-    specifier: ^0.32.2
-    version: 0.32.2
+    specifier: ^0.32.3
+    version: 0.32.3
   '@cosmjs/encoding':
     specifier: ^0.32.2
     version: 0.32.2
@@ -579,15 +579,6 @@ packages:
       '@cosmjs/utils': 0.30.1
     dev: false
 
-  /@cosmjs/amino@0.32.2:
-    resolution: {integrity: sha512-lcK5RCVm4OfdAooxKcF2+NwaDVVpghOq6o/A40c2mHXDUzUoRZ33VAHjVJ9Me6vOFxshrw/XEFn1f4KObntjYA==}
-    dependencies:
-      '@cosmjs/crypto': 0.32.2
-      '@cosmjs/encoding': 0.32.2
-      '@cosmjs/math': 0.32.2
-      '@cosmjs/utils': 0.32.2
-    dev: false
-
   /@cosmjs/amino@0.32.3:
     resolution: {integrity: sha512-G4zXl+dJbqrz1sSJ56H/25l5NJEk/pAPIr8piAHgbXYw88OdAOlpA26PQvk2IbSN/rRgVbvlLTNgX2tzz1dyUA==}
     dependencies:
@@ -648,9 +639,9 @@ packages:
   /@cosmjs/crypto@0.32.2:
     resolution: {integrity: sha512-RuxrYKzhrPF9g6NmU7VEq++Hn1vZJjqqJpZ9Tmw9lOYOV8BUsv+j/0BE86kmWi7xVJ7EwxiuxYsKuM8IR18CIA==}
     dependencies:
-      '@cosmjs/encoding': 0.32.2
-      '@cosmjs/math': 0.32.2
-      '@cosmjs/utils': 0.32.2
+      '@cosmjs/encoding': 0.32.3
+      '@cosmjs/math': 0.32.3
+      '@cosmjs/utils': 0.32.3
       '@noble/hashes': 1.3.3
       bn.js: 5.2.1
       elliptic: 6.5.4
@@ -995,7 +986,7 @@ packages:
     resolution: {integrity: sha512-AsJa29fT7Jd4xt9Ai+HMqhyj7UQu7fyYKdXj/8+/9PD74xe6lZSYhQPcitUmMLJ1ckKPgXSk5Dd2LbsQT0IhZg==}
     dependencies:
       '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.32.2
+      '@cosmjs/amino': 0.32.3
       '@cosmjs/encoding': 0.32.2
       '@cosmjs/math': 0.32.2
       '@cosmjs/proto-signing': 0.32.3
@@ -1661,7 +1652,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@apollo/client': 3.8.8(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
-      '@cosmjs/amino': 0.32.2
+      '@cosmjs/amino': 0.32.3
       '@cosmjs/proto-signing': 0.32.3
       '@cosmjs/stargate': 0.32.2
       '@ensdomains/ens-validation': 0.1.0
