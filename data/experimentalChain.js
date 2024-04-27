@@ -489,8 +489,8 @@ export const chainObj = {
             high: 0.5,
         },
     },
-    "centuri-1": {
-        chainId: "centuri-1",
+    "centauri-1": {
+        chainId: "centauri-1",
         chainName: "composable",
         rpc: "https://composable-rpc.polkachu.com/",
         rest: "https://composable-api.polkachu.com/",
@@ -510,7 +510,7 @@ export const chainObj = {
                 coinDenom: "PICA",
                 coinMinimalDenom: "ppica",
                 coinDecimals: 12,
-                coinGeckoId: "banksy-token",
+                coinGeckoId: "picasso",
             },
         ],
         feeCurrencies: [
@@ -518,14 +518,14 @@ export const chainObj = {
                 coinDenom: "PICA",
                 coinMinimalDenom: "ppica",
                 coinDecimals: 12,
-                coinGeckoId: "banksy-token",
+                coinGeckoId: "picasso",
             },
         ],
         stakeCurrency: {
             coinDenom: "PICA",
             coinMinimalDenom: "ppica",
             coinDecimals: 12,
-            coinGeckoId: "banksy-token",
+            coinGeckoId: "picasso",
         },
         gasPriceStep: {
             low: 0.25,

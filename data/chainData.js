@@ -400,7 +400,7 @@ export const chainData = [
         hyperLink: "https://sgenetwork.io"
     },
     {
-        chain_id: "centuri-1",
+        chain_id: "centauri-1",
         denom: "ppica",
         displayDenom: "pica",
         base_denom: {
